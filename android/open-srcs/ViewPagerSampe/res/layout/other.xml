@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical" >
+	<LinearLayout
+		android:id="@+id/page_mark"
+		android:orientation="horizontal" 
+		android:layout_width="fill_parent"
+		android:layout_height="30dp"
+		android:gravity="center" />
+	<RelativeLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" >
+		<Button 
+			android:id="@+id/prev"
+			android:layout_width="60dp"
+			android:layout_height="50dp"
+			android:text="Prev"/>
+		<Button 
+			android:id="@+id/next"
+			android:layout_width="60dp"
+			android:layout_height="50dp"
+			android:layout_alignParentRight="true"
+			android:text="Next"/>
+		<RadioGroup 
+		    android:id="@+id/option"
+		    android:orientation="horizontal"
+		    android:layout_width="fill_parent"
+			android:layout_height="50dp"
+			android:layout_toLeftOf="@id/next"
+			android:layout_toRightOf="@id/prev"
+			android:gravity="center" >
+			<RadioButton 
+				android:id="@+id/enable"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:text="enable"
+				android:checked="true"/>
+			<RadioButton 
+				android:id="@+id/disable"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:text="disable"/>
+		</RadioGroup>
+	</RelativeLayout>
+	<android.support.v4.view.ViewPager
+		android:id="@+id/pager"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent" />
+</LinearLayout>
