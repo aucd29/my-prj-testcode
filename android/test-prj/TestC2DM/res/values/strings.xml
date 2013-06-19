@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, TestC2DMActivity!</string>
+    <string name="app_name">TestC2DM</string>
+
+</resources>

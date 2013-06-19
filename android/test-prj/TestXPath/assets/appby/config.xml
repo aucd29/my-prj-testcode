@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<groupby id="1" version="1.0" name="Groupby test">
+<items count="3">
+    <appby path="test1" />
+    <appby path="test2" />
+    <appby path="test3" />
+</items>
+</groupby>
