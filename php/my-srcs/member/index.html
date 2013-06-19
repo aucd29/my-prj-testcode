@@ -1,0 +1,70 @@
+<?php
+//
+// Default Setting
+//
+require '../global.php';
+
+//
+// Function
+//
+require $_SELF[FUN].'/common/common.php';
+
+//
+// Userdata
+//
+require $_SELF[CFG].'/admin_config.php';
+require $_SELF[CFG].'/member_include.php';
+
+if(is_file("../html/$header")) include "../html/$header"; 
+?>
+<script language='javascript' src='./include/member.js'></script>
+
+<table border="0" cellspacing=0 cellpadding="2" align='center'>
+<tr> 
+	<td height=7></td>
+</tr>
+<tr> 
+	<td align=center><font color=#2121BA><?=$HOME_NAME?>에 오신것을 환영합니다.</font><br></td>
+</tr>
+<tr bgcolor="#FFFFFF"> 
+	<td align="center"> 
+		<textarea name="content" class=box cols="90" rows="20"><? 
+			if( is_file( "../config/member_article.php" ) )
+			{
+				include "../config/member_article.php";
+				echo $article;
+			}
+			else
+			{
+				echo"약관이 준비 되지 않았습니다.";		
+			}
+		?></textarea>
+	</td>
+</tr>
+</table>
+<br>
+<form name=okok style=margin:0;border:0>
+<table width="480" border="0" cellpadding="0" height=28 align=center background=mem_back.gif>
+<tr> 
+	<td align=center>
+		회원 약관을 읽었으며 회원약관에 동의 하겠습니다
+		<input type=checkbox name=agree value='Y'>예
+	</td>
+</tr>
+</table>
+</form>
+<table border="0" cellpadding="15" align=center>
+<tr> 
+	<td align="center">
+		<input type='button' name='go' value=' 가입하기 ' class='inputbtn' onclick=GO_selected1(this) />
+		<input type='button' name='back' value=' 뒤 로 ' class='inputbtn' onClick='history.back()' />
+	</td>   
+</tr>
+</table>
+
+<?
+if( is_file( "../html/$footer" ) ) 
+{
+	include "../html/$footer"; 
+}
+?>

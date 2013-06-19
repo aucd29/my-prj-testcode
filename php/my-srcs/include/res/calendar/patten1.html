@@ -1,0 +1,46 @@
+<style type='text/css'>
+.calendar_top td{color:white;text-align:center;background-color:#006699;}
+.calendar_black_td{background-color:#ececec}
+.calendar_td{background-color:#f7f7f7;text-align:center;}
+.calendar_sun{color:deeppink}
+.calendar_sat{color:blue}
+.calendar_nor{color:#484848;}
+.calendar_today{color:deeppink;font-weight:bold}
+.calendar_over{background-color:#E9F4FE}
+.calendar_font td{font-size:8pt;font-family:tahoma}
+</style>
+
+<table cellspacing='0' cellpadding='0' border='0'  width='95%' align='center' class='calendar_font'>
+<tr>
+	<td>
+		<table cellspacing='0' cellpadding='0' border='0'  width='95%' align='center'>
+		<tr>
+			<td>
+				<a href='<?php echo $_SERVER[PHP_SELF].'?'.$nBackYear.$sAppendix;?>'>◀</a>
+				<a href='<?php echo $_SERVER[PHP_SELF].'?'.$nBackMonth.$sAppendix;?>'>◁</a></td>
+			<td align='center' style='font-weight:bold'><?php echo $nYear;?>년 <?php echo $nMonth;?>월</td>
+			<td align='right'>
+				<a href='<?php echo $_SERVER[PHP_SELF].'?'.$nNextMonth.$sAppendix;?>'>▷</a> 
+				<a href='<?php echo $_SERVER[PHP_SELF].'?'.$nNextYear.$sAppendix;?>'>▶</a></td>
+		</tr>
+		<tr>
+			<td colspan='3'>
+				<table cellspacing='1' cellpadding='3' border='0'  width='100%' align='center'>
+				<tr class='calendar_top'>
+					<td>일</td>
+					<td>월</td>
+					<td>화</td>
+					<td>수</td>
+					<td>목</td>
+					<td>금</td>
+					<td>토</td>
+				</tr>
+				<?php $objCalendar->Calendar(); ?>
+				</tr>
+				</table>
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+</table>

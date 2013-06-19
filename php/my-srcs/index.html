@@ -1,0 +1,99 @@
+<!--------------------------------------------------------------------
+ +
+ +		Date			: 2004-11-07
+ +		Copyright		: Kurome
+ +		E-mail			: aucd29@daum.net, help@mota.co.kr
+ +
+ +
+ +
+ + ------------------------------------------------------------------>
+<html>
+<head>
+<title></title>
+<meta name='author' content='interkorea'>
+<meta name='keywords' content=''>
+<meta http-equiv='Cache-Control' content='no-cache'>
+<meta http-equiv='Pragma' content='no-cache'>
+<meta http-equiv='Content-Type' content='text/html; charset=euc-kr'>
+<link rel='stylesheet' href='/include/css.css' type='text/css'>
+<script language='javascript' src='/include/main.js'></script>
+</head>
+<body>
+<a href="javascript:winOpen('member/login.php','login',400,400)">로그인</a>
+<br />
+<a href='member/member_write.php'>회원가입</a>
+<br />
+<a href='member/member_write.php?mode=modify'>회원수정</a>
+<br />
+<a href="javascript:winOpen('include/message/receive.php','view','500','500',1)">메신저</a>
+
+<script> 
+Scroll = function() {};
+Scroll.prototype.Init = function(id,gap,base,atv,spd)
+{
+	this.set[gap]	= 10;
+	this.set[base]	= 10;
+	this.set[atv]	= 200;
+	this.set[spd]	= 30;
+	this.set[start]	= 0;
+	this.set[end]	= 0;
+	this.form		= document.getElementById(id);
+	alert(this.set[gap]);
+}
+
+Scroll.prototype.setData = function()
+{
+	this.form.style.top	= document.body.scrollTop + this.set[gap];
+	this.set[start] = parseInt(this.form.style.top,10); // 스크롤 시작위치
+	this.set[end]	= document.body.scrollTop + this.set[base];
+}
+
+/*Scroll.prototype.scrolling = function()
+{
+	var sv;
+	if (this.set[start] != this.set[end])
+	{
+		sv = Math.ceil(Math.abs(this.set[end]-this.set[start]) / 15);
+		this.form.style.top = parseInt(this.form.style.top,10) + ((this.set[end] < this.set[start])?-sv:sv);
+	}
+	setTimeout("this.scrolling();",this.set[spd]);
+}*/
+</script>
+
+
+
+<table cellspacing='0' cellpadding='0' border='0' width='5%' align='center'>
+<tr>
+	<td width='60%'></td>
+	<td>
+	
+	<div onLoad=align='center' id='scroll' style='position:absolute;border:1 solid #ececec;top:0'>
+<table cellspacing='0' align='center' cellpadding='3' border='1' width='200' bordercolordark='white' bordercolorlight='#D6D6D6'>
+<tr>
+	<td>test</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td	class='tableTR'>test</td>
+	<td>test</td>
+</tr>
+</table>
+</div>
+
+<!-- <script language='javascript' src='/include/js/RightScroll.js'></script>
+ -->
+<script>
+var scroll = new Scroll();
+scroll.Init('scroll',400,40,200,10);
+</script>
+
+
+
+</td>
+</tr>
+</table>
+
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+</body>
+</html>

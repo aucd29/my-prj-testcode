@@ -1,0 +1,4 @@
+<?php
+$morning = $webmota = "";
+$damota = "";
+?>

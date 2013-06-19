@@ -1,0 +1,65 @@
+<?
+/***************************************************************************
+ *
+ *		Date			: 2004-11-01
+ *		Copyright		: Kurome
+ *		E-mail			: aucd29@daum.net, help@mota.co.kr
+ *		Type			:
+ *
+ *
+ *
+ ***************************************************************************/
+
+//
+// Default Setting
+//
+require '../global.php';
+include "admin_auth.php";
+
+//
+// Function
+//
+require $_SELF[FUN].'/common/common.php';
+require $_SELF[FUN].'/date/GetToday.php';
+?>
+<html>
+<head>
+<title>:: 관리자 ::</title>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<link rel="stylesheet" href="../include/css.css" type="text/css">
+</head>
+<body bgcolor=#000000 leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%">
+<tr>
+	<td>
+		<table cellspacing="0" cellpadding="2" border="0">
+		<tr>
+			<td width=160 align=center><font color=FFFFFF class='tahoma8'><? GetToday();?></font></td>
+			<td><a href='/' target=center class=white>홈페이지</a></td>
+			<td><font color=CCCCCC>|<font></td>
+<!-- 
+			<td><a href='./admin_main.html' target='main' class=white>기본홈</a></td>
+			<td><font color=CCCCCC>|<font></td> -->
+
+			<?php
+			$aTopMenu = array(
+				'./config/config_write.php'		=> '기본세팅',
+				'./phpMyAdmin'					=> '디비',
+				'../sendMail/sendmail_list.php' => '폼메일',
+			);
+
+			foreach($aTopMenu as $index => $value)
+			{
+				echo "<td style='color:cccccc'><a href='$index' class='white' target='center'>$value</a> | </td>";
+			}
+			?>
+
+			<td><a href="../../Process/member_process.php?psMode=LOGOUT" target="_top" class=white>로그아웃</a></td>
+			<td><font color=CCCCCC>|<font></td>
+		</tr>
+		</table>
+	<td align=right><a href='javascript:top.window.close()'><img src=./img/close.gif border=0></a>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+</table>
+</body>
+</html>

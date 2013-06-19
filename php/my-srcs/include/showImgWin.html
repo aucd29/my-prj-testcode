@@ -1,0 +1,14 @@
+<html>
+<head>
+<title>이미지확대보기</title>
+<meta name='author' content='interkorea'>
+<meta http-equiv='content-type' content='text/html; charset=euc-kr'>
+<?php 
+$sImg = $_GET[sImg];
+$aImgInfo = getimagesize($_SERVER[DOCUMENT_ROOT].'/'.$sImg);
+?>
+</head>
+<body style='margin:0'>
+<img src='<?=$sImg?>' <?php echo $aImgInfo[2];?> onClick='self.close();' onLoad='resizeTo(<?php echo $aImgInfo[0]+10;?>,<?php echo $aImgInfo[1]+35;?>)' border='0' onFocus='this.blur()' style='cursor:hand' />
+</body>
+</html>
