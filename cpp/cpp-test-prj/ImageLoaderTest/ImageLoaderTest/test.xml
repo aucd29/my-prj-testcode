@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding='euc-kr'?>
+<image>
+    <directory>btn</directory>
+    <normal>
+        <left>normal_left.png</left>
+        <center>normal_cen.bmp</center>
+        <right>normal_right.png</right>
+    </normal>
+    <over>
+        <left>over_left.png</left>
+        <center>over_cen.bmp</center>
+        <right>over_right.png</right>
+    </over>
+    <active>
+        <left>active_left.png</left>
+        <center>active_cen.bmp</center>
+        <right>active_right.png</right>
+    </active>
+</image>
