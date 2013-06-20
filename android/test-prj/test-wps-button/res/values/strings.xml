@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">test-wps-button</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="wifi_wps_onstart_pin" msgid="8067502591043979939">"Wi-Fi 공유기에 PIN(개인 식별 번호) %1$s 을(를) 입력하세요. 설정을 완료하는 데 최대 2분이 소요됩니다."</string>
+    <string name="wifi_wps_onstart_pbc" msgid="7204827509934892103">"공유기에서 Wi-Fi Protected 설정 버튼을 누르세요. \'WPS\'라고 줄여 부르기도 하며 다음 기호를 포함할 수도 있습니다."</string>
+    <string name="wifi_wps_failed_overlap" msgid="5159533685596844778">"다른 WPS 세션이 감지되었습니다. 잠시 후 다시 시도해 주세요."</string>
+    <string name="wifi_wps_failed_wep" msgid="2702820087105284461">"무선 공유기 보안 설정(WEP)은 지원되지 않습니다."</string>
+    <string name="wifi_wps_failed_tkip" msgid="4282401586860713349">"무선 공유기 보안 설정(TKIP)은 지원되지 않습니다."</string>
+    <string name="wifi_wps_in_progress" msgid="3372311348221357944">"WPS 설정이 이미 진행 중이며 완료하는 데 최대 2분이 소요됩니다."</string>
+    <string name="wifi_wps_failed_generic" msgid="5668775022238832527">"WPS가 실패하였습니다. 잠시 후 다시 시도해 주세요."</string>
+    <string name="wifi_wps_setup_msg" msgid="315174329121275092">"WPS을 시작하는 중…"</string>
+    <string name="wifi_cancel" msgid="6763568902542968964">"취소"</string>
+    <string name="wifi_wps_connected" msgid="5754399645462924103">"Wi-Fi 네트워크 %s에 연결됨"</string>
+    <string name="wifi_wps_complete" msgid="2388138550456729134">"WPS 성공. 네트워크에 연결 중…"</string>
+    <string name="dlg_ok" msgid="2402639055725653590">"확인"</string>
+    <string name="cancel">"취소"</string>
+
+</resources>
