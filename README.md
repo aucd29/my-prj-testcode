@@ -1,9 +1,5 @@
-aucd29's test code & libraries
+aucd29's Libraries & Test code
 ------------------------------------
-
-My url : http://www.sarangnamu.net
-
-# Libraries
 
 ## ANDROID
 ### Platform libraries 
@@ -40,3 +36,5 @@ My url : http://www.sarangnamu.net
 - Macro for Editplus [link](https://github.com/aucd29/my-prj-testcode/tree/master/macro/iphone)
 
 ## OTHERS
+- Home : http://www.sarangnamu.net
+
