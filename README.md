@@ -37,4 +37,4 @@ aucd29's Libraries & Test code
 
 ## OTHERS
 - Home : http://www.sarangnamu.net
-
+- glib & gssdp for android : https://github.com/aucd29/glib-2.35.8-for-android
