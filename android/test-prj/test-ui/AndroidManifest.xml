@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.sarangnamu.ui_test"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="13"
+        android:targetSdkVersion="16" />
+
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" /> <!-- for lockscreen -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".lockscreen.LockScreen"
+            android:clearTaskOnLaunch="false"
+            android:launchMode="singleTask"
+            android:taskAffinity="locker.activity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- RECEIVER -->
+
+        <receiver android:name=".receiver.NotificationReceiveriver" >
+            <intent-filter>
+                <action android:name="com.sec.smart_home.receiver.NOTIFICATION_RECEIVER" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".lockscreen.LockScreenService" />
+    </application>
+
+</manifest>
