@@ -22,6 +22,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -32,9 +35,12 @@ import com.google.android.gcm.GCMRegistrar;
  * IntentService responsible for handling GCM messages.
  */
 public class GCMIntentService extends GCMBaseIntentService {
-
     @SuppressWarnings("hiding")
     private static final String TAG = "GCMIntentService";
+
+    private SoundPool sp;
+    private boolean soundPoolLoaded = false;
+    private int spCorrent;
 
     public GCMIntentService() {
         super(SENDER_ID);
@@ -45,6 +51,15 @@ public class GCMIntentService extends GCMBaseIntentService {
         Log.i(TAG, "Device registered: regId = " + registrationId);
         displayMessage(context, getString(R.string.gcm_registered));
         ServerUtilities.register(context, registrationId);
+
+        sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        spCorrent = sp.load(this, R.raw.chirp, 1);
+        sp.setOnLoadCompleteListener(new OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                soundPoolLoaded = true;
+            }
+        });
     }
 
     @Override
@@ -74,6 +89,16 @@ public class GCMIntentService extends GCMBaseIntentService {
         //        }
 
         String message = bundle.getString("data");
+
+        if (sp == null) {
+            soundPoolLoaded = false;
+            sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+            spCorrent = sp.load(this, R.raw.chirp, 1);
+        }
+
+        //if (soundPoolLoaded) {
+        sp.play(spCorrent, 1, 1, 0, 0, 1);
+        //}
 
         Log.e(TAG, "onMessage " + message);
         displayMessage(context, message);
