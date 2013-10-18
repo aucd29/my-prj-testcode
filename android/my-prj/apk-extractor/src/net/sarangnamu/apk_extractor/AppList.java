@@ -59,31 +59,11 @@ public class AppList {
             newInfo.versionName = p.versionName;
             newInfo.versionCode = p.versionCode;
             newInfo.icon = p.applicationInfo.loadIcon(context.getPackageManager());
+            newInfo.srcDir = p.applicationInfo.sourceDir;
             newInfo.size = BkMath.toFileSizeString(new File(p.applicationInfo.sourceDir).length());
 
             res.add(newInfo);
         }
-
-        //        PkgInfo pkgInfo;
-        //        Intent localIntent = new Intent("android.intent.action.MAIN", null);
-        //        localIntent.addCategory("android.intent.category.LAUNCHER");
-        //
-        //        List<ResolveInfo> localList = context.getPackageManager().queryIntentActivities(localIntent, 0);
-        //        for (ResolveInfo info: localList) {
-        //            if (info.activityInfo.applicationInfo.sourceDir.startsWith("/data/app-private/")) {
-        //                continue;
-        //            }
-        //
-        //            PkgInfo newInfo = new PkgInfo();
-        //            newInfo.appName = p.applicationInfo.loadLabel(context.getPackageManager()).toString();
-        //            //            newInfo.pkgName = p.packageName;
-        //            //            newInfo.versionName = p.versionName;
-        //            //            newInfo.versionCode = p.versionCode;
-        //            //            newInfo.icon = p.applicationInfo.loadIcon(context.getPackageManager());
-        //
-        //
-        //            res.add(newInfo);
-        //        }
 
         return res;
     }
@@ -99,6 +79,7 @@ public class AppList {
         public String pkgName;
         public String versionName;
         public String size;
+        public String srcDir;
         public int versionCode = 0;
         public Drawable icon;
     }

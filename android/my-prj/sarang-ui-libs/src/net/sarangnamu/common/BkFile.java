@@ -25,6 +25,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class BkFile {
+    private static final String TAG = "BkFile";
+
     public static void mkdirs(File fp) throws Exception {
         if (!fp.exists()) {
             if (!fp.mkdirs()) {
@@ -47,6 +49,50 @@ public class BkFile {
     // COPY
     //
     ////////////////////////////////////////////////////////////////////////////////////
+
+    public static void copyFile(File fpSrc, String destPathName) throws Exception {
+        copyFile(fpSrc, destPathName, null);
+    }
+
+    public static void copyFile(File fpSrc, String destPathName, FileCopyListener l) throws Exception {
+        String fileName = BkString.getFileName(fpSrc.getAbsolutePath());
+
+        File fpDestDir = new File(destPathName);
+        if (!fpDestDir.exists()) {
+            boolean res = fpDestDir.mkdirs();
+            DLog.d(TAG, "make dir " + res);
+        }
+
+        File fpDest = new File(destPathName, fileName);
+        InputStream in = new FileInputStream(fpSrc);
+        OutputStream out = new FileOutputStream(fpDest);
+
+        // Copy the bits from instream to outstream
+        byte[] buf = new byte[4096];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            if (l.isCancelled()) {
+                break;
+            }
+
+            out.write(buf, 0, len);
+        }
+
+        out.flush();
+        in.close();
+        out.close();
+
+        if (l != null) {
+            if (l.isCancelled()) {
+                l.onCancelled();
+
+                return ;
+            }
+
+            l.copyFile(fpDest.getAbsolutePath());
+            Thread.sleep(1);
+        }
+    }
 
     public static void copyDirectory(File srcPath, File destPath) throws Exception {
         copyDirectory(srcPath, destPath, null);
@@ -86,6 +132,7 @@ public class BkFile {
                 }
 
                 out.write(buf, 0, len);
+                Thread.sleep(1);
             }
 
             out.flush();
@@ -100,7 +147,6 @@ public class BkFile {
                 }
 
                 l.copyFile(srcPath.getAbsolutePath());
-                Thread.sleep(1);
             }
         }
     }

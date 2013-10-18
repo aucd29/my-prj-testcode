@@ -6,4 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="plsWait">Please wait..</string>
     <string name="appName">&lt;b&gt;APK&lt;/b&gt; Extractor</string>
+    <string name="downloadPath">Download path</string>
+    <string name="dev">Developer</string>
+
 </resources>

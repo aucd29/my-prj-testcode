@@ -1,5 +1,5 @@
 /*
- * Extractor.java
+ * BkCfg.java
  * Copyright 2013 Burke.Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
@@ -15,8 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sarangnamu.apk_extractor;
+package net.sarangnamu.common;
 
-public class Extractor {
-    private static final String PATH = "/apks/";
+import android.os.Environment;
+
+public class BkCfg {
+    public static String sdPath() {
+        return Environment.getExternalStorageDirectory().getAbsolutePath();
+    }
 }
