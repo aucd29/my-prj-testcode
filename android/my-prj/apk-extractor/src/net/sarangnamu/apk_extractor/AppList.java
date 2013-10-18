@@ -60,7 +60,8 @@ public class AppList {
             newInfo.versionCode = p.versionCode;
             newInfo.icon = p.applicationInfo.loadIcon(context.getPackageManager());
             newInfo.srcDir = p.applicationInfo.sourceDir;
-            newInfo.size = BkMath.toFileSizeString(new File(p.applicationInfo.sourceDir).length());
+            newInfo.size = new File(p.applicationInfo.sourceDir).length();
+            newInfo.appSize = BkMath.toFileSizeString(newInfo.size);
 
             res.add(newInfo);
         }
@@ -78,9 +79,10 @@ public class AppList {
         public String appName;
         public String pkgName;
         public String versionName;
-        public String size;
+        public String appSize;
         public String srcDir;
         public int versionCode = 0;
+        public long size;
         public Drawable icon;
     }
 }

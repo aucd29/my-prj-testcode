@@ -8,5 +8,6 @@
     <string name="appName">&lt;b&gt;APK&lt;/b&gt; Extractor</string>
     <string name="downloadPath">Download path</string>
     <string name="dev">Developer</string>
+    <string name="extractOk">Extract OK!</string>
 
 </resources>

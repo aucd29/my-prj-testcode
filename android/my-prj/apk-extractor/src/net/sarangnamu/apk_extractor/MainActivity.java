@@ -12,6 +12,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,14 +24,35 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends ListActivity {
     private static final String TAG = "MainActivity";
+    private static final long SHOW_PROGRESS = 100000000;
+    private static final int SHOW_TOAST = 1;
 
     private AppAdapter adapter;
     private ProgressDialog dlg;
     private ArrayList<PkgInfo> data;
     private TextView title, path, dev;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+            case SHOW_TOAST:
+                Toast.makeText(getApplicationContext(), R.string.extractOk, Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
+    };
+
+    private void sendMessage(int type, Object obj) {
+        Message msg = handler.obtainMessage();
+        msg.what = type;
+        msg.obj  = obj;
+        handler.sendMessage(msg);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,13 +116,17 @@ public class MainActivity extends ListActivity {
         getListView().setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                showProgress();
+                final PkgInfo info = data.get(position);
+
+                if (info.size > SHOW_PROGRESS) {
+                    showProgress();
+                }
 
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            PkgInfo info = data.get(position);
+                            //PkgInfo info = data.get(position);
 
                             File src = new File(info.srcDir);
                             BkFile.copyFile(src, Cfg.getDownPath(), new FileCopyListener() {
@@ -118,7 +145,11 @@ public class MainActivity extends ListActivity {
                                     DLog.d(TAG, "ok downloaded " + name);
                                     DLog.d(TAG, "===================================================================");
 
-                                    dlg.dismiss();
+                                    if (info.size > SHOW_PROGRESS) {
+                                        dlg.dismiss();
+                                    } else {
+                                        sendMessage(SHOW_TOAST, null);
+                                    }
                                 }
                             });
                         } catch (Exception e) {
@@ -179,7 +210,7 @@ public class MainActivity extends ListActivity {
             PkgInfo info = data.get(position);
             holder.icon.setBackgroundDrawable(info.icon);
             holder.name.setText(info.appName);
-            holder.size.setText(info.size);
+            holder.size.setText(info.appSize);
             holder.pkgName.setText(info.pkgName);
             holder.version.setText("(" + info.versionName + ")");
 
