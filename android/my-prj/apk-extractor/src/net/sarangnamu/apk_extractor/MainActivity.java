@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -18,12 +19,17 @@ import android.widget.TextView;
 
 public class MainActivity extends ListActivity {
     private AppAdapter adapter;
-    private ArrayList<PkgInfo> data;
     private ProgressDialog dlg;
+    private ArrayList<PkgInfo> data;
+    private TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        title = (TextView) findViewById(R.id.title);
+        title.setText(Html.fromHtml(getString(R.string.appName)));
 
         initData();
     }
@@ -46,7 +52,7 @@ public class MainActivity extends ListActivity {
             @Override
             protected Boolean doInBackground(Context... contexts) {
                 Context context = contexts[0];
-                data = AppList.getInstance().getInstalledApps(context, false);
+                data = AppList.getInstance().getInstalledApps(context);
 
                 return false;
             }
@@ -72,7 +78,7 @@ public class MainActivity extends ListActivity {
 
     class ViewHolder {
         ImageView icon;
-        TextView name, size, pkgName;
+        TextView name, size, pkgName, version;
     }
 
     class AppAdapter extends BaseAdapter {
@@ -103,6 +109,7 @@ public class MainActivity extends ListActivity {
                 holder.name     = (TextView) convertView.findViewById(R.id.name);
                 holder.size     = (TextView) convertView.findViewById(R.id.size);
                 holder.pkgName  = (TextView) convertView.findViewById(R.id.pkgName);
+                holder.version  = (TextView) convertView.findViewById(R.id.version);
 
                 convertView.setTag(holder);
             } else {
@@ -110,11 +117,11 @@ public class MainActivity extends ListActivity {
             }
 
             PkgInfo info = data.get(position);
-
             holder.icon.setBackgroundDrawable(info.icon);
             holder.name.setText(info.appName);
-            holder.size.setText("0MB");
+            holder.size.setText(info.size);
             holder.pkgName.setText(info.pkgName);
+            holder.version.setText("(" + info.versionName + ")");
 
             return convertView;
         }

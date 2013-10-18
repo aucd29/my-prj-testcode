@@ -17,12 +17,14 @@
  */
 package net.sarangnamu.apk_extractor;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sarangnamu.common.BkMath;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 
 public class AppList {
@@ -41,14 +43,14 @@ public class AppList {
 
     }
 
-    public ArrayList<PkgInfo> getInstalledApps(Context context, boolean getSysPackages) {
+    public ArrayList<PkgInfo> getInstalledApps(Context context) {
         ArrayList<PkgInfo> res = new ArrayList<PkgInfo>();
-        List<PackageInfo> packs = context.getPackageManager().getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES);
+        List<PackageInfo> packs = context.getPackageManager().getInstalledPackages(0);
 
         for(int i=0;i<packs.size();i++) {
             PackageInfo p = packs.get(i);
-            if ((!getSysPackages) && (p.versionName == null)) {
-                continue ;
+            if ((p.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                continue;
             }
 
             PkgInfo newInfo = new PkgInfo();
@@ -57,9 +59,31 @@ public class AppList {
             newInfo.versionName = p.versionName;
             newInfo.versionCode = p.versionCode;
             newInfo.icon = p.applicationInfo.loadIcon(context.getPackageManager());
+            newInfo.size = BkMath.toFileSizeString(new File(p.applicationInfo.sourceDir).length());
 
             res.add(newInfo);
         }
+
+        //        PkgInfo pkgInfo;
+        //        Intent localIntent = new Intent("android.intent.action.MAIN", null);
+        //        localIntent.addCategory("android.intent.category.LAUNCHER");
+        //
+        //        List<ResolveInfo> localList = context.getPackageManager().queryIntentActivities(localIntent, 0);
+        //        for (ResolveInfo info: localList) {
+        //            if (info.activityInfo.applicationInfo.sourceDir.startsWith("/data/app-private/")) {
+        //                continue;
+        //            }
+        //
+        //            PkgInfo newInfo = new PkgInfo();
+        //            newInfo.appName = p.applicationInfo.loadLabel(context.getPackageManager()).toString();
+        //            //            newInfo.pkgName = p.packageName;
+        //            //            newInfo.versionName = p.versionName;
+        //            //            newInfo.versionCode = p.versionCode;
+        //            //            newInfo.icon = p.applicationInfo.loadIcon(context.getPackageManager());
+        //
+        //
+        //            res.add(newInfo);
+        //        }
 
         return res;
     }
@@ -71,9 +95,10 @@ public class AppList {
     ////////////////////////////////////////////////////////////////////////////////////
 
     public static class PkgInfo {
-        public String appName = "";
-        public String pkgName = "";
-        public String versionName = "";
+        public String appName;
+        public String pkgName;
+        public String versionName;
+        public String size;
         public int versionCode = 0;
         public Drawable icon;
     }
