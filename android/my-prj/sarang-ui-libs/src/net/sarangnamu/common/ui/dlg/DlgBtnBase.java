@@ -29,6 +29,7 @@ import android.widget.TextView;
 public abstract class DlgBtnBase extends DlgBase implements View.OnClickListener {
     protected Button left, right;
     protected TextView title;
+    protected FrameLayout layout;
     protected LinearLayout content, bottom;
     private DlgBtnListener listener;
 
@@ -37,7 +38,7 @@ public abstract class DlgBtnBase extends DlgBase implements View.OnClickListener
     }
 
     @Override
-    protected int getContentViewId() {
+    protected int getBaseLayoutId() {
         return R.layout.dlg_base;
     }
 
@@ -46,6 +47,7 @@ public abstract class DlgBtnBase extends DlgBase implements View.OnClickListener
         left    = (Button) findViewById(R.id.left);
         right   = (Button) findViewById(R.id.right);
         title   = (TextView) findViewById(R.id.title);
+        layout  = (FrameLayout) findViewById(R.id.layout);
         content = (LinearLayout) findViewById(R.id.content);
         bottom  = (LinearLayout) findViewById(R.id.bottom);
 
@@ -106,6 +108,10 @@ public abstract class DlgBtnBase extends DlgBase implements View.OnClickListener
 
         FrameLayout.LayoutParams lp = (LayoutParams) content.getLayoutParams();
         lp.bottomMargin = dpToPixelInt(10);
+    }
+
+    public void setTransparentBaseLayout() {
+        layout.setBackgroundColor(0x00000000);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

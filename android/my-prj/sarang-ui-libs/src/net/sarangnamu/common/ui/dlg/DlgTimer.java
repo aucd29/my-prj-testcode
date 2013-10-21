@@ -18,12 +18,14 @@
 package net.sarangnamu.common.ui.dlg;
 
 import android.content.Context;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.TextView;
 
 public class DlgTimer extends DlgBtnBase {
     private int time = 1000, layoutId;
     private String value;
+    private Spanned html;
     protected TextView msg;
 
     public DlgTimer(Context context, int layoutId) {
@@ -44,7 +46,7 @@ public class DlgTimer extends DlgBtnBase {
 
         int msgId = view.getResources().getIdentifier("msg", "id", getContext().getPackageName());
         msg = (TextView) view.findViewById(msgId);
-        msg.setText(value);
+        msg.setText(html == null ? value : html);
         msg.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -65,4 +67,7 @@ public class DlgTimer extends DlgBtnBase {
         this.value = getString(resid);
     }
 
+    public void setMessage(Spanned msg) {
+        html = msg;
+    }
 }

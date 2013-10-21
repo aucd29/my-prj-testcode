@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:background="@drawable/popup_bg"
+    android:minHeight="115dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="27dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:minHeight="80dp"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="25.5dp"
+            android:layout_height="25.5dp"
+            android:contentDescription="@null"
+            android:src="@drawable/icon_check" />
+
+        <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
+            android:id="@+id/msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxHeight="75dp"
+            android:singleLine="false"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+</RelativeLayout>

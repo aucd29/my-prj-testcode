@@ -6,7 +6,7 @@
     android:background="@android:color/background_light"
     android:orientation="vertical" >
     
-    <com.sec.smarthome.common.ui.RobotoRegularTextView
+    <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         android:paddingLeft="11dp"
         android:paddingRight="11dp" >
 
-        <com.sec.smarthome.common.ui.RobotoRegularButton
+        <Button
             android:id="@+id/left"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             android:textColor="#000000"
             android:text="@android:string/ok" />
 
-        <com.sec.smarthome.common.ui.RobotoRegularButton
+        <Button
             android:id="@+id/right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

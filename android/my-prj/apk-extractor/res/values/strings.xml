@@ -9,5 +9,9 @@
     <string name="downloadPath">Download path</string>
     <string name="dev">Developer</string>
     <string name="extractOk">Extract OK!</string>
-
+    <string name="sdcard">sd</string>
+    <string name="email">e-mail</string>
+    <string name="errorEmail">There are no email clients installed.</string>
+    <string name="sendMailOk">Sent Mail, Please checking letter few miniture</string>
+    <string name="sendMailFail">Please check network</string>
 </resources>

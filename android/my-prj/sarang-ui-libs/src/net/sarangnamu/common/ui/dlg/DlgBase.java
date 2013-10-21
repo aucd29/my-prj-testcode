@@ -43,7 +43,7 @@ public abstract class DlgBase extends Dialog {
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         setCanceledOnTouchOutside(false);
-        setContentView(getContentViewId());
+        setContentView(getBaseLayoutId());
         initLayout();
     }
 
@@ -125,6 +125,6 @@ public abstract class DlgBase extends Dialog {
     //
     ////////////////////////////////////////////////////////////////////////////////////
 
-    protected abstract int getContentViewId();
+    protected abstract int getBaseLayoutId();
     protected abstract void initLayout();
 }
