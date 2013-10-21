@@ -16,7 +16,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -74,11 +73,12 @@ public class MainActivity extends ListActivity {
         initData();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+    //    @Override
+    //    public boolean onCreateOptionsMenu(Menu menu) {
+    //        getMenuInflater().inflate(R.menu.main, menu);
+    //        return true;
+    //    }
+
 
     private void initData() {
         new AsyncTask<Context, Void, Boolean>() {
@@ -126,8 +126,6 @@ public class MainActivity extends ListActivity {
                     @Override
                     public void run() {
                         try {
-                            //PkgInfo info = data.get(position);
-
                             File src = new File(info.srcDir);
                             BkFile.copyFile(src, Cfg.getDownPath(), new FileCopyListener() {
                                 @Override
