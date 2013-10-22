@@ -15,14 +15,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sarangnamu.apk_extractor;
+package net.sarangnamu.apk_extractor.cfg;
 
 import net.sarangnamu.common.BkCfg;
+import android.content.Context;
 
-public class Cfg {
+public class Cfg extends BkCfg {
     public static final String PATH = "/apks/";
+    private static final String EMAIL = "email";
 
     public static String getDownPath() {
         return BkCfg.sdPath() + PATH;
+    }
+
+    public static String getEmail(Context context) {
+        return get(context, EMAIL, null);
+    }
+
+    public static void setEmail(Context context, String email) {
+        set(context, EMAIL, email);
     }
 }

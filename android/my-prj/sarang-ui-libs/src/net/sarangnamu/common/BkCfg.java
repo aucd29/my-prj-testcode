@@ -17,9 +17,25 @@
  */
 package net.sarangnamu.common;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Environment;
 
 public class BkCfg {
+    private static final String SHARED_PREF = "burke.pref";
+
+    public static String get(Context context, String name, String defVal) {
+        SharedPreferences spRefresh = context.getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
+        return spRefresh.getString(name, defVal);
+    }
+
+    public static void set(Context context, String name, String data) {
+        SharedPreferences spRefresh = context.getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = spRefresh.edit();
+        editor.putString(name, data);
+        editor.commit();
+    }
+
     public static String sdPath() {
         return Environment.getExternalStorageDirectory().getAbsolutePath();
     }

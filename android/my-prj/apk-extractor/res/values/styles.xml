@@ -24,7 +24,6 @@
     <style name="title" parent="dFont">
         <item name="android:textSize">20dp</item>
         <item name="android:textColor">@color/dFont</item>
-        <item name="android:background">@color/dBg</item>
     </style>
     
     <style name="path" parent="dFont">

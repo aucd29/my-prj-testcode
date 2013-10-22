@@ -1,83 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/row"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+    <RelativeLayout
+        android:id="@+id/row"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
-    <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="15dp"
-        android:layout_toRightOf="@+id/icon"
-        android:textColor="@android:color/black"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp" />
 
-    <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
-        android:id="@+id/size"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:textSize="12sp" />
+        <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/icon"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-    <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
-        android:id="@+id/pkgName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/name"
-        android:layout_below="@+id/name"
-        android:layout_marginTop="5dp"
-        android:textSize="11sp" />
+        <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
+            android:id="@+id/size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="3dp"
+            android:textSize="12sp" />
 
-    <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
-        android:id="@+id/version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/pkgName"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/pkgName"
-        android:textColor="#ff4100"
-        android:textSize="9sp" />
+        <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
+            android:id="@+id/pkgName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/name"
+            android:layout_below="@+id/name"
+            android:layout_marginTop="5dp"
+            android:textSize="11sp" />
+
+        <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
+            android:id="@+id/version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/pkgName"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/pkgName"
+            android:textColor="#ff4100"
+            android:textSize="9sp" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/btnLayout"
         android:layout_width="130dp"
         android:layout_height="65dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="-130dp"
+        android:layout_toRightOf="@id/row"
         android:orientation="horizontal" >
-
+        
         <TextView
             android:id="@+id/sd"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" 
             style="@style/btnLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="#8c8c8c"
-            android:textColor="#ffffff"            
             android:text="@string/sdcard"
-            />
+            android:textColor="#ffffff" />
+
         <TextView
             android:id="@+id/email"
             style="@style/btnLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" 
+            android:layout_height="match_parent"
             android:background="#ee3135"
-            android:text="@string/email"
-            />
+            android:text="@string/email" />
     </LinearLayout>
 
 </RelativeLayout>

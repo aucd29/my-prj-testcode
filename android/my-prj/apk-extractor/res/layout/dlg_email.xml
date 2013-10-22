@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/popup_bg"
+    android:minHeight="150dp"
+    android:orientation="vertical"
+    android:padding="15dp" >
+
+    <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
+        android:id="@+id/label"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dlgEmail" />
+
+    <EditText
+        android:id="@+id/edit"
+        android:layout_width="220dp"
+        android:layout_marginTop="-5dp"
+        android:textSize="14sp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/label" />
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_toRightOf="@id/edit"
+        android:textSize="14sp"
+        android:background="@drawable/btn_base_selector"
+        android:text="@string/save" />
+
+    <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
+        android:id="@+id/emailList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        android:text="@string/regAddr" />
+
+    <View
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/emailList"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="6dp"
+        android:background="#ececec" />
+
+    <LinearLayout
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bar"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical" />
+
+</RelativeLayout>
