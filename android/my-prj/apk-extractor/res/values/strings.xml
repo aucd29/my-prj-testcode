@@ -11,7 +11,6 @@
     <string name="email">e-mail</string>
     <string name="dlgEmail">E-Mail : </string>
     <string name="errorEmail">There are no email clients installed.</string>
-    <string name="sendMailOk">Sent Mail, Please checking few miniture letter</string>
     <string name="sendMailFail">Please check network</string>
     <string name="regAddr">Registered Address</string>
     <string name="save">Save</string>

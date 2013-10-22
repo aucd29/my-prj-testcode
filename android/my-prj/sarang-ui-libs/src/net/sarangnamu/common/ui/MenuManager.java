@@ -39,11 +39,9 @@ public class MenuManager {
     }
 
     public void showMenu(Context context, View v, int resid) {
-        if (popup == null) {
-            popup = new PopupMenu(context, v);
-            popup.getMenuInflater().inflate(resid, popup.getMenu());
-            popup.setOnMenuItemClickListener(listener);
-        }
+        popup = new PopupMenu(context, v);
+        popup.getMenuInflater().inflate(resid, popup.getMenu());
+        popup.setOnMenuItemClickListener(listener);
 
         popup.show();
     }

@@ -46,6 +46,10 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final int SHOW_POPUP = 1;
     private static final int SLIDING_MARGIN = 130;
 
+    private static final int ET_SDCARD = 0;
+    private static final int ET_EMAIL  = 1;
+    private static final int ET_MENU   = 2;
+
     private boolean sendEmail = false;
     private boolean[] checkedList;
     private TextView title, path, dev;
@@ -96,9 +100,9 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        DLog.e(TAG, "onActivityResult " + requestCode + ", " +resultCode);
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
-                showPopup(getString(R.string.sendMailOk));
             } else if (resultCode == RESULT_CANCELED) {
             } else {
                 showPopup(getString(R.string.sendMailFail));
@@ -193,7 +197,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         setListAdapter(adapter);
     }
 
-
     private void sendToSd(int position) {
         final PkgInfo info = data.get(position);
 
@@ -218,10 +221,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
                         @Override
                         public void copyFile(String name) {
-                            DLog.d(TAG, "===================================================================");
-                            DLog.d(TAG, "ok copied " + name);
-                            DLog.d(TAG, "===================================================================");
-
                             if (sendEmail) {
                                 sendToEmail(info, name);
                             } else {
@@ -298,10 +297,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             public void onAnimationEnd(Animator animation) {
                 view.setClickable(true);
 
-                //                if (startX == 0) {
                 vh.sd.setText(R.string.sdcard);
                 vh.email.setText(R.string.email);
-                //                }
             }
 
             @Override
@@ -342,10 +339,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     class PosHolder {
         int position;
         int type;
+        View row;
 
-        public PosHolder(int pos, int type) {
+        public PosHolder(int pos, int type, View row) {
             this.position = pos;
             this.type = type;
+            this.row = row;
         }
     }
 
@@ -408,9 +407,9 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             holder.pkgName.setText(info.pkgName);
             holder.version.setText("(" + info.versionName + ")");
 
-            holder.sd.setTag(new PosHolder(position, 0));
-            holder.email.setTag(new PosHolder(position, 1));
-            holder.row.setTag(new PosHolder(position, 2));
+            holder.sd.setTag(new PosHolder(position, ET_SDCARD, holder.row));
+            holder.email.setTag(new PosHolder(position, ET_EMAIL, holder.row));
+            holder.row.setTag(new PosHolder(position, ET_MENU, holder.row));
 
             RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) holder.row.getLayoutParams();
             switch (getItemViewType(position)) {
@@ -437,14 +436,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     public void onClick(View v) {
         PosHolder ph = (PosHolder) v.getTag();
 
-        if (ph.type == 0) {
-            sendEmail = false;
-            sendToSd(ph.position);
-        } else if (ph.type == 1) {
-            sendEmail = true;
-            sendToSd(ph.position);
-        } else {
+        if (ph.type == ET_MENU) {
             showAnimation(v, ph.position);
+        } else {
+            sendEmail = ph.type == 0 ? false : true;
+            sendToSd(ph.position);
+            showAnimation(ph.row, ph.position);
         }
     }
 }
