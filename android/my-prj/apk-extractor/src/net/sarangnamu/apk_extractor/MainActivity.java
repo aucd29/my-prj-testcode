@@ -30,7 +30,9 @@ import android.text.Html;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
@@ -58,6 +60,9 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private ImageButton menu;
     private ProgressDialog dlg;
     private ArrayList<PkgInfo> data;
+
+    private View clickedView = null;
+
 
     private Handler handler = new Handler() {
         @Override
@@ -197,7 +202,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         adapter = new AppAdapter();
         setListAdapter(adapter);
 
-        getListView().setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        //getListView().setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        getListView().setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
     }
 
     private void sendToSd(int position) {
@@ -297,20 +308,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             @Override
             public void onAnimationEnd(Animator animation) {
                 objAni.removeAllListeners();
-
-                //                RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) view.getLayoutParams();
-                //                rlp.leftMargin = endX;
-                //                view.setLayoutParams(rlp);
-
-                //                RelativeLayout.LayoutParams llp = (RelativeLayout.LayoutParams) vh.btnLayout.getLayoutParams();
-                //                if (endX == 0) {
-                //                    llp.rightMargin = moveX * -1;
-                //                } else {
-                //                    llp.rightMargin = 0;
-                //                }
-                //                vh.btnLayout.setLayoutParams(llp);
-
                 view.setClickable(true);
+
+                if (endX < 0) {
+                } else {
+                }
             }
 
             @Override
@@ -319,47 +321,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             public void onAnimationCancel(Animator animation) { }
         });
         objAni.start();
-
-        //        final ValueAnimator anim = ValueAnimator.ofInt(startX, endX);
-        //        anim.addListener(new AnimatorListener() {
-        //            @Override
-        //            public void onAnimationStart(Animator animation) {
-        //                view.setClickable(false);
-        //
-        //                vh.sd.setText("");
-        //                vh.email.setText("");
-        //            }
-        //
-        //            @Override
-        //            public void onAnimationRepeat(Animator animation) {}
-        //
-        //            @Override
-        //            public void onAnimationEnd(Animator animation) {
-        //                view.setClickable(true);
-        //
-        //                vh.sd.setText(R.string.sdcard);
-        //                vh.email.setText(R.string.email);
-        //
-        //                anim.removeAllListeners();
-        //            }
-        //
-        //            @Override
-        //            public void onAnimationCancel(Animator animation) {}
-        //        });
-        //
-        //        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-        //            @Override
-        //            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-        //                int val = (Integer) valueAnimator.getAnimatedValue();
-        //
-        //                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) view.getLayoutParams();
-        //                lp.leftMargin = val;
-        //
-        //                view.setLayoutParams(lp);
-        //            }
-        //        });
-        //        anim.setDuration(200);
-        //        anim.start();
     }
 
     private int dpToPixelInt(int dp) {
@@ -461,22 +422,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             holder.email.setTag(new PosHolder(position, ET_EMAIL, holder.row));
             holder.row.setTag(new PosHolder(position, ET_MENU, holder.row));
 
-            //            RelativeLayout.LayoutParams llp = (RelativeLayout.LayoutParams) holder.btnLayout.getLayoutParams();
-            //            RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) holder.row.getLayoutParams();
-            //            switch (getItemViewType(position)) {
-            //            case 0:
-            //                rlp.leftMargin = 0;
-            //                //                llp.rightMargin = margin;
-            //                break;
-            //
-            //            default:
-            //                rlp.leftMargin = margin;
-            //                //                llp.rightMargin = 0;
-            //                break;
-            //            }
-            //            holder.row.setLayoutParams(rlp);
-            //            holder.btnLayout.setLayoutParams(llp);
-
             return convertView;
         }
     }
@@ -492,7 +437,14 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         PosHolder ph = (PosHolder) v.getTag();
 
         if (ph.type == ET_MENU) {
-            showAnimation(v, ph.position);
+            if (clickedView == null) {
+                clickedView = v;
+                showAnimation(v, ph.position);
+            } else {
+                ph = (PosHolder) clickedView.getTag();
+                showAnimation(clickedView, ph.position);
+                clickedView = null;
+            }
         } else {
             sendEmail = ph.type == 0 ? false : true;
             sendToSd(ph.position);
