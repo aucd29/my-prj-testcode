@@ -88,7 +88,8 @@ public final class R {
         /**  MENU 
          */
         public static final int mnu_email=0x7f04000d;
-        public static final int mnu_license=0x7f04000e;
+        public static final int mnu_license=0x7f04000f;
+        public static final int mnu_search=0x7f04000e;
         public static final int plsWait=0x7f040001;
         public static final int regAddr=0x7f04000b;
         public static final int save=0x7f04000c;

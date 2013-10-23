@@ -55,7 +55,8 @@ int string email 0x7f040007
 int string errorEmail 0x7f040009
 int string extractOk 0x7f040005
 int string mnu_email 0x7f04000d
-int string mnu_license 0x7f04000e
+int string mnu_license 0x7f04000f
+int string mnu_search 0x7f04000e
 int string plsWait 0x7f040001
 int string regAddr 0x7f04000b
 int string save 0x7f04000c

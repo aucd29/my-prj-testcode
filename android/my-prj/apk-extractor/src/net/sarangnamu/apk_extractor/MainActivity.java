@@ -14,9 +14,6 @@ import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.ui.DimTool;
 import net.sarangnamu.common.ui.MenuManager;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
-import android.animation.ValueAnimator;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -35,6 +32,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -195,6 +193,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         checkedList = new boolean[data.size()];
         adapter = new AppAdapter();
         setListAdapter(adapter);
+
+        getListView().setLayerType(View.LAYER_TYPE_HARDWARE, null);
     }
 
     private void sendToSd(int position) {
@@ -277,47 +277,98 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         final int moveX = dpToPixelInt(SLIDING_MARGIN);
         final int startX = lp.leftMargin;
         final ViewHolder vh = (ViewHolder)((RelativeLayout) view.getParent()).getTag();
-        int endX = lp.leftMargin == 0 ? moveX*-1 : 0;
-        checkedList[position] = startX == 0 ? true : false;
+        //int endX = lp.leftMargin == 0 ? moveX*-1 : 0;
+        final int endX;
 
-        ValueAnimator anim = ValueAnimator.ofInt(startX, endX);
-        anim.addListener(new AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                view.setClickable(false);
+        if (!checkedList[position]) {
+            endX = moveX * -1;
+            checkedList[position] = true;
+        } else {
+            endX = 0;
+            checkedList[position] = false;
+        }
 
-                vh.sd.setText("");
-                vh.email.setText("");
-            }
+        //checkedList[position] = startX == 0 ? true : false;
+        //ObjectAnimator.ofFloat(vh.btnLayout, "translationX", endX).start();
+        //        final ObjectAnimator objAni = ObjectAnimator.ofFloat(view, "translationX", endX);
+        //        objAni.addListener(new AnimatorListener() {
+        //            @Override
+        //            public void onAnimationStart(Animator animation) {
+        //                view.setClickable(false);
+        //
+        //                vh.sd.setText("");
+        //                vh.email.setText("");
+        //
+        //                view.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        //            }
+        //
+        //            @Override
+        //            public void onAnimationEnd(Animator animation) {
+        //                objAni.removeAllListeners();
+        //
+        //                view.setLayerType(View.LAYER_TYPE_NONE, null);
+        //
+        //                vh.sd.setText(R.string.sdcard);
+        //                vh.email.setText(R.string.email);
+        //
+        //                //                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) view.getLayoutParams();
+        //                //                lp.leftMargin = endX;
+        //
+        //                //                view.setLayoutParams(lp);
+        //                view.setClickable(true);
+        //            }
+        //
+        //            @Override
+        //            public void onAnimationRepeat(Animator animation) { }
+        //            @Override
+        //            public void onAnimationCancel(Animator animation) { }
+        //        });
+        //        objAni.addUpdateListener(new AnimatorUpdateListener() {
+        //            @Override
+        //            public void onAnimationUpdate(ValueAnimator animation) {
+        //
+        //            }
+        //        });
+        //        objAni.start();
 
-            @Override
-            public void onAnimationRepeat(Animator animation) {}
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                view.setClickable(true);
-
-                vh.sd.setText(R.string.sdcard);
-                vh.email.setText(R.string.email);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {}
-        });
-
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                int val = (Integer) valueAnimator.getAnimatedValue();
-
-                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) view.getLayoutParams();
-                lp.leftMargin = val;
-
-                view.setLayoutParams(lp);
-            }
-        });
-        anim.setDuration(150);
-        anim.start();
+        //        ValueAnimator anim = ValueAnimator.ofInt(startX, endX);
+        //        anim.addListener(new AnimatorListener() {
+        //            @Override
+        //            public void onAnimationStart(Animator animation) {
+        //                view.setClickable(false);
+        //
+        //                vh.sd.setText("");
+        //                vh.email.setText("");
+        //            }
+        //
+        //            @Override
+        //            public void onAnimationRepeat(Animator animation) {}
+        //
+        //            @Override
+        //            public void onAnimationEnd(Animator animation) {
+        //                view.setClickable(true);
+        //
+        //                vh.sd.setText(R.string.sdcard);
+        //                vh.email.setText(R.string.email);
+        //            }
+        //
+        //            @Override
+        //            public void onAnimationCancel(Animator animation) {}
+        //        });
+        //
+        //        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        //            @Override
+        //            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+        //                int val = (Integer) valueAnimator.getAnimatedValue();
+        //
+        //                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) view.getLayoutParams();
+        //                lp.leftMargin = val;
+        //
+        //                view.setLayoutParams(lp);
+        //            }
+        //        });
+        //        anim.setDuration(200);
+        //        anim.start();
     }
 
     private int dpToPixelInt(int dp) {
@@ -333,6 +384,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     class ViewHolder {
         ImageView icon;
         TextView name, size, pkgName, version, sd, email;
+        LinearLayout btnLayout;
         RelativeLayout row;
     }
 
@@ -382,18 +434,21 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 convertView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item, null);
 
                 holder = new ViewHolder();
-                holder.icon     = (ImageView) convertView.findViewById(R.id.icon);
-                holder.name     = (TextView) convertView.findViewById(R.id.name);
-                holder.size     = (TextView) convertView.findViewById(R.id.size);
-                holder.pkgName  = (TextView) convertView.findViewById(R.id.pkgName);
-                holder.version  = (TextView) convertView.findViewById(R.id.version);
-                holder.sd       = (TextView) convertView.findViewById(R.id.sd);
-                holder.email    = (TextView) convertView.findViewById(R.id.email);
-                holder.row      = (RelativeLayout) convertView.findViewById(R.id.row);
+                holder.icon      = (ImageView) convertView.findViewById(R.id.icon);
+                holder.name      = (TextView) convertView.findViewById(R.id.name);
+                holder.size      = (TextView) convertView.findViewById(R.id.size);
+                holder.pkgName   = (TextView) convertView.findViewById(R.id.pkgName);
+                holder.version   = (TextView) convertView.findViewById(R.id.version);
+                holder.sd        = (TextView) convertView.findViewById(R.id.sd);
+                holder.email     = (TextView) convertView.findViewById(R.id.email);
+                holder.row       = (RelativeLayout) convertView.findViewById(R.id.row);
+                holder.btnLayout = (LinearLayout) convertView.findViewById(R.id.btnLayout);
 
                 holder.sd.setOnClickListener(MainActivity.this);
                 holder.email.setOnClickListener(MainActivity.this);
                 holder.row.setOnClickListener(MainActivity.this);
+
+                //                                holder.btnLayout.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
                 convertView.setTag(holder);
             } else {
@@ -411,16 +466,20 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             holder.email.setTag(new PosHolder(position, ET_EMAIL, holder.row));
             holder.row.setTag(new PosHolder(position, ET_MENU, holder.row));
 
-            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) holder.row.getLayoutParams();
-            switch (getItemViewType(position)) {
-            case 0:
-                lp.leftMargin = 0;
-                break;
+            //            holder.sd.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+            //            holder.email.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+            //            holder.row.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
-            default:
-                lp.leftMargin = dpToPixelInt(SLIDING_MARGIN) * -1;
-                break;
-            }
+            //            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) holder.row.getLayoutParams();
+            //            switch (getItemViewType(position)) {
+            //            case 0:
+            //                lp.leftMargin = 0;
+            //                break;
+            //
+            //            default:
+            //                lp.leftMargin = dpToPixelInt(SLIDING_MARGIN) * -1;
+            //                break;
+            //            }
 
             return convertView;
         }
