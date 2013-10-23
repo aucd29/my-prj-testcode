@@ -64,7 +64,8 @@
         android:id="@+id/btnLayout"
         android:layout_width="130dp"
         android:layout_height="65dp"
-        android:layout_toRightOf="@id/row"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="-130dp"
         android:orientation="horizontal" >
 
         <TextView

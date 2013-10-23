@@ -14,6 +14,9 @@ import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.ui.DimTool;
 import net.sarangnamu.common.ui.MenuManager;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
+import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
+import android.animation.ObjectAnimator;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -271,13 +274,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     private void showAnimation(final View view, int position) {
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) view.getLayoutParams();
-        lp.width = view.getMeasuredWidth();
-
         final int moveX = dpToPixelInt(SLIDING_MARGIN);
-        final int startX = lp.leftMargin;
         final ViewHolder vh = (ViewHolder)((RelativeLayout) view.getParent()).getTag();
-        //int endX = lp.leftMargin == 0 ? moveX*-1 : 0;
         final int endX;
 
         if (!checkedList[position]) {
@@ -288,50 +286,41 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             checkedList[position] = false;
         }
 
-        //checkedList[position] = startX == 0 ? true : false;
-        //ObjectAnimator.ofFloat(vh.btnLayout, "translationX", endX).start();
-        //        final ObjectAnimator objAni = ObjectAnimator.ofFloat(view, "translationX", endX);
-        //        objAni.addListener(new AnimatorListener() {
-        //            @Override
-        //            public void onAnimationStart(Animator animation) {
-        //                view.setClickable(false);
-        //
-        //                vh.sd.setText("");
-        //                vh.email.setText("");
-        //
-        //                view.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        //            }
-        //
-        //            @Override
-        //            public void onAnimationEnd(Animator animation) {
-        //                objAni.removeAllListeners();
-        //
-        //                view.setLayerType(View.LAYER_TYPE_NONE, null);
-        //
-        //                vh.sd.setText(R.string.sdcard);
-        //                vh.email.setText(R.string.email);
-        //
-        //                //                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) view.getLayoutParams();
-        //                //                lp.leftMargin = endX;
-        //
-        //                //                view.setLayoutParams(lp);
-        //                view.setClickable(true);
-        //            }
-        //
-        //            @Override
-        //            public void onAnimationRepeat(Animator animation) { }
-        //            @Override
-        //            public void onAnimationCancel(Animator animation) { }
-        //        });
-        //        objAni.addUpdateListener(new AnimatorUpdateListener() {
-        //            @Override
-        //            public void onAnimationUpdate(ValueAnimator animation) {
-        //
-        //            }
-        //        });
-        //        objAni.start();
+        ObjectAnimator.ofFloat(vh.btnLayout, "translationX", endX).start();
+        final ObjectAnimator objAni = ObjectAnimator.ofFloat(view, "translationX", endX);
+        objAni.addListener(new AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                view.setClickable(false);
+            }
 
-        //        ValueAnimator anim = ValueAnimator.ofInt(startX, endX);
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                objAni.removeAllListeners();
+
+                //                RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) view.getLayoutParams();
+                //                rlp.leftMargin = endX;
+                //                view.setLayoutParams(rlp);
+
+                //                RelativeLayout.LayoutParams llp = (RelativeLayout.LayoutParams) vh.btnLayout.getLayoutParams();
+                //                if (endX == 0) {
+                //                    llp.rightMargin = moveX * -1;
+                //                } else {
+                //                    llp.rightMargin = 0;
+                //                }
+                //                vh.btnLayout.setLayoutParams(llp);
+
+                view.setClickable(true);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) { }
+            @Override
+            public void onAnimationCancel(Animator animation) { }
+        });
+        objAni.start();
+
+        //        final ValueAnimator anim = ValueAnimator.ofInt(startX, endX);
         //        anim.addListener(new AnimatorListener() {
         //            @Override
         //            public void onAnimationStart(Animator animation) {
@@ -350,6 +339,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         //
         //                vh.sd.setText(R.string.sdcard);
         //                vh.email.setText(R.string.email);
+        //
+        //                anim.removeAllListeners();
         //            }
         //
         //            @Override
@@ -401,6 +392,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     class AppAdapter extends BaseAdapter {
+        public int margin;
+
+        public AppAdapter() {
+            margin = dpToPixelInt(SLIDING_MARGIN) * -1;
+        }
+
         @Override
         public int getCount() {
             return data.size();
@@ -448,8 +445,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 holder.email.setOnClickListener(MainActivity.this);
                 holder.row.setOnClickListener(MainActivity.this);
 
-                //                                holder.btnLayout.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -466,20 +461,21 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             holder.email.setTag(new PosHolder(position, ET_EMAIL, holder.row));
             holder.row.setTag(new PosHolder(position, ET_MENU, holder.row));
 
-            //            holder.sd.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-            //            holder.email.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-            //            holder.row.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-
-            //            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) holder.row.getLayoutParams();
+            //            RelativeLayout.LayoutParams llp = (RelativeLayout.LayoutParams) holder.btnLayout.getLayoutParams();
+            //            RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) holder.row.getLayoutParams();
             //            switch (getItemViewType(position)) {
             //            case 0:
-            //                lp.leftMargin = 0;
+            //                rlp.leftMargin = 0;
+            //                //                llp.rightMargin = margin;
             //                break;
             //
             //            default:
-            //                lp.leftMargin = dpToPixelInt(SLIDING_MARGIN) * -1;
+            //                rlp.leftMargin = margin;
+            //                //                llp.rightMargin = 0;
             //                break;
             //            }
+            //            holder.row.setLayoutParams(rlp);
+            //            holder.btnLayout.setLayoutParams(llp);
 
             return convertView;
         }
