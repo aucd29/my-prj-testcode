@@ -8,6 +8,7 @@ import net.sarangnamu.apk_extractor.cfg.Cfg;
 import net.sarangnamu.apk_extractor.dlg.DlgEmail;
 import net.sarangnamu.apk_extractor.dlg.DlgLicense;
 import net.sarangnamu.apk_extractor.ui.LockListView;
+import net.sarangnamu.apk_extractor.ui.LockListView.TouchUpListener;
 import net.sarangnamu.common.BkFile;
 import net.sarangnamu.common.BkFile.FileCopyListener;
 import net.sarangnamu.common.BkString;
@@ -201,7 +202,18 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         adapter = new AppAdapter();
         setListAdapter(adapter);
 
-        //getListView().setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        ((LockListView) getListView()).setOnTouchListener(new TouchUpListener() {
+            @Override
+            public void up() {
+                if (clickedView != null) {
+                    PosHolder  ph = (PosHolder) clickedView.getTag();
+                    showAnimation(clickedView, ph.position);
+                    clickedView = null;
+
+                    ((LockListView) getListView()).setLock();
+                }
+            }
+        });
     }
 
     private void sendToSd(int position) {

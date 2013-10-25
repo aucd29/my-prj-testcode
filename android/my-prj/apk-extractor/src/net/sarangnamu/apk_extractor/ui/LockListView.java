@@ -26,6 +26,7 @@ import android.widget.ListView;
 public class LockListView extends ListView {
     private static final String TAG = "LockListView";
     private boolean lockScroll;
+    private TouchUpListener listener;
 
     public LockListView(Context context) {
         super(context);
@@ -52,12 +53,9 @@ public class LockListView extends ListView {
             switch (ev.getAction()) {
             case MotionEvent.ACTION_UP:
                 DLog.d(TAG, "up");
-                break;
-            case MotionEvent.ACTION_DOWN:
-                DLog.d(TAG, "dn");
-                break;
-            case MotionEvent.ACTION_MOVE:
-                DLog.d(TAG, "mv");
+                if (listener != null) {
+                    listener.up();
+                }
                 break;
             }
 
@@ -70,38 +68,33 @@ public class LockListView extends ListView {
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (lockScroll) {
-            switch (ev.getAction()) {
-            case MotionEvent.ACTION_UP:
-                DLog.e(TAG, "up");
-                break;
-            case MotionEvent.ACTION_DOWN:
-                DLog.e(TAG, "dn");
-                break;
-            case MotionEvent.ACTION_MOVE:
-                DLog.e(TAG, "mv");
-                break;
-            }
-
-            //            if (ev.getAction() == MotionEvent.ACTION_UP) {
-            //                lockScroll = false;
-            //                return true;
-            //            }
-
-            //scrollBy(0, 0);
-
             return false;
         } else {
             return super.onTouchEvent(ev);
         }
     }
 
-    public void setLock() {
+    public synchronized void  setLock() {
         lockScroll = lockScroll ? false : true;
 
-        DLog.d(TAG, "lock stat" + lockScroll);
+        //DLog.d(TAG, "lock stat " + lockScroll);
     }
 
     public boolean getLockStatus() {
         return lockScroll;
+    }
+
+    public void setOnTouchListener(TouchUpListener l) {
+        listener = l;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // TouchUpListener
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    public interface TouchUpListener {
+        public void up();
     }
 }
