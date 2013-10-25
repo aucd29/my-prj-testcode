@@ -20,6 +20,8 @@ package net.sarangnamu.common;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 public class BkCfg {
     private static final String SHARED_PREF = "burke.pref";
@@ -38,5 +40,15 @@ public class BkCfg {
 
     public static String sdPath() {
         return Environment.getExternalStorageDirectory().getAbsolutePath();
+    }
+
+    public static void showKeyboard(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    public static void hideKeyboard(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 }

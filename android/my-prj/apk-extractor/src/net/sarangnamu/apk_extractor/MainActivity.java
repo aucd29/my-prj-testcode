@@ -9,11 +9,13 @@ import net.sarangnamu.apk_extractor.dlg.DlgEmail;
 import net.sarangnamu.apk_extractor.dlg.DlgLicense;
 import net.sarangnamu.apk_extractor.ui.LockListView;
 import net.sarangnamu.apk_extractor.ui.LockListView.TouchUpListener;
+import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.BkFile;
 import net.sarangnamu.common.BkFile.FileCopyListener;
 import net.sarangnamu.common.BkString;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.ui.DimTool;
+import net.sarangnamu.common.ui.FontLoader;
 import net.sarangnamu.common.ui.MenuManager;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
 import android.animation.Animator;
@@ -34,13 +36,16 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 
 public class MainActivity extends ListActivity implements View.OnClickListener {
@@ -53,13 +58,16 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final int ET_EMAIL  = 1;
     private static final int ET_MENU   = 2;
 
-    private boolean sendEmail = false;
+    private boolean sendEmail = false, searchedList = false;
     private boolean[] checkedList;
-    private TextView title, path, dev;
+    private TextView title, path, dev, tvSearch;
+    private EditText search;
     private AppAdapter adapter;
     private ImageButton menu;
+    private RelativeLayout titleBar;
     private ProgressDialog dlg;
     private ArrayList<PkgInfo> data;
+    private ArrayList<PkgInfo> searchedData;
 
     private View clickedView = null;
 
@@ -93,13 +101,17 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        title   = (TextView) findViewById(R.id.title);
-        path    = (TextView) findViewById(R.id.path);
-        dev     = (TextView) findViewById(R.id.dev);
-        menu    = (ImageButton) findViewById(R.id.menu);
+        title    = (TextView) findViewById(R.id.title);
+        path     = (TextView) findViewById(R.id.path);
+        dev      = (TextView) findViewById(R.id.dev);
+        tvSearch = (TextView) findViewById(R.id.tvSearch);
+        search   = (EditText) findViewById(R.id.search);
+        menu     = (ImageButton) findViewById(R.id.menu);
+        titleBar = (RelativeLayout) findViewById(R.id.titleBar);
 
         initLabel();
         initMenu();
+        initSearch();
         initData();
     }
 
@@ -140,6 +152,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
+                case R.id.mnu_search: {
+                    setSearchUi();
+                }
+                break;
+
                 case R.id.mnu_email: {
                     DlgEmail dlg = new DlgEmail(MainActivity.this);
                     dlg.show();
@@ -163,6 +180,65 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 MenuManager.getInstance().showMenu(MainActivity.this, v, R.menu.main);
             }
         });
+    }
+
+    private void initSearch() {
+        search.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        search.setOnEditorActionListener(new OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if (searchedData == null) {
+                        searchedData = new ArrayList<PkgInfo>();
+                    }
+
+                    searchedData.clear();
+                    String keyword = search.getText().toString();
+
+                    if (keyword != null && keyword.length() > 0) {
+                        searchedList = true;
+                        keyword = keyword.toLowerCase();
+
+                        for (PkgInfo info : data) {
+                            if (info.appName.toLowerCase().contains(keyword)) {
+                                searchedData.add(info);
+                            }
+                        }
+
+                    } else {
+                        searchedList = false;
+                        setSearchUi();
+                    }
+
+                    adapter.notifyDataSetChanged();
+                }
+
+                return false;
+            }
+        });
+
+        search.setTypeface(FontLoader.getInstance(MainActivity.this).getFont("Roboto-Light"));
+    }
+
+    private void setSearchUi() {
+        if (search.getVisibility() == View.GONE) {
+            search.setVisibility(View.VISIBLE);
+            tvSearch.setVisibility(View.VISIBLE);
+            title.setVisibility(View.GONE);
+
+            titleBar.setBackgroundResource(R.color.dBgSearch);
+
+            search.requestFocus();
+            BkCfg.showKeyboard(MainActivity.this, search);
+        } else {
+            search.setVisibility(View.GONE);
+            tvSearch.setVisibility(View.GONE);
+            title.setVisibility(View.VISIBLE);
+
+            titleBar.setBackgroundResource(R.color.dBg);
+
+            BkCfg.hideKeyboard(MainActivity.this, search);
+        }
     }
 
     private void initData() {
@@ -361,6 +437,10 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
         @Override
         public int getCount() {
+            if (searchedList) {
+                return searchedData.size();
+            }
+
             return data.size();
         }
 
@@ -411,7 +491,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            PkgInfo info = data.get(position);
+            PkgInfo info;
+            if (searchedList) {
+                info = searchedData.get(position);
+            } else {
+                info = data.get(position);
+            }
+
             holder.icon.setBackgroundDrawable(info.icon);
             holder.name.setText(info.appName);
             holder.size.setText(info.appSize);

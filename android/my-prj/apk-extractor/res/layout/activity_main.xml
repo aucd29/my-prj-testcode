@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <FrameLayout
+    <RelativeLayout
+        android:id="@+id/titleBar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/dBg" >
@@ -14,17 +15,43 @@
             style="@style/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|center_vertical" />
+            android:layout_centerInParent="true" />
+        
+        <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
+            android:id="@+id/tvSearch"
+            style="@style/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:text="@string/mnu_search"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp" />
+        
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint=""
+            android:ems="10"
+            android:singleLine="true"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="50dp"
+            android:layout_toRightOf="@id/tvSearch"
+            android:background="#ffffff"
+            android:layout_centerVertical="true"
+            android:visibility="gone" />
 
         <ImageButton
             android:id="@+id/menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
             android:layout_marginRight="10dp"
-            android:src="@drawable/icon_menu"
-            android:background="@null" />
-    </FrameLayout>
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_menu" />
+    </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
