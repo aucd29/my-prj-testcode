@@ -63,7 +63,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     private View clickedView = null;
 
-
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -314,10 +313,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             public void onAnimationEnd(Animator animation) {
                 objAni.removeAllListeners();
                 view.setClickable(true);
-
-                if (endX < 0) {
-                } else {
-                }
             }
 
             @Override
@@ -455,7 +450,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         } else {
             sendEmail = ph.type == 0 ? false : true;
             sendToSd(ph.position);
-            showAnimation(ph.row, ph.position);
         }
     }
 }
