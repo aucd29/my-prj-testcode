@@ -7,6 +7,7 @@ import net.sarangnamu.apk_extractor.AppList.PkgInfo;
 import net.sarangnamu.apk_extractor.cfg.Cfg;
 import net.sarangnamu.apk_extractor.dlg.DlgEmail;
 import net.sarangnamu.apk_extractor.dlg.DlgLicense;
+import net.sarangnamu.apk_extractor.ui.LockListView;
 import net.sarangnamu.common.BkFile;
 import net.sarangnamu.common.BkFile.FileCopyListener;
 import net.sarangnamu.common.BkString;
@@ -30,9 +31,7 @@ import android.text.Html;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
@@ -203,12 +202,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         setListAdapter(adapter);
 
         //getListView().setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        getListView().setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
     }
 
     private void sendToSd(int position) {
@@ -437,6 +430,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         PosHolder ph = (PosHolder) v.getTag();
 
         if (ph.type == ET_MENU) {
+            ((LockListView) getListView()).setLock();
+
             if (clickedView == null) {
                 clickedView = v;
                 showAnimation(v, ph.position);
