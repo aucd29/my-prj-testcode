@@ -23,9 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
-            android:background="@null"
             android:layout_centerVertical="true"
-            android:src="@drawable/icon_menu" />
+            android:background="@drawable/icon_menu" />
     </RelativeLayout>
 
     <FrameLayout
@@ -52,7 +51,7 @@
             android:gravity="right|center_vertical" />
     </FrameLayout>
 
-    <net.sarangnamu.apk_extractor.ui.LockListView
+    <net.sarangnamu.common.ui.list.LockListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sarangnamu.apk_extractor.ui;
+package net.sarangnamu.common.ui.list;
 
 import net.sarangnamu.common.DLog;
 import android.content.Context;

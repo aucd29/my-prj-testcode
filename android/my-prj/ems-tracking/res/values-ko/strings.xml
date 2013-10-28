@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">EMS 추적</string>
+    <string name="plsWait">잠시만 기다려주세요..</string>
+    <string name="appName">&lt;b&gt;EMS&lt;/b&gt; 추적</string>
+    <string name="delete">삭제</string>
+
+</resources>
