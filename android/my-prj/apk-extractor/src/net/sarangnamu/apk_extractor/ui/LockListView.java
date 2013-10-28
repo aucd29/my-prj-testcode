@@ -44,7 +44,9 @@ public class LockListView extends ListView {
     }
 
     protected void initLayout() {
-
+        RobotoLightTextView empty = new RobotoLightTextView(getContext());
+        empty.setText("Not found a app");
+        setEmptyView(empty);
     }
 
     @Override

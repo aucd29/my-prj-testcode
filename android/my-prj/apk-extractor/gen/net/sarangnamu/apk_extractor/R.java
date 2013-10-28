@@ -150,9 +150,10 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f050001;
-        public static final int btnLayout=0x7f050005;
+        public static final int btnLayout=0x7f050006;
         public static final int dFont=0x7f050002;
-        public static final int path=0x7f050004;
+        public static final int path=0x7f050005;
+        public static final int search=0x7f050004;
         public static final int title=0x7f050003;
     }
 }

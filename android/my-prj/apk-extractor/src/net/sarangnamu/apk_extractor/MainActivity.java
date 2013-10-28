@@ -204,12 +204,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                                 searchedData.add(info);
                             }
                         }
-
                     } else {
                         searchedList = false;
-                        setSearchUi();
                     }
 
+                    setSearchUi();
                     adapter.notifyDataSetChanged();
                 }
 
@@ -225,11 +224,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             search.setVisibility(View.VISIBLE);
             tvSearch.setVisibility(View.VISIBLE);
             title.setVisibility(View.GONE);
-
             titleBar.setBackgroundResource(R.color.dBgSearch);
-
-            search.requestFocus();
-            BkCfg.showKeyboard(MainActivity.this, search);
+            search.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    BkCfg.showKeyboard(MainActivity.this, search);
+                }
+            }, 500);
         } else {
             search.setVisibility(View.GONE);
             tvSearch.setVisibility(View.GONE);
@@ -454,15 +455,15 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             return 0;
         }
 
-        @Override
-        public int getItemViewType(int position) {
-            return checkedList[position] ? 1 : 0;
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return 2;
-        }
+        //        @Override
+        //        public int getItemViewType(int position) {
+        //            return checkedList[position] ? 1 : 0;
+        //        }
+        //
+        //        @Override
+        //        public int getViewTypeCount() {
+        //            return 2;
+        //        }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {

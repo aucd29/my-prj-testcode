@@ -69,7 +69,8 @@ int string sdcard 0x7f040006
 int string sendMailFail 0x7f04000a
 int style AppBaseTheme 0x7f050000
 int style AppTheme 0x7f050001
-int style btnLayout 0x7f050005
+int style btnLayout 0x7f050006
 int style dFont 0x7f050002
-int style path 0x7f050004
+int style path 0x7f050005
+int style search 0x7f050004
 int style title 0x7f050003
