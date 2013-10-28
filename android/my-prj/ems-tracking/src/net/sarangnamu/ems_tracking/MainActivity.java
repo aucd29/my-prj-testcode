@@ -1,9 +1,11 @@
 package net.sarangnamu.ems_tracking;
 
+import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.common.ui.DimTool;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
 import net.sarangnamu.common.ui.list.LockListView;
 import net.sarangnamu.common.ui.list.LockListView.TouchUpListener;
+import net.sarangnamu.ems_tracking.cfg.EmsDbHelper;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -84,6 +86,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             @Override
             protected void onPreExecute() {
                 showProgress();
+                DbManager.getInstance().open(MainActivity.this, new EmsDbHelper(MainActivity.this));
             }
 
             @Override
