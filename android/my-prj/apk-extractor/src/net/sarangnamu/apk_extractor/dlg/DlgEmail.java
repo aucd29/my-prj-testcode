@@ -19,8 +19,8 @@ package net.sarangnamu.apk_extractor.dlg;
 
 import net.sarangnamu.apk_extractor.R;
 import net.sarangnamu.apk_extractor.cfg.Cfg;
-import net.sarangnamu.apk_extractor.ui.RobotoLightTextView;
-import net.sarangnamu.common.ui.FontLoader;
+import net.sarangnamu.common.fonts.RobotoLightTextView;
+import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.ui.dlg.DlgBase;
 import android.content.Context;
 import android.view.View;

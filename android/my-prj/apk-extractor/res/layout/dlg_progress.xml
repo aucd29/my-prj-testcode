@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     
-    <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
+    <net.sarangnamu.common.fonts.RobotoLightTextView
         android:id="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

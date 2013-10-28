@@ -10,14 +10,14 @@
         android:layout_height="40dp"
         android:background="@color/dBg" >
 
-        <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
+        <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/title"
             style="@style/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
         
-        <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
+        <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/tvSearch"
             style="@style/search"
             android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
         android:layout_height="20dp"
         android:background="#d9d9d9" >
 
-        <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
+        <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/dev"
             style="@style/path"
             android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
             android:gravity="center_vertical"
             android:text="@string/dev" />
 
-        <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
+        <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/path"
             style="@style/path"
             android:layout_width="wrap_content"

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="15dp" >
 
-    <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
+    <net.sarangnamu.common.fonts.RobotoLightTextView
         android:id="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         android:text="@string/save"
         android:textSize="14sp" />
 
-    <net.sarangnamu.apk_extractor.ui.RobotoLightTextView
+    <net.sarangnamu.common.fonts.RobotoLightTextView
         android:id="@+id/emailList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
