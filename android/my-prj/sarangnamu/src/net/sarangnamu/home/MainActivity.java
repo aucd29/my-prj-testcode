@@ -1,5 +1,6 @@
 package net.sarangnamu.home;
 
+import net.sarangnamu.home.page.PageBaseFrgmt;
 import net.sarangnamu.home.page.home.HomeFrgmt;
 import net.sarangnamu.home.page.openprj.OpenPrjFrgmt;
 import net.sarangnamu.home.page.qna.QnaFrgmt;
@@ -7,18 +8,21 @@ import net.sarangnamu.home.page.study.StudyFrgmt;
 import net.sarangnamu.home.ui.Navigator;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.SlidingPaneLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class MainActivity extends FragmentActivity {
     private RadioGroup group;
+    private SlidingPaneLayout sliding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        group = (RadioGroup) findViewById(R.id.rdoMenu);
+        group   = (RadioGroup) findViewById(R.id.rdoMenu);
+        sliding = (SlidingPaneLayout) findViewById(R.id.sliding);
 
         initNaviation();
         initMenu();
@@ -57,7 +61,18 @@ public class MainActivity extends FragmentActivity {
                     nv.show(Navigator.QNA);
                     break;
                 }
+
+                sliding.closePane();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        PageBaseFrgmt ft = (PageBaseFrgmt) Navigator.getInstance(this).getCurrent();
+
+        if (!ft.onBackPressed()) {
+            super.onBackPressed();
+        }
     }
 }

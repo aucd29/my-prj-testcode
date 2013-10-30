@@ -18,6 +18,7 @@
 package net.sarangnamu.home.page.home;
 
 import net.sarangnamu.home.page.PageBaseFrgmt;
+import android.os.Bundle;
 import android.widget.ListView;
 
 
@@ -30,4 +31,35 @@ public class HomeFrgmt extends PageBaseFrgmt {
 
         list = (ListView) view.findViewById(android.R.id.list);
     }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+
+    }
+
+    //    public void getNoticeData() {
+    //        new AsyncTask<Context, Void, Boolean>() {
+    //            @Override
+    //            protected void onPreExecute() {
+    //
+    //            }
+    //
+    //            @Override
+    //            protected Boolean doInBackground(Context... contexts) {
+    //                Context context = contexts[0];
+    //
+    //                BkHttp http = new BkHttp();
+    //
+    //                return false;
+    //            }
+    //
+    //            @Override
+    //            protected void onPostExecute(Boolean result) {
+    //
+    //            }
+    //        }.execute(getActivity());
+    //    }
+
 }

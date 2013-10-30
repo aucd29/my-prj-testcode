@@ -17,8 +17,42 @@
  */
 package net.sarangnamu.home.page.qna;
 
+import net.sarangnamu.home.R;
 import net.sarangnamu.home.page.PageBaseFrgmt;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class QnaFrgmt extends PageBaseFrgmt {
+    private WebView web;
 
+    @Override
+    protected void initLayout() {
+        super.initLayout();
+
+        web = (WebView) view.findViewById(R.id.web);
+        web.getSettings().setLoadWithOverviewMode(true);
+        web.getSettings().setUseWideViewPort(true);
+        web.getSettings().setJavaScriptEnabled(true);
+        web.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
+        web.loadUrl("https://groups.google.com/forum/m/?fromgroups#!forum/aucd29");
+        //        web.loadUrl("http://m.daum.net");
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (web.canGoBack()) {
+            web.goBack();
+
+            return true;
+        }
+
+        return false;
+    }
 }
+

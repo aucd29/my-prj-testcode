@@ -29,10 +29,10 @@ public abstract class FrgmtManager {
     private static final String TAG = "FrgmtManager";
 
     protected int baseLayoutId;
+    protected String currentName, baseName;
     protected FragmentManager fm;
     protected HashMap<String, Class<?>> classes;
     protected HashMap<String, Fragment> frgmts;
-
 
     public FrgmtManager() {
         setMap();
@@ -83,6 +83,7 @@ public abstract class FrgmtManager {
             return ;
         }
 
+        baseName = name;
         trans.add(baseLayoutId, frgmt);
         trans.commit();
     }
@@ -116,6 +117,7 @@ public abstract class FrgmtManager {
             return ;
         }
 
+        currentName = name;
         trans.replace(baseLayoutId, frgmt);
         trans.addToBackStack(name);
         trans.commit();
@@ -131,5 +133,15 @@ public abstract class FrgmtManager {
         for (int i=0; i<count; ++i) {
             fm.popBackStack(i, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
+
+        currentName = baseName;
+    }
+
+    public Fragment getCurrent() {
+        if (frgmts != null) {
+            return frgmts.get(currentName);
+        }
+
+        return null;
     }
 }

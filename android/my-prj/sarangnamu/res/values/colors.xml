@@ -6,5 +6,6 @@
     <color name="dMenuChecked">#3c3c3c</color>
     <color name="dBgSearch">#6a6a6a</color>
     <color name="dFont">@android:color/white</color>
+    <color name="pink">#f94d77</color>
 
 </resources>

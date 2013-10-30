@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.home.page;
 
+import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.frgmt.FrgmtBase;
 import net.sarangnamu.home.R;
 import android.os.Bundle;
@@ -42,7 +43,13 @@ public abstract class PageBaseFrgmt extends FrgmtBase {
         title   = (TextView) base.findViewById(R.id.pageTitle);
         content = (LinearLayout) base.findViewById(R.id.pageContent);
 
-        view = inflate(getLayoutIdentifier(getClassSimpleName()));
+        int id = getLayoutIdentifier(getClassSimpleName());
+        if (id != 0) {
+            view = inflate(id);
+            content.addView(view);
+        } else {
+            DLog.e(TAG, "initLayout, not found layout id for content");
+        }
     }
 
     @Override
@@ -63,5 +70,9 @@ public abstract class PageBaseFrgmt extends FrgmtBase {
 
     protected int getLayoutIdentifier(String name) {
         return getResources().getIdentifier("page_" + name.toLowerCase(), "layout", getActivity().getPackageName());
+    }
+
+    public boolean onBackPressed() {
+        return false;
     }
 }
