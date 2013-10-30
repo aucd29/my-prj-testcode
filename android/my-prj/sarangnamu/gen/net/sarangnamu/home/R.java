@@ -34,23 +34,30 @@ public final class R {
         public static final int rdo_left_menu_bg_selector=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f09000a;
-        public static final int content=0x7f090006;
-        public static final int mnu_home=0x7f090002;
-        public static final int mnu_openprj=0x7f090004;
-        public static final int mnu_qna=0x7f090005;
-        public static final int mnu_study=0x7f090003;
-        public static final int pageContent=0x7f090008;
-        public static final int pageTitle=0x7f090007;
-        public static final int rdoMenu=0x7f090001;
+        public static final int action_settings=0x7f09000f;
+        public static final int content=0x7f090007;
+        public static final int date=0x7f090008;
+        public static final int mnu_home=0x7f090003;
+        public static final int mnu_openprj=0x7f090005;
+        public static final int mnu_qna=0x7f090006;
+        public static final int mnu_study=0x7f090004;
+        public static final int pageBar=0x7f09000b;
+        public static final int pageContent=0x7f09000c;
+        public static final int pageProgress=0x7f09000a;
+        public static final int pageTitle=0x7f090009;
+        public static final int progressBar1=0x7f09000e;
+        public static final int rdoMenu=0x7f090002;
+        public static final int sarangnamu=0x7f090001;
         public static final int sliding=0x7f090000;
-        public static final int web=0x7f090009;
+        public static final int web=0x7f09000d;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int page_base=0x7f030001;
-        public static final int page_home=0x7f030002;
-        public static final int page_qna=0x7f030003;
+        public static final int home_list_item=0x7f030001;
+        public static final int page_base=0x7f030002;
+        public static final int page_home=0x7f030003;
+        public static final int page_qna=0x7f030004;
+        public static final int progress=0x7f030005;
     }
     public static final class menu {
         public static final int main=0x7f080000;
@@ -58,11 +65,13 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f040001;
         public static final int app_name=0x7f040000;
-        public static final int mnu_home=0x7f040002;
-        public static final int mnu_openprj=0x7f040005;
-        public static final int mnu_profile=0x7f040004;
-        public static final int mnu_qna=0x7f040006;
-        public static final int mnu_study=0x7f040003;
+        public static final int aucd29=0x7f040003;
+        public static final int mnu_home=0x7f040004;
+        public static final int mnu_openprj=0x7f040007;
+        public static final int mnu_profile=0x7f040006;
+        public static final int mnu_qna=0x7f040008;
+        public static final int mnu_study=0x7f040005;
+        public static final int sarangnamu=0x7f040002;
     }
     public static final class style {
         /** 
@@ -150,11 +159,13 @@ public final class R {
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
 
 
+
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
 
 
         
@@ -183,9 +194,10 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f050001;
-        public static final int leftBar=0x7f050004;
-        public static final int leftMenu=0x7f050003;
-        public static final int menuTxtColor=0x7f050002;
-        public static final int title=0x7f050005;
+        public static final int date=0x7f050005;
+        public static final int leftBar=0x7f050003;
+        public static final int leftMenu=0x7f050002;
+        public static final int title=0x7f050004;
+        public static final int url=0x7f050006;
     }
 }

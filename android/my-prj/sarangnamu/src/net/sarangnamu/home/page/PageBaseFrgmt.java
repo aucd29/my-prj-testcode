@@ -19,18 +19,21 @@ package net.sarangnamu.home.page;
 
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.frgmt.FrgmtBase;
+import net.sarangnamu.home.MainActivity;
 import net.sarangnamu.home.R;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public abstract class PageBaseFrgmt extends FrgmtBase {
     private static final String TAG = "PageBaseFrgmt";
 
-    protected TextView title;
-    protected LinearLayout content;
     protected View view;
+    protected TextView pageTitle;
+    protected LinearLayout pageContent;
+    protected ProgressBar pageProgress;
 
 
     @Override
@@ -40,15 +43,16 @@ public abstract class PageBaseFrgmt extends FrgmtBase {
 
     @Override
     protected void initLayout() {
-        title   = (TextView) base.findViewById(R.id.pageTitle);
-        content = (LinearLayout) base.findViewById(R.id.pageContent);
+        pageTitle    = (TextView) base.findViewById(R.id.pageTitle);
+        pageProgress = (ProgressBar) base.findViewById(R.id.pageProgress);
+        pageContent  = (LinearLayout) base.findViewById(R.id.pageContent);
 
         int id = getLayoutIdentifier(getClassSimpleName());
         if (id != 0) {
             view = inflate(id);
-            content.addView(view);
+            pageContent.addView(view);
         } else {
-            DLog.e(TAG, "initLayout, not found layout id for content");
+            DLog.e(TAG, "initLayout, not found layout id for pageContent");
         }
     }
 
@@ -57,7 +61,7 @@ public abstract class PageBaseFrgmt extends FrgmtBase {
         super.onActivityCreated(savedInstanceState);
 
         String name = getClassSimpleName();
-        title.setText(getStringIdentifier(name));
+        pageTitle.setText(getStringIdentifier(name));
     }
 
     protected String getClassSimpleName() {
@@ -74,5 +78,21 @@ public abstract class PageBaseFrgmt extends FrgmtBase {
 
     public boolean onBackPressed() {
         return false;
+    }
+
+    protected void showDlgProgress() {
+        ((MainActivity) getActivity()).showDlgProgress();
+    }
+
+    protected void hideDlgProgress() {
+        ((MainActivity) getActivity()).hideDlgProgress();
+    }
+
+    protected void showIconProgress() {
+        pageProgress.setVisibility(View.VISIBLE);
+    }
+
+    protected void hideIconProgress() {
+        pageProgress.setVisibility(View.GONE);
     }
 }

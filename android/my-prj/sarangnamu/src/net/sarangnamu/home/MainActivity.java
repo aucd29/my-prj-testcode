@@ -1,20 +1,26 @@
 package net.sarangnamu.home;
 
+import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.home.page.PageBaseFrgmt;
 import net.sarangnamu.home.page.home.HomeFrgmt;
 import net.sarangnamu.home.page.openprj.OpenPrjFrgmt;
 import net.sarangnamu.home.page.qna.QnaFrgmt;
 import net.sarangnamu.home.page.study.StudyFrgmt;
 import net.sarangnamu.home.ui.Navigator;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class MainActivity extends FragmentActivity {
+    private static final String TAG = "MainActivity";
+
     private RadioGroup group;
     private SlidingPaneLayout sliding;
+    private ProgressDialog popup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +71,33 @@ public class MainActivity extends FragmentActivity {
                 sliding.closePane();
             }
         });
+
+        FontLoader.getInstance(MainActivity.this).applyChild("Ubuntu-L", group, RadioButton.class);
+    }
+
+    public void showDlgProgress() {
+        if (popup == null) {
+            popup = new ProgressDialog(MainActivity.this);
+        }
+
+        popup.show();
+        popup.setCancelable(false);
+        popup.setContentView(R.layout.progress);
+    }
+
+    public void hideDlgProgress() {
+        if (popup == null) {
+            return ;
+        }
+
+        popup.dismiss();
     }
 
     @Override
     public void onBackPressed() {
         PageBaseFrgmt ft = (PageBaseFrgmt) Navigator.getInstance(this).getCurrent();
 
-        if (!ft.onBackPressed()) {
+        if (ft == null || !ft.onBackPressed()) {
             super.onBackPressed();
         }
     }

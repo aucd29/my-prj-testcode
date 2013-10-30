@@ -21,6 +21,9 @@ import java.util.HashMap;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class FontLoader {
     private Context context;
@@ -55,5 +58,18 @@ public class FontLoader {
         }
 
         return typeface;
+    }
+
+    public void applyChild(String fontName, ViewGroup target, Class<?> type) {
+        int count = target.getChildCount();
+        Typeface tf = getFont(fontName);
+
+        for (int i=0; i<count; ++i) {
+            View child = target.getChildAt(i);
+
+            if (child.getClass().getSimpleName().equals(type.getSimpleName())) {
+                ((TextView) child).setTypeface(tf);
+            }
+        }
     }
 }

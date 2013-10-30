@@ -24,6 +24,7 @@ import net.sarangnamu.common.DLog;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -53,6 +54,23 @@ public class JsonTool {
             ObjectMapper mapper = new ObjectMapper();
 
             T modDevices = mapper.readValue(json, objectType);
+            return modDevices;
+        } catch (JsonParseException e) {
+            DLog.e(TAG, "Json2Obj JsonParseException", e);
+        } catch (JsonMappingException e) {
+            DLog.e(TAG, "Json2Obj JsonMappingException", e);
+        } catch (IOException e) {
+            DLog.e(TAG, "Json2Obj IOException", e);
+        }
+
+        return null;
+    }
+
+    public static <T> Object toObj(String json, TypeReference<T> typeRef) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+
+            T modDevices = mapper.readValue(json, typeRef);
             return modDevices;
         } catch (JsonParseException e) {
             DLog.e(TAG, "Json2Obj JsonParseException", e);

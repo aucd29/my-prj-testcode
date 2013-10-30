@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:paddingLeft="10dp">
+    android:orientation="vertical"
+    android:paddingLeft="10dp" >
 
     <net.sarangnamu.home.ui.fonts.UbuntuTextView
         android:id="@+id/pageTitle"
@@ -11,16 +11,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <ProgressBar
+        android:id="@+id/pageProgress"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true" />
+
     <View
+        android:id="@+id/pageBar"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@color/pink"
-         />
+        android:layout_height="2dp"
+        android:layout_below="@id/pageTitle"
+        android:background="@color/pink" />
 
     <LinearLayout
         android:id="@+id/pageContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/pageBar"
         android:orientation="vertical" />
 
-</LinearLayout>
+</RelativeLayout>
