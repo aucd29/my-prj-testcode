@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.common.ui;
 
+import net.sarangnamu.common.DimTool;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;

@@ -17,7 +17,7 @@
  */
 package net.sarangnamu.common.ui.dlg;
 
-import net.sarangnamu.common.ui.DimTool;
+import net.sarangnamu.common.DimTool;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;

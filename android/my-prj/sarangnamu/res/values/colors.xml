@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="dBg">#f94d77</color>
+    <color name="dMenu">#525252</color>
+    <color name="dMenuChecked">#3c3c3c</color>
+    <color name="dBgSearch">#6a6a6a</color>
+    <color name="dFont">@android:color/white</color>
+
+</resources>

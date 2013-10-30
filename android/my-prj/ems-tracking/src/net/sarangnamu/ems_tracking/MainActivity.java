@@ -1,7 +1,7 @@
 package net.sarangnamu.ems_tracking;
 
+import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.sqlite.DbManager;
-import net.sarangnamu.common.ui.DimTool;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
 import net.sarangnamu.common.ui.list.LockListView;
 import net.sarangnamu.common.ui.list.LockListView.TouchUpListener;

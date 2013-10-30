@@ -1,0 +1,76 @@
+<android.support.v4.widget.SlidingPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="130dp"
+        android:layout_height="match_parent"
+        android:background="@color/dMenu"
+        android:orientation="vertical" >
+
+        <RadioGroup
+            android:id="@+id/rdoMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <RadioButton
+                android:id="@+id/mnu_home"
+                style="@style/leftMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/mnu_home" />
+
+            <View
+                style="@style/leftBar"
+                android:layout_width="match_parent" />
+
+            <RadioButton
+                android:id="@+id/mnu_study"
+                style="@style/leftMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mnu_study" />
+
+            <View
+                style="@style/leftBar"
+                android:layout_width="match_parent" />
+
+<!--             <RadioButton -->
+<!--                 android:id="@+id/mnu_profile" -->
+<!--                 style="@style/leftMenu" -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:text="@string/mnu_profile" /> -->
+
+<!--             <View -->
+<!--                 style="@style/leftBar" -->
+<!--                 android:layout_width="match_parent" /> -->
+
+            <RadioButton
+                android:id="@+id/mnu_openprj"
+                style="@style/leftMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mnu_openprj" />
+
+            <View
+                style="@style/leftBar"
+                android:layout_width="match_parent" />
+
+            <RadioButton
+                android:id="@+id/mnu_qna"
+                style="@style/leftMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mnu_qna" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</android.support.v4.widget.SlidingPaneLayout>
