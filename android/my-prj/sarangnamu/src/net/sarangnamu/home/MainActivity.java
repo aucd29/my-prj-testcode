@@ -3,8 +3,8 @@ package net.sarangnamu.home;
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.home.page.PageBaseFrgmt;
 import net.sarangnamu.home.page.home.HomeFrgmt;
-import net.sarangnamu.home.page.openprj.OpenPrjFrgmt;
 import net.sarangnamu.home.page.qna.QnaFrgmt;
+import net.sarangnamu.home.page.study.StudyDetailFrgmt;
 import net.sarangnamu.home.page.study.StudyFrgmt;
 import net.sarangnamu.home.ui.Navigator;
 import android.app.ProgressDialog;
@@ -39,7 +39,8 @@ public class MainActivity extends FragmentActivity {
         nv.setBaseLayoutId(R.id.content);
         nv.add(Navigator.HOME, HomeFrgmt.class);
         nv.add(Navigator.STUDY, StudyFrgmt.class);
-        nv.add(Navigator.OPENPRJ, OpenPrjFrgmt.class);
+        nv.add(Navigator.STUDY_DETAIL, StudyDetailFrgmt.class);
+        //nv.add(Navigator.OPENPRJ, OpenPrjFrgmt.class);
         nv.add(Navigator.QNA, QnaFrgmt.class);
         nv.setBase(Navigator.HOME);
     }
@@ -55,9 +56,9 @@ public class MainActivity extends FragmentActivity {
                     nv.showBase();
                     break;
 
-                case R.id.mnu_openprj:
-                    nv.show(Navigator.OPENPRJ);
-                    break;
+                    //                case R.id.mnu_openprj:
+                    //                    nv.show(Navigator.OPENPRJ);
+                    //                    break;
 
                 case R.id.mnu_study:
                     nv.show(Navigator.STUDY);

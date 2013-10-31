@@ -20,9 +20,7 @@ package net.sarangnamu.home.page;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-public abstract class ApiTaskPageBaseFrgmt extends PageBaseFrgmt {
-    private static final String TAG = "ApiTaskPageBaseFrgmt";
-
+public abstract class ApiTaskFrgmt extends PageBaseFrgmt {
     ////////////////////////////////////////////////////////////////////////////////////
     //
     // ApiTask
@@ -55,7 +53,7 @@ public abstract class ApiTaskPageBaseFrgmt extends PageBaseFrgmt {
 
         @Override
         protected void onPostExecute(Boolean result) {
-            if (page == 0) {
+            if (page == 1) {
                 hideDlgProgress();
             }
 
@@ -82,4 +80,12 @@ public abstract class ApiTaskPageBaseFrgmt extends PageBaseFrgmt {
         public boolean doBackground(int page);
         public void onPostExecute(int page);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // ABSTRACT
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    protected abstract void loadTask(int page);
 }

@@ -1,5 +1,5 @@
 /*
- * Cfg.java
+ * Study.java
  * Copyright 2013 Burke.Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
@@ -15,11 +15,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sarangnamu.home.cfg;
+package net.sarangnamu.home.api.json;
 
-public class Cfg {
-    public static final String URL = "http://www.sarangnamu.net/api";
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    public static final String URI_NOTICE = URL + "/notice.php";
-    public static final String URI_STUDY  = URL + "/study.php";
+public class Study {
+    @JsonProperty
+    public String no;
+
+    @JsonProperty
+    public String category;
+
+    @JsonProperty
+    public String title;
+
+    @JsonProperty
+    public String content;
+
+    @JsonProperty
+    public String date;
+
+    @JsonProperty
+    public int read;
 }

@@ -23,27 +23,21 @@ import net.sarangnamu.common.DLog;
 import net.sarangnamu.home.R;
 import net.sarangnamu.home.api.Api;
 import net.sarangnamu.home.api.json.Notice;
-import net.sarangnamu.home.page.ApiTaskPageBaseFrgmt;
+import net.sarangnamu.home.page.ListApiTaskFrgmt;
 import net.sarangnamu.home.ui.EndlessScrollListener;
 import net.sarangnamu.home.ui.EndlessScrollListener.LoadTaskListener;
-import android.os.Bundle;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
-public class HomeFrgmt extends ApiTaskPageBaseFrgmt {
+public class HomeFrgmt extends ListApiTaskFrgmt {
     private static final String TAG = "HomeFrgmt";
 
-    private ListView list;
-    private NoticeAdapter adapter;
     private ArrayList<Notice> notices;
-    private ProgressBar progress;
     private EndlessScrollListener endlessListener;
 
     @Override
@@ -62,14 +56,7 @@ public class HomeFrgmt extends ApiTaskPageBaseFrgmt {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        showDlgProgress();
-        loadTask(1);
-    }
-
-    private void loadTask(int page) {
+    protected void loadTask(int page) {
         new ApiTask(new ApiTaskListener() {
             @Override
             public boolean doBackground(int page) {
@@ -161,7 +148,7 @@ public class HomeFrgmt extends ApiTaskPageBaseFrgmt {
             }
 
             Notice nt = notices.get(position);
-            holder.content.setText(Html.fromHtml(nt.content));
+            holder.content.setText(nt.content);
             holder.date.setText(nt.date);
 
             return convertView;

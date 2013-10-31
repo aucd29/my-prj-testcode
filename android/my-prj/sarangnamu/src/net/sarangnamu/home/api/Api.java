@@ -25,6 +25,7 @@ import java.util.Map;
 import net.sarangnamu.common.json.JsonTool;
 import net.sarangnamu.common.network.BkHttp;
 import net.sarangnamu.home.api.json.Notice;
+import net.sarangnamu.home.api.json.Study;
 import net.sarangnamu.home.cfg.Cfg;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -41,5 +42,16 @@ public class Api {
         String res = http.submit(Cfg.URI_NOTICE, params);
 
         return (ArrayList<Notice>) JsonTool.toObj(res, new TypeReference<List<Notice>>(){});
+    }
+
+    public static ArrayList<Study> study(int page) throws Exception {
+        BkHttp http = new BkHttp();
+        http.setMethod("GET");
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("nPage", "" + page);
+        String res = http.submit(Cfg.URI_STUDY, params);
+
+        return (ArrayList<Study>) JsonTool.toObj(res, new TypeReference<List<Study>>(){});
     }
 }

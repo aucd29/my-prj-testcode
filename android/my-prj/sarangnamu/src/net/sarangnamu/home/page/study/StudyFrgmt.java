@@ -17,7 +17,151 @@
  */
 package net.sarangnamu.home.page.study;
 
-import net.sarangnamu.home.page.PageBaseFrgmt;
+import java.util.ArrayList;
 
-public class StudyFrgmt extends PageBaseFrgmt {
+import net.sarangnamu.common.DLog;
+import net.sarangnamu.home.R;
+import net.sarangnamu.home.api.Api;
+import net.sarangnamu.home.api.json.Study;
+import net.sarangnamu.home.page.ListApiTaskFrgmt;
+import net.sarangnamu.home.ui.EndlessScrollListener;
+import net.sarangnamu.home.ui.EndlessScrollListener.LoadTaskListener;
+import net.sarangnamu.home.ui.Navigator;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+public class StudyFrgmt extends ListApiTaskFrgmt {
+    private static final String TAG = "StudyFrgmt";
+
+    private ArrayList<Study> studies;
+    private EndlessScrollListener endlessListener;
+
+    @Override
+    protected void initLayout() {
+        super.initLayout();
+
+        list = (ListView) view.findViewById(android.R.id.list);
+        endlessListener = new EndlessScrollListener();
+        endlessListener.setOnLoadTaskListener(new LoadTaskListener() {
+            @Override
+            public void onLoadTask(int page) {
+                loadTask(page);
+            }
+        });
+        list.setOnScrollListener(endlessListener);
+        list.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
+                Study study = studies.get(pos);
+                StudyDetailFrgmt frg = (StudyDetailFrgmt) Navigator.getInstance(getActivity()).show(Navigator.STUDY_DETAIL);
+                frg.setStudyData(study);
+            }
+        });
+    }
+
+    @Override
+    protected void loadTask(int page) {
+        new ApiTask(new ApiTaskListener() {
+            @Override
+            public boolean doBackground(int page) {
+                try {
+                    if (page == 1) {
+                        studies = Api.study(page);
+
+                        if (studies == null) {
+                            DLog.e(TAG, "loadStudyData studies null");
+
+                            return false;
+                        }
+                    } else {
+                        ArrayList<Study> nt = Api.study(page);
+
+                        if (nt == null) {
+                            DLog.e(TAG, "loadStudyData studies null");
+
+                            return false;
+                        }
+
+                        studies.addAll(nt);
+                    }
+                } catch (Exception e) {
+                    DLog.e(TAG, "doInBackground", e);
+
+                    return false;
+                }
+
+                return true;
+            }
+
+            @Override
+            public void onPostExecute(int page) {
+                if (page == 1) {
+                    adapter = new StudyAdapter();
+                    list.setAdapter(adapter);
+                } else {
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }).execute(page);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // ADAPTER
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    class ViewHolder {
+        TextView title, date;
+    }
+
+    class StudyAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            if (studies == null) {
+                return 0;
+            }
+
+            return studies.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.home_list_item, null);
+
+                holder = new ViewHolder();
+                holder.title  = (TextView) convertView.findViewById(R.id.content);
+                holder.date   = (TextView) convertView.findViewById(R.id.date);
+
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            Study nt = studies.get(position);
+            holder.title.setText(nt.title);
+            holder.date.setText(nt.date);
+
+            return convertView;
+        }
+    }
 }

@@ -3,11 +3,12 @@
 
     <string name="app_name">Sarangnamu</string>
     <string name="action_settings">Settings</string>
-    <string name="sarangnamu">sarangnamu.net</string>
+    <string name="sarangnamu">sarangnamu.net\r\nJune 17, 2003</string>
     <string name="aucd29"><![CDATA["@"]]>aucd29</string>
     
     <string name="mnu_home">Home</string>
     <string name="mnu_study">Study</string>
+    <string name="mnu_studydetail">Study</string>
     <string name="mnu_profile">Profile</string>
     <string name="mnu_openprj">Open Project</string>
     <string name="mnu_qna">Q&amp;A</string>

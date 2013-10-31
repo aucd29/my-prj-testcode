@@ -102,25 +102,27 @@ public abstract class FrgmtManager {
         return null;
     }
 
-    public void show(String name) {
+    public Fragment show(String name) {
         Fragment frgmt = frgmts.get(name);
         if (frgmt == null) {
             frgmt = instFragment(name);
         }
 
         if (frgmt == null) {
-            return ;
+            return frgmt;
         }
 
         FragmentTransaction trans = fm.beginTransaction();
         if (frgmt.isVisible()) {
-            return ;
+            return frgmt;
         }
 
         currentName = name;
         trans.replace(baseLayoutId, frgmt);
-        trans.addToBackStack(name);
+        trans.addToBackStack(null);
         trans.commit();
+
+        return frgmt;
     }
 
     public void showBase() {
