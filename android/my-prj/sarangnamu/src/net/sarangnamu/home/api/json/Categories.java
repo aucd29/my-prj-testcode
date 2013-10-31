@@ -1,5 +1,5 @@
 /*
- * Cfg.java
+ * Categories.java
  * Copyright 2013 Burke.Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
@@ -15,11 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sarangnamu.home.cfg;
+package net.sarangnamu.home.api.json;
 
-public class Cfg {
-    public static final String URL = "http://www.sarangnamu.net/api";
+public class Categories {
 
-    public static final String URI_NOTICE = URL + "/notice.php";
-    public static final String URI_STUDY  = URL + "/study.php";
 }

@@ -146,4 +146,8 @@ public abstract class FrgmtManager {
 
         return null;
     }
+
+    public void set() {
+
+    }
 }

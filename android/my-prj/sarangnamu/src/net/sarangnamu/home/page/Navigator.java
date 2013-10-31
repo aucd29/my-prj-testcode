@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sarangnamu.home.ui;
+package net.sarangnamu.home.page;
 
 import net.sarangnamu.common.frgmt.FrgmtManager;
 import android.support.v4.app.FragmentActivity;
@@ -26,7 +26,6 @@ public class Navigator extends FrgmtManager {
     public static final String HOME         = "home";
     public static final String STUDY        = "study";
     public static final String STUDY_DETAIL = "studyDetail";
-    //public static final String OPENPRJ      = "openprj";
     public static final String QNA          = "qna";
 
     public static Navigator getInstance(FragmentActivity act) {

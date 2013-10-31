@@ -16,6 +16,7 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         style="@style/titleProgress"
+        android:layout_toRightOf="@id/pageTitle"
         />
 
     <View

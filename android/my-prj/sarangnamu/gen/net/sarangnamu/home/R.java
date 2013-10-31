@@ -12,12 +12,13 @@ public final class R {
     }
     public static final class color {
         public static final int dBg=0x7f060000;
+        public static final int dBgList=0x7f060006;
         public static final int dBgSearch=0x7f060003;
         public static final int dFont=0x7f060004;
         public static final int dMenu=0x7f060001;
         public static final int dMenuChecked=0x7f060002;
         public static final int pink=0x7f060005;
-        public static final int rdo_left_menu_selector=0x7f060006;
+        public static final int rdo_left_menu_selector=0x7f060007;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -31,11 +32,13 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
-        public static final int rdo_left_menu_bg_selector=0x7f020001;
+        public static final int list_bg_selector=0x7f020001;
+        public static final int rdo_left_menu_bg_selector=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f090011;
+        public static final int action_settings=0x7f090012;
         public static final int bar=0x7f09000f;
+        public static final int category=0x7f090011;
         public static final int content=0x7f090006;
         public static final int date=0x7f090007;
         public static final int mnu_home=0x7f090003;
@@ -62,6 +65,7 @@ public final class R {
         public static final int page_study=0x7f030005;
         public static final int page_studydetail=0x7f030006;
         public static final int progress=0x7f030007;
+        public static final int study_list_item=0x7f030008;
     }
     public static final class menu {
         public static final int main=0x7f080000;

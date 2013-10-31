@@ -1,12 +1,12 @@
 package net.sarangnamu.home;
 
 import net.sarangnamu.common.fonts.FontLoader;
+import net.sarangnamu.home.page.Navigator;
 import net.sarangnamu.home.page.PageBaseFrgmt;
-import net.sarangnamu.home.page.home.HomeFrgmt;
-import net.sarangnamu.home.page.qna.QnaFrgmt;
-import net.sarangnamu.home.page.study.StudyDetailFrgmt;
-import net.sarangnamu.home.page.study.StudyFrgmt;
-import net.sarangnamu.home.ui.Navigator;
+import net.sarangnamu.home.page.sub.HomeFrgmt;
+import net.sarangnamu.home.page.sub.QnaFrgmt;
+import net.sarangnamu.home.page.sub.StudyDetailFrgmt;
+import net.sarangnamu.home.page.sub.StudyFrgmt;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

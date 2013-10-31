@@ -1,5 +1,5 @@
 /*
- * StudyFrgmt.java
+ * HomeFrgmt.java
  * Copyright 2013 Burke.Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
@@ -15,31 +15,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sarangnamu.home.page.study;
+package net.sarangnamu.home.page.sub;
 
 import java.util.ArrayList;
 
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.home.R;
 import net.sarangnamu.home.api.Api;
-import net.sarangnamu.home.api.json.Study;
+import net.sarangnamu.home.api.json.Notice;
 import net.sarangnamu.home.page.ListApiTaskFrgmt;
 import net.sarangnamu.home.ui.EndlessScrollListener;
 import net.sarangnamu.home.ui.EndlessScrollListener.LoadTaskListener;
-import net.sarangnamu.home.ui.Navigator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class StudyFrgmt extends ListApiTaskFrgmt {
-    private static final String TAG = "StudyFrgmt";
 
-    private ArrayList<Study> studies;
+public class HomeFrgmt extends ListApiTaskFrgmt {
+    private static final String TAG = "HomeFrgmt";
+
+    private ArrayList<Notice> notices;
     private EndlessScrollListener endlessListener;
 
     @Override
@@ -55,14 +53,6 @@ public class StudyFrgmt extends ListApiTaskFrgmt {
             }
         });
         list.setOnScrollListener(endlessListener);
-        list.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-                Study study = studies.get(pos);
-                StudyDetailFrgmt frg = (StudyDetailFrgmt) Navigator.getInstance(getActivity()).show(Navigator.STUDY_DETAIL);
-                frg.setStudyData(study);
-            }
-        });
     }
 
     @Override
@@ -72,23 +62,23 @@ public class StudyFrgmt extends ListApiTaskFrgmt {
             public boolean doBackground(int page) {
                 try {
                     if (page == 1) {
-                        studies = Api.study(page);
+                        notices = Api.notices(page);
 
-                        if (studies == null) {
-                            DLog.e(TAG, "loadStudyData studies null");
+                        if (notices == null) {
+                            DLog.e(TAG, "loadNoticeData notices null");
 
                             return false;
                         }
                     } else {
-                        ArrayList<Study> nt = Api.study(page);
+                        ArrayList<Notice> nt = Api.notices(page);
 
                         if (nt == null) {
-                            DLog.e(TAG, "loadStudyData studies null");
+                            DLog.e(TAG, "loadNoticeData notices null");
 
                             return false;
                         }
 
-                        studies.addAll(nt);
+                        notices.addAll(nt);
                     }
                 } catch (Exception e) {
                     DLog.e(TAG, "doInBackground", e);
@@ -102,7 +92,7 @@ public class StudyFrgmt extends ListApiTaskFrgmt {
             @Override
             public void onPostExecute(int page) {
                 if (page == 1) {
-                    adapter = new StudyAdapter();
+                    adapter = new NoticeAdapter();
                     list.setAdapter(adapter);
                 } else {
                     adapter.notifyDataSetChanged();
@@ -118,17 +108,17 @@ public class StudyFrgmt extends ListApiTaskFrgmt {
     ////////////////////////////////////////////////////////////////////////////////////
 
     class ViewHolder {
-        TextView title, date;
+        TextView content, date;
     }
 
-    class StudyAdapter extends BaseAdapter {
+    class NoticeAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            if (studies == null) {
+            if (notices == null) {
                 return 0;
             }
 
-            return studies.size();
+            return notices.size();
         }
 
         @Override
@@ -142,23 +132,23 @@ public class StudyFrgmt extends ListApiTaskFrgmt {
         }
 
         @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
 
             if (convertView == null) {
                 convertView = LayoutInflater.from(getActivity()).inflate(R.layout.home_list_item, null);
 
                 holder = new ViewHolder();
-                holder.title  = (TextView) convertView.findViewById(R.id.content);
-                holder.date   = (TextView) convertView.findViewById(R.id.date);
+                holder.content  = (TextView) convertView.findViewById(R.id.content);
+                holder.date     = (TextView) convertView.findViewById(R.id.date);
 
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            Study nt = studies.get(position);
-            holder.title.setText(nt.title);
+            Notice nt = notices.get(position);
+            holder.content.setText(nt.content);
             holder.date.setText(nt.date);
 
             return convertView;

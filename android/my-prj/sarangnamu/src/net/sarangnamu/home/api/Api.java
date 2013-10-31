@@ -26,12 +26,18 @@ import net.sarangnamu.common.json.JsonTool;
 import net.sarangnamu.common.network.BkHttp;
 import net.sarangnamu.home.api.json.Notice;
 import net.sarangnamu.home.api.json.Study;
-import net.sarangnamu.home.cfg.Cfg;
+
+import org.json.JSONObject;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
 public class Api {
     private static final String TAG = "Api";
+
+    public static final String URL = "http://www.sarangnamu.net/api";
+    public static final String URI_NOTICE       = URL + "/notice.php";
+    public static final String URI_STUDY        = URL + "/study.php";
+    public static final String URI_CATEGORIES   = URL + "/categories.php";
 
     public static ArrayList<Notice> notices(int page) throws Exception {
         BkHttp http = new BkHttp();
@@ -39,7 +45,7 @@ public class Api {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("nPage", "" + page);
-        String res = http.submit(Cfg.URI_NOTICE, params);
+        String res = http.submit(URI_NOTICE, params);
 
         return (ArrayList<Notice>) JsonTool.toObj(res, new TypeReference<List<Notice>>(){});
     }
@@ -50,8 +56,17 @@ public class Api {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("nPage", "" + page);
-        String res = http.submit(Cfg.URI_STUDY, params);
+        String res = http.submit(URI_STUDY, params);
 
         return (ArrayList<Study>) JsonTool.toObj(res, new TypeReference<List<Study>>(){});
+    }
+
+    public static void categories() throws Exception {
+        BkHttp http = new BkHttp();
+        http.setMethod("GET");
+        String res = http.submit(URI_CATEGORIES, null);
+
+        JSONObject obj = new JSONObject(res);
+
     }
 }
