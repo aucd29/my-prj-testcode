@@ -50,10 +50,10 @@ public final class R {
         public static final int pageTitle=0x7f090008;
         public static final int progressBar1=0x7f090010;
         public static final int rdoMenu=0x7f090002;
-        public static final int read=0x7f09000e;
+        public static final int read=0x7f09000d;
         public static final int sarangnamu=0x7f090001;
         public static final int sliding=0x7f090000;
-        public static final int title=0x7f09000d;
+        public static final int title=0x7f09000e;
         public static final int web=0x7f09000c;
     }
     public static final class layout {
@@ -166,19 +166,11 @@ public final class R {
 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-
-
-
-
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
-
-
-
-
         
 
         Base application theme for API 11+. This theme completely replaces
@@ -205,11 +197,13 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f050001;
-        public static final int date=0x7f050006;
+        public static final int date=0x7f050008;
+        public static final int detailBar=0x7f050004;
+        public static final int detailTitle=0x7f050006;
         public static final int leftBar=0x7f050003;
         public static final int leftMenu=0x7f050002;
-        public static final int title=0x7f050004;
-        public static final int titleProgress=0x7f050005;
-        public static final int url=0x7f050007;
+        public static final int title=0x7f050005;
+        public static final int titleProgress=0x7f050007;
+        public static final int url=0x7f050009;
     }
 }

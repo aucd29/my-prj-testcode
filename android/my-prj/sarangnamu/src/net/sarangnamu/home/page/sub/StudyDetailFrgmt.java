@@ -20,7 +20,6 @@ package net.sarangnamu.home.page.sub;
 import net.sarangnamu.home.R;
 import net.sarangnamu.home.api.json.Study;
 import net.sarangnamu.home.page.PageBaseFrgmt;
-import android.text.Html;
 import android.widget.TextView;
 
 public class StudyDetailFrgmt extends PageBaseFrgmt {
@@ -40,7 +39,11 @@ public class StudyDetailFrgmt extends PageBaseFrgmt {
         if (data != null) {
             title.setText(data.title);
             read.setText(data.read + "");
-            content.setText(Html.fromHtml(data.content));
+
+            String res = data.content;
+            /*res = data.content.replace("&lt;", "<");
+            res = res.replace("&gt;", ">");*/
+            content.setText(res);
         }
     }
 
