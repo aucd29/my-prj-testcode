@@ -13,11 +13,10 @@
 
     <ProgressBar
         android:id="@+id/pageProgress"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_alignParentRight="true" />
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        style="@style/titleProgress"
+        />
 
     <View
         android:id="@+id/pageBar"

@@ -39,6 +39,6 @@ public class UbuntuTextView extends TextView {
     }
 
     protected void initLayout() {
-        setTypeface(FontLoader.getInstance(getContext()).getFont("Ubuntu-L"));
+        setTypeface(FontLoader.getInstance(getContext()).getFont("Ubuntu-R"));
     }
 }

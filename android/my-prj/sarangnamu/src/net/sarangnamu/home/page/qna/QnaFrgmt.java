@@ -19,6 +19,7 @@ package net.sarangnamu.home.page.qna;
 
 import net.sarangnamu.home.R;
 import net.sarangnamu.home.page.PageBaseFrgmt;
+import android.graphics.Bitmap;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -39,9 +40,22 @@ public class QnaFrgmt extends PageBaseFrgmt {
                 view.loadUrl(url);
                 return true;
             }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+
+                showIconProgress();
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+
+                hideIconProgress();
+            }
         });
         web.loadUrl("https://groups.google.com/forum/m/?fromgroups#!forum/aucd29");
-        //        web.loadUrl("http://m.daum.net");
     }
 
     @Override

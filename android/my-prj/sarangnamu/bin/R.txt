@@ -43,8 +43,9 @@ int string mnu_study 0x7f040005
 int string sarangnamu 0x7f040002
 int style AppBaseTheme 0x7f050000
 int style AppTheme 0x7f050001
-int style date 0x7f050005
+int style date 0x7f050006
 int style leftBar 0x7f050003
 int style leftMenu 0x7f050002
 int style title 0x7f050004
-int style url 0x7f050006
+int style titleProgress 0x7f050005
+int style url 0x7f050007

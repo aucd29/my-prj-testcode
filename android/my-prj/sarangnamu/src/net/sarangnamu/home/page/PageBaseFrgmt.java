@@ -35,7 +35,6 @@ public abstract class PageBaseFrgmt extends FrgmtBase {
     protected LinearLayout pageContent;
     protected ProgressBar pageProgress;
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.page_base;

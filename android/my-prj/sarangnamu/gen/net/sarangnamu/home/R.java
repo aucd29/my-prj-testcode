@@ -160,11 +160,13 @@ public final class R {
 
 
 
+
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
 
 
 
@@ -194,10 +196,11 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f050001;
-        public static final int date=0x7f050005;
+        public static final int date=0x7f050006;
         public static final int leftBar=0x7f050003;
         public static final int leftMenu=0x7f050002;
         public static final int title=0x7f050004;
-        public static final int url=0x7f050006;
+        public static final int titleProgress=0x7f050005;
+        public static final int url=0x7f050007;
     }
 }
