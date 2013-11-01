@@ -79,9 +79,13 @@
         </RadioGroup>
         
         <net.sarangnamu.home.ui.fonts.UbuntuTextView
+            android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
+            android:textColor="#8b8b8b"
+            android:layout_marginBottom="15dp"
             android:text="@string/aucd29"
              />
     </RelativeLayout>

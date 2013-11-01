@@ -36,6 +36,7 @@
 
         <net.sarangnamu.home.ui.fonts.UbuntuTextView
             android:id="@+id/content"
+            android:autoLink="all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </ScrollView>

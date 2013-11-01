@@ -17,9 +17,11 @@
  */
 package net.sarangnamu.home.page.sub;
 
+import net.sarangnamu.common.DLog;
 import net.sarangnamu.home.R;
 import net.sarangnamu.home.api.json.Study;
 import net.sarangnamu.home.page.PageBaseFrgmt;
+import android.os.Bundle;
 import android.widget.TextView;
 
 public class StudyDetailFrgmt extends PageBaseFrgmt {
@@ -35,19 +37,26 @@ public class StudyDetailFrgmt extends PageBaseFrgmt {
         title   = (TextView) view.findViewById(R.id.title);
         read    = (TextView) view.findViewById(R.id.read);
         content = (TextView) view.findViewById(R.id.content);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         if (data != null) {
             title.setText(data.title);
             read.setText(data.read + "");
-
-            String res = data.content;
-            /*res = data.content.replace("&lt;", "<");
-            res = res.replace("&gt;", ">");*/
-            content.setText(res);
+            content.post(new Runnable() {
+                @Override
+                public void run() {
+                    content.setText(data.content);
+                }
+            });
         }
     }
 
     public void setStudyData(Study data) {
+        DLog.d(TAG, "set study data");
         this.data = data;
     }
 }

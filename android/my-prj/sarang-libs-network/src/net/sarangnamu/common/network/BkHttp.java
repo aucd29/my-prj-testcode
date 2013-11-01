@@ -38,9 +38,16 @@ import org.json.JSONObject;
 
 public class BkHttp {
     private String method = "POST";
+    protected HttpClient http;
 
     public BkHttp() {
+        initHttp();
+    }
 
+    protected void initHttp() {
+        if (http == null) {
+            http = new DefaultHttpClient();
+        }
     }
 
     private void timeout() {
@@ -86,7 +93,7 @@ public class BkHttp {
     }
 
     protected HttpEntity methodGet(final String getUrl, final Map<String, String> parameters) throws Exception {
-        HttpClient http = new DefaultHttpClient();
+        initHttp();
 
         String params = "";
         if (parameters != null) {
@@ -107,7 +114,7 @@ public class BkHttp {
     }
 
     protected HttpEntity methodPost(final String getUrl, final Map<String, String> parameters) throws Exception {
-        HttpClient http = new DefaultHttpClient();
+        initHttp();
 
         HttpPost httpPost = new HttpPost(getUrl);
         timeout();

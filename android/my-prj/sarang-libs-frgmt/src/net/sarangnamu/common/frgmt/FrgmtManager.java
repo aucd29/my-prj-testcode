@@ -83,6 +83,11 @@ public abstract class FrgmtManager {
             return ;
         }
 
+        showBase();
+        if (baseName != null) {
+            trans.remove(frgmts.get(baseName));
+        }
+
         baseName = name;
         trans.add(baseLayoutId, frgmt);
         trans.commit();
