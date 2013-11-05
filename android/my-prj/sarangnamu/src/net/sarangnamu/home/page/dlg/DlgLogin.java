@@ -43,8 +43,8 @@ public class DlgLogin extends DlgBtnBase {
         content.addView(view);
 
         title.setText(R.string.login);
-        left.setText(R.string.login);
-        right.setText(R.string.cancel);
+        right.setText(R.string.login);
+        left.setText(R.string.cancel);
 
         id = (EditText) view.findViewById(R.id.id);
         pw = (EditText) view.findViewById(R.id.pw);
@@ -56,17 +56,17 @@ public class DlgLogin extends DlgBtnBase {
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == left.getId()) {
+        if (v.getId() == right.getId()) {
             String id = this.id.getText().toString();
             String pw = this.pw.getText().toString();
 
             if (id == null || id.length() == 0) {
-                Toast.makeText(getContext(), "Please insert id", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.please_insert_id, Toast.LENGTH_SHORT).show();
                 return ;
             }
 
             if (pw == null || pw.length() == 0) {
-                Toast.makeText(getContext(), "Please insert password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.please_insert_pw, Toast.LENGTH_SHORT).show();
                 return ;
             }
 

@@ -24,10 +24,10 @@ import java.util.Map;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
@@ -38,7 +38,7 @@ import org.json.JSONObject;
 
 public class BkHttp {
     private String method = "POST";
-    protected HttpClient http;
+    protected DefaultHttpClient http;
 
     public BkHttp() {
         initHttp();
@@ -128,5 +128,9 @@ public class BkHttp {
         HttpResponse response = http.execute(httpPost);
 
         return response.getEntity();
+    }
+
+    public List<Cookie> getCookie() {
+        return http.getCookieStore().getCookies();
     }
 }

@@ -1,6 +1,7 @@
 package net.sarangnamu.home;
 
 import net.sarangnamu.common.fonts.FontLoader;
+import net.sarangnamu.home.api.Api;
 import net.sarangnamu.home.page.Navigator;
 import net.sarangnamu.home.page.PageBaseFrgmt;
 import net.sarangnamu.home.page.dlg.DlgLogin;
@@ -10,6 +11,8 @@ import net.sarangnamu.home.page.sub.QnaFrgmt;
 import net.sarangnamu.home.page.sub.StudyDetailFrgmt;
 import net.sarangnamu.home.page.sub.StudyFrgmt;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -18,6 +21,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity {
     private static final String TAG = "MainActivity";
@@ -91,11 +95,44 @@ public class MainActivity extends FragmentActivity {
                 dlg.setOnLoginListener(new DlgLoginListener() {
                     @Override
                     public void ok(String id, String pw) {
+                        loginTask(id, pw);
                     }
                 });
                 dlg.show();
             }
         });
+    }
+
+    private void loginTask(final String id, final String pw) {
+        new AsyncTask<Context, Void, Boolean>() {
+            @Override
+            protected void onPreExecute() {
+                showDlgProgress();
+            }
+
+            @Override
+            protected Boolean doInBackground(Context... contexts) {
+                Context context = contexts[0];
+
+                boolean res = false;
+                try {
+                    res = Api.login(id, pw);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                return res;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+                hideDlgProgress();
+
+                if (result) {
+                    Toast.makeText(MainActivity.this, "Login OK", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }.execute(MainActivity.this);
     }
 
     public void showDlgProgress() {

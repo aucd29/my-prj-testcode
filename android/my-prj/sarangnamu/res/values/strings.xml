@@ -4,9 +4,12 @@
     <string name="app_name">Sarangnamu</string>
     <string name="action_settings">Settings</string>
     <string name="sarangnamu">sarangnamu.net\r\nJune 17, 2003</string>
+    <string name="plsWait">Please wait..</string>
     <string name="aucd29"><![CDATA["@"]]>aucd29</string>
     <string name="login">Login</string>
     <string name="cancel">Cancel</string>
+    <string name="please_insert_id">Please insert id</string>
+    <string name="please_insert_pw">Please insert password</string>
     
     <string name="mnu_home">Home</string>
     <string name="mnu_study">Study</string>
