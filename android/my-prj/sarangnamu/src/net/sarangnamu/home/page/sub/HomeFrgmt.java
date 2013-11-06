@@ -24,8 +24,10 @@ import net.sarangnamu.home.R;
 import net.sarangnamu.home.api.Api;
 import net.sarangnamu.home.api.json.Notice;
 import net.sarangnamu.home.page.ListApiTaskFrgmt;
+import net.sarangnamu.home.page.Navigator;
 import net.sarangnamu.home.ui.EndlessScrollListener;
 import net.sarangnamu.home.ui.EndlessScrollListener.LoadTaskListener;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +43,31 @@ public class HomeFrgmt extends ListApiTaskFrgmt {
     private EndlessScrollListener endlessListener;
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (Api.userId != null && Api.userId.length() > 0) {
+            pageWrite.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
     protected void initLayout() {
         super.initLayout();
+
+        pageRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadTask(1); // refresh
+            }
+        });
+
+        pageWrite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFrgmt(Navigator.HOME_WRITE);
+            }
+        });
 
         list = (ListView) view.findViewById(android.R.id.list);
         endlessListener = new EndlessScrollListener();
@@ -61,23 +86,16 @@ public class HomeFrgmt extends ListApiTaskFrgmt {
             @Override
             public boolean doBackground(int page) {
                 try {
+                    ArrayList<Notice> nt = Api.notices(page);
+                    if (nt == null) {
+                        DLog.e(TAG, "loadNoticeData notices null");
+
+                        return false;
+                    }
+
                     if (page == 1) {
-                        notices = Api.notices(page);
-
-                        if (notices == null) {
-                            DLog.e(TAG, "loadNoticeData notices null");
-
-                            return false;
-                        }
+                        notices = nt;
                     } else {
-                        ArrayList<Notice> nt = Api.notices(page);
-
-                        if (nt == null) {
-                            DLog.e(TAG, "loadNoticeData notices null");
-
-                            return false;
-                        }
-
                         notices.addAll(nt);
                     }
                 } catch (Exception e) {

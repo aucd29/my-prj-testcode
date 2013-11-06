@@ -19,16 +19,26 @@ package net.sarangnamu.home.page.sub;
 
 import net.sarangnamu.home.R;
 import net.sarangnamu.home.page.PageBaseFrgmt;
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class QnaFrgmt extends PageBaseFrgmt {
     private WebView web;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void initLayout() {
         super.initLayout();
+
+        pageRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                web.reload();
+            }
+        });
 
         web = (WebView) view.findViewById(R.id.web);
         web.getSettings().setLoadWithOverviewMode(true);

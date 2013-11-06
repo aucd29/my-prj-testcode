@@ -28,7 +28,6 @@ import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 
 public class AppList {
-    private static final String TAG = "AppList";
     private static AppList inst;
 
     public static AppList getInstance() {

@@ -7,6 +7,7 @@ import net.sarangnamu.home.page.PageBaseFrgmt;
 import net.sarangnamu.home.page.dlg.DlgLogin;
 import net.sarangnamu.home.page.dlg.DlgLogin.DlgLoginListener;
 import net.sarangnamu.home.page.sub.HomeFrgmt;
+import net.sarangnamu.home.page.sub.HomeWriteFrgmt;
 import net.sarangnamu.home.page.sub.QnaFrgmt;
 import net.sarangnamu.home.page.sub.StudyDetailFrgmt;
 import net.sarangnamu.home.page.sub.StudyFrgmt;
@@ -49,9 +50,10 @@ public class MainActivity extends FragmentActivity {
         Navigator nv = Navigator.getInstance(this);
         nv.setBaseLayoutId(R.id.content);
         nv.add(Navigator.HOME, HomeFrgmt.class);
+        nv.add(Navigator.HOME_WRITE, HomeWriteFrgmt.class);
+        nv.add(Navigator.QNA, QnaFrgmt.class);
         nv.add(Navigator.STUDY, StudyFrgmt.class);
         nv.add(Navigator.STUDY_DETAIL, StudyDetailFrgmt.class);
-        //nv.add(Navigator.OPENPRJ, OpenPrjFrgmt.class);
         nv.add(Navigator.QNA, QnaFrgmt.class);
         nv.setBase(Navigator.HOME);
     }
@@ -66,10 +68,6 @@ public class MainActivity extends FragmentActivity {
                 case R.id.mnu_home:
                     nv.setBase(Navigator.HOME);
                     break;
-
-                    //                case R.id.mnu_openprj:
-                    //                    nv.show(Navigator.OPENPRJ);
-                    //                    break;
 
                 case R.id.mnu_study:
                     nv.setBase(Navigator.STUDY);
@@ -129,7 +127,14 @@ public class MainActivity extends FragmentActivity {
                 hideDlgProgress();
 
                 if (result) {
-                    Toast.makeText(MainActivity.this, "Login OK", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.loginOk, Toast.LENGTH_SHORT).show();
+
+                    PageBaseFrgmt base = (PageBaseFrgmt) Navigator.getInstance(MainActivity.this).getCurrent();
+                    if (base instanceof HomeFrgmt) {
+                        base.showWriteButton();
+                    }
+
+                    sliding.closePane();
                 }
             }
         }.execute(MainActivity.this);

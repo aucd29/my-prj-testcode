@@ -23,6 +23,8 @@ import net.sarangnamu.home.MainActivity;
 import net.sarangnamu.home.R;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,7 +33,9 @@ public abstract class PageBaseFrgmt extends FrgmtBase {
     private static final String TAG = "PageBaseFrgmt";
 
     protected View view;
+    protected Button pageWrite;
     protected TextView pageTitle;
+    protected ImageView pageRefresh;
     protected LinearLayout pageContent;
     protected ProgressBar pageProgress;
 
@@ -42,7 +46,9 @@ public abstract class PageBaseFrgmt extends FrgmtBase {
 
     @Override
     protected void initLayout() {
+        pageWrite    = (Button) base.findViewById(R.id.pageWrite);
         pageTitle    = (TextView) base.findViewById(R.id.pageTitle);
+        pageRefresh  = (ImageView) base.findViewById(R.id.pageRefresh);
         pageProgress = (ProgressBar) base.findViewById(R.id.pageProgress);
         pageContent  = (LinearLayout) base.findViewById(R.id.pageContent);
 
@@ -61,6 +67,7 @@ public abstract class PageBaseFrgmt extends FrgmtBase {
 
         String name = getClassSimpleName();
         pageTitle.setText(getStringIdentifier(name));
+        pageRefresh.setAlpha(0.4f);
     }
 
     protected String getClassSimpleName() {
@@ -89,9 +96,19 @@ public abstract class PageBaseFrgmt extends FrgmtBase {
 
     protected void showIconProgress() {
         pageProgress.setVisibility(View.VISIBLE);
+        pageRefresh.setClickable(false);
     }
 
     protected void hideIconProgress() {
         pageProgress.setVisibility(View.GONE);
+        pageRefresh.setClickable(true);
+    }
+
+    protected void showFrgmt(String name) {
+        Navigator.getInstance(getActivity()).show(name);
+    }
+
+    public void showWriteButton() {
+        pageWrite.setVisibility(View.VISIBLE);
     }
 }

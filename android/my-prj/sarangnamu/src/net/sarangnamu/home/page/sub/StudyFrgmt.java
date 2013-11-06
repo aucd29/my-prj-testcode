@@ -46,6 +46,13 @@ public class StudyFrgmt extends ListApiTaskFrgmt {
     protected void initLayout() {
         super.initLayout();
 
+        pageRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadTask(1); // refresh
+            }
+        });
+
         list = (ListView) view.findViewById(android.R.id.list);
         endlessListener = new EndlessScrollListener();
         endlessListener.setOnLoadTaskListener(new LoadTaskListener() {
@@ -71,23 +78,17 @@ public class StudyFrgmt extends ListApiTaskFrgmt {
             @Override
             public boolean doBackground(int page) {
                 try {
+                    ArrayList<Study> nt = Api.study(page);
+
+                    if (nt == null) {
+                        DLog.e(TAG, "loadStudyData studies null");
+
+                        return false;
+                    }
+
                     if (page == 1) {
-                        studies = Api.study(page);
-
-                        if (studies == null) {
-                            DLog.e(TAG, "loadStudyData studies null");
-
-                            return false;
-                        }
+                        studies = nt;
                     } else {
-                        ArrayList<Study> nt = Api.study(page);
-
-                        if (nt == null) {
-                            DLog.e(TAG, "loadStudyData studies null");
-
-                            return false;
-                        }
-
                         studies.addAll(nt);
                     }
                 } catch (Exception e) {

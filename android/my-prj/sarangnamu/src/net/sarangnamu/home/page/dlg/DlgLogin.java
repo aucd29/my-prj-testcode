@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.home.page.dlg;
 
+import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.ui.dlg.DlgBtnBase;
 import net.sarangnamu.home.R;
 import android.content.Context;
@@ -48,6 +49,15 @@ public class DlgLogin extends DlgBtnBase {
 
         id = (EditText) view.findViewById(R.id.id);
         pw = (EditText) view.findViewById(R.id.pw);
+
+        BkCfg.showKeyboard(getContext(), id);
+    }
+
+    @Override
+    public void dismiss() {
+        BkCfg.hideKeyboard(getContext());
+
+        super.dismiss();
     }
 
     public void setOnLoginListener(DlgLoginListener l) {
@@ -61,12 +71,12 @@ public class DlgLogin extends DlgBtnBase {
             String pw = this.pw.getText().toString();
 
             if (id == null || id.length() == 0) {
-                Toast.makeText(getContext(), R.string.please_insert_id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.pleaseInsertId, Toast.LENGTH_SHORT).show();
                 return ;
             }
 
             if (pw == null || pw.length() == 0) {
-                Toast.makeText(getContext(), R.string.please_insert_pw, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.pleaseInsertPw, Toast.LENGTH_SHORT).show();
                 return ;
             }
 

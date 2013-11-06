@@ -8,8 +8,16 @@
     <string name="aucd29"><![CDATA["@"]]>aucd29</string>
     <string name="login">Login</string>
     <string name="cancel">Cancel</string>
-    <string name="please_insert_id">Please insert id</string>
-    <string name="please_insert_pw">Please insert password</string>
+    <string name="pleaseInsertId">Please insert id</string>
+    <string name="pleaseInsertPw">Please insert password</string>
+    
+    <string name="id">id</string>
+    <string name="password">password</string>
+    <string name="plus">+</string>
+    <string name="submit">Submit</string>
+    <string name="notification">Notification</string>
+    <string name="loginOk">Login OK!</string>
+    
     
     <string name="mnu_home">Home</string>
     <string name="mnu_study">Study</string>

@@ -24,8 +24,6 @@ import android.view.View;
 import android.widget.ListView;
 
 public abstract class ListSwipeListener extends SwipeListenerBase {
-    private static final String TAG = "ListSwipeListener";
-
     private ListView list;
     protected float scaleFactor = 1.f;
     protected ScaleGestureDetector scaleDetector;

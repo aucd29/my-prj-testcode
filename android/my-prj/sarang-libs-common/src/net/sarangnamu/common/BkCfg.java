@@ -42,15 +42,25 @@ public class BkCfg {
         return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
-    public static void showKeyboard(Context context, View view) {
-        view.requestFocus();
+    public static void showKeyboard(final Context context, final View view) {
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                view.requestFocus();
 
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+            }
+        }, 400);
+
+        //view.requestFocus();
+
+        //        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        //        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
     }
 
-    public static void hideKeyboard(Context context, View view) {
+    public static void hideKeyboard(final Context context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 }

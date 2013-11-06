@@ -225,17 +225,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             tvSearch.setVisibility(View.VISIBLE);
             title.setVisibility(View.GONE);
             titleBar.setBackgroundResource(R.color.dBgSearch);
-            search.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    BkCfg.showKeyboard(MainActivity.this, search);
-                }
-            }, 500);
+
+            BkCfg.showKeyboard(MainActivity.this, search);
         } else {
             search.setVisibility(View.GONE);
             tvSearch.setVisibility(View.GONE);
             title.setVisibility(View.VISIBLE);
-
             titleBar.setBackgroundResource(R.color.dBg);
 
             BkCfg.hideKeyboard(MainActivity.this, search);

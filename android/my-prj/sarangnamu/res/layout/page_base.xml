@@ -13,11 +13,37 @@
 
     <ProgressBar
         android:id="@+id/pageProgress"
+        style="@style/titleProgress"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        style="@style/titleProgress"
         android:layout_toRightOf="@id/pageTitle"
-        />
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/pageRefresh"
+        style="@style/titleReload"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:contentDescription="@null"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/list_bg_selector"
+        android:src="@drawable/ic_refresh" />
+
+    <Button
+        android:id="@+id/pageWrite"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/pageBar"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="12dp"
+        android:layout_toLeftOf="@id/pageRefresh"
+        android:background="@drawable/list_bg_selector"
+        android:gravity="center_vertical|center"
+        android:paddingBottom="3dp"
+        android:text="@string/plus"
+        android:textColor="@color/btn_plus_selector"
+        android:textSize="25sp"
+        android:visibility="gone" />
 
     <View
         android:id="@+id/pageBar"

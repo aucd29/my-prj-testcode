@@ -43,7 +43,7 @@ public class Api {
     public static final String URI_LOGIN        = URL + "/login.php";
 
     private static BkHttp http;
-    private static String userId;
+    public static String userId;
 
     private static void initHttp() {
         if (http == null) {

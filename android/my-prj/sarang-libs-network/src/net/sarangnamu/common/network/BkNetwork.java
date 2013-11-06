@@ -22,7 +22,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 public class BkNetwork {
-    private static final String TAG = "BkNetwork";
     private static final int BLEUTOOH = 0x00000007; // not defined at android sdk
 
     public static boolean checkNetworkInfo(Context context) {

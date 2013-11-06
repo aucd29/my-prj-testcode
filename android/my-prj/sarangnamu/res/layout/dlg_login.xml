@@ -11,7 +11,8 @@
         android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="id"
+        android:hint="@string/id"
+        android:privateImeOptions="defaultInputmode=english"
         android:ems="10" >
 
         <requestFocus />
@@ -24,7 +25,8 @@
         android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="password"
+        android:hint="@string/password"
+        android:privateImeOptions="defaultInputmode=english"
         android:ems="10"
         android:inputType="textPassword" />
 
