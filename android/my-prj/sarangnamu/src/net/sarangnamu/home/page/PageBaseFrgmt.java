@@ -18,10 +18,11 @@
 package net.sarangnamu.home.page;
 
 import net.sarangnamu.common.DLog;
-import net.sarangnamu.common.frgmt.FrgmtBase;
+import net.sarangnamu.common.FrgmtBase;
 import net.sarangnamu.home.MainActivity;
 import net.sarangnamu.home.R;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -108,7 +109,18 @@ public abstract class PageBaseFrgmt extends FrgmtBase {
         Navigator.getInstance(getActivity()).show(name);
     }
 
+    public void backFrgmt() {
+        Navigator.getInstance(getActivity()).back();
+    }
+
+    public Fragment getFrgmtByName(String name) {
+        return Navigator.getInstance(getActivity()).getFragmentByName(name);
+    }
+
     public void showWriteButton() {
+        DLog.e(TAG, "show write button");
+
         pageWrite.setVisibility(View.VISIBLE);
+        pageWrite.invalidate();
     }
 }

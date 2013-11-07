@@ -2,32 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="10dp" >
 
     <EditText
         android:id="@+id/id"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="10"
         android:hint="@string/id"
-        android:privateImeOptions="defaultInputmode=english"
-        android:ems="10" >
+        android:privateImeOptions="defaultInputmode=english" >
 
         <requestFocus />
     </EditText>
 
     <EditText
         android:id="@+id/pw"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/password"
-        android:privateImeOptions="defaultInputmode=english"
+        android:layout_marginBottom="10dp"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:privateImeOptions="defaultInputmode=english" />
+
+    <CheckBox
+        android:id="@+id/rememberMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/rememberMe" />
 
 </LinearLayout>

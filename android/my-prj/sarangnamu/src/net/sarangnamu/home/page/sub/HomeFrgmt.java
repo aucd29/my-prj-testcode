@@ -58,7 +58,7 @@ public class HomeFrgmt extends ListApiTaskFrgmt {
         pageRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadTask(1); // refresh
+                reload();
             }
         });
 
@@ -78,6 +78,10 @@ public class HomeFrgmt extends ListApiTaskFrgmt {
             }
         });
         list.setOnScrollListener(endlessListener);
+    }
+
+    public void reload() {
+        loadTask(1);
     }
 
     @Override

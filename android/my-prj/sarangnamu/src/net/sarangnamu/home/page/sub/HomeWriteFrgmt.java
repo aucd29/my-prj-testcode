@@ -17,8 +17,71 @@
  */
 package net.sarangnamu.home.page.sub;
 
+import net.sarangnamu.common.BkCfg;
+import net.sarangnamu.common.DLog;
+import net.sarangnamu.home.R;
+import net.sarangnamu.home.api.Api;
+import net.sarangnamu.home.page.Navigator;
 import net.sarangnamu.home.page.PageBaseFrgmt;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class HomeWriteFrgmt extends PageBaseFrgmt {
+    private static final String TAG = "HomeWriteFrgmt";
+    private EditText msg;
+    private Button submit;
 
+    @Override
+    protected void initLayout() {
+        super.initLayout();
+
+        msg    = (EditText) view.findViewById(R.id.msg);
+        submit = (Button) view.findViewById(R.id.submit);
+
+        BkCfg.showKeyboard(getActivity(), msg);
+        pageRefresh.setVisibility(View.GONE);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AsyncTask<Context, Void, Boolean>() {
+                    @Override
+                    protected void onPreExecute() {
+                        submit.setClickable(false);
+                        msg.setEnabled(false);
+                        showIconProgress();
+                    }
+
+                    @Override
+                    protected Boolean doInBackground(Context... contexts) {
+                        Context context = contexts[0];
+
+                        try {
+                            Api.noticeWrite(msg.getText().toString());
+
+                            return true;
+                        } catch (Exception e) {
+                            DLog.e(TAG, "doInBackground", e);
+                        }
+
+                        return false;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Boolean result) {
+                        hideIconProgress();
+                        msg.setText("");
+                        msg.setEnabled(true);
+                        submit.setClickable(true);
+                        backFrgmt();
+
+                        HomeFrgmt frgmt = (HomeFrgmt) getFrgmtByName(Navigator.HOME);
+                        frgmt.reload();
+                    }
+                }.execute(getActivity());
+            }
+        });
+    }
 }

@@ -19,15 +19,19 @@ package net.sarangnamu.home.page.dlg;
 
 import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.ui.dlg.DlgBtnBase;
+import net.sarangnamu.home.Cfg;
 import net.sarangnamu.home.R;
 import android.content.Context;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 public class DlgLogin extends DlgBtnBase {
     protected int layoutId;
     protected EditText id, pw;
+    protected CheckBox rememberMe;
     protected DlgLoginListener l;
 
     public DlgLogin(Context context, int layoutId) {
@@ -40,6 +44,8 @@ public class DlgLogin extends DlgBtnBase {
     protected void initLayout() {
         super.initLayout();
 
+        setDialogSize(dpToPixelInt(300), FrameLayout.LayoutParams.WRAP_CONTENT);
+
         View view = inflate(layoutId);
         content.addView(view);
 
@@ -49,8 +55,17 @@ public class DlgLogin extends DlgBtnBase {
 
         id = (EditText) view.findViewById(R.id.id);
         pw = (EditText) view.findViewById(R.id.pw);
+        rememberMe = (CheckBox) view.findViewById(R.id.rememberMe);
 
         BkCfg.showKeyboard(getContext(), id);
+
+        String rememberId = Cfg.getId(getContext());
+        if (rememberId.length() > 0) {
+            id.setText(rememberId);
+            pw.setText(Cfg.getPw(getContext()));
+
+            rememberMe.setChecked(true);
+        }
     }
 
     @Override
@@ -78,6 +93,10 @@ public class DlgLogin extends DlgBtnBase {
             if (pw == null || pw.length() == 0) {
                 Toast.makeText(getContext(), R.string.pleaseInsertPw, Toast.LENGTH_SHORT).show();
                 return ;
+            }
+
+            if (rememberMe.isChecked()) {
+                Cfg.rememberMe(getContext(), id, pw);
             }
 
             if (l != null) {

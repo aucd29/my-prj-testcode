@@ -233,7 +233,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             title.setVisibility(View.VISIBLE);
             titleBar.setBackgroundResource(R.color.dBg);
 
-            BkCfg.hideKeyboard(MainActivity.this, search);
+            BkCfg.hideKeyboard(MainActivity.this);
         }
     }
 

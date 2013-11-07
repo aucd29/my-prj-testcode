@@ -20,6 +20,7 @@ package net.sarangnamu.common.ui.dlg;
 import net.sarangnamu.sarang_libs.R;
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
@@ -112,6 +113,14 @@ public abstract class DlgBtnBase extends DlgBase implements View.OnClickListener
 
     public void setTransparentBaseLayout() {
         layout.setBackgroundColor(0x00000000);
+    }
+
+    public void setDialogSize(int width, int height) {
+        ViewGroup.LayoutParams lp = layout.getLayoutParams();
+        lp.width = width;
+        lp.height = height;
+
+        layout.setLayoutParams(lp);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

@@ -17,9 +17,11 @@
     <string name="submit">Submit</string>
     <string name="notification">Notification</string>
     <string name="loginOk">Login OK!</string>
+    <string name="rememberMe">Remember Me</string>
     
     
     <string name="mnu_home">Home</string>
+    <string name="mnu_homewrite">Write</string>
     <string name="mnu_study">Study</string>
     <string name="mnu_studydetail">Study</string>
     <string name="mnu_profile">Profile</string>

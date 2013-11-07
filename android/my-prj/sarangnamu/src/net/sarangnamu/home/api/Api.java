@@ -38,6 +38,7 @@ public class Api {
 
     public static final String URL = "http://www.sarangnamu.net/api";
     public static final String URI_NOTICE       = URL + "/notice.php";
+    public static final String URI_NOTICE_WRITE = URL + "/noticeWrite.php";
     public static final String URI_STUDY        = URL + "/study.php";
     public static final String URI_CATEGORIES   = URL + "/categories.php";
     public static final String URI_LOGIN        = URL + "/login.php";
@@ -60,6 +61,17 @@ public class Api {
         String res = http.submit(URI_NOTICE, params);
 
         return (ArrayList<Notice>) JsonTool.toObj(res, new TypeReference<List<Notice>>(){});
+    }
+
+    public static boolean noticeWrite(String msg) throws Exception {
+        initHttp();
+        http.setMethod("POST");
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("sContent", msg);
+        String res = http.submit(URI_NOTICE_WRITE, params);
+
+        return true;
     }
 
     public static ArrayList<Study> study(int page) throws Exception {

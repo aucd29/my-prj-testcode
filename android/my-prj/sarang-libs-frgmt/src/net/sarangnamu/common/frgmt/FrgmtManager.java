@@ -88,7 +88,7 @@ public abstract class FrgmtManager {
             trans.remove(frgmts.get(baseName));
         }
 
-        baseName = name;
+        currentName = baseName = name;
         trans.add(baseLayoutId, frgmt);
         trans.commit();
     }
@@ -152,7 +152,17 @@ public abstract class FrgmtManager {
         return null;
     }
 
-    public void set() {
+    public Fragment getFragmentByName(String name) {
+        if (frgmts == null) {
+            return null;
+        }
 
+        return frgmts.get(name);
+    }
+
+    public void back() {
+        if (fm != null) {
+            fm.popBackStack();
+        }
     }
 }

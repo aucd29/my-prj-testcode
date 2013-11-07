@@ -1,5 +1,6 @@
 package net.sarangnamu.home;
 
+import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.home.api.Api;
 import net.sarangnamu.home.page.Navigator;
@@ -129,9 +130,13 @@ public class MainActivity extends FragmentActivity {
                 if (result) {
                     Toast.makeText(MainActivity.this, R.string.loginOk, Toast.LENGTH_SHORT).show();
 
+                    DLog.e(TAG, "onPostExecute result ok");
                     PageBaseFrgmt base = (PageBaseFrgmt) Navigator.getInstance(MainActivity.this).getCurrent();
                     if (base instanceof HomeFrgmt) {
+                        DLog.e(TAG, "home fragment");
                         base.showWriteButton();
+                    } else {
+                        DLog.e(TAG, "onPostExecute error fragment");
                     }
 
                     sliding.closePane();
