@@ -2,9 +2,6 @@ package net.sarangnamu.ems_tracking;
 
 import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.sqlite.DbManager;
-import net.sarangnamu.common.ui.dlg.DlgTimer;
-import net.sarangnamu.common.ui.list.LockListView;
-import net.sarangnamu.common.ui.list.LockListView.TouchUpListener;
 import net.sarangnamu.ems_tracking.cfg.EmsDbHelper;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -118,25 +115,26 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         adapter = new AppAdapter();
         setListAdapter(adapter);
 
-        ((LockListView) getListView()).setOnTouchListener(new TouchUpListener() {
-            @Override
-            public void up() {
-                //                if (clickedView != null) {
-                //                    PosHolder  ph = (PosHolder) clickedView.getTag();
-                //                    showAnimation(clickedView, ph.position);
-                //                    clickedView = null;
-                //
-                //                    ((LockListView) getListView()).setLock();
-                //                }
-            }
-        });
+        //        ((LockListView) getListView()).setOnTouchListener(new TouchUpListener() {
+        //            @Override
+        //            public void up() {
+        //                //                if (clickedView != null) {
+        //                //                    PosHolder  ph = (PosHolder) clickedView.getTag();
+        //                //                    showAnimation(clickedView, ph.position);
+        //                //                    clickedView = null;
+        //                //
+        //                //                    ((LockListView) getListView()).setLock();
+        //                //                }
+        //            }
+        //        });
     }
+
     private void showPopup(String msg) {
-        DlgTimer dlg = new DlgTimer(MainActivity.this, R.layout.dlg_timer);
-        dlg.setMessage(msg);
-        dlg.setTime(1000);
-        dlg.show();
-        dlg.setTransparentBaseLayout();
+        //        DlgTimer dlg = new DlgTimer(MainActivity.this, R.layout.dlg_timer);
+        //        dlg.setMessage(msg);
+        //        dlg.setTime(1000);
+        //        dlg.show();
+        //        dlg.setTransparentBaseLayout();
     }
 
     private void showAnimation(final View view, int position) {
