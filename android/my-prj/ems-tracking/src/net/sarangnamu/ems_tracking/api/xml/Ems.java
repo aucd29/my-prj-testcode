@@ -1,26 +1,25 @@
-/*
- * Config.java
- * Copyright 2013 Burke.Choi All rights reserved.
+/**
+ * Ems.java
+ * Copyright 2013 Burke Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sarangnamu.ems_tracking.cfg;
+package net.sarangnamu.ems_tracking.api.xml;
 
-public class Config {
-    public static boolean isEmsNumber(String num) {
-        //if (num.matches(""))
+public class Ems {
+    public String emsNum;
+    public String date;
+    public String detail;
 
-        return true;
-    }
 }

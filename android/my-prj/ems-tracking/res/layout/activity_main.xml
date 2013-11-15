@@ -39,13 +39,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/emsNumber"
-            android:weight="0.9" />
+            android:layout_weight="0.9" />
 
         <Button
             android:id="@+id/add"
             android:layout_width="wrap_content"
+			android:text="@string/add"
             android:layout_height="match_parent"
-            android:weight="0.1" />
+            android:layout_weight="0.1" />
     </LinearLayout>
 
     <net.sarangnamu.common.ui.list.LockListView

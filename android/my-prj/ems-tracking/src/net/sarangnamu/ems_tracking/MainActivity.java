@@ -2,6 +2,7 @@ package net.sarangnamu.ems_tracking;
 
 import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.sqlite.DbManager;
+import net.sarangnamu.ems_tracking.cfg.Config;
 import net.sarangnamu.ems_tracking.db.EmsDbHelper;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -15,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,10 +27,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final long SHOW_PROGRESS = 100000000;
     private static final int SHOW_POPUP = 1;
 
-    private TextView title, path, dev, tvSearch;
+    private Button add;
+    private TextView title; //, path, dev, tvSearch;
+    private EditText emsNum;
     private AppAdapter adapter;
     private ProgressDialog dlg;
-    private Handler handler = new Handler() {
+    private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -50,13 +55,15 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         msg.obj  = obj;
         handler.sendMessage(msg);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        add      = (Button) findViewById(R.id.add);
         title    = (TextView) findViewById(R.id.title);
-        dev      = (TextView) findViewById(R.id.dev);
+        emsNum   = (EditText) findViewById(R.id.emsNum);
 
         initLabel();
         initData();
@@ -71,19 +78,51 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     private void initLabel() {
         title.setText(Html.fromHtml(getString(R.string.appName)));
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String num = emsNum.getText().toString();
+                if (num == null || num.length() < 1) {
+                    return ;
+                }
 
-        String src;
+                if (!Config.isEmsNumber(num)) {
+                    return ;
+                }
 
-        src = String.format("<b>%s</b> <a href='http://sarangnamu.net'>@aucd29</a>", getString(R.string.dev));
-        dev.setText(Html.fromHtml(src));
+                new AsyncTask<Context, Void, Boolean>() {
+                    @Override
+                    protected void onPreExecute() {
+                        showProgress();
+                    }
+
+                    @Override
+                    protected Boolean doInBackground(Context... contexts) {
+                        Context context = contexts[0];
+                        
+                        
+                        
+
+                        return false;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Boolean result) {
+                        dlg.dismiss();
+                        initListView();
+                    }
+                }.execute(getApplicationContext());
+            }
+        });
     }
 
     private void initData() {
+        DbManager.getInstance().open(MainActivity.this, new EmsDbHelper(MainActivity.this));
+
         new AsyncTask<Context, Void, Boolean>() {
             @Override
             protected void onPreExecute() {
                 showProgress();
-                DbManager.getInstance().open(MainActivity.this, new EmsDbHelper(MainActivity.this));
             }
 
             @Override
@@ -127,6 +166,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         //                //                }
         //            }
         //        });
+
+
     }
 
     private void showPopup(String msg) {
