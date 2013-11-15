@@ -225,6 +225,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             tvSearch.setVisibility(View.VISIBLE);
             title.setVisibility(View.GONE);
             titleBar.setBackgroundResource(R.color.dBgSearch);
+            search.setText("");
 
             BkCfg.showKeyboard(MainActivity.this, search);
         } else {
@@ -288,7 +289,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     private void sendToSd(int position) {
-        final PkgInfo info = data.get(position);
+        final PkgInfo info;
+
+        if (searchedList) {
+            info = searchedData.get(position);
+        } else {
+            info = data.get(position);
+        }
 
         if (info.size > SHOW_PROGRESS) {
             showProgress();
