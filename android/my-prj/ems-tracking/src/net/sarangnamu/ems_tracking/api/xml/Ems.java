@@ -17,9 +17,54 @@
  */
 package net.sarangnamu.ems_tracking.api.xml;
 
-public class Ems {
+import javax.xml.xpath.XPathConstants;
+
+import net.sarangnamu.common.XPathParser;
+
+public class Ems extends XPathParser {
     public String emsNum;
     public String date;
+    public String status;
+    public String office;
     public String detail;
 
+    public Ems(String ems) {
+        super();
+
+        loadXmlString(ems);
+    }
+
+    @Override
+    protected void parsing() throws Exception {
+        /*
+         *  <?xml version='1.0' encoding="utf-8"?>
+            <xsync>
+            <xsyncData>
+                <rgist><![CDATA[RB839962647CN]]></rgist>
+            </xsyncData>
+            <xsyncData>
+                <processDe><![CDATA[2013-10-24 18:11]]></processDe>
+                <processSttus><![CDATA[접수]]></processSttus>
+                <nowLc><![CDATA[100614]]></nowLc>
+                <detailDc><![CDATA[]]></detailDc>
+            </xsyncData>
+            </xsync>
+         */
+        String expr;
+
+        expr = "//rgist/text()";
+        emsNum = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+
+        expr = "//processDe/text()";
+        date = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+
+        expr = "//processSttus/text()";
+        status = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+
+        expr = "//nowLc/text()";
+        office = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+
+        expr = "//detailDc/text()";
+        detail = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+    }
 }

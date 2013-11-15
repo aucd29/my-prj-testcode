@@ -17,13 +17,17 @@
  */
 package net.sarangnamu.ems_tracking.api;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.network.BkHttp;
+import net.sarangnamu.ems_tracking.api.xml.Ems;
 
 public class Api {
     private static final String TAG = "Api";
 
     public static final String URL = "http://smart.epost.go.kr:8080/servlet/kpl.vis.common.svl.VisSVL";
-
     private static BkHttp http;
 
     private static void initHttp() {
@@ -32,8 +36,29 @@ public class Api {
         }
     }
 
-    public static void tracking(String num) {
+    public static Ems tracking(String num) {
+        initHttp();
+        http.setMethod("POST");
 
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("typeApp", "postSearch");
+        params.put("typeSmart", "A");
+        params.put("ver", "1.4.9");
+        params.put("target_command", "kpl.vis.inh.rel.cmd.RetrieveOrderListMobileXmlCMD");
+        params.put("register_No_From", num);
+
+        Ems ems = null;
+
+        try {
+            String res = http.submit(URL, params);
+            ems = new Ems(res);
+
+
+        } catch (Exception e) {
+            DLog.e(TAG, "tracking", e);
+        }
+
+        return ems;
     }
 
     //    public static ArrayList<Notice> notices(int page) throws Exception {
