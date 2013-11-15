@@ -25,10 +25,10 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DbManager {
     private static final String TAG = "DbManager";
-    private static final String DB = "db.db";
+    //private static final String DB = "db.db";
     private static DbManager inst;
 
-    private int version = 1;
+    //private int version = 1;
     protected SQLiteDatabase db;
     protected DbHelperBase helper;
 
