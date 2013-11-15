@@ -4,7 +4,7 @@
 *.dex
 *.class
 
-bin/
-gen/
-proguard/
+**/bin/
+**/gen/
+**/proguard/
 
