@@ -1,2 +1,10 @@
-bin
-gen
+*.apk
+*.ap_
+
+*.dex
+*.class
+
+bin/
+gen/
+proguard/
+
