@@ -20,18 +20,62 @@ package net.sarangnamu.ems_tracking.db;
 import java.util.HashMap;
 
 import net.sarangnamu.common.sqlite.DbHelperBase;
+import net.sarangnamu.common.sqlite.DbManager;
+import net.sarangnamu.ems_tracking.api.xml.Ems;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.provider.BaseColumns;
 
 public class EmsDbHelper extends DbHelperBase {
     private static final String DB_NAME = "ems.db";
     private static final int VERSION = 1;
+    public static final String[] FIELDS = new String[] {
+        Columns.EMS_NUM,
+        Columns.DATE,
+        Columns.STATUS,
+        Columns.DETAIL
+    };
 
     public EmsDbHelper(Context context) {
         super(context, DB_NAME, VERSION);
 
         tables = new HashMap<String, String>();
         tables.put(Columns.TABLE, Columns.CREATE);
+    }
+
+    public static Cursor select() {
+        String[] fields = new String[] {Columns.EMS_NUM, Columns._ID};
+        return DbManager.getInstance().query(Columns.TABLE, fields, null);
+    }
+
+    public static Cursor selectDesc() {
+        return DbManager.getInstance().query(Columns.TABLE, null, null, "_id DESC");
+    }
+
+    public static boolean insert(Ems ems) {
+        ContentValues values = new ContentValues();
+        values.put(Columns.EMS_NUM, ems.emsNum);
+        values.put(Columns.DATE, ems.date);
+        values.put(Columns.STATUS, ems.status);
+        values.put(Columns.OFFICE, ems.office);
+        values.put(Columns.DETAIL, ems.detail);
+
+        return DbManager.getInstance().insert(Columns.TABLE, values) > 0 ? true : false;
+    }
+
+    public static void update(int id, Ems ems) {
+        ContentValues values = new ContentValues();
+        values.put(Columns.DATE, ems.date);
+        values.put(Columns.STATUS, ems.status);
+        values.put(Columns.OFFICE, ems.office);
+        values.put(Columns.DETAIL, ems.detail);
+
+        DbManager.getInstance().update(Columns.TABLE, values, "_id=" + id);
+    }
+
+    public static void delete(int id) {
+        DbManager.getInstance().delete(Columns.TABLE, "_id=" + id);
     }
 
     public static final class Columns implements BaseColumns {
@@ -41,7 +85,7 @@ public class EmsDbHelper extends DbHelperBase {
         public static final String OFFICE   = "office";
         public static final String DETAIL   = "detail";
 
-        public static final String TABLE = "list";
+        public static final String TABLE = "ems";
         public static final String CREATE = "CREATE TABLE " + TABLE + "("
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + EMS_NUM + " TEXT NOT NULL, "

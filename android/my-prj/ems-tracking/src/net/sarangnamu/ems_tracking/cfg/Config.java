@@ -19,7 +19,9 @@ package net.sarangnamu.ems_tracking.cfg;
 
 public class Config {
     public static boolean isEmsNumber(String num) {
-        //if (num.matches(""))
+        if (!num.matches("[a-zA-Z]{1}[0-9a-zA-Z]{12}")) {
+            return false;
+        }
 
         return true;
     }

@@ -1,5 +1,6 @@
 package net.sarangnamu.ems_tracking;
 
+import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.ems_tracking.api.Api;
@@ -8,8 +9,8 @@ import net.sarangnamu.ems_tracking.cfg.Config;
 import net.sarangnamu.ems_tracking.db.EmsDbHelper;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,8 +19,8 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -33,8 +34,9 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private Button add;
     private TextView title; //, path, dev, tvSearch;
     private EditText emsNum;
-    private AppAdapter adapter;
+    private EmsAdapter adapter;
     private ProgressDialog dlg;
+
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -100,16 +102,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                         Ems ems = Api.tracking(num);
                         ems.trace();
 
-                        ContentValues values = new ContentValues();
-                        values.put(EmsDbHelper.Columns.EMS_NUM, ems.emsNum);
-                        values.put(EmsDbHelper.Columns.DATE, ems.date);
-                        values.put(EmsDbHelper.Columns.STATUS, ems.status);
-                        values.put(EmsDbHelper.Columns.OFFICE, ems.office);
-                        values.put(EmsDbHelper.Columns.DETAIL, ems.detail);
-
-                        DbManager.getInstance().insert(EmsDbHelper.Columns.TABLE, values);
-
-                        return false;
+                        return EmsDbHelper.insert(ems);
                     }
 
                     @Override
@@ -120,6 +113,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 }.execute(getApplicationContext());
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        DbManager.getInstance().open(MainActivity.this, new EmsDbHelper(MainActivity.this));
+
+        super.onResume();
     }
 
     private void initData() {
@@ -134,9 +134,23 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             @Override
             protected Boolean doInBackground(Context... contexts) {
                 Context context = contexts[0];
-                //                data = AppList.getInstance().getInstalledApps(context);
 
-                return false;
+                try {
+                    Cursor cr = EmsDbHelper.select();
+                    while (cr.moveToNext()) {
+                        // load tracking numbers
+                        String num = cr.getString(0);
+                        Ems ems = Api.tracking(num);
+
+                        EmsDbHelper.update(cr.getInt(1), ems);
+                    }
+                } catch (Exception e) {
+                    DLog.e(TAG, "initData", e);
+
+                    return false;
+                }
+
+                return true;
             }
 
             @Override
@@ -155,9 +169,15 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         dlg.setContentView(R.layout.dlg_progress);
     }
 
+    private void hideProgress() {
+        if (dlg != null) {
+            dlg.dismiss();
+        }
+    }
+
     private void initListView() {
         //        checkedList = new boolean[data.size()];
-        adapter = new AppAdapter();
+        adapter = new EmsAdapter(MainActivity.this, EmsDbHelper.selectDesc());
         setListAdapter(adapter);
 
         //        ((LockListView) getListView()).setOnTouchListener(new TouchUpListener() {
@@ -172,8 +192,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         //                //                }
         //            }
         //        });
-
-
     }
 
     private void showPopup(String msg) {
@@ -225,109 +243,44 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     ////////////////////////////////////////////////////////////////////////////////////
     //
-    // APP ADAPTER
+    // ADAPTER
     //
     ////////////////////////////////////////////////////////////////////////////////////
 
     class ViewHolder {
-        TextView trackingNumber, origin, destination, status, delete;
+        TextView emsNum, status, detail;
         LinearLayout btnLayout;
         RelativeLayout row;
     }
 
-    //    class PosHolder {
-    //        int position;
-    //        int type;
-    //        View row;
-    //
-    //        public PosHolder(int pos, int type, View row) {
-    //            this.position = pos;
-    //            this.type = type;
-    //            this.row = row;
-    //        }
-    //    }
-
-    class AppAdapter extends BaseAdapter {
-        public int margin;
-
-        public AppAdapter() {
-            //            margin = dpToPixelInt(SLIDING_MARGIN) * -1;
+    class EmsAdapter extends CursorAdapter {
+        public EmsAdapter(Context context, Cursor c) {
+            super(context, c);
         }
 
         @Override
-        public int getCount() {
-            //            if (searchedList) {
-            //                return searchedData.size();
-            //            }
-            //
-            //            return data.size();
+        public void bindView(View view, Context context, Cursor cr) {
+            TextView emsNum = (TextView) view.findViewById(R.id.emsNum);
+            TextView date   = (TextView) view.findViewById(R.id.date);
+            TextView status = (TextView) view.findViewById(R.id.status);
+            TextView detail = (TextView) view.findViewById(R.id.detail);
 
-            return 0;
-        }
+            int pos = 1;
+            emsNum.setText(cr.getString(pos++));
+            date.setText(cr.getString(pos++));
+            status.setText(cr.getString(pos++));
 
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        //        @Override
-        //        public int getItemViewType(int position) {
-        //            return checkedList[position] ? 1 : 0;
-        //        }
-        //
-        //        @Override
-        //        public int getViewTypeCount() {
-        //            return 2;
-        //        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item, null);
-
-                holder = new ViewHolder();
-                holder.trackingNumber   = (TextView) convertView.findViewById(R.id.name);
-                holder.origin           = (TextView) convertView.findViewById(R.id.origin);
-                holder.destination      = (TextView) convertView.findViewById(R.id.destination);
-                holder.status           = (TextView) convertView.findViewById(R.id.status);
-                holder.delete           = (TextView) convertView.findViewById(R.id.delete);
-                holder.row              = (RelativeLayout) convertView.findViewById(R.id.row);
-                holder.btnLayout        = (LinearLayout) convertView.findViewById(R.id.btnLayout);
-
-                holder.delete.setOnClickListener(MainActivity.this);
-                //                holder.email.setOnClickListener(MainActivity.this);
-                //                holder.row.setOnClickListener(MainActivity.this);
-
-                convertView.setTag(holder);
+            String str = cr.getString(pos++);
+            if (str != null && str.length() > 0) {
+                detail.setText(str);
             } else {
-                holder = (ViewHolder) convertView.getTag();
+                detail.setVisibility(View.GONE);
             }
+        }
 
-            //            PkgInfo info;
-            //            if (searchedList) {
-            //                info = searchedData.get(position);
-            //            } else {
-            //                info = data.get(position);
-            //            }
-            //
-            //            holder.icon.setBackgroundDrawable(info.icon);
-            //            holder.name.setText(info.appName);
-            //            holder.size.setText(info.appSize);
-            //            holder.pkgName.setText(info.pkgName);
-            //            holder.version.setText("(" + info.versionName + ")");
-            //
-            //            holder.sd.setTag(new PosHolder(position, ET_SDCARD, holder.row));
-            //            holder.email.setTag(new PosHolder(position, ET_EMAIL, holder.row));
-            //            holder.row.setTag(new PosHolder(position, ET_MENU, holder.row));
-
-            return convertView;
+        @Override
+        public View newView(Context context, Cursor arg1, ViewGroup parent) {
+            return LayoutInflater.from(context).inflate(R.layout.item, parent, false);
         }
     }
 

@@ -26,27 +26,29 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@drawable/icon_menu" />
+            android:background="@drawable/btn_selector" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#d9d9d9" >
+        android:background="#d9d9d9"
+        android:paddingLeft="10dp" >
 
         <EditText
             android:id="@+id/emsNum"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/emsNumber"
-            android:layout_weight="0.9" />
+            android:layout_weight="0.9"
+            android:hint="@string/emsNumber"
+            android:background="@null" />
 
         <Button
             android:id="@+id/add"
             android:layout_width="wrap_content"
-			android:text="@string/add"
             android:layout_height="match_parent"
-            android:layout_weight="0.1" />
+            android:layout_weight="0.1"
+            android:text="@string/add" />
     </LinearLayout>
 
     <net.sarangnamu.common.ui.list.LockListView
@@ -55,5 +57,11 @@
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:drawSelectorOnTop="false" />
+
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/emptyList" />
 
 </LinearLayout>
