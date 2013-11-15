@@ -2,7 +2,7 @@ package net.sarangnamu.ems_tracking;
 
 import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.sqlite.DbManager;
-import net.sarangnamu.ems_tracking.cfg.EmsDbHelper;
+import net.sarangnamu.ems_tracking.db.EmsDbHelper;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
