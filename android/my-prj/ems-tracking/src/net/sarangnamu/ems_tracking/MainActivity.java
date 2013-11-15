@@ -2,10 +2,13 @@ package net.sarangnamu.ems_tracking;
 
 import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.sqlite.DbManager;
+import net.sarangnamu.ems_tracking.api.Api;
+import net.sarangnamu.ems_tracking.api.xml.Ems;
 import net.sarangnamu.ems_tracking.cfg.Config;
 import net.sarangnamu.ems_tracking.db.EmsDbHelper;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -69,19 +72,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         initData();
     }
 
-    //    @Override
-    //    public boolean onCreateOptionsMenu(Menu menu) {
-    //        // Inflate the menu; this adds items to the action bar if it is present.
-    //        getMenuInflater().inflate(R.menu.main, menu);
-    //        return true;
-    //    }
-
     private void initLabel() {
         title.setText(Html.fromHtml(getString(R.string.appName)));
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String num = emsNum.getText().toString();
+
                 if (num == null || num.length() < 1) {
                     return ;
                 }
@@ -99,9 +96,18 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                     @Override
                     protected Boolean doInBackground(Context... contexts) {
                         Context context = contexts[0];
-                        
-                        
-                        
+
+                        Ems ems = Api.tracking(num);
+                        ems.trace();
+
+                        ContentValues values = new ContentValues();
+                        values.put(EmsDbHelper.Columns.EMS_NUM, ems.emsNum);
+                        values.put(EmsDbHelper.Columns.DATE, ems.date);
+                        values.put(EmsDbHelper.Columns.STATUS, ems.status);
+                        values.put(EmsDbHelper.Columns.OFFICE, ems.office);
+                        values.put(EmsDbHelper.Columns.DETAIL, ems.detail);
+
+                        DbManager.getInstance().insert(EmsDbHelper.Columns.TABLE, values);
 
                         return false;
                     }
@@ -109,7 +115,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                     @Override
                     protected void onPostExecute(Boolean result) {
                         dlg.dismiss();
-                        initListView();
+                        adapter.notifyDataSetChanged();
                     }
                 }.execute(getApplicationContext());
             }

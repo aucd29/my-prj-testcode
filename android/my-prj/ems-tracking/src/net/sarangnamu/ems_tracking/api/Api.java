@@ -52,84 +52,11 @@ public class Api {
         try {
             String res = http.submit(URL, params);
             ems = new Ems(res);
-
-
+            //            ems.trace();
         } catch (Exception e) {
             DLog.e(TAG, "tracking", e);
         }
 
         return ems;
     }
-
-    //    public static ArrayList<Notice> notices(int page) throws Exception {
-    //        initHttp();
-    //        http.setMethod("GET");
-    //
-    //        Map<String, String> params = new HashMap<String, String>();
-    //        params.put("nPage", "" + page);
-    //        String res = http.submit(URI_NOTICE, params);
-    //
-    //        return (ArrayList<Notice>) JsonTool.toObj(res, new TypeReference<List<Notice>>(){});
-    //    }
-    //
-    //    public static boolean noticeWrite(String msg) throws Exception {
-    //        initHttp();
-    //        http.setMethod("POST");
-    //
-    //        Map<String, String> params = new HashMap<String, String>();
-    //        params.put("sContent", msg);
-    //        String res = http.submit(URI_NOTICE_WRITE, params);
-    //
-    //        return true;
-    //    }
-    //
-    //    public static ArrayList<Study> study(int page) throws Exception {
-    //        initHttp();
-    //        http.setMethod("GET");
-    //
-    //        Map<String, String> params = new HashMap<String, String>();
-    //        params.put("nPage", "" + page);
-    //        String res = http.submit(URI_STUDY, params);
-    //
-    //        return (ArrayList<Study>) JsonTool.toObj(res, new TypeReference<List<Study>>(){});
-    //    }
-    //
-    //    public static void categories() throws Exception {
-    //        initHttp();
-    //        http.setMethod("GET");
-    //
-    //        String res = http.submit(URI_CATEGORIES, null);
-    //        JSONObject obj = new JSONObject(res);
-    //    }
-    //
-    //    public static boolean login(String id, String pw) throws Exception {
-    //        initHttp();
-    //        http.setMethod("POST");
-    //
-    //        Map<String, String> params = new HashMap<String, String>();
-    //        params.put("id", id);
-    //        params.put("passwd", pw);
-    //        params.put("rnd", "pre-" + System.currentTimeMillis() / 1000);
-    //
-    //        String res = http.submit(URI_LOGIN, params);
-    //
-    //        JSONObject json = new JSONObject(res);
-    //        String login = "";
-    //
-    //        try {
-    //            login = json.getString("res");
-    //        } catch (Exception e) {
-    //            DLog.e(TAG, "login", e);
-    //        }
-    //
-    //        List<Cookie> cookies = http.getCookie();
-    //        for (Cookie cookie : cookies) {
-    //            if (cookie.getName().equals("sMemberID")) {
-    //                userId = cookie.getName();
-    //            }
-    //        }
-    //
-    //        return login.equals("success") && userId != null;
-    //    }
-
 }

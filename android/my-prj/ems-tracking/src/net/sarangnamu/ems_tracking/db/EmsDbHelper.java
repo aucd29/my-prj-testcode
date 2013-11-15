@@ -31,21 +31,24 @@ public class EmsDbHelper extends DbHelperBase {
         super(context, DB_NAME, VERSION);
 
         tables = new HashMap<String, String>();
-        tables.put(ListColumns.TABLE, ListColumns.CREATE);
+        tables.put(Columns.TABLE, Columns.CREATE);
     }
 
-    public static final class ListColumns implements BaseColumns {
-        public static final String TRACKING_NUMBER = "tr_num";
-        public static final String ORIGIN = "origin";
-        public static final String DESTINATION = "destination";
-        public static final String STATUS = "status";
+    public static final class Columns implements BaseColumns {
+        public static final String EMS_NUM  = "emsNum";
+        public static final String DATE     = "date";
+        public static final String STATUS   = "status";
+        public static final String OFFICE   = "office";
+        public static final String DETAIL   = "detail";
 
         public static final String TABLE = "list";
         public static final String CREATE = "CREATE TABLE " + TABLE + "("
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + TRACKING_NUMBER + " TEXT NOT NULL, "
-                + ORIGIN + " TEXT NOT NULL, "
-                + DESTINATION + " TEXT NOT NULL, "
-                + STATUS + " TEXT NOT NULL);";
+                + EMS_NUM + " TEXT NOT NULL, "
+                + DATE + " TEXT NOT NULL, "
+                + STATUS + " TEXT NOT NULL, "
+                + OFFICE + " TEXT NOT NULL, "
+                + DETAIL + " TEXT NOT NULL"
+                + ");";
     }
 }

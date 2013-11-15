@@ -19,9 +19,12 @@ package net.sarangnamu.ems_tracking.api.xml;
 
 import javax.xml.xpath.XPathConstants;
 
+import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.XPathParser;
 
 public class Ems extends XPathParser {
+    private static final String TAG = "Ems";
+
     public String emsNum;
     public String date;
     public String status;
@@ -66,5 +69,17 @@ public class Ems extends XPathParser {
 
         expr = "//detailDc/text()";
         detail = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+    }
+
+    public void trace() {
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "EMS DATA INFO");
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "emsNum " + emsNum);
+        DLog.d(TAG, "date " + date);
+        DLog.d(TAG, "status " + status);
+        DLog.d(TAG, "office " + office);
+        DLog.d(TAG, "detail " + detail);
+        DLog.d(TAG, "===================================================================");
     }
 }
