@@ -1,5 +1,7 @@
 package net.sarangnamu.ems_tracking;
 
+import java.util.HashMap;
+
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.sqlite.DbManager;
@@ -14,8 +16,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,34 +36,35 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final int SLIDING_MARGIN = 130;
 
     private Button add;
-    private TextView title, empty; //, path, dev, tvSearch;
+    private TextView title, empty;
     private EditText emsNum;
     private EmsAdapter adapter;
     private ProgressDialog dlg;
+    private HashMap<String, Ems> emsData;
 
-    private final Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-            case SHOW_POPUP:
-                //                String fileName = (String) msg.obj;
-                //
-                //                DlgTimer dlg = new DlgTimer(MainActivity.this, R.layout.dlg_timer);
-                //                dlg.setMessage(Html.fromHtml(dlgMsg));
-                //                dlg.setTime(2000);
-                //                dlg.show();
-                //                dlg.setTransparentBaseLayout();
-                break;
-            }
-        }
-    };
+    //    private final Handler handler = new Handler() {
+    //        @Override
+    //        public void handleMessage(Message msg) {
+    //            switch (msg.what) {
+    //            case SHOW_POPUP:
+    //                //                String fileName = (String) msg.obj;
+    //                //
+    //                //                DlgTimer dlg = new DlgTimer(MainActivity.this, R.layout.dlg_timer);
+    //                //                dlg.setMessage(Html.fromHtml(dlgMsg));
+    //                //                dlg.setTime(2000);
+    //                //                dlg.show();
+    //                //                dlg.setTransparentBaseLayout();
+    //                break;
+    //            }
+    //        }
+    //    };
 
-    private void sendMessage(int type, Object obj) {
-        Message msg = handler.obtainMessage();
-        msg.what = type;
-        msg.obj  = obj;
-        handler.sendMessage(msg);
-    }
+    //    private void sendMessage(int type, Object obj) {
+    //        Message msg = handler.obtainMessage();
+    //        msg.what = type;
+    //        msg.obj  = obj;
+    //        handler.sendMessage(msg);
+    //    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,18 +105,19 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
                     @Override
                     protected Boolean doInBackground(Context... contexts) {
-                        Context context = contexts[0];
-
                         Ems ems = Api.tracking(num);
-                        //ems.trace();
 
                         return EmsDbHelper.insert(ems);
                     }
 
                     @Override
                     protected void onPostExecute(Boolean result) {
-                        dlg.dismiss();
-                        adapter.notifyDataSetChanged();
+                        hideProgress();
+
+                        if (result) {
+                            Cursor cr = EmsDbHelper.selectDesc();
+                            adapter.changeCursor(cr);
+                        }
                     }
                 }.execute(getApplicationContext());
             }
@@ -131,7 +133,10 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     private void initData() {
         DbManager.getInstance().open(MainActivity.this, new EmsDbHelper(MainActivity.this));
+        loadEmsData(null, true);
+    }
 
+    private void loadEmsData(final String num, final boolean refresh) {
         new AsyncTask<Context, Void, Boolean>() {
             @Override
             protected void onPreExecute() {
@@ -140,16 +145,16 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
             @Override
             protected Boolean doInBackground(Context... contexts) {
-                Context context = contexts[0];
-
                 try {
-                    Cursor cr = EmsDbHelper.select();
-                    while (cr.moveToNext()) {
-                        // load tracking numbers
-                        String num = cr.getString(0);
-                        Ems ems = Api.tracking(num);
+                    if (num == null) {
+                        Cursor cr = EmsDbHelper.select();
+                        while (cr.moveToNext()) {
+                            String num = cr.getString(0);
+                            Ems ems = Api.tracking(num);
+                            EmsDbHelper.update(cr.getInt(1), ems);
+                        }
+                    } else {
 
-                        EmsDbHelper.update(cr.getInt(1), ems);
                     }
                 } catch (Exception e) {
                     DLog.e(TAG, "initData", e);
@@ -257,6 +262,35 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     ////////////////////////////////////////////////////////////////////////////////////
     //
+    // EMS INTERFACE
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    public interface EmsDataListener {
+        public void onEmsData(Ems ems);
+    }
+
+    private void getEmsData(String num, EmsDataListener l) {
+        if (emsData == null) {
+            emsData = new HashMap<String, Ems>();
+        }
+
+        Ems ems = emsData.get(num);
+        if (ems == null) {
+
+        }
+
+        if (l != null) {
+            l.onEmsData(ems);
+        }
+    }
+
+    private void setEmsData(String num) {
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
     // ADAPTER
     //
     ////////////////////////////////////////////////////////////////////////////////////
@@ -283,8 +317,14 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             int pos = 1;
             emsNum.setText(cr.getString(pos++));
             date.setText(cr.getString(pos++));
-            status.setText(cr.getString(pos++));
-            office.setText(String.format(getString(R.string.postOffice), cr.getString(pos++)));
+
+            String statusValue = cr.getString(pos++);
+            status.setText(statusValue);
+            if (statusValue.equals("배달완료")) {
+                status.setTextColor(0xff278736);
+            }
+
+            office.setText(cr.getString(pos++));
 
             String str = cr.getString(pos++);
             if (str != null && str.length() > 0) {

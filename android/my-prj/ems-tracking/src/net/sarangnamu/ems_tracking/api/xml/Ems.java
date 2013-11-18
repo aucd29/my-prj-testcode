@@ -38,6 +38,10 @@ public class Ems extends XPathParser {
 
     @Override
     protected void parsing() throws Exception {
+        if (emsData == null) {
+            emsData = new ArrayList<EmsData>();
+        }
+
         /*
          *  <?xml version='1.0' encoding="utf-8"?>
             <xsync>
@@ -111,7 +115,7 @@ public class Ems extends XPathParser {
         emsNum = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
 
         for (int i=2; i<=count; ++i) {
-            EmsData data = new EmsData(i);
+            emsData.add(new EmsData(i));
         }
     }
 
