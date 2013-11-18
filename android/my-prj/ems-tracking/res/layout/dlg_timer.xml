@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
     android:background="@drawable/popup_bg"
-    android:minHeight="115dp" >
+    android:minHeight="90dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,14 +21,13 @@
             android:contentDescription="@null"
             android:src="@drawable/icon_check" />
 
-        <net.sarangnamu.common.fonts.RobotoLightTextView
+        <TextView
             android:id="@+id/msg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:maxHeight="75dp"
             android:singleLine="false"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:textColor="#000000"
             android:textSize="13sp" />
     </LinearLayout>

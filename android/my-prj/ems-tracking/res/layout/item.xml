@@ -22,11 +22,19 @@
             android:textSize="15sp"
             android:textStyle="bold" />
 
+        <net.sarangnamu.common.fonts.RobotoLightTextView
+            android:id="@+id/office"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/emsNum"
+            android:text="office"
+            android:textSize="12sp" />
+        
         <TextView
             android:id="@+id/detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/emsNum"
+            android:layout_below="@id/office"
             android:text="detail"
             android:textSize="12sp" />
 
@@ -37,22 +45,22 @@
             android:layout_alignParentRight="true"
             android:text="status"
             android:textColor="#ff4100"
-            android:textSize="10sp" />
+            android:textSize="16sp" />
 
-        <TextView
+        <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@id/status"
             android:text="date"
-            android:textSize="9sp" />
+            android:textSize="11sp" />
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/btnLayout"
         android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="-65dp"
         android:orientation="horizontal" >

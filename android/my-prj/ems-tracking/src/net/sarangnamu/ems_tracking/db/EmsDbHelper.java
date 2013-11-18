@@ -22,6 +22,7 @@ import java.util.HashMap;
 import net.sarangnamu.common.sqlite.DbHelperBase;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.ems_tracking.api.xml.Ems;
+import net.sarangnamu.ems_tracking.api.xml.Ems.EmsData;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -56,20 +57,24 @@ public class EmsDbHelper extends DbHelperBase {
     public static boolean insert(Ems ems) {
         ContentValues values = new ContentValues();
         values.put(Columns.EMS_NUM, ems.emsNum);
-        values.put(Columns.DATE, ems.date);
-        values.put(Columns.STATUS, ems.status);
-        values.put(Columns.OFFICE, ems.office);
-        values.put(Columns.DETAIL, ems.detail);
+
+        EmsData emsData = ems.getLastEmsData();
+        values.put(Columns.DATE, emsData.date);
+        values.put(Columns.STATUS, emsData.status);
+        values.put(Columns.OFFICE, emsData.office);
+        values.put(Columns.DETAIL, emsData.detail);
 
         return DbManager.getInstance().insert(Columns.TABLE, values) > 0 ? true : false;
     }
 
     public static void update(int id, Ems ems) {
         ContentValues values = new ContentValues();
-        values.put(Columns.DATE, ems.date);
-        values.put(Columns.STATUS, ems.status);
-        values.put(Columns.OFFICE, ems.office);
-        values.put(Columns.DETAIL, ems.detail);
+
+        EmsData emsData = ems.getLastEmsData();
+        values.put(Columns.DATE, emsData.date);
+        values.put(Columns.STATUS, emsData.status);
+        values.put(Columns.OFFICE, emsData.office);
+        values.put(Columns.DETAIL, emsData.detail);
 
         DbManager.getInstance().update(Columns.TABLE, values, "_id=" + id);
     }

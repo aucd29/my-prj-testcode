@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -11,7 +11,7 @@
         android:background="@color/dBg" >
 
         <!-- net.sarangnamu.common.fonts.RobotoLight -->
-
+        
         <TextView
             android:id="@+id/title"
             style="@style/title"
@@ -26,7 +26,17 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@drawable/btn_selector" />
+             />
+        
+        <net.sarangnamu.common.fonts.RobotoLightTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="8dp"
+            android:textColor="#7fffffff"
+            android:text="@string/myid"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -48,7 +58,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.1"
-            android:text="@string/add" />
+            android:text="@string/add"
+            android:background="@drawable/btn_selector" />
     </LinearLayout>
 
     <net.sarangnamu.common.ui.list.LockListView
@@ -56,12 +67,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
+        android:listSelector="@drawable/list_bg_selector"
         android:drawSelectorOnTop="false" />
 
     <TextView
         android:id="@android:id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/emptyList" />
+        android:gravity="center|center_vertical"
+        android:layout_gravity="center_vertical"
+        android:text="@string/emptyList"
+        />
 
 </LinearLayout>

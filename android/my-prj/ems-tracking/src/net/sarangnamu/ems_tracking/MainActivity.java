@@ -3,6 +3,7 @@ package net.sarangnamu.ems_tracking;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.sqlite.DbManager;
+import net.sarangnamu.common.ui.dlg.DlgTimer;
 import net.sarangnamu.ems_tracking.api.Api;
 import net.sarangnamu.ems_tracking.api.xml.Ems;
 import net.sarangnamu.ems_tracking.cfg.Config;
@@ -19,6 +20,8 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
@@ -30,9 +33,10 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
     private static final long SHOW_PROGRESS = 100000000;
     private static final int SHOW_POPUP = 1;
+    private static final int SLIDING_MARGIN = 130;
 
     private Button add;
-    private TextView title; //, path, dev, tvSearch;
+    private TextView title, empty; //, path, dev, tvSearch;
     private EditText emsNum;
     private EmsAdapter adapter;
     private ProgressDialog dlg;
@@ -68,6 +72,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
         add      = (Button) findViewById(R.id.add);
         title    = (TextView) findViewById(R.id.title);
+        empty    = (TextView) findViewById(android.R.id.empty);
         emsNum   = (EditText) findViewById(R.id.emsNum);
 
         initLabel();
@@ -82,10 +87,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 final String num = emsNum.getText().toString();
 
                 if (num == null || num.length() < 1) {
+                    showPopup(getString(R.string.plsInputNum));
                     return ;
                 }
 
                 if (!Config.isEmsNumber(num)) {
+                    showPopup(getString(R.string.invalidEmsNum));
                     return ;
                 }
 
@@ -100,7 +107,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                         Context context = contexts[0];
 
                         Ems ems = Api.tracking(num);
-                        ems.trace();
+                        //ems.trace();
 
                         return EmsDbHelper.insert(ems);
                     }
@@ -179,6 +186,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         //        checkedList = new boolean[data.size()];
         adapter = new EmsAdapter(MainActivity.this, EmsDbHelper.selectDesc());
         setListAdapter(adapter);
+        getListView().setEmptyView(empty);
+        getListView().setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
 
         //        ((LockListView) getListView()).setOnTouchListener(new TouchUpListener() {
         //            @Override
@@ -195,11 +209,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     private void showPopup(String msg) {
-        //        DlgTimer dlg = new DlgTimer(MainActivity.this, R.layout.dlg_timer);
-        //        dlg.setMessage(msg);
-        //        dlg.setTime(1000);
-        //        dlg.show();
-        //        dlg.setTransparentBaseLayout();
+        DlgTimer dlg = new DlgTimer(MainActivity.this, R.layout.dlg_timer);
+        dlg.setMessage(msg);
+        dlg.setTime(1000);
+        dlg.show();
+        dlg.setTransparentBaseLayout();
     }
 
     private void showAnimation(final View view, int position) {
@@ -263,12 +277,14 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             TextView emsNum = (TextView) view.findViewById(R.id.emsNum);
             TextView date   = (TextView) view.findViewById(R.id.date);
             TextView status = (TextView) view.findViewById(R.id.status);
+            TextView office = (TextView) view.findViewById(R.id.office);
             TextView detail = (TextView) view.findViewById(R.id.detail);
 
             int pos = 1;
             emsNum.setText(cr.getString(pos++));
             date.setText(cr.getString(pos++));
             status.setText(cr.getString(pos++));
+            office.setText(String.format(getString(R.string.postOffice), cr.getString(pos++)));
 
             String str = cr.getString(pos++);
             if (str != null && str.length() > 0) {

@@ -4,7 +4,8 @@
     <color name="dBg">#ce2400</color>
     <color name="dBgSearch">#6a6a6a</color>
     <color name="dFont">@android:color/white</color>
+    <color name="dBgList">#ebebeb</color>
     
-	<color name="btnBase">#a2a2a2</color>
-	<color name="btnOver">#dedede</color>
+	<color name="btnBase">#c9c9c9</color>
+	<color name="btnOver">#b2b2b2</color>
 </resources>

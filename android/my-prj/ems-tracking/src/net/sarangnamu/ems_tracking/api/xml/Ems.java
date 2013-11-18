@@ -17,6 +17,8 @@
  */
 package net.sarangnamu.ems_tracking.api.xml;
 
+import java.util.ArrayList;
+
 import javax.xml.xpath.XPathConstants;
 
 import net.sarangnamu.common.DLog;
@@ -26,10 +28,7 @@ public class Ems extends XPathParser {
     private static final String TAG = "Ems";
 
     public String emsNum;
-    public String date;
-    public String status;
-    public String office;
-    public String detail;
+    public ArrayList<EmsData> emsData = new ArrayList<EmsData>();
 
     public Ems(String ems) {
         super();
@@ -43,32 +42,102 @@ public class Ems extends XPathParser {
          *  <?xml version='1.0' encoding="utf-8"?>
             <xsync>
             <xsyncData>
-                <rgist><![CDATA[RB839962647CN]]></rgist>
+                <rgist><![CDATA[RB832426012CN]]></rgist>
             </xsyncData>
             <xsyncData>
-                <processDe><![CDATA[2013-10-24 18:11]]></processDe>
-                <processSttus><![CDATA[접수]]></processSttus>
-                <nowLc><![CDATA[100614]]></nowLc>
+                <processDe><![CDATA[2013-10-06 16:05]]></processDe>
+                    <processSttus><![CDATA[접수]]></processSttus>
+                    <nowLc><![CDATA[528032]]></nowLc>
+                    <detailDc><![CDATA[]]></detailDc>
+                </xsyncData>
+            <xsyncData>
+                <processDe><![CDATA[2013-10-09 11:02]]></processDe>
+                    <processSttus><![CDATA[발송준비]]></processSttus>
+                    <nowLc><![CDATA[CNCANA]]></nowLc>
+                    <detailDc><![CDATA[]]></detailDc>
+                </xsyncData>
+            <xsyncData>
+                <processDe><![CDATA[2013-10-11 15:48]]></processDe>
+                <processSttus><![CDATA[교환국 도착]]></processSttus>
+                <nowLc><![CDATA[국제우편물류센터]]></nowLc>
+                <detailDc><![CDATA[]]></detailDc>
+            </xsyncData>
+            <xsyncData>
+                <processDe><![CDATA[2013-10-11 22:10]]></processDe>
+                <processSttus><![CDATA[발송]]></processSttus>
+                <nowLc><![CDATA[국제우편물류센터]]></nowLc>
+                <detailDc><![CDATA[]]></detailDc>
+            </xsyncData>
+            <xsyncData>
+                <processDe><![CDATA[2013-10-11 23:41]]></processDe>
+                <processSttus><![CDATA[도착]]></processSttus>
+                <nowLc><![CDATA[동서울우편집중국]]></nowLc>
+                <detailDc><![CDATA[]]></detailDc>
+            </xsyncData>
+            <xsyncData>
+                <processDe><![CDATA[2013-10-12 03:31]]></processDe>
+                <processSttus><![CDATA[발송]]></processSttus>
+                <nowLc><![CDATA[동서울우편집중국]]></nowLc>
+                <detailDc><![CDATA[]]></detailDc>
+            </xsyncData>
+            <xsyncData>
+                <processDe><![CDATA[2013-10-12 04:27]]></processDe>
+                <processSttus><![CDATA[도착]]></processSttus>
+                <nowLc><![CDATA[서울강남]]></nowLc>
+                <detailDc><![CDATA[]]></detailDc>
+            </xsyncData>
+            <xsyncData>
+                <processDe><![CDATA[2013-10-14 09:28]]></processDe>
+                <processSttus><![CDATA[배달준비]]></processSttus>
+                <nowLc><![CDATA[서울강남]]></nowLc>
+                <detailDc><![CDATA[]]></detailDc>
+            </xsyncData>
+            <xsyncData>
+                <processDe><![CDATA[2013-10-15 16:05]]></processDe>
+                <processSttus><![CDATA[배달완료]]></processSttus>
+                <nowLc><![CDATA[서울강남]]></nowLc>
                 <detailDc><![CDATA[]]></detailDc>
             </xsyncData>
             </xsync>
+
          */
         String expr;
+        int count;
+
+        expr = "count(//xsyncData)";
+        count = Integer.parseInt(xpath.evaluate(expr, document, XPathConstants.STRING).toString());
 
         expr = "//rgist/text()";
         emsNum = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
 
-        expr = "//processDe/text()";
-        date = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+        for (int i=2; i<=count; ++i) {
+            EmsData data = new EmsData(i);
+        }
+    }
 
-        expr = "//processSttus/text()";
-        status = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+    public int getDataCount() {
+        if (emsData == null) {
+            return 0;
+        }
 
-        expr = "//nowLc/text()";
-        office = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+        return emsData.size();
+    }
 
-        expr = "//detailDc/text()";
-        detail = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+    public EmsData getEmsData(int pos) {
+        if (emsData == null) {
+            return null;
+        }
+
+        return emsData.get(pos);
+    }
+
+    public EmsData getLastEmsData() {
+        if (emsData == null) {
+            return null;
+        }
+
+        int pos = emsData.size();
+        return emsData.get(pos - 1);
     }
 
     public void trace() {
@@ -76,10 +145,41 @@ public class Ems extends XPathParser {
         DLog.d(TAG, "EMS DATA INFO");
         DLog.d(TAG, "===================================================================");
         DLog.d(TAG, "emsNum " + emsNum);
-        DLog.d(TAG, "date " + date);
-        DLog.d(TAG, "status " + status);
-        DLog.d(TAG, "office " + office);
-        DLog.d(TAG, "detail " + detail);
+
+        for (EmsData data : emsData) {
+            data.trace();
+        }
+
         DLog.d(TAG, "===================================================================");
+    }
+
+    public class EmsData {
+        public String date;
+        public String status;
+        public String office;
+        public String detail;
+
+        public EmsData(int pos) throws Exception {
+            String expr, prefix = "//xsyncData[" + pos + "]";
+            expr = prefix + "/processDe/text()";
+
+            date = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+
+            expr = prefix + "//processSttus/text()";
+            status = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+
+            expr = prefix + "//nowLc/text()";
+            office = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+
+            expr = prefix + "//detailDc/text()";
+            detail = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+        }
+
+        public void trace() {
+            DLog.d(TAG, "date " + date);
+            DLog.d(TAG, "status " + status);
+            DLog.d(TAG, "office " + office);
+            DLog.d(TAG, "detail " + detail);
+        }
     }
 }
