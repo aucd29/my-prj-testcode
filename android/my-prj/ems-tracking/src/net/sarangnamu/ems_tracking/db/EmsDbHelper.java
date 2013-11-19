@@ -76,7 +76,11 @@ public class EmsDbHelper extends DbHelperBase {
         values.put(Columns.OFFICE, emsData.office);
         values.put(Columns.DETAIL, emsData.detail);
 
-        DbManager.getInstance().update(Columns.TABLE, values, "_id=" + id);
+        if (id == 0) {
+            DbManager.getInstance().update(Columns.TABLE, values, Columns.EMS_NUM + "='" + id + "'");
+        } else {
+            DbManager.getInstance().update(Columns.TABLE, values, "_id=" + id);
+        }
     }
 
     public static void delete(int id) {

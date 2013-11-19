@@ -1,11 +1,11 @@
 package net.sarangnamu.ems_tracking;
 
-import java.util.HashMap;
-
+import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
+import net.sarangnamu.ems_tracking.EmsDataManager.EmsDataListener;
 import net.sarangnamu.ems_tracking.api.Api;
 import net.sarangnamu.ems_tracking.api.xml.Ems;
 import net.sarangnamu.ems_tracking.cfg.Config;
@@ -13,6 +13,7 @@ import net.sarangnamu.ems_tracking.db.EmsDbHelper;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -40,7 +41,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private EditText emsNum;
     private EmsAdapter adapter;
     private ProgressDialog dlg;
-    private HashMap<String, Ems> emsData;
 
     //    private final Handler handler = new Handler() {
     //        @Override
@@ -100,6 +100,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 new AsyncTask<Context, Void, Boolean>() {
                     @Override
                     protected void onPreExecute() {
+                        BkCfg.hideKeyboard(MainActivity.this);
                         showProgress();
                     }
 
@@ -133,10 +134,10 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     private void initData() {
         DbManager.getInstance().open(MainActivity.this, new EmsDbHelper(MainActivity.this));
-        loadEmsData(null, true);
+        loadEmsData();
     }
 
-    private void loadEmsData(final String num, final boolean refresh) {
+    private void loadEmsData() {
         new AsyncTask<Context, Void, Boolean>() {
             @Override
             protected void onPreExecute() {
@@ -146,15 +147,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             @Override
             protected Boolean doInBackground(Context... contexts) {
                 try {
-                    if (num == null) {
-                        Cursor cr = EmsDbHelper.select();
-                        while (cr.moveToNext()) {
-                            String num = cr.getString(0);
-                            Ems ems = Api.tracking(num);
-                            EmsDbHelper.update(cr.getInt(1), ems);
-                        }
-                    } else {
+                    Cursor cr = EmsDbHelper.select();
+                    while (cr.moveToNext()) {
+                        String num = cr.getString(0);
+                        Ems ems = Api.tracking(num);
+                        EmsDataManager.getInstance().setEmsData(num, ems);
 
+                        EmsDbHelper.update(cr.getInt(1), ems);
                     }
                 } catch (Exception e) {
                     DLog.e(TAG, "initData", e);
@@ -173,7 +172,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         }.execute(getApplicationContext());
     }
 
-    private void showProgress() {
+    public void showProgress() {
         dlg = new ProgressDialog(MainActivity.this);
         dlg.setCancelable(false);
         dlg.setMessage(getString(R.string.plsWait));
@@ -181,7 +180,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         dlg.setContentView(R.layout.dlg_progress);
     }
 
-    private void hideProgress() {
+    public void hideProgress() {
         if (dlg != null) {
             dlg.dismiss();
         }
@@ -195,7 +194,16 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         getListView().setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String emsNum = (String) view.getTag();
 
+                EmsDataManager.getInstance().getAsyncEmsData(MainActivity.this, emsNum, new EmsDataListener() {
+                    @Override
+                    public void onEmsData(Ems ems) {
+                        Intent intent = new Intent(MainActivity.this, Detail.class);
+                        intent.putExtra("emsNum", ems.emsNum);
+                        startActivity(intent);
+                    }
+                });
             }
         });
 
@@ -262,32 +270,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     ////////////////////////////////////////////////////////////////////////////////////
     //
-    // EMS INTERFACE
+    // EmsDataListener
     //
     ////////////////////////////////////////////////////////////////////////////////////
 
-    public interface EmsDataListener {
-        public void onEmsData(Ems ems);
-    }
 
-    private void getEmsData(String num, EmsDataListener l) {
-        if (emsData == null) {
-            emsData = new HashMap<String, Ems>();
-        }
-
-        Ems ems = emsData.get(num);
-        if (ems == null) {
-
-        }
-
-        if (l != null) {
-            l.onEmsData(ems);
-        }
-    }
-
-    private void setEmsData(String num) {
-
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////
     //
@@ -332,6 +319,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             } else {
                 detail.setVisibility(View.GONE);
             }
+
+            view.setTag(emsNum);
         }
 
         @Override
