@@ -141,6 +141,10 @@ public class Ems extends XPathParser {
         }
 
         int pos = emsData.size();
+        if (pos == 0) {
+            return null;
+        }
+
         return emsData.get(pos - 1);
     }
 

@@ -30,7 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class MainActivity extends ListActivity implements View.OnClickListener {
+public class MainActivity extends ListActivity {
     private static final String TAG = "MainActivity";
     private static final long SHOW_PROGRESS = 100000000;
     private static final int SHOW_POPUP = 1;
@@ -200,7 +200,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                     @Override
                     public void onEmsData(Ems ems) {
                         Intent intent = new Intent(MainActivity.this, Detail.class);
-                        intent.putExtra("emsNum", ems.emsNum);
+                        intent.putExtra(Detail.EMS_NUM, ems.emsNum);
                         startActivity(intent);
                     }
                 });
@@ -270,14 +270,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     ////////////////////////////////////////////////////////////////////////////////////
     //
-    // EmsDataListener
-    //
-    ////////////////////////////////////////////////////////////////////////////////////
-
-
-
-    ////////////////////////////////////////////////////////////////////////////////////
-    //
     // ADAPTER
     //
     ////////////////////////////////////////////////////////////////////////////////////
@@ -302,7 +294,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             TextView detail = (TextView) view.findViewById(R.id.detail);
 
             int pos = 1;
-            emsNum.setText(cr.getString(pos++));
+            String emsNumber = cr.getString(pos++);
+            emsNum.setText(emsNumber);
             date.setText(cr.getString(pos++));
 
             String statusValue = cr.getString(pos++);
@@ -320,39 +313,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 detail.setVisibility(View.GONE);
             }
 
-            view.setTag(emsNum);
+            view.setTag(emsNumber);
         }
 
         @Override
         public View newView(Context context, Cursor arg1, ViewGroup parent) {
             return LayoutInflater.from(context).inflate(R.layout.item, parent, false);
         }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////
-    //
-    // View.OnClickListener
-    //
-    ////////////////////////////////////////////////////////////////////////////////////
-
-    @Override
-    public void onClick(View v) {
-        //        PosHolder ph = (PosHolder) v.getTag();
-
-        //        if (ph.type == ET_MENU) {
-        //            ((LockListView) getListView()).setLock();
-        //
-        //            if (clickedView == null) {
-        //                clickedView = v;
-        //                showAnimation(v, ph.position);
-        //            } else {
-        //                ph = (PosHolder) clickedView.getTag();
-        //                showAnimation(clickedView, ph.position);
-        //                clickedView = null;
-        //            }
-        //        } else {
-        //            sendEmail = ph.type == 0 ? false : true;
-        //            sendToSd(ph.position);
-        //        }
     }
 }
