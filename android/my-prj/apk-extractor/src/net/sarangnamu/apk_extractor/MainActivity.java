@@ -50,7 +50,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
-    private static final long SHOW_PROGRESS = 100000000;
+    private static final long SHOW_PROGRESS = 10000000;
     private static final int SHOW_POPUP = 1;
     private static final int SLIDING_MARGIN = 130;
 
@@ -117,7 +117,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        DLog.e(TAG, "onActivityResult " + requestCode + ", " +resultCode);
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
             } else if (resultCode == RESULT_CANCELED) {
@@ -456,16 +455,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         public long getItemId(int position) {
             return 0;
         }
-
-        //        @Override
-        //        public int getItemViewType(int position) {
-        //            return checkedList[position] ? 1 : 0;
-        //        }
-        //
-        //        @Override
-        //        public int getViewTypeCount() {
-        //            return 2;
-        //        }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {

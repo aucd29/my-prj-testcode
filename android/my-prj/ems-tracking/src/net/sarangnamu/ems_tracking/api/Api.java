@@ -26,8 +26,9 @@ import net.sarangnamu.ems_tracking.api.xml.Ems;
 
 public class Api {
     private static final String TAG = "Api";
+    private static final String URL = "http://smart.epost.go.kr/servlet/kpl.vis.common.svl.VisSVL";
+    private static final String VERSION = "1.5.1";
 
-    public static final String URL = "http://smart.epost.go.kr:8080/servlet/kpl.vis.common.svl.VisSVL";
     private static BkHttp http;
 
     private static void initHttp() {
@@ -43,7 +44,7 @@ public class Api {
         Map<String, String> params = new HashMap<String, String>();
         params.put("typeApp", "postSearch");
         params.put("typeSmart", "A");
-        params.put("ver", "1.4.9");
+        params.put("ver", VERSION);
         params.put("target_command", "kpl.vis.inh.rel.cmd.RetrieveOrderListMobileXmlCMD");
         params.put("register_No_From", num);
 
