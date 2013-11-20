@@ -27,6 +27,7 @@ import android.os.AsyncTask;
 
 public class EmsDataManager {
     private static final String TAG = "EmsDataManager";
+    public static final String EMS_NUM = "emsNum";
 
     private static EmsDataManager inst;
     private HashMap<String, Ems> emsData;

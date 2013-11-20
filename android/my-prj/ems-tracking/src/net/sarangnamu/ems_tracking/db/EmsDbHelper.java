@@ -83,8 +83,9 @@ public class EmsDbHelper extends DbHelperBase {
         }
     }
 
-    public static void delete(int id) {
-        DbManager.getInstance().delete(Columns.TABLE, "_id=" + id);
+    public static boolean delete(int id) {
+        int res = DbManager.getInstance().delete(Columns.TABLE, "_id=" + id);
+        return res > 0 ? true : false;
     }
 
     public static final class Columns implements BaseColumns {

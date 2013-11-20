@@ -12,6 +12,5 @@
 
     <string name="plsInputNum">EMS 번호를 입력하세요</string>
     <string name="invalidEmsNum">EMS 번호 형식과 맞지 않습니다.</string>
-    <string name="postOffice">접수 우체국 : %s</string>
-    
+    <string name="detailedInfo">세부 정보</string>
 </resources>

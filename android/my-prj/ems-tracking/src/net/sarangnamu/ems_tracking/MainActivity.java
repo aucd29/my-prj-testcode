@@ -5,15 +5,19 @@ import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
-import net.sarangnamu.ems_tracking.EmsDataManager.EmsDataListener;
+import net.sarangnamu.common.ui.list.LockListView;
+import net.sarangnamu.common.ui.list.LockListView.TouchUpListener;
+import net.sarangnamu.common.ui.swipe.SwipeListenerBase;
 import net.sarangnamu.ems_tracking.api.Api;
 import net.sarangnamu.ems_tracking.api.xml.Ems;
 import net.sarangnamu.ems_tracking.cfg.Config;
 import net.sarangnamu.ems_tracking.db.EmsDbHelper;
+import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
+import android.animation.ObjectAnimator;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,11 +34,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
     private static final long SHOW_PROGRESS = 100000000;
     private static final int SHOW_POPUP = 1;
-    private static final int SLIDING_MARGIN = 130;
+    private static final int SLIDING_MARGIN = 124;
+
+    //private boolean[] checkedList;
+    private int currPos;
+    private boolean checkedList;
 
     private Button add;
     private TextView title, empty;
@@ -86,6 +94,7 @@ public class MainActivity extends ListActivity {
             @Override
             public void onClick(View v) {
                 final String num = emsNum.getText().toString();
+                //FIXME emsNum.setText("");
 
                 if (num == null || num.length() < 1) {
                     showPopup(getString(R.string.plsInputNum));
@@ -147,14 +156,16 @@ public class MainActivity extends ListActivity {
             @Override
             protected Boolean doInBackground(Context... contexts) {
                 try {
-                    Cursor cr = EmsDbHelper.select();
-                    while (cr.moveToNext()) {
-                        String num = cr.getString(0);
-                        Ems ems = Api.tracking(num);
-                        EmsDataManager.getInstance().setEmsData(num, ems);
-
-                        EmsDbHelper.update(cr.getInt(1), ems);
-                    }
+                    // FIXME
+                    //                    Cursor cr = EmsDbHelper.select();
+                    //
+                    //                    while (cr.moveToNext()) {
+                    //                        String num = cr.getString(0);
+                    //                        Ems ems = Api.tracking(num);
+                    //                        EmsDataManager.getInstance().setEmsData(num, ems);
+                    //
+                    //                        EmsDbHelper.update(cr.getInt(1), ems);
+                    //                    }
                 } catch (Exception e) {
                     DLog.e(TAG, "initData", e);
 
@@ -183,42 +194,49 @@ public class MainActivity extends ListActivity {
     public void hideProgress() {
         if (dlg != null) {
             dlg.dismiss();
+            dlg = null;
         }
     }
 
     private void initListView() {
-        //        checkedList = new boolean[data.size()];
         adapter = new EmsAdapter(MainActivity.this, EmsDbHelper.selectDesc());
         setListAdapter(adapter);
         getListView().setEmptyView(empty);
         getListView().setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String emsNum = (String) view.getTag();
+                //String emsNum = (String) view.getTag();
 
-                EmsDataManager.getInstance().getAsyncEmsData(MainActivity.this, emsNum, new EmsDataListener() {
-                    @Override
-                    public void onEmsData(Ems ems) {
-                        Intent intent = new Intent(MainActivity.this, Detail.class);
-                        intent.putExtra(Detail.EMS_NUM, ems.emsNum);
-                        startActivity(intent);
-                    }
-                });
+                ((LockListView) getListView()).setLock();
+                showAnimation(view, position);
+
+                //                EmsDataManager.getInstance().getAsyncEmsData(MainActivity.this, emsNum, new EmsDataListener() {
+                //                    @Override
+                //                    public void onEmsData(Ems ems) {
+                //                        if (ems == null) {
+                //                            DLog.e(TAG, "onEmsData ems == null");
+                //                            return ;
+                //                        }
+                //
+                //                        Intent intent = new Intent(MainActivity.this, Detail.class);
+                //                        intent.putExtra(EmsDataManager.EMS_NUM, ems.emsNum);
+                //                        startActivity(intent);
+                //                    }
+                //                });
             }
         });
+        ((LockListView) getListView()).setOnTouchListener(new TouchUpListener() {
+            @Override
+            public void up() {
+                if (currPos != -1) {
+                    View view = getListView().getChildAt(currPos);
+                    showAnimation(view, currPos);
 
-        //        ((LockListView) getListView()).setOnTouchListener(new TouchUpListener() {
-        //            @Override
-        //            public void up() {
-        //                //                if (clickedView != null) {
-        //                //                    PosHolder  ph = (PosHolder) clickedView.getTag();
-        //                //                    showAnimation(clickedView, ph.position);
-        //                //                    clickedView = null;
-        //                //
-        //                //                    ((LockListView) getListView()).setLock();
-        //                //                }
-        //            }
-        //        });
+                    ((LockListView) getListView()).setLock();
+                }
+            }
+        });
+        //getListView().setOnTouchListener(new MyListSwipeListener(MainActivity.this));
     }
 
     private void showPopup(String msg) {
@@ -230,42 +248,87 @@ public class MainActivity extends ListActivity {
     }
 
     private void showAnimation(final View view, int position) {
-        //        final int moveX = dpToPixelInt(SLIDING_MARGIN);
-        //        final ViewHolder vh = (ViewHolder)((RelativeLayout) view.getParent()).getTag();
-        //        final int endX;
+        final int endX;
+        final int moveX = dpToPixelInt(SLIDING_MARGIN);
+        View tempView;
 
-        //        if (!checkedList[position]) {
-        //            endX = moveX * -1;
-        //            checkedList[position] = true;
-        //        } else {
-        //            endX = 0;
-        //            checkedList[position] = false;
-        //        }
+        if (checkedList) {
+            endX = 0;
+            tempView = getListView().getChildAt(currPos);
+            currPos = -1;
+        } else {
+            endX = moveX * -1;
+            tempView = view;
+            currPos = position;
+        }
 
-        //        ObjectAnimator.ofFloat(vh.btnLayout, "translationX", endX).start();
-        //        final ObjectAnimator objAni = ObjectAnimator.ofFloat(view, "translationX", endX);
-        //        objAni.addListener(new AnimatorListener() {
-        //            @Override
-        //            public void onAnimationStart(Animator animation) {
-        //                view.setClickable(false);
-        //            }
-        //
-        //            @Override
-        //            public void onAnimationEnd(Animator animation) {
-        //                objAni.removeAllListeners();
-        //                view.setClickable(true);
-        //            }
-        //
-        //            @Override
-        //            public void onAnimationRepeat(Animator animation) { }
-        //            @Override
-        //            public void onAnimationCancel(Animator animation) { }
-        //        });
-        //        objAni.start();
+        checkedList = !checkedList;
+
+        final View btnLayout = tempView.findViewById(R.id.btnLayout);
+        final View row       = tempView.findViewById(R.id.row);
+
+        ObjectAnimator.ofFloat(btnLayout, "translationX", endX).start();
+        final ObjectAnimator objAni = ObjectAnimator.ofFloat(row, "translationX", endX);
+        objAni.addListener(new AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                //view.setClickable(false);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                objAni.removeAllListeners();
+                //view.setClickable(true);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) { }
+            @Override
+            public void onAnimationCancel(Animator animation) { }
+        });
+        objAni.start();
     }
 
     private int dpToPixelInt(int dp) {
         return DimTool.dpToPixelInt(getApplicationContext(), dp);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // MyListSwipeListener
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    class MyListSwipeListener extends SwipeListenerBase {
+        public MyListSwipeListener(Context context) {
+            super(context);
+
+            setThreshold(100);
+            setVelocity(100);
+        }
+
+        @Override
+        public void onSwipeTop(int position) {
+        }
+
+        @Override
+        public void onSwipeRight(int position) {
+        }
+
+        @Override
+        public void onSwipeLeft(int position) {
+            View view = getListView().getChildAt(position);
+            showAnimation(view, position);
+        }
+
+        @Override
+        public void onSwipeBottom(int position) {
+        }
+
+        @Override
+        protected int getPosition(int x, int y) {
+            return getListView().pointToPosition(x, y) - getListView().getFirstVisiblePosition();
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -292,8 +355,12 @@ public class MainActivity extends ListActivity {
             TextView status = (TextView) view.findViewById(R.id.status);
             TextView office = (TextView) view.findViewById(R.id.office);
             TextView detail = (TextView) view.findViewById(R.id.detail);
+            TextView delete = (TextView) view.findViewById(R.id.delete);
 
-            int pos = 1;
+            int pos = 0;
+            delete.setTag(cr.getInt(pos++));
+            delete.setOnClickListener(MainActivity.this);
+
             String emsNumber = cr.getString(pos++);
             emsNum.setText(emsNumber);
             date.setText(cr.getString(pos++));
@@ -305,20 +372,34 @@ public class MainActivity extends ListActivity {
             }
 
             office.setText(cr.getString(pos++));
-
-            String str = cr.getString(pos++);
-            if (str != null && str.length() > 0) {
-                detail.setText(str);
-            } else {
-                detail.setVisibility(View.GONE);
-            }
-
             view.setTag(emsNumber);
         }
 
         @Override
         public View newView(Context context, Cursor arg1, ViewGroup parent) {
             return LayoutInflater.from(context).inflate(R.layout.item, parent, false);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // View.OnClickListener
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void onClick(View v) {
+        // 삭제 문구를 넣을까?
+        if (v instanceof TextView) {
+            int key = (Integer) v.getTag();
+            if (key != 0) {
+                boolean res = EmsDbHelper.delete(key);
+
+                if (res) {
+                    Cursor cr = EmsDbHelper.selectDesc();
+                    adapter.changeCursor(cr);
+                }
+            }
         }
     }
 }

@@ -4,16 +4,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <net.sarangnamu.common.fonts.RobotoLightTextView
+        android:id="@+id/emsNum"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center" >
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/dBg"
+        android:textColor="@android:color/white"
+        android:padding="5dp"
+        android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/emsNum"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+    <net.sarangnamu.common.fonts.RobotoLightTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="13dp"
+        android:padding="5dp" 
+        android:background="#d1d1d1"
+        android:text="@string/detailedInfo"/>
 
     <ListView
         android:id="@+id/list"

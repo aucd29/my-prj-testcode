@@ -11,6 +11,6 @@
 	<string name="emptyList">Empty list</string>
 	<string name="plsInputNum">Please insert EMS Number</string>
 	<string name="invalidEmsNum">Invalid EMS Number</string>
-	<string name="postOffice">Post Office : %s</string>
+	<string name="detailedInfo">Detailed information</string>
 	
 </resources>

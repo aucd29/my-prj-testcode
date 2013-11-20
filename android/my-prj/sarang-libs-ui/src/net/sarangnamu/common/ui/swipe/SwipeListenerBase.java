@@ -23,13 +23,21 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public abstract class SwipeListenerBase implements GestureDetector.OnGestureListener, View.OnTouchListener {
-    public static final int SWIPE_THRESHOLD = 300;
-    public static final int SWIPE_VELOCITY_THRESHOLD = 300;
+    public static int SWIPE_THRESHOLD = 300;
+    public static int SWIPE_VELOCITY_THRESHOLD = 300;
 
     protected GestureDetector detector;
 
     public SwipeListenerBase(Context context) {
         this.detector = new GestureDetector(context, this);
+    }
+
+    protected void setThreshold(int val) {
+        SWIPE_THRESHOLD = val;
+    }
+
+    protected void setVelocity(int val) {
+        SWIPE_VELOCITY_THRESHOLD = val;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -81,8 +89,7 @@ public abstract class SwipeListenerBase implements GestureDetector.OnGestureList
     }
 
     @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-            float distanceY) {
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         return false;
     }
 

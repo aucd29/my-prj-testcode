@@ -29,8 +29,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class Detail extends Activity {
-    public static final String EMS_NUM = "emsNum";
-
     private TextView emsNum;
     private ListView list;
     private Ems ems;
@@ -40,15 +38,24 @@ public class Detail extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String emsNumber = getIntent().getStringExtra(EMS_NUM);
+        String emsNumber = getIntent().getStringExtra(EmsDataManager.EMS_NUM);
         ems = EmsDataManager.getInstance().getEmsData(emsNumber);
 
         setContentView(R.layout.detail);
 
-        emsNum = (TextView) findViewById(R.id.emsNum);
-        list     = (ListView) findViewById(R.id.list);
-        adapter = new EmsHistory();
+        emsNum  = (TextView) findViewById(R.id.emsNum);
+        list    = (ListView) findViewById(R.id.list);
 
+        initLabel();
+        initListView();
+    }
+
+    private void initLabel() {
+        emsNum.setText(ems.emsNum);
+    }
+
+    private void initListView() {
+        adapter = new EmsHistory();
         list.setAdapter(adapter);
     }
 

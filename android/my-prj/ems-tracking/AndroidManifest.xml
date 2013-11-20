@@ -28,9 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity 
-            android:name=".Detail"/>
+        <activity
+            android:name=".Detail"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
     </application>
 
 </manifest>

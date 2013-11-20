@@ -61,6 +61,7 @@ public class BkCfg {
 
     public static void hideKeyboard(final Context context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
     }
 }
