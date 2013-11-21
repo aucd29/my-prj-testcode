@@ -52,7 +52,7 @@ public class Api {
 
         try {
             String res = http.submit(URL, params);
-            ems = new Ems(res);
+            ems = new Ems(res, num);
             //            ems.trace();
         } catch (Exception e) {
             DLog.e(TAG, "tracking", e);

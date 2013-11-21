@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public abstract class DlgBtnBase extends DlgBase implements View.OnClickListener {
+    protected int titleColor;
     protected Button left, right;
     protected TextView title;
     protected FrameLayout layout;
@@ -54,6 +55,10 @@ public abstract class DlgBtnBase extends DlgBase implements View.OnClickListener
 
         left.setOnClickListener(this);
         right.setOnClickListener(this);
+
+        if (titleColor != 0) {
+            title.setBackgroundColor(titleColor);
+        }
     }
 
     public void setOnButtonClickListener(boolean left, View.OnClickListener l) {
@@ -121,6 +126,10 @@ public abstract class DlgBtnBase extends DlgBase implements View.OnClickListener
         lp.height = height;
 
         layout.setLayoutParams(lp);
+    }
+
+    public void setTitleBackgroundColor(int color) {
+        titleColor = color;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

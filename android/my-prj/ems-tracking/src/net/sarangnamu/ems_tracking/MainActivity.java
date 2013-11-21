@@ -1,7 +1,25 @@
+/**
+ * Detail.java
+ * Copyright 2013 Burke Choi All rights reserved.
+ *             http://www.sarangnamu.net
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package net.sarangnamu.ems_tracking;
 
 import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.DLog;
+import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.common.ui.dlg.DlgBtnBase.DlgBtnListener;
 import net.sarangnamu.common.ui.dlg.DlgNormal;
@@ -83,12 +101,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                     @Override
                     protected Boolean doInBackground(Context... contexts) {
                         Ems ems = Api.tracking(num);
-                        if (ems == null || ems.emsNum == null || ems.emsNum.length() == 0) {
-                            errMsg = ems.errMsg;
-
-                            return false;
-                        }
-
                         return EmsDbHelper.insert(ems);
                     }
 
@@ -222,6 +234,10 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         }
     }
 
+    private int dpToPixelInt(int dp) {
+        return DimTool.dpToPixelInt(MainActivity.this, dp);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////
     //
     // ADAPTER
@@ -272,10 +288,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
             String statusValue = cr.getString(pos++);
             vh.status.setText(statusValue);
-            //            if (statusValue.equals("배달완료")) {
-            //                vh.status.setTextColor(0xff278736);
-            //            }
-
             vh.detail.setTag(new DetailType(emsNumber, vh.row));
             vh.detail.setOnClickListener(MainActivity.this);
 
@@ -318,10 +330,14 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                     }
                 });
                 dlg.show();
+                dlg.hideTitle();
+                dlg.setDialogSize(dpToPixelInt(330), -1);
             } else if (obj instanceof DetailType) {
-                DetailType type = (DetailType) obj;
+                final DetailType type = (DetailType) obj;
                 if (type != null) {
-                    ((AniBtnListView) getListView()).showAnimation(type.row);
+                    //((AniBtnListView) getListView()).showAnimation(type.row);
+                    //type.row.performClick();
+
                     showDetail(type.emsNum);
                 }
             }

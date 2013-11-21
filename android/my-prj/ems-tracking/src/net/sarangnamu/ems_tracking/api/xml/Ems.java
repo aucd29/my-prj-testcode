@@ -27,13 +27,14 @@ import net.sarangnamu.common.XPathParser;
 public class Ems extends XPathParser {
     private static final String TAG = "Ems";
 
-    public String emsNum;
+    public String emsNum, tmpNum;
     public ArrayList<EmsData> emsData = new ArrayList<EmsData>();
     public String errMsg;
 
-    public Ems(String ems) {
+    public Ems(String ems, String emsNum) {
         super();
 
+        tmpNum = emsNum.toUpperCase();
         loadXmlString(ems);
     }
 
@@ -124,6 +125,7 @@ public class Ems extends XPathParser {
 
         expr = "//rgist/text()";
         emsNum = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+
         if (emsNum == null || emsNum.length() == 0) {
             expr = "//message/text()";
             errMsg = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
@@ -132,6 +134,9 @@ public class Ems extends XPathParser {
             expr = "//error_code/text()";
             errMsg += xpath.evaluate(expr, document, XPathConstants.STRING).toString();
             errMsg += "]";
+
+            emsNum = tmpNum;
+            emsData.add(new EmsData());
         } else {
             for (int i=2; i<=count; ++i) {
                 emsData.add(new EmsData(i));
@@ -186,6 +191,13 @@ public class Ems extends XPathParser {
         public String status;
         public String office;
         public String detail;
+
+        public EmsData() {
+            date   = "";
+            status = "미등록";
+            office = "-";
+            detail = "-";
+        }
 
         public EmsData(int pos) throws Exception {
             String expr, prefix = "//xsyncData[" + pos + "]";

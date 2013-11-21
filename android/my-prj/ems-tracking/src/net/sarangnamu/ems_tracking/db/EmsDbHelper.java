@@ -55,7 +55,6 @@ public class EmsDbHelper extends DbHelperBase {
     }
 
     public static boolean insert(Ems ems) {
-
         ContentValues values = new ContentValues();
         values.put(Columns.EMS_NUM, ems.emsNum);
 

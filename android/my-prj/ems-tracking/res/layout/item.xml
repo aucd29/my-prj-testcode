@@ -69,7 +69,7 @@
             style="@style/btnLayout"
             android:layout_width="62dp"
             android:layout_height="match_parent"
-            android:background="#930000"
+            android:background="#cd2415"
             android:text="@string/delete"
             android:textColor="#ffffff" />
     </LinearLayout>
