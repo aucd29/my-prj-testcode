@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.common.ui.dlg;
 
+import net.sarangnamu.common.ui.R;
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
@@ -30,6 +31,12 @@ public class DlgNormal extends DlgBtnBase {
         super(context);
 
         this.layoutId = layoutId;
+    }
+
+    public DlgNormal(Context context) {
+        super(context);
+
+        this.layoutId = R.layout.dlg_normal;
     }
 
     @Override

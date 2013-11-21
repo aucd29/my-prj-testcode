@@ -61,7 +61,7 @@
             android:layout_width="62dp"
             android:layout_height="match_parent"
             android:background="#8c8c8c"
-            android:text="@string/delete"
+            android:text="@string/detail"
             android:textColor="#ffffff" />
 
         <TextView
@@ -69,7 +69,7 @@
             style="@style/btnLayout"
             android:layout_width="62dp"
             android:layout_height="match_parent"
-            android:background="#8c8c8c"
+            android:background="#930000"
             android:text="@string/delete"
             android:textColor="#ffffff" />
     </LinearLayout>

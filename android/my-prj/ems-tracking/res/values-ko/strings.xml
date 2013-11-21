@@ -7,10 +7,13 @@
     
     <string name="delete">삭제</string>
     <string name="add">등록 </string>
+    <string name="detail">상세정보</string>
     <string name="emsNumber">EMS/등기 번호 </string>
     <string name="emptyList">내용이 없습니다.</string>
 
     <string name="plsInputNum">EMS 번호를 입력하세요</string>
     <string name="invalidEmsNum">EMS 번호 형식과 맞지 않습니다.</string>
     <string name="detailedInfo">세부 정보</string>
+    <string name="deleted">삭제되었습니다.</string>
+    
 </resources>

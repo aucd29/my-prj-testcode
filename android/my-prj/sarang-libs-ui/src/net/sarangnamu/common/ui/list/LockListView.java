@@ -17,7 +17,6 @@
  */
 package net.sarangnamu.common.ui.list;
 
-import net.sarangnamu.common.DLog;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -51,11 +50,19 @@ public class LockListView extends ListView {
         if (lockScroll) {
             switch (ev.getAction()) {
             case MotionEvent.ACTION_UP:
-                DLog.d(TAG, "up");
+                //                DLog.d(TAG, "up");
                 if (listener != null) {
                     listener.up();
                 }
                 break;
+
+                //            case MotionEvent.ACTION_DOWN:
+                //                DLog.d(TAG, "down");
+                //                break;
+                //
+                //            case MotionEvent.ACTION_MOVE:
+                //                DLog.d(TAG, "move");
+                //                break;
             }
 
             return false;

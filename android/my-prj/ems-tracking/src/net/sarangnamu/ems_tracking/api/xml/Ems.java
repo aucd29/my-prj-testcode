@@ -169,8 +169,8 @@ public class Ems extends XPathParser {
 
         public EmsData(int pos) throws Exception {
             String expr, prefix = "//xsyncData[" + pos + "]";
-            expr = prefix + "/processDe/text()";
 
+            expr = prefix + "/processDe/text()";
             date = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
 
             expr = prefix + "//processSttus/text()";

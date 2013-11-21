@@ -6,11 +6,14 @@
     <string name="appName">&lt;b&gt;EMS&lt;/b&gt; Tracking</string>
     <string name="myid">dev <![CDATA["@"]]>aucd29</string>
         
+    <string name="delete">Delete</string>
     <string name="add">Add</string>
     <string name="emsNumber">EMS Number</string>
 	<string name="emptyList">Empty list</string>
 	<string name="plsInputNum">Please insert EMS Number</string>
 	<string name="invalidEmsNum">Invalid EMS Number</string>
 	<string name="detailedInfo">Detailed information</string>
+	<string name="deleted">Deleted</string>
+	<string name="detail">Detail</string>
 	
 </resources>

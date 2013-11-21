@@ -37,6 +37,7 @@
             android:layout_marginLeft="5dp"
             android:textSize="8dp"
             android:textColor="#7fffffff"
+            android:visibility="gone"
             android:text="@string/myid"/>
     </RelativeLayout>
 
@@ -63,7 +64,7 @@
             android:background="@drawable/btn_selector" />
     </LinearLayout>
 
-    <net.sarangnamu.common.ui.list.LockListView
+    <net.sarangnamu.common.ui.list.AniBtnListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
