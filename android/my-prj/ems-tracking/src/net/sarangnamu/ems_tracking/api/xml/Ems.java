@@ -29,6 +29,7 @@ public class Ems extends XPathParser {
 
     public String emsNum;
     public ArrayList<EmsData> emsData = new ArrayList<EmsData>();
+    public String errMsg;
 
     public Ems(String ems) {
         super();
@@ -104,7 +105,17 @@ public class Ems extends XPathParser {
             </xsyncData>
             </xsync>
 
+            // error
+            <?xml version='1.0' encoding="utf-8"?>
+            <xsync>
+            <xsyncData>
+            <error_code><![CDATA[ERR-001]]></error_code>
+            <message><![CDATA[조회결과가 없습니다.]]></message>
+            </xsyncData>
+            </xsync>
          */
+
+
         String expr;
         int count;
 
@@ -113,9 +124,18 @@ public class Ems extends XPathParser {
 
         expr = "//rgist/text()";
         emsNum = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+        if (emsNum == null || emsNum.length() == 0) {
+            expr = "//message/text()";
+            errMsg = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+            errMsg += " - [";
 
-        for (int i=2; i<=count; ++i) {
-            emsData.add(new EmsData(i));
+            expr = "//error_code/text()";
+            errMsg += xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+            errMsg += "]";
+        } else {
+            for (int i=2; i<=count; ++i) {
+                emsData.add(new EmsData(i));
+            }
         }
     }
 

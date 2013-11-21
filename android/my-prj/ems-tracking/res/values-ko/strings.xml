@@ -15,5 +15,6 @@
     <string name="invalidEmsNum">EMS 번호 형식과 맞지 않습니다.</string>
     <string name="detailedInfo">세부 정보</string>
     <string name="deleted">삭제되었습니다.</string>
-    
+    <string name="deleteMsg">삭제 하시겠습니까?</string>
+    <string name="insertErrorMsg">입력시 오류가 발생하였습니다.</string>
 </resources>

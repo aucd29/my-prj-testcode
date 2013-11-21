@@ -3,6 +3,7 @@ package net.sarangnamu.ems_tracking;
 import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.sqlite.DbManager;
+import net.sarangnamu.common.ui.dlg.DlgBtnBase.DlgBtnListener;
 import net.sarangnamu.common.ui.dlg.DlgNormal;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
 import net.sarangnamu.common.ui.list.AniBtnListView;
@@ -71,6 +72,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 }
 
                 new AsyncTask<Context, Void, Boolean>() {
+                    String errMsg;
+
                     @Override
                     protected void onPreExecute() {
                         BkCfg.hideKeyboard(MainActivity.this);
@@ -80,6 +83,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                     @Override
                     protected Boolean doInBackground(Context... contexts) {
                         Ems ems = Api.tracking(num);
+                        if (ems == null || ems.emsNum == null || ems.emsNum.length() == 0) {
+                            errMsg = ems.errMsg;
+
+                            return false;
+                        }
 
                         return EmsDbHelper.insert(ems);
                     }
@@ -92,6 +100,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                         if (result) {
                             Cursor cr = EmsDbHelper.selectDesc();
                             adapter.changeCursor(cr);
+                        } else {
+                            showPopup(errMsg);
                         }
                     }
                 }.execute(getApplicationContext());
@@ -125,10 +135,14 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
                     while (cr.moveToNext()) {
                         String num = cr.getString(0);
-                        Ems ems = Api.tracking(num);
-                        EmsDataManager.getInstance().setEmsData(num, ems);
+                        String status = cr.getString(2);
 
-                        EmsDbHelper.update(cr.getInt(1), ems);
+                        // 배달완료된 항목은 첫 로딩시 체크하지 않는다.
+                        if (!status.equals("배달완료")) {
+                            Ems ems = Api.tracking(num);
+                            EmsDataManager.getInstance().setEmsData(num, ems);
+                            EmsDbHelper.update(cr.getInt(1), ems);
+                        }
                     }
                 } catch (Exception e) {
                     DLog.e(TAG, "initData", e);
@@ -141,7 +155,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
             @Override
             protected void onPostExecute(Boolean result) {
-                dlg.dismiss();
+                hideProgress();
                 initListView();
             }
         }.execute(getApplicationContext());
@@ -288,15 +302,22 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         if (v instanceof RelativeLayout) {
             ((AniBtnListView) getListView()).showAnimation(v);
         } else if (v instanceof TextView) {
-            Object obj = v.getTag();
+            final Object obj = v.getTag();
 
             if (obj instanceof Integer) {
                 DlgNormal dlg = new DlgNormal(MainActivity.this);
                 dlg.setCancelable(false);
-                int id = (Integer) obj;
-                if (id != 0) {
-                    deleteItem(id);
-                }
+                dlg.setMessage(R.string.deleteMsg);
+                dlg.setOnBtnListener(new DlgBtnListener() {
+                    @Override
+                    public void ok() {
+                        int id = (Integer) obj;
+                        if (id != 0) {
+                            deleteItem(id);
+                        }
+                    }
+                });
+                dlg.show();
             } else if (obj instanceof DetailType) {
                 DetailType type = (DetailType) obj;
                 if (type != null) {

@@ -46,7 +46,7 @@ public class EmsDbHelper extends DbHelperBase {
     }
 
     public static Cursor select() {
-        String[] fields = new String[] {Columns.EMS_NUM, Columns._ID};
+        String[] fields = new String[] {Columns.EMS_NUM, Columns._ID, Columns.STATUS};
         return DbManager.getInstance().query(Columns.TABLE, fields, null);
     }
 
@@ -55,6 +55,7 @@ public class EmsDbHelper extends DbHelperBase {
     }
 
     public static boolean insert(Ems ems) {
+
         ContentValues values = new ContentValues();
         values.put(Columns.EMS_NUM, ems.emsNum);
 

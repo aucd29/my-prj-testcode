@@ -15,5 +15,6 @@
 	<string name="detailedInfo">Detailed information</string>
 	<string name="deleted">Deleted</string>
 	<string name="detail">Detail</string>
-	
+	<string name="deleteMsg">Sure that you want to delete?</string>
+	<string name="insertErrorMsg">Input Error</string>
 </resources>

@@ -86,7 +86,7 @@ public abstract class DlgBtnBase extends DlgBase implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == left.getId()) {
+        if (v.getId() == right.getId()) {
             if (listener != null) {
                 listener.ok();
             }
