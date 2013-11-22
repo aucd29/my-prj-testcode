@@ -19,6 +19,7 @@ package net.sarangnamu.ems_tracking.db;
 
 import java.util.HashMap;
 
+import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.sqlite.DbHelperBase;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.ems_tracking.api.xml.Ems;
@@ -29,6 +30,8 @@ import android.database.Cursor;
 import android.provider.BaseColumns;
 
 public class EmsDbHelper extends DbHelperBase {
+    private static final String TAG = "EmsDbHelper";
+
     private static final String DB_NAME = "ems.db";
     private static final int VERSION = 1;
     public static final String[] FIELDS = new String[] {
@@ -55,37 +58,64 @@ public class EmsDbHelper extends DbHelperBase {
     }
 
     public static boolean insert(Ems ems) {
-        ContentValues values = new ContentValues();
-        values.put(Columns.EMS_NUM, ems.emsNum);
+        try {
+            ContentValues values = new ContentValues();
+            values.put(Columns.EMS_NUM, ems.emsNum);
 
-        EmsData emsData = ems.getLastEmsData();
-        values.put(Columns.DATE, emsData.date);
-        values.put(Columns.STATUS, emsData.status);
-        values.put(Columns.OFFICE, emsData.office);
-        values.put(Columns.DETAIL, emsData.detail);
+            EmsData emsData = ems.getLastEmsData();
+            values.put(Columns.DATE, emsData.date);
+            values.put(Columns.STATUS, emsData.status);
+            values.put(Columns.OFFICE, emsData.office);
+            values.put(Columns.DETAIL, emsData.detail);
 
-        return DbManager.getInstance().insert(Columns.TABLE, values) > 0 ? true : false;
+            return DbManager.getInstance().insert(Columns.TABLE, values) > 0 ? true : false;
+        } catch (NullPointerException e) {
+            DLog.e(TAG, "insert", e);
+        } catch (Exception e) {
+            DLog.e(TAG, "insert", e);
+        }
+
+        return false;
     }
 
-    public static void update(int id, Ems ems) {
-        ContentValues values = new ContentValues();
+    public static boolean update(int id, Ems ems) {
+        try {
+            ContentValues values = new ContentValues();
 
-        EmsData emsData = ems.getLastEmsData();
-        values.put(Columns.DATE, emsData.date);
-        values.put(Columns.STATUS, emsData.status);
-        values.put(Columns.OFFICE, emsData.office);
-        values.put(Columns.DETAIL, emsData.detail);
+            EmsData emsData = ems.getLastEmsData();
+            values.put(Columns.DATE, emsData.date);
+            values.put(Columns.STATUS, emsData.status);
+            values.put(Columns.OFFICE, emsData.office);
+            values.put(Columns.DETAIL, emsData.detail);
 
-        if (id == 0) {
-            DbManager.getInstance().update(Columns.TABLE, values, Columns.EMS_NUM + "='" + id + "'");
-        } else {
-            DbManager.getInstance().update(Columns.TABLE, values, "_id=" + id);
+            int res;
+            if (id == 0) {
+                res = DbManager.getInstance().update(Columns.TABLE, values, Columns.EMS_NUM + "='" + id + "'");
+            } else {
+                res = DbManager.getInstance().update(Columns.TABLE, values, "_id=" + id);
+            }
+
+            return res > 0 ? true : false;
+        } catch (NullPointerException e) {
+            DLog.e(TAG, "update", e);
+        } catch (Exception e) {
+            DLog.e(TAG, "update", e);
         }
+
+        return false;
     }
 
     public static boolean delete(int id) {
-        int res = DbManager.getInstance().delete(Columns.TABLE, "_id=" + id);
-        return res > 0 ? true : false;
+        try {
+            int res = DbManager.getInstance().delete(Columns.TABLE, "_id=" + id);
+            return res > 0 ? true : false;
+        } catch (NullPointerException e) {
+            DLog.e(TAG, "delete", e);
+        } catch (Exception e) {
+            DLog.e(TAG, "delete", e);
+        }
+
+        return false;
     }
 
     public static final class Columns implements BaseColumns {
