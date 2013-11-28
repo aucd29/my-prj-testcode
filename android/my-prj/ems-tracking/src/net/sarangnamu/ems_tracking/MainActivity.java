@@ -52,7 +52,7 @@ import android.widget.TextView;
 public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
     private static final int SLIDING_MARGIN = 124;
-    private static final String MY_AD_UNIT_ID = "a15296eb58325b9";
+
     private Button add;
 
     private TextView title, empty;
