@@ -40,6 +40,9 @@ public class Detail extends Activity {
 
         String emsNumber = getIntent().getStringExtra(EmsDataManager.EMS_NUM);
         ems = EmsDataManager.getInstance().getEmsData(emsNumber);
+        if (ems == null) {
+            finish();
+        }
 
         setContentView(R.layout.detail);
 
@@ -51,6 +54,10 @@ public class Detail extends Activity {
     }
 
     private void initLabel() {
+        if (ems == null) {
+            return ;
+        }
+
         emsNum.setText(ems.emsNum);
     }
 

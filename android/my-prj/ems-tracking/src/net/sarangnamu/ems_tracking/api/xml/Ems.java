@@ -205,13 +205,13 @@ public class Ems extends XPathParser {
             expr = prefix + "/processDe/text()";
             date = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
 
-            expr = prefix + "//processSttus/text()";
+            expr = prefix + "/processSttus/text()";
             status = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
 
-            expr = prefix + "//nowLc/text()";
+            expr = prefix + "/nowLc/text()";
             office = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
 
-            expr = prefix + "//detailDc/text()";
+            expr = prefix + "/detailDc/text()";
             detail = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
         }
 

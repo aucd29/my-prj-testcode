@@ -44,6 +44,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,12 +52,17 @@ import android.widget.TextView;
 public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
     private static final int SLIDING_MARGIN = 124;
+    private static final String MY_AD_UNIT_ID = "a15296eb58325b9";
 
+    //    private AdView adView;
     private Button add;
+
     private TextView title, empty;
     private EditText emsNum;
     private EmsAdapter adapter;
+    private ImageButton refersh;
     private ProgressDialog dlg;
+    private LinearLayout adLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +73,19 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         title    = (TextView) findViewById(R.id.title);
         empty    = (TextView) findViewById(android.R.id.empty);
         emsNum   = (EditText) findViewById(R.id.emsNum);
+        refersh  = (ImageButton) findViewById(R.id.refersh);
+        adLayout = (LinearLayout) findViewById(R.id.adLayout);
 
         initLabel();
+        initAdView();
         initData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        //adView.destroy();
+
+        super.onDestroy();
     }
 
     private void initLabel() {
@@ -119,6 +135,19 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 }.execute(getApplicationContext());
             }
         });
+
+        refersh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadEmsData();
+            }
+        });
+    }
+
+    private void initAdView() {
+        //        adView = new AdView(this, AdSize.BANNER, MY_AD_UNIT_ID);
+        //        adLayout.addView(adView);
+        //        adView.loadAd(new AdRequest());
     }
 
     @Override
