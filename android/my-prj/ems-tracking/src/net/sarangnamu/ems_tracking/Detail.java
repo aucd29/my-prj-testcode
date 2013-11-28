@@ -19,20 +19,29 @@ package net.sarangnamu.ems_tracking;
 
 import net.sarangnamu.ems_tracking.api.xml.Ems;
 import net.sarangnamu.ems_tracking.api.xml.Ems.EmsData;
+import net.sarangnamu.ems_tracking.cfg.Config;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
+
 public class Detail extends Activity {
-    private TextView emsNum;
-    private ListView list;
     private Ems ems;
     private EmsHistory adapter;
+
+    private AdView adView;
+    private TextView emsNum;
+    private ListView list;
+    private LinearLayout adLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +55,20 @@ public class Detail extends Activity {
 
         setContentView(R.layout.detail);
 
-        emsNum  = (TextView) findViewById(R.id.emsNum);
-        list    = (ListView) findViewById(R.id.list);
+        emsNum   = (TextView) findViewById(R.id.emsNum);
+        list     = (ListView) findViewById(R.id.list);
+        adLayout = (LinearLayout) findViewById(R.id.adLayout);
 
         initLabel();
+        initAdView();
         initListView();
+    }
+
+    @Override
+    protected void onDestroy() {
+        adView.destroy();
+
+        super.onDestroy();
     }
 
     private void initLabel() {
@@ -59,6 +77,12 @@ public class Detail extends Activity {
         }
 
         emsNum.setText(ems.emsNum);
+    }
+
+    private void initAdView() {
+        adView = new AdView(this, AdSize.BANNER, Config.ADMOB_ID);
+        adLayout.addView(adView);
+        adView.loadAd(new AdRequest());
     }
 
     private void initListView() {
