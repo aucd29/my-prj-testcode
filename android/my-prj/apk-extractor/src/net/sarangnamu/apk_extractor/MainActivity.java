@@ -16,11 +16,8 @@ import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.ui.MenuManager;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
+import net.sarangnamu.common.ui.list.AniBtnListView;
 import net.sarangnamu.common.ui.list.LockListView;
-import net.sarangnamu.common.ui.list.LockListView.TouchUpListener;
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
-import android.animation.ObjectAnimator;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -273,18 +270,23 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         adapter = new AppAdapter();
         setListAdapter(adapter);
 
-        ((LockListView) getListView()).setOnTouchListener(new TouchUpListener() {
-            @Override
-            public void up() {
-                if (clickedView != null) {
-                    PosHolder  ph = (PosHolder) clickedView.getTag();
-                    showAnimation(clickedView, ph.position);
-                    clickedView = null;
+        AniBtnListView list = (AniBtnListView) getListView();
+        list.setSlidingMargin(SLIDING_MARGIN);
+        list.setBtnLayoutId(R.id.btnLayout);
+        list.setRowId(R.id.row);
 
-                    ((LockListView) getListView()).setLock();
-                }
-            }
-        });
+        //        ((LockListView) getListView()).setOnTouchListener(new TouchUpListener() {
+        //            @Override
+        //            public void up() {
+        //                if (clickedView != null) {
+        //                    PosHolder  ph = (PosHolder) clickedView.getTag();
+        //                    showAnimation(clickedView, ph.position);
+        //                    clickedView = null;
+        //
+        //                    ((LockListView) getListView()).setLock();
+        //                }
+        //            }
+        //        });
     }
 
     private void sendToSd(int position) {
@@ -366,40 +368,40 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         dlg.setTransparentBaseLayout();
     }
 
-    private void showAnimation(final View view, int position) {
-        final int moveX = dpToPixelInt(SLIDING_MARGIN);
-        final ViewHolder vh = (ViewHolder)((RelativeLayout) view.getParent()).getTag();
-        final int endX;
-
-        if (!checkedList[position]) {
-            endX = moveX * -1;
-            checkedList[position] = true;
-        } else {
-            endX = 0;
-            checkedList[position] = false;
-        }
-
-        ObjectAnimator.ofFloat(vh.btnLayout, "translationX", endX).start();
-        final ObjectAnimator objAni = ObjectAnimator.ofFloat(view, "translationX", endX);
-        objAni.addListener(new AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                view.setClickable(false);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                objAni.removeAllListeners();
-                view.setClickable(true);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) { }
-            @Override
-            public void onAnimationCancel(Animator animation) { }
-        });
-        objAni.start();
-    }
+    //    private void showAnimation(final View view, int position) {
+    //        final int moveX = dpToPixelInt(SLIDING_MARGIN);
+    //        final ViewHolder vh = (ViewHolder)((RelativeLayout) view.getParent()).getTag();
+    //        final int endX;
+    //
+    //        if (!checkedList[position]) {
+    //            endX = moveX * -1;
+    //            checkedList[position] = true;
+    //        } else {
+    //            endX = 0;
+    //            checkedList[position] = false;
+    //        }
+    //
+    //        ObjectAnimator.ofFloat(vh.btnLayout, "translationX", endX).start();
+    //        final ObjectAnimator objAni = ObjectAnimator.ofFloat(view, "translationX", endX);
+    //        objAni.addListener(new AnimatorListener() {
+    //            @Override
+    //            public void onAnimationStart(Animator animation) {
+    //                view.setClickable(false);
+    //            }
+    //
+    //            @Override
+    //            public void onAnimationEnd(Animator animation) {
+    //                objAni.removeAllListeners();
+    //                view.setClickable(true);
+    //            }
+    //
+    //            @Override
+    //            public void onAnimationRepeat(Animator animation) { }
+    //            @Override
+    //            public void onAnimationCancel(Animator animation) { }
+    //        });
+    //        objAni.start();
+    //    }
 
     private int dpToPixelInt(int dp) {
         return DimTool.dpToPixelInt(getApplicationContext(), dp);
@@ -519,10 +521,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
             if (clickedView == null) {
                 clickedView = v;
-                showAnimation(v, ph.position);
+                ((AniBtnListView) getListView()).showAnimation(v);
+                //                showAnimation(v, ph.position);
             } else {
                 ph = (PosHolder) clickedView.getTag();
-                showAnimation(clickedView, ph.position);
+                ((AniBtnListView) getListView()).showAnimation(clickedView);
+                //                showAnimation(clickedView, ph.position);
                 clickedView = null;
             }
         } else {
