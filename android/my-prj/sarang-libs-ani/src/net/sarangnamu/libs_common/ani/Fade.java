@@ -22,7 +22,7 @@ import android.animation.ObjectAnimator;
 import android.view.View;
 
 public class Fade {
-    private static final String TAG = "ChangeFade";
+    private static final String TAG = "Fade";
 
     public static void animate(View hideView, View showView, AnimatorListener l) {
         if (hideView == null || showView == null) {

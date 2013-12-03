@@ -1,3 +1,20 @@
+/*
+ * MainActivity.java
+ * Copyright 2013 Burke.Choi All rights reserved.
+ *             http://www.sarangnamu.net
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package net.sarangnamu.apk_extractor;
 
 import java.io.File;
@@ -17,7 +34,6 @@ import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.ui.MenuManager;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
 import net.sarangnamu.common.ui.list.AniBtnListView;
-import net.sarangnamu.common.ui.list.LockListView;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -56,7 +72,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final int ET_MENU   = 2;
 
     private boolean sendEmail = false, searchedList = false;
-    private boolean[] checkedList;
     private TextView title, path, dev, tvSearch;
     private EditText search;
     private AppAdapter adapter;
@@ -65,8 +80,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private ProgressDialog dlg;
     private ArrayList<PkgInfo> data;
     private ArrayList<PkgInfo> searchedData;
-
-    private View clickedView = null;
 
     private Handler handler = new Handler() {
         @Override
@@ -266,7 +279,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     private void initListView() {
-        checkedList = new boolean[data.size()];
+        //checkedList = new boolean[data.size()];
         adapter = new AppAdapter();
         setListAdapter(adapter);
 
@@ -274,19 +287,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         list.setSlidingMargin(SLIDING_MARGIN);
         list.setBtnLayoutId(R.id.btnLayout);
         list.setRowId(R.id.row);
-
-        //        ((LockListView) getListView()).setOnTouchListener(new TouchUpListener() {
-        //            @Override
-        //            public void up() {
-        //                if (clickedView != null) {
-        //                    PosHolder  ph = (PosHolder) clickedView.getTag();
-        //                    showAnimation(clickedView, ph.position);
-        //                    clickedView = null;
-        //
-        //                    ((LockListView) getListView()).setLock();
-        //                }
-        //            }
-        //        });
     }
 
     private void sendToSd(int position) {
@@ -367,41 +367,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         dlg.show();
         dlg.setTransparentBaseLayout();
     }
-
-    //    private void showAnimation(final View view, int position) {
-    //        final int moveX = dpToPixelInt(SLIDING_MARGIN);
-    //        final ViewHolder vh = (ViewHolder)((RelativeLayout) view.getParent()).getTag();
-    //        final int endX;
-    //
-    //        if (!checkedList[position]) {
-    //            endX = moveX * -1;
-    //            checkedList[position] = true;
-    //        } else {
-    //            endX = 0;
-    //            checkedList[position] = false;
-    //        }
-    //
-    //        ObjectAnimator.ofFloat(vh.btnLayout, "translationX", endX).start();
-    //        final ObjectAnimator objAni = ObjectAnimator.ofFloat(view, "translationX", endX);
-    //        objAni.addListener(new AnimatorListener() {
-    //            @Override
-    //            public void onAnimationStart(Animator animation) {
-    //                view.setClickable(false);
-    //            }
-    //
-    //            @Override
-    //            public void onAnimationEnd(Animator animation) {
-    //                objAni.removeAllListeners();
-    //                view.setClickable(true);
-    //            }
-    //
-    //            @Override
-    //            public void onAnimationRepeat(Animator animation) { }
-    //            @Override
-    //            public void onAnimationCancel(Animator animation) { }
-    //        });
-    //        objAni.start();
-    //    }
 
     private int dpToPixelInt(int dp) {
         return DimTool.dpToPixelInt(getApplicationContext(), dp);
@@ -517,18 +482,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         PosHolder ph = (PosHolder) v.getTag();
 
         if (ph.type == ET_MENU) {
-            ((LockListView) getListView()).setLock();
-
-            if (clickedView == null) {
-                clickedView = v;
-                ((AniBtnListView) getListView()).showAnimation(v);
-                //                showAnimation(v, ph.position);
-            } else {
-                ph = (PosHolder) clickedView.getTag();
-                ((AniBtnListView) getListView()).showAnimation(clickedView);
-                //                showAnimation(clickedView, ph.position);
-                clickedView = null;
-            }
+            ((AniBtnListView) getListView()).showAnimation(v);
         } else {
             sendEmail = ph.type == 0 ? false : true;
             sendToSd(ph.position);
