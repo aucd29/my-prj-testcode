@@ -16,10 +16,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.view.GestureDetector;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -33,15 +37,84 @@ public class MainActivity extends FragmentActivity {
     private RadioGroup group;
     private SlidingPaneLayout sliding;
     private ProgressDialog popup;
+    private GestureDetector detector;
+    public static int SWIPE_THRESHOLD = 300;
+    public static int SWIPE_VELOCITY_THRESHOLD = 300;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        detector = new GestureDetector(this, new GestureDetector.OnGestureListener() {
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent e) {
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                return true;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                try {
+                    float diffY = e2.getY() - e1.getY();
+                    float diffX = e2.getX() - e1.getX();
+
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffX > 0) {
+                                onSwipeRight();
+
+                                return true;
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                return true;
+            }
+
+            protected void onSwipeRight() {
+                onBackPressed();
+                Navigator.getInstance(MainActivity.this).setCurrentName(Navigator.STUDY);
+            }
+
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return false;
+            }
+        });
+
         login   = (TextView) findViewById(R.id.login);
         group   = (RadioGroup) findViewById(R.id.rdoMenu);
         sliding = (SlidingPaneLayout) findViewById(R.id.sliding);
+
+        sliding.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Fragment ft = Navigator.getInstance(MainActivity.this).getCurrent();
+                if (ft instanceof StudyDetailFrgmt) {
+                    detector.onTouchEvent(event);
+
+                    return true;
+                }
+
+                return false;
+            }
+        });
 
         initNaviation();
         initMenu();

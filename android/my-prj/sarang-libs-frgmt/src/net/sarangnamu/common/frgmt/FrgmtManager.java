@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.common.frgmt;
 
+import java.util.ArrayDeque;
 import java.util.HashMap;
 
 import net.sarangnamu.common.DLog;
@@ -33,6 +34,7 @@ public abstract class FrgmtManager {
     protected FragmentManager fm;
     protected HashMap<String, Class<?>> classes;
     protected HashMap<String, Fragment> frgmts;
+    protected ArrayDeque<String> history;
 
     public FrgmtManager() {
         setMap();
@@ -54,6 +56,10 @@ public abstract class FrgmtManager {
 
         if (frgmts == null) {
             frgmts = new HashMap<String, Fragment>();
+        }
+
+        if (history == null) {
+            history = new ArrayDeque<String>();
         }
     }
 
@@ -89,6 +95,7 @@ public abstract class FrgmtManager {
         }
 
         currentName = baseName = name;
+        history.add(baseName);
         trans.add(baseLayoutId, frgmt);
         trans.commit();
     }
@@ -123,6 +130,9 @@ public abstract class FrgmtManager {
         }
 
         currentName = name;
+        setTransition(trans);
+        history.add(name);
+
         trans.replace(baseLayoutId, frgmt);
         trans.addToBackStack(null);
         trans.commit();
@@ -142,6 +152,10 @@ public abstract class FrgmtManager {
         }
 
         currentName = baseName;
+    }
+
+    public void setCurrentName(String name) {
+        currentName = name;
     }
 
     public Fragment getCurrent() {
@@ -164,5 +178,9 @@ public abstract class FrgmtManager {
         if (fm != null) {
             fm.popBackStack();
         }
+    }
+
+    protected void setTransition(FragmentTransaction trans) {
+        trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
     }
 }
