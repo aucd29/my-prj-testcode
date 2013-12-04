@@ -28,8 +28,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class CalcDateActivity extends Activity {
-    private static final String TAG = "CalcDateActivity";
+public class DateActivity extends Activity {
+    private static final String TAG = "DateActivity";
     private static final int DATE_DIALOG_ID = 1;
 
     private long currentTime;
@@ -46,10 +46,11 @@ public class CalcDateActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        add     = (Button)findViewById(R.id.add);
         message = (EditText)findViewById(R.id.message);
-        date = (TextView)findViewById(R.id.date);
-        list = (ListView)findViewById(R.id.list);
-        add  = (Button)findViewById(R.id.add);
+        date    = (TextView)findViewById(R.id.date);
+        list    = (ListView)findViewById(R.id.list);
+
         refresh     = (Button)findViewById(R.id.refresh);
         preManager  = new PreferenceManager(this);
         adapter     = new DateAdapter(this);
@@ -211,7 +212,7 @@ public class CalcDateActivity extends Activity {
                 convertView.setOnLongClickListener(new OnLongClickListener() {
                     @Override
                     public boolean onLongClick(final View v) {
-                        new AlertDialog.Builder(CalcDateActivity.this)
+                        new AlertDialog.Builder(DateActivity.this)
                         .setMessage(R.string.want_remove)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override

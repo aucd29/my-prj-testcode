@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/row"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp" >
+
+        <!-- net.sarangnamu.common.fonts.RobotoLight -->
+
+        <TextView
+            android:id="@+id/emsNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:textColor="@android:color/black"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <net.sarangnamu.common.fonts.RobotoLightTextView
+            android:id="@+id/office"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/emsNum"
+            android:layout_marginTop="7dp"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="#ff4100"
+            android:textSize="16sp" />
+
+        <net.sarangnamu.common.fonts.RobotoLightTextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/status"
+            android:layout_marginTop="10dp"
+            android:textSize="11sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/btnLayout"
+        android:layout_width="124dp"
+        android:layout_height="62dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="-124dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/detail"
+            style="@style/btnLayout"
+            android:layout_width="62dp"
+            android:layout_height="match_parent"
+            android:background="#acacac"
+            android:text="@string/detail"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/delete"
+            style="@style/btnLayout"
+            android:layout_width="62dp"
+            android:layout_height="match_parent"
+            android:background="#ed594e"
+            android:text="@string/delete"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
+</RelativeLayout>
