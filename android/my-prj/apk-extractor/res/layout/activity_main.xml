@@ -44,11 +44,10 @@
 
         <ImageButton
             android:id="@+id/menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:background="@null"
+            android:background="@drawable/btn_bgcolor_selector"
             android:layout_centerVertical="true"
             android:src="@drawable/icon_menu" />
     </RelativeLayout>

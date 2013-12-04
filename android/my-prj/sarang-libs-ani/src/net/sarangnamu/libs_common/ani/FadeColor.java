@@ -12,9 +12,10 @@ import android.content.res.Resources;
 import android.view.View;
 
 public class FadeColor {
+    private static final int DURATION = 500;
+
     public static void startResource(View view, int fRes, int sRes, AnimatorListener l) {
-        Resources res = view.getContext().getResources();
-        start(view, res.getColor(fRes), res.getColor(sRes), l);
+        startResource(view, fRes, sRes, DURATION, l);
     }
 
     public static void startResource(View view, int fRes, int sRes, int duration, AnimatorListener l) {
@@ -23,7 +24,7 @@ public class FadeColor {
     }
 
     public static void start(View view, int fColor, int sColor, AnimatorListener l) {
-        start(view, fColor, sColor, 500, l);
+        start(view, fColor, sColor, DURATION, l);
     }
 
     public static void start(View view, int fColor, int sColor, int duration, AnimatorListener l) {
@@ -32,7 +33,7 @@ public class FadeColor {
         }
 
         ObjectAnimator colorFade = ObjectAnimator.ofObject(
-                view, "backgroundColor", new ArgbEvaluator(),  fColor, sColor);
+                view, "backgroundColor", new ArgbEvaluator(), fColor, sColor);
         colorFade.setDuration(duration);
         colorFade.start();
     }
