@@ -24,7 +24,12 @@ import android.widget.TextView;
 /**
  * {@code
  * <pre>
-
+    <net.sarangnamu.common.fonts.RobotoLightTextView
+        android:id="@+id/id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sarangnamu"
+        />
  * </pre>}
  * 
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>

@@ -29,7 +29,27 @@ import android.view.View;
 /**
  * {@code
  * <pre>
+    - xml
+    <net.sarangnamu.common.ui.list.AniBtnListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:drawSelectorOnTop="false" />
 
+    - code
+    private static final int SLIDING_MARGIN = 130;
+
+    AniBtnListView list = (AniBtnListView) getListView();
+    list.setSlidingMargin(SLIDING_MARGIN);
+    list.setBtnLayoutId(R.id.btnLayout);
+    list.setRowId(R.id.row);
+
+    - row
+    holder.row.setOnClickListener(MainActivity.this);
+
+    - click
+    ((AniBtnListView) getListView()).showAnimation(v);
  * </pre>}
  * 
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>

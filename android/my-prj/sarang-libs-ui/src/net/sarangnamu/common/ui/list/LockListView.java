@@ -25,7 +25,23 @@ import android.widget.ListView;
 /**
  * {@code
  * <pre>
+    - xml
+    <net.sarangnamu.common.ui.list.LockListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:drawSelectorOnTop="false" />
 
+    - code
+    LockListView list = (LockListView) findViewById(R.id.list);
+    list.setOnTouchListener(new TouchUpListener() {
+        public void up() {
+
+        }
+    });
+
+    list.setLock();
  * </pre>}
  * 
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>

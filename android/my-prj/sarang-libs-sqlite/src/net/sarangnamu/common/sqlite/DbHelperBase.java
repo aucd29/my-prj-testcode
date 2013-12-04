@@ -26,7 +26,93 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * {@code
  * <pre>
+    public class TestDbHelper extends DbHelperBase {
+        private static final String TAG = "TestDbHelper";
 
+        private static final String DB_NAME = "db.db";
+        private static final int VERSION = 1;
+        public static final String[] FIELDS = new String[] {
+            Columns.DATE,
+            Columns.DETAIL
+        };
+
+        public EmsDbHelper(Context context) {
+            super(context, DB_NAME, VERSION);
+
+            tables = new HashMap<String, String>();
+            tables.put(Columns.TABLE, Columns.CREATE);
+        }
+
+        public static Cursor select() {
+            String[] fields = new String[] {Columns._ID, Columns.DATE};
+            return DbManager.getInstance().query(Columns.TABLE, fields, null);
+        }
+
+        public static Cursor selectDesc() {
+            return DbManager.getInstance().query(Columns.TABLE, null, null, "_id DESC");
+        }
+
+        public static boolean insert() {
+            try {
+                ContentValues values = new ContentValues();
+
+                values.put(Columns.DATE, "");
+                values.put(Columns.DETAIL, "");
+
+                return DbManager.getInstance().insert(Columns.TABLE, values) > 0 ? true : false;
+            } catch (NullPointerException e) {
+                DLog.e(TAG, "insert", e);
+            } catch (Exception e) {
+                DLog.e(TAG, "insert", e);
+            }
+
+            return false;
+        }
+
+        public static boolean update(int id, Ems ems) {
+            try {
+                ContentValues values = new ContentValues();
+
+                values.put(Columns.DATE, "");
+                values.put(Columns.DETAIL, "");
+
+                res = DbManager.getInstance().update(Columns.TABLE, values, "_id=" + id);
+
+                return res > 0 ? true : false;
+            } catch (NullPointerException e) {
+                DLog.e(TAG, "update", e);
+            } catch (Exception e) {
+                DLog.e(TAG, "update", e);
+            }
+
+            return false;
+        }
+
+        public static boolean delete(int id) {
+            try {
+                int res = DbManager.getInstance().delete(Columns.TABLE, "_id=" + id);
+                return res > 0 ? true : false;
+            } catch (NullPointerException e) {
+                DLog.e(TAG, "delete", e);
+            } catch (Exception e) {
+                DLog.e(TAG, "delete", e);
+            }
+
+            return false;
+        }
+
+        public static final class Columns implements BaseColumns {
+            public static final String DATE     = "date";
+            public static final String DETAIL   = "detail";
+
+            public static final String TABLE = "ems";
+            public static final String CREATE = "CREATE TABLE " + TABLE + "("
+                    + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + DATE + " TEXT NOT NULL, "
+                    + DETAIL + " TEXT NOT NULL"
+                    + ");";
+        }
+    }
  * </pre>}
  * 
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
