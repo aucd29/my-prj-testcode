@@ -33,10 +33,8 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class DbManager {
     private static final String TAG = "DbManager";
-    //private static final String DB = "db.db";
     private static DbManager inst;
 
-    //private int version = 1;
     protected SQLiteDatabase db;
     protected DbHelperBase helper;
 
@@ -79,50 +77,14 @@ public class DbManager {
     }
 
     public long insert(String table, ContentValues inputValues) {
-        long res = 0;
-
-        db.beginTransaction();
-        try {
-            res = db.insert(table, null, inputValues);
-            db.setTransactionSuccessful();
-        } catch (Exception e) {
-            DLog.e(TAG, "insert", e);
-        } finally {
-            db.endTransaction();
-        }
-
-        return res;
+        return db.insert(table, null, inputValues);
     }
 
     public int update(String table, ContentValues inputValues, String where) {
-        int res = 0;
-
-        db.beginTransaction();
-        try {
-            res = db.update(table, inputValues, where, null);
-            db.setTransactionSuccessful();
-        } catch (Exception e) {
-            DLog.e(TAG, "insert", e);
-        } finally {
-            db.endTransaction();
-        }
-
-        return res;
+        return db.update(table, inputValues, where, null);
     }
 
     public int delete(String table, String where) {
-        int res = 0;
-
-        db.beginTransaction();
-        try {
-            res = db.delete(table, where, null);
-            db.setTransactionSuccessful();
-        } catch (Exception e) {
-            DLog.e(TAG, "delete", e);
-        } finally {
-            db.endTransaction();
-        }
-
-        return res;
+        return db.delete(table, where, null);
     }
 }
