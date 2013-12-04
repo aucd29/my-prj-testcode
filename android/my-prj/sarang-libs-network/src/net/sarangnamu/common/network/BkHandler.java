@@ -20,6 +20,14 @@ package net.sarangnamu.common.network;
 import android.os.Handler;
 import android.os.Message;
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public abstract class BkHandler extends Handler {
     protected static final int SUCCESS    = 0;
     protected static final int UPDATE     = 1;

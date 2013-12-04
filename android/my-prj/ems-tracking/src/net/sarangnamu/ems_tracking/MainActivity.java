@@ -1,5 +1,5 @@
-/**
- * Detail.java
+/*
+ * MainActivity.java
  * Copyright 2013 Burke Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
@@ -161,7 +161,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                         String num = cr.getString(0);
                         String status = cr.getString(2);
 
-                        // 배달완료된 항목은 첫 로딩시 체크하지 않는다.
+                        // 배달완료된 항목은 로딩시 체크하지 않는다.
                         if (!status.equals("배달완료")) {
                             Ems ems = Api.tracking(num);
                             EmsDataManager.getInstance().setEmsData(num, ems);

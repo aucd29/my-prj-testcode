@@ -23,6 +23,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public abstract class FrgmtBase extends Fragment {
     protected View base;
 

@@ -21,6 +21,14 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public class RobotoLightTextView extends TextView {
     public RobotoLightTextView(Context context) {
         super(context);

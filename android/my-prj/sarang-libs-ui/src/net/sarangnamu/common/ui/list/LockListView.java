@@ -22,6 +22,14 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ListView;
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public class LockListView extends ListView {
     private static final String TAG = "LockListView";
     private boolean lockScroll;
@@ -50,19 +58,10 @@ public class LockListView extends ListView {
         if (lockScroll) {
             switch (ev.getAction()) {
             case MotionEvent.ACTION_UP:
-                //                DLog.d(TAG, "up");
                 if (listener != null) {
                     listener.up();
                 }
                 break;
-
-                //            case MotionEvent.ACTION_DOWN:
-                //                DLog.d(TAG, "down");
-                //                break;
-                //
-                //            case MotionEvent.ACTION_MOVE:
-                //                DLog.d(TAG, "move");
-                //                break;
             }
 
             return false;
@@ -80,10 +79,8 @@ public class LockListView extends ListView {
         }
     }
 
-    public synchronized void  setLock() {
+    public synchronized void setLock() {
         lockScroll = lockScroll ? false : true;
-
-        //DLog.d(TAG, "lock stat " + lockScroll);
     }
 
     public boolean getLockStatus() {

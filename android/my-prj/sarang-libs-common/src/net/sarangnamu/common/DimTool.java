@@ -19,6 +19,14 @@ package net.sarangnamu.common;
 
 import android.content.Context;
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public class DimTool {
     public static float pixelToDp(Context context, float pixel) {
         return pixel / context.getResources().getDisplayMetrics().density;

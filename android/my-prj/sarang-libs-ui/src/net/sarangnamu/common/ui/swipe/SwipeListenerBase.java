@@ -22,6 +22,14 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public abstract class SwipeListenerBase implements GestureDetector.OnGestureListener, View.OnTouchListener {
     public static int SWIPE_THRESHOLD = 300;
     public static int SWIPE_VELOCITY_THRESHOLD = 300;

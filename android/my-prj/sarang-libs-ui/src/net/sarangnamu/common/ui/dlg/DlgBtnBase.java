@@ -27,6 +27,14 @@ import android.widget.FrameLayout.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public abstract class DlgBtnBase extends DlgBase implements View.OnClickListener {
     protected int titleColor;
     protected Button left, right;

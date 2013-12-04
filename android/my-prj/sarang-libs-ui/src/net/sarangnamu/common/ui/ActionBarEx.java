@@ -20,7 +20,16 @@ package net.sarangnamu.common.ui;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.view.View;
-
+/**
+ * {@code
+ * <pre>
+    ActionBarEx actionBar;
+    actionBar = new ActionBarEx(this);
+    actionBar.init(R.layout.actionbar);
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public class ActionBarEx {
     protected int displayOpt = ActionBar.DISPLAY_SHOW_CUSTOM;
     protected Activity activity;

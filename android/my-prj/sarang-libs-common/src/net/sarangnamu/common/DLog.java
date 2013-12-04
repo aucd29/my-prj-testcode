@@ -19,6 +19,14 @@ package net.sarangnamu.common;
 
 import android.util.Log;
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public class DLog {
     public static final boolean DEBUG_MODE = true;
 

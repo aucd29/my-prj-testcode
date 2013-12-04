@@ -21,6 +21,14 @@ import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public class DlgEdit extends DlgBtnBase {
     protected int layoutId;
     protected String value, hint;

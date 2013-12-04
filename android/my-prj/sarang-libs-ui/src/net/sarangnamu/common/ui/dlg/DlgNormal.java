@@ -22,6 +22,14 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public class DlgNormal extends DlgBtnBase {
     protected int layoutId;
     protected String value;

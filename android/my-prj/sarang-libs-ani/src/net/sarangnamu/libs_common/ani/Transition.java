@@ -21,6 +21,14 @@ import android.animation.Animator.AnimatorListener;
 import android.animation.ObjectAnimator;
 import android.view.View;
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public class Transition {
     public static void startX(View view, float moveX, AnimatorListener l) {
         start(view, 0, moveX, l);

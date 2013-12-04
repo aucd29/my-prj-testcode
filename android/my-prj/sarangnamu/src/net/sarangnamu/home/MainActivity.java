@@ -1,7 +1,26 @@
+/*
+ * Cfg.java
+ * Copyright 2013 Burke.Choi All rights reserved.
+ *             http://www.sarangnamu.net
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package net.sarangnamu.home;
 
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.fonts.FontLoader;
+import net.sarangnamu.common.ui.gesture.Gesture;
+import net.sarangnamu.common.ui.gesture.Gesture.GestureRightListener;
 import net.sarangnamu.home.api.Api;
 import net.sarangnamu.home.page.Navigator;
 import net.sarangnamu.home.page.PageBaseFrgmt;
@@ -19,7 +38,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SlidingPaneLayout;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,7 +55,7 @@ public class MainActivity extends FragmentActivity {
     private RadioGroup group;
     private SlidingPaneLayout sliding;
     private ProgressDialog popup;
-    private GestureDetector detector;
+    private Gesture gesture;
     public static int SWIPE_THRESHOLD = 300;
     public static int SWIPE_VELOCITY_THRESHOLD = 300;
 
@@ -46,41 +64,10 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        detector = new GestureDetector(this, new GestureDetector.OnGestureListener() {
+        gesture = Gesture.NEW(this);
+        gesture.setOnGestureRightListener(new GestureRightListener() {
             @Override
-            public boolean onSingleTapUp(MotionEvent e) { return false; }
-            @Override
-            public void onShowPress(MotionEvent e) { }
-            @Override
-            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) { return false; }
-            @Override
-            public void onLongPress(MotionEvent e) { }
-            @Override
-            public boolean onDown(MotionEvent e) { return false; }
-
-            @Override
-            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                try {
-                    float diffY = e2.getY() - e1.getY();
-                    float diffX = e2.getX() - e1.getX();
-
-                    if (Math.abs(diffX) > Math.abs(diffY)) {
-                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                            if (diffX > 0) {
-                                onSwipeRight();
-
-                                return false;
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                return false;
-            }
-
-            protected void onSwipeRight() {
+            public void toRight() {
                 onBackPressed();
                 Navigator.getInstance(MainActivity.this).setCurrentName(Navigator.STUDY);
             }
@@ -95,7 +82,7 @@ public class MainActivity extends FragmentActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 Fragment ft = Navigator.getInstance(MainActivity.this).getCurrent();
                 if (ft instanceof StudyDetailFrgmt) {
-                    detector.onTouchEvent(event);
+                    gesture.onTouchEvent(event);
 
                     return true;
                 }

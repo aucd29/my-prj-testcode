@@ -17,7 +17,14 @@
  */
 package net.sarangnamu.common;
 
+/**
+ * {@code
+ * <pre>
 
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public class BkMath {
     public static String toFileSizeString(long size) {
         int u = 0;

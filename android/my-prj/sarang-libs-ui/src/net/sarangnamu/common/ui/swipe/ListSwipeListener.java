@@ -23,6 +23,14 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ListView;
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public abstract class ListSwipeListener extends SwipeListenerBase {
     private ListView list;
     protected float scaleFactor = 1.f;

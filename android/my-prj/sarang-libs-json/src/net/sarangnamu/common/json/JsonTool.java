@@ -31,6 +31,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 // mapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
 // mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public class JsonTool {
     private static final String TAG = "JsonTool";
 

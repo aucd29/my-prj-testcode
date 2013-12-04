@@ -30,6 +30,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public abstract class DlgBase extends Dialog {
     public DlgBase(Context context) {
         super(context);

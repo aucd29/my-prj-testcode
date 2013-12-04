@@ -25,6 +25,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public class FontLoader {
     private Context context;
     private HashMap<String, Typeface> fonts = new HashMap<String, Typeface>();

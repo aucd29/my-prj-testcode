@@ -21,6 +21,20 @@ import android.content.Context;
 import android.view.View;
 import android.widget.PopupMenu;
 
+/**
+ * {@code
+ * <pre>
+    MenuManager.getInstance().showMenu(this, btn, R.menu.id);
+    MenuManager.getInstance().setListener(new PopupMenu.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            // TODO
+            return true;
+        }
+    });
+    MenuManager.getInstance().show();
+ * </pre>}
+ */
 public class MenuManager {
     private static MenuManager inst;
     private PopupMenu.OnMenuItemClickListener listener;

@@ -20,6 +20,14 @@ package net.sarangnamu.common.network;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+/**
+ * {@code
+ * <pre>
+
+ * </pre>}
+ * 
+ * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ */
 public class ParameterEncoder {
     public String encode = "UTF-8";
     private ArrayList<String> fields = new ArrayList<String>();
