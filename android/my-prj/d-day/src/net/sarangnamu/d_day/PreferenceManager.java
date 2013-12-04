@@ -1,4 +1,4 @@
-package net.sarangnamu.calcdate;
+package net.sarangnamu.d_day;
 
 import org.json.JSONArray;
 import org.json.JSONException;
