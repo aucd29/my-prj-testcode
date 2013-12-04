@@ -48,22 +48,15 @@ public class MainActivity extends FragmentActivity {
 
         detector = new GestureDetector(this, new GestureDetector.OnGestureListener() {
             @Override
-            public boolean onSingleTapUp(MotionEvent e) {
-                return false;
-            }
-
+            public boolean onSingleTapUp(MotionEvent e) { return false; }
             @Override
-            public void onShowPress(MotionEvent e) {
-            }
-
+            public void onShowPress(MotionEvent e) { }
             @Override
-            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                return true;
-            }
-
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) { return false; }
             @Override
-            public void onLongPress(MotionEvent e) {
-            }
+            public void onLongPress(MotionEvent e) { }
+            @Override
+            public boolean onDown(MotionEvent e) { return false; }
 
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
@@ -76,7 +69,7 @@ public class MainActivity extends FragmentActivity {
                             if (diffX > 0) {
                                 onSwipeRight();
 
-                                return true;
+                                return false;
                             }
                         }
                     }
@@ -84,17 +77,12 @@ public class MainActivity extends FragmentActivity {
                     e.printStackTrace();
                 }
 
-                return true;
+                return false;
             }
 
             protected void onSwipeRight() {
                 onBackPressed();
                 Navigator.getInstance(MainActivity.this).setCurrentName(Navigator.STUDY);
-            }
-
-            @Override
-            public boolean onDown(MotionEvent e) {
-                return false;
             }
         });
 

@@ -34,6 +34,7 @@ import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.ui.MenuManager;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
 import net.sarangnamu.common.ui.list.AniBtnListView;
+import net.sarangnamu.libs_common.ani.FadeColor;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -233,7 +234,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             search.setVisibility(View.VISIBLE);
             tvSearch.setVisibility(View.VISIBLE);
             title.setVisibility(View.GONE);
-            titleBar.setBackgroundResource(R.color.dBgSearch);
+            FadeColor.startResource(titleBar, R.color.dBg, R.color.dBgSearch, null);
+
             search.setText("");
 
             BkCfg.showKeyboard(MainActivity.this, search);
@@ -241,7 +243,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             search.setVisibility(View.GONE);
             tvSearch.setVisibility(View.GONE);
             title.setVisibility(View.VISIBLE);
-            titleBar.setBackgroundResource(R.color.dBg);
+            FadeColor.startResource(titleBar, R.color.dBgSearch, R.color.dBg, null);
 
             BkCfg.hideKeyboard(MainActivity.this);
         }

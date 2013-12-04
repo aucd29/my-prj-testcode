@@ -22,15 +22,15 @@ import android.animation.ObjectAnimator;
 import android.view.View;
 
 public class Transition {
-    public static void animateX(View view, float moveX, AnimatorListener l) {
-        animate(view, 0, moveX, l);
+    public static void startX(View view, float moveX, AnimatorListener l) {
+        start(view, 0, moveX, l);
     }
 
-    public static void animateY(View view, float moveY, AnimatorListener l) {
-        animate(view, 0, moveY, l);
+    public static void startY(View view, float moveY, AnimatorListener l) {
+        start(view, 0, moveY, l);
     }
 
-    private static void animate(final View view, int type, float move, AnimatorListener l) {
+    private static void start(final View view, int type, float move, AnimatorListener l) {
         if (view == null) {
             return ;
         }
