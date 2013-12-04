@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:textColor="@android:color/black"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
         <net.sarangnamu.common.fonts.RobotoLightTextView
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/emsNum"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="7dp"
             android:textSize="12sp" />
 
         <TextView
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@id/status"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:textSize="11sp" />
     </RelativeLayout>
 
@@ -60,7 +60,7 @@
             style="@style/btnLayout"
             android:layout_width="62dp"
             android:layout_height="match_parent"
-            android:background="#8c8c8c"
+            android:background="#acacac"
             android:text="@string/detail"
             android:textColor="#ffffff" />
 
@@ -69,7 +69,7 @@
             style="@style/btnLayout"
             android:layout_width="62dp"
             android:layout_height="match_parent"
-            android:background="#cd2415"
+            android:background="#ed594e"
             android:text="@string/delete"
             android:textColor="#ffffff" />
     </LinearLayout>
