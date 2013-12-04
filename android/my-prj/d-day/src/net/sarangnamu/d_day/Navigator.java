@@ -23,12 +23,6 @@ import android.support.v4.app.FragmentActivity;
 public class Navigator extends FrgmtManager {
     private static Navigator inst;
 
-    public static final String HOME         = "home";
-    public static final String HOME_WRITE   = "homeWrite";
-    public static final String STUDY        = "study";
-    public static final String STUDY_DETAIL = "studyDetail";
-    public static final String QNA          = "qna";
-
     public static Navigator getInstance(FragmentActivity act) {
         if (inst == null) {
             inst = new Navigator();
@@ -42,4 +36,12 @@ public class Navigator extends FrgmtManager {
     private Navigator() {
 
     }
+
+    //    @Override
+    //    protected void setTransition(FragmentTransaction trans) {
+    //        //super.setTransition(trans);
+    //
+    //        trans.setTransition(android.app.FragmentTransaction.TRANSIT_UNSET);
+    //        //trans.setCustomAnimations(android.R.anim.overshoot_interpolator, android.R.anim.slide_out_right);
+    //    }
 }

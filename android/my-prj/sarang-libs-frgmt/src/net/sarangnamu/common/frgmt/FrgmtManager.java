@@ -110,8 +110,18 @@ public abstract class FrgmtManager {
         classes.put(name, cls);
     }
 
+    public void add(Class<?> cls) {
+        setMap();
+
+        classes.put(cls.getSimpleName(), cls);
+    }
+
     public void setBaseLayoutId(int id) {
         baseLayoutId = id;
+    }
+
+    public void setBase(Class<?> cls) {
+        setBase(cls.getSimpleName());
     }
 
     public void setBase(String name) {
@@ -153,6 +163,10 @@ public abstract class FrgmtManager {
         }
 
         return null;
+    }
+
+    public Fragment show(Class<?> cls) {
+        return show(cls.getSimpleName());
     }
 
     public Fragment show(String name) {

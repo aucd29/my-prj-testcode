@@ -17,6 +17,8 @@
  */
 package net.sarangnamu.d_day;
 
+import net.sarangnamu.common.sqlite.DbManager;
+import net.sarangnamu.d_day.db.DbHelper;
 import net.sarangnamu.d_day.sub.AddFrgmt;
 import net.sarangnamu.d_day.sub.HomeFrgmt;
 import android.os.Bundle;
@@ -35,6 +37,13 @@ public class MainActivity extends FragmentActivity {
     }
 
     @Override
+    protected void onResume() {
+        DbManager.getInstance().open(this, new DbHelper(this));
+
+        super.onResume();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -43,8 +52,8 @@ public class MainActivity extends FragmentActivity {
     private void initNaviation() {
         Navigator nv = Navigator.getInstance(this);
         nv.setBaseLayoutId(R.id.content);
-        nv.add(Navigator.HOME, HomeFrgmt.class);
-        nv.add(Navigator.HOME_WRITE, AddFrgmt.class);
-        nv.setBase(Navigator.HOME);
+        nv.add(HomeFrgmt.class);
+        nv.add(AddFrgmt.class);
+        nv.setBase(HomeFrgmt.class);
     }
 }

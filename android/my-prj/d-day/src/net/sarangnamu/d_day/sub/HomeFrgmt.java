@@ -6,10 +6,20 @@
 package net.sarangnamu.d_day.sub;
 
 import net.sarangnamu.common.FrgmtBase;
+import net.sarangnamu.common.ui.list.AniBtnListView;
+import net.sarangnamu.d_day.Navigator;
 import net.sarangnamu.d_day.R;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class HomeFrgmt extends FrgmtBase {
     private static final int SLIDING_MARGIN = 124;
+
+    private Button add;
+    private TextView title, empty;
+    private AniBtnListView list;
+
 
     @Override
     protected int getLayoutId() {
@@ -18,6 +28,17 @@ public class HomeFrgmt extends FrgmtBase {
 
     @Override
     protected void initLayout() {
+        add   = (Button) base.findViewById(R.id.add);
+        title = (TextView) base.findViewById(R.id.title);
+        empty = (TextView) base.findViewById(android.R.id.empty);
+        list  = (AniBtnListView) base.findViewById(android.R.id.list);
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigator.getInstance(getActivity()).show(AddFrgmt.class);
+            }
+        });
     }
 
     //    private void deleteItem(final int id) {

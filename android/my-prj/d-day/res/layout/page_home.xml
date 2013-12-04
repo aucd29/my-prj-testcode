@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,15 +12,16 @@
 
         <!-- net.sarangnamu.common.fonts.RobotoLight -->
 
-        <TextView
+        <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/title"
             style="@style/title"
+            android:text="@string/app_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
 
         <Button
-            android:id="@+id/refersh"
+            android:id="@+id/add"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -27,17 +29,6 @@
             android:background="@drawable/btn_bgcolor_selector"
             android:text="+"
             />
-
-        <net.sarangnamu.common.fonts.RobotoLightTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:text="@string/app_name"
-            android:textColor="#7fffffff"
-            android:textSize="8dp"
-            android:visibility="gone" />
     </RelativeLayout>
 
     <net.sarangnamu.common.ui.list.AniBtnListView
