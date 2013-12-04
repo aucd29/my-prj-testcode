@@ -34,7 +34,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * {@code
  * <pre>
+    public class Notice {
+        @JsonProperty
+        public int no;
 
+        @JsonProperty
+        public String date;
+
+        @JsonProperty
+        public String content;
+    }
+
+    (ArrayList<Notice>) JsonTool.toObj(res, new TypeReference<List<Notice>>(){});
  * </pre>}
  * 
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>

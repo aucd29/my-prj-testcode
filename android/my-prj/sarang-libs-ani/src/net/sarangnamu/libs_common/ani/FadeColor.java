@@ -14,7 +14,8 @@ import android.view.View;
 /**
  * {@code
  * <pre>
-
+    FadeColor.startResource(view, R.color.red, R.color.blue, null);
+    FadeColor.start(view, 0xffff0000, 0xff0000ff, null);
  * </pre>}
  * 
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>

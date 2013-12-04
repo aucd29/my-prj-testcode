@@ -26,7 +26,16 @@ import android.view.inputmethod.InputMethodManager;
 /**
  * {@code
  * <pre>
+    - preferences
+    BkCfg.get(context, "name", "");
+    BkCfg.set(context, "name", "burke.choi");
 
+    - get sdcard path
+    BkCfg.sdPath();
+
+    - toggle keyboard
+    BkCfg.showKeyboard(context, view);
+    BkCfg.hideKeyboard(context);
  * </pre>}
  * 
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>

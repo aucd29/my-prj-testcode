@@ -27,7 +27,14 @@ import java.io.OutputStream;
 /**
  * {@code
  * <pre>
+    - make directory
+    BkFile.mkdirs("/mnt/sdcard/test");
 
+    - copy directory
+    BkFile.copyDirectory("/mnt/sdcard/a", "/mnt/sdcard/b");
+
+    - delete directory
+    BkFile.deleteAll(new File("/mnt/sdcard/b"));
  * </pre>}
  * 
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>

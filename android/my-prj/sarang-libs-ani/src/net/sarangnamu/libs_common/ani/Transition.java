@@ -24,18 +24,18 @@ import android.view.View;
 /**
  * {@code
  * <pre>
-
+    Transition.startX(view, 100, null);
  * </pre>}
  * 
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
  */
 public class Transition {
-    public static void startX(View view, float moveX, AnimatorListener l) {
-        start(view, 0, moveX, l);
+    public static void startX(View view, float dpMoveX, AnimatorListener l) {
+        start(view, 0, dpMoveX, l);
     }
 
-    public static void startY(View view, float moveY, AnimatorListener l) {
-        start(view, 0, moveY, l);
+    public static void startY(View view, float dpMoveY, AnimatorListener l) {
+        start(view, 0, dpMoveY, l);
     }
 
     private static void start(final View view, int type, float move, AnimatorListener l) {
@@ -50,6 +50,7 @@ public class Transition {
         default: cmd = "translationX"; break;
         }
 
+        move = move * view.getContext().getResources().getDisplayMetrics().density;
         ObjectAnimator obj = ObjectAnimator.ofFloat(view, cmd, move);
 
         if (l != null) {

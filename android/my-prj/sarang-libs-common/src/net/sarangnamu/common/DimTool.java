@@ -22,7 +22,7 @@ import android.content.Context;
 /**
  * {@code
  * <pre>
-
+    DimTool.dpTpPixel(context, 100);
  * </pre>}
  * 
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>

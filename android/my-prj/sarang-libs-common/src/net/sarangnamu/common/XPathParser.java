@@ -32,7 +32,11 @@ import org.xml.sax.InputSource;
 /**
  * {@code
  * <pre>
-
+    class TestParser extends XPathParser {
+        protected void parsing() throws Exception {
+            // TODO
+        }
+    }
  * </pre>}
  * 
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>

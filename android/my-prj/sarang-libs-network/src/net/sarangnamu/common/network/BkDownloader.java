@@ -32,7 +32,8 @@ import net.sarangnamu.common.DLog;
 /**
  * {@code
  * <pre>
-
+    BkDownloader dn = new BkDownloader();
+    dn.downloadThread("http://", "/mnt/sdcard/down", null);
  * </pre>}
  * 
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
