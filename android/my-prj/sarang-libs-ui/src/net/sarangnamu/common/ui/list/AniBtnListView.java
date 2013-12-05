@@ -37,6 +37,50 @@ import android.view.View;
         android:background="@android:color/white"
         android:drawSelectorOnTop="false" />
 
+    - row xml
+    <RelativeLayout
+        android:id="@+id/row"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/emsNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:textColor="@android:color/black"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/btnLayout"
+        android:layout_width="124dp"
+        android:layout_height="62dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="-124dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/detail"
+            style="@style/btnLayout"
+            android:layout_width="62dp"
+            android:layout_height="match_parent"
+            android:background="#acacac"
+            android:text="@string/detail"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/delete"
+            style="@style/btnLayout"
+            android:layout_width="62dp"
+            android:layout_height="match_parent"
+            android:background="#ed594e"
+            android:text="@string/delete"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
     - code
     private static final int SLIDING_MARGIN = 130;
 
