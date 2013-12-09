@@ -35,6 +35,14 @@
         <activity
             android:name="com.google.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+        
+        <receiver android:name=".widget.StatusWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:resource="@xml/status_widget" 
+                android:name="android.appwidget.provider"/>
+        </receiver>
     </application>
 
 </manifest>

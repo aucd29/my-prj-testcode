@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <ProgressBar
+        android:id="@+id/prog"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_launcher"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/unknown"
+            style="@style/widgetFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:paddingLeft="3dp"
+            android:paddingTop="3dp" />
+
+        <TextView
+            android:id="@+id/delivering"
+            style="@style/widgetFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:paddingLeft="3dp" />
+
+        <TextView
+            android:id="@+id/delivered"
+            style="@style/widgetFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="3dp" />
+    </LinearLayout>
+
+</FrameLayout>

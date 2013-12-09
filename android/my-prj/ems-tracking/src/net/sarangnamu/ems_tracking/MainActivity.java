@@ -276,7 +276,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     class EmsAdapter extends CursorAdapter {
         public EmsAdapter(Context context, Cursor c) {
-            super(context, c);
+            super(context, c, true);
         }
 
         @Override
