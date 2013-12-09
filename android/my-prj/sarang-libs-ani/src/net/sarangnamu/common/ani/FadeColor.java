@@ -3,7 +3,7 @@
  * Copyright 2013 OBIGO All rights reserved.
  *             http://www.obigo.com
  */
-package net.sarangnamu.libs_common.ani;
+package net.sarangnamu.common.ani;
 
 import android.animation.Animator.AnimatorListener;
 import android.animation.ArgbEvaluator;

@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sarangnamu.libs_common.ani;
+package net.sarangnamu.common.ani;
 
 import android.animation.Animator.AnimatorListener;
 import android.animation.ObjectAnimator;
