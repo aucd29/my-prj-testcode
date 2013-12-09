@@ -24,7 +24,6 @@ import net.sarangnamu.home.R;
 import net.sarangnamu.home.api.Api;
 import net.sarangnamu.home.api.json.Notice;
 import net.sarangnamu.home.page.ListApiTaskFrgmt;
-import net.sarangnamu.home.page.Navigator;
 import net.sarangnamu.home.ui.EndlessScrollListener;
 import net.sarangnamu.home.ui.EndlessScrollListener.LoadTaskListener;
 import android.os.Bundle;
@@ -65,7 +64,7 @@ public class HomeFrgmt extends ListApiTaskFrgmt {
         pageWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFrgmt(Navigator.HOME_WRITE);
+                showFrgmt(HomeWriteFrgmt.class);
             }
         });
 

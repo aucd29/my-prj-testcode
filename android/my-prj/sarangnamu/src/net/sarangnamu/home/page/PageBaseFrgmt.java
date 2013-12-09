@@ -105,16 +105,16 @@ public abstract class PageBaseFrgmt extends FrgmtBase {
         pageRefresh.setClickable(true);
     }
 
-    protected void showFrgmt(String name) {
-        Navigator.getInstance(getActivity()).show(name);
+    protected void showFrgmt(Class<?> cls) {
+        Navigator.getInstance(getActivity()).show(cls);
     }
 
     public void backFrgmt() {
         Navigator.getInstance(getActivity()).back();
     }
 
-    public Fragment getFrgmtByName(String name) {
-        return Navigator.getInstance(getActivity()).getFragmentByName(name);
+    public Fragment getFrgmtByName(Class<?> cls) {
+        return Navigator.getInstance(getActivity()).getFragmentByName(cls);
     }
 
     public void showWriteButton() {

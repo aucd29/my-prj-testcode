@@ -56,10 +56,10 @@ import android.support.v4.app.FragmentTransaction;
     - example
     Navigator nv = Navigator.getInstance(this);
     nv.setBaseLayoutId(R.id.content);
-    nv.add(Navigator.HOME, HomeFrgmt.class);
-    nv.add(Navigator.STUDY, StudyFrgmt.class);
-    nv.add(Navigator.STUDY_DETAIL, StudyDetailFrgmt.class);
-    nv.setBase(Navigator.HOME);
+    nv.add(HomeFrgmt.class);
+    nv.add(StudyFrgmt.class);
+    nv.add(StudyDetailFrgmt.class);
+    nv.setBase(HomeFrgmt.class);
 
     - change page
     nv.show(Navigator.STUDY_DETAIL);
@@ -113,7 +113,7 @@ public abstract class FrgmtManager {
     public void add(Class<?> cls) {
         setMap();
 
-        classes.put(cls.getSimpleName(), cls);
+        classes.put(cls.getName(), cls);
     }
 
     public void setBaseLayoutId(int id) {
@@ -121,7 +121,7 @@ public abstract class FrgmtManager {
     }
 
     public void setBase(Class<?> cls) {
-        setBase(cls.getSimpleName());
+        setBase(cls.getName());
     }
 
     public void setBase(String name) {
@@ -213,6 +213,10 @@ public abstract class FrgmtManager {
         currentName = name;
     }
 
+    public void setCurrentName(Class<?> cls) {
+        currentName = cls.getName();
+    }
+
     public Fragment getCurrent() {
         if (frgmts != null) {
             return frgmts.get(currentName);
@@ -227,6 +231,14 @@ public abstract class FrgmtManager {
         }
 
         return frgmts.get(name);
+    }
+
+    public Fragment getFragmentByName(Class<?> cls) {
+        if (frgmts == null) {
+            return null;
+        }
+
+        return frgmts.get(cls.getName());
     }
 
     public void back() {

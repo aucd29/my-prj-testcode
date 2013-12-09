@@ -21,7 +21,6 @@ import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.home.R;
 import net.sarangnamu.home.api.Api;
-import net.sarangnamu.home.page.Navigator;
 import net.sarangnamu.home.page.PageBaseFrgmt;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -77,7 +76,7 @@ public class HomeWriteFrgmt extends PageBaseFrgmt {
                         submit.setClickable(true);
                         backFrgmt();
 
-                        HomeFrgmt frgmt = (HomeFrgmt) getFrgmtByName(Navigator.HOME);
+                        HomeFrgmt frgmt = (HomeFrgmt) getFrgmtByName(HomeFrgmt.class);
                         frgmt.reload();
                     }
                 }.execute(getActivity());

@@ -24,12 +24,6 @@ import android.support.v4.app.FragmentTransaction;
 public class Navigator extends FrgmtManager {
     private static Navigator inst;
 
-    public static final String HOME         = "home";
-    public static final String HOME_WRITE   = "homeWrite";
-    public static final String STUDY        = "study";
-    public static final String STUDY_DETAIL = "studyDetail";
-    public static final String QNA          = "qna";
-
     public static Navigator getInstance(FragmentActivity act) {
         if (inst == null) {
             inst = new Navigator();

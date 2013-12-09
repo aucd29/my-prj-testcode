@@ -69,7 +69,7 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void toRight() {
                 onBackPressed();
-                Navigator.getInstance(MainActivity.this).setCurrentName(Navigator.STUDY);
+                Navigator.getInstance(MainActivity.this).setCurrentName(StudyFrgmt.class);
             }
         });
 
@@ -105,13 +105,13 @@ public class MainActivity extends FragmentActivity {
     private void initNaviation() {
         Navigator nv = Navigator.getInstance(this);
         nv.setBaseLayoutId(R.id.content);
-        nv.add(Navigator.HOME, HomeFrgmt.class);
-        nv.add(Navigator.HOME_WRITE, HomeWriteFrgmt.class);
-        nv.add(Navigator.QNA, QnaFrgmt.class);
-        nv.add(Navigator.STUDY, StudyFrgmt.class);
-        nv.add(Navigator.STUDY_DETAIL, StudyDetailFrgmt.class);
-        nv.add(Navigator.QNA, QnaFrgmt.class);
-        nv.setBase(Navigator.HOME);
+        nv.add(HomeFrgmt.class);
+        nv.add(HomeWriteFrgmt.class);
+        nv.add(QnaFrgmt.class);
+        nv.add(StudyFrgmt.class);
+        nv.add(StudyDetailFrgmt.class);
+        nv.add(QnaFrgmt.class);
+        nv.setBase(HomeFrgmt.class);
     }
 
     private void initMenu() {
@@ -122,15 +122,15 @@ public class MainActivity extends FragmentActivity {
 
                 switch (checkedId) {
                 case R.id.mnu_home:
-                    nv.setBase(Navigator.HOME);
+                    nv.setBase(HomeFrgmt.class);
                     break;
 
                 case R.id.mnu_study:
-                    nv.setBase(Navigator.STUDY);
+                    nv.setBase(StudyFrgmt.class);
                     break;
 
                 case R.id.mnu_qna:
-                    nv.setBase(Navigator.QNA);
+                    nv.setBase(QnaFrgmt.class);
                     break;
                 }
 
