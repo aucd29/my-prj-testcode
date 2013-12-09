@@ -64,8 +64,9 @@ import android.widget.TextView.OnEditorActionListener;
 
 public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
+
     private static final long SHOW_PROGRESS = 10000000;
-    private static final int SHOW_POPUP = 1;
+    private static final int SHOW_POPUP     = 1;
     private static final int SLIDING_MARGIN = 130;
 
     private static final int ET_SDCARD = 0;
@@ -162,25 +163,22 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                case R.id.mnu_search: {
-                    setSearchUi();
-                }
-                break;
-
-                case R.id.mnu_email: {
-                    DlgEmail dlg = new DlgEmail(MainActivity.this);
-                    dlg.show();
-                }
-                break;
-
-                case R.id.mnu_license: {
-                    DlgLicense dlg = new DlgLicense(MainActivity.this);
-                    dlg.show();
-                }
-                break;
+                case R.id.mnu_search:  setSearchUi();    break;
+                case R.id.mnu_email:   showEmailDlg();   break;
+                case R.id.mnu_license: showLicenseDlg(); break;
                 }
 
                 return false;
+            }
+
+            void showEmailDlg() {
+                DlgEmail dlg = new DlgEmail(MainActivity.this);
+                dlg.show();
+            }
+
+            void showLicenseDlg() {
+                DlgLicense dlg = new DlgLicense(MainActivity.this);
+                dlg.show();
             }
         });
 
@@ -281,7 +279,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     private void initListView() {
-        //checkedList = new boolean[data.size()];
         adapter = new AppAdapter();
         setListAdapter(adapter);
 
@@ -354,6 +351,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
         intent.putExtra(Intent.EXTRA_SUBJECT, "[APK Extractor] Backup " + info.appName);
         intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + target));
+        //intent.putExtra(Intent.EXTRA_TEXT, "");
 
         try {
             startActivityForResult(Intent.createChooser(intent, "Send mail..."), 100);
