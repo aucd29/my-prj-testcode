@@ -166,7 +166,7 @@ public abstract class FrgmtManager {
     }
 
     public Fragment show(Class<?> cls) {
-        return show(cls.getSimpleName());
+        return show(cls.getName());
     }
 
     public Fragment show(String name) {
