@@ -14,7 +14,7 @@
         android:padding="10dp" >
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/eventTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10" >
@@ -22,11 +22,40 @@
             <requestFocus />
         </EditText>
 
-        <CalendarView
-            android:id="@+id/calendarView1"
+        <TextView
+            android:id="@+id/eventDate"
             android:layout_width="match_parent"
-            android:layout_height="149dp"
-            android:layout_weight="0.23" />
+            android:layout_height="wrap_content"
+            android:text="date"
+             />
+
+        <TextView
+            android:id="@+id/eventDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RadioGroup
+            android:id="@+id/eventTypeGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 />
+            
+            <RadioButton
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            
+            <RadioButton
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
     </LinearLayout>
 
 </LinearLayout>

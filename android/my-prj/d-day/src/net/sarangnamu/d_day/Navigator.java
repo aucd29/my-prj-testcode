@@ -19,6 +19,7 @@ package net.sarangnamu.d_day;
 
 import net.sarangnamu.common.frgmt.FrgmtManager;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 
 public class Navigator extends FrgmtManager {
     private static Navigator inst;
@@ -37,11 +38,8 @@ public class Navigator extends FrgmtManager {
 
     }
 
-    //    @Override
-    //    protected void setTransition(FragmentTransaction trans) {
-    //        //super.setTransition(trans);
-    //
-    //        trans.setTransition(android.app.FragmentTransaction.TRANSIT_UNSET);
-    //        //trans.setCustomAnimations(android.R.anim.overshoot_interpolator, android.R.anim.slide_out_right);
-    //    }
+    @Override
+    protected void setTransition(FragmentTransaction trans) {
+        setSlideTransition(trans);
+    }
 }

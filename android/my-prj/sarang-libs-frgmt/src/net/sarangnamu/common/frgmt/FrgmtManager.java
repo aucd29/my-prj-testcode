@@ -254,4 +254,8 @@ public abstract class FrgmtManager {
     protected void setSlideTransition(FragmentTransaction trans) {
         trans.setCustomAnimations(R.anim.slide_in_current, R.anim.slide_in_next, R.anim.slide_out_current, R.anim.slide_out_prev);
     }
+
+    protected void setUpTransition(FragmentTransaction trans) {
+        trans.setCustomAnimations(R.anim.slide_up_current, R.anim.slide_up_next, R.anim.slide_down_current, R.anim.slide_down_prev);
+    }
 }
