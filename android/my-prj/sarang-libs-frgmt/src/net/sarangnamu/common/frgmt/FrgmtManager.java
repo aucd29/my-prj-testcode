@@ -238,4 +238,8 @@ public abstract class FrgmtManager {
     protected void setTransition(FragmentTransaction trans) {
         trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
     }
+
+    protected void setSlideTransition(FragmentTransaction trans) {
+        trans.setCustomAnimations(R.anim.slide_in_current, R.anim.slide_in_next, R.anim.slide_out_current, R.anim.slide_out_prev);
+    }
 }
