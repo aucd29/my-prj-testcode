@@ -20,24 +20,24 @@
             style="@style/widgetFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="2dp"
-            android:paddingLeft="3dp"
-            android:paddingTop="3dp" />
+            android:paddingBottom="5dp"
+            android:paddingLeft="7dp"
+            android:paddingTop="9dp" />
 
         <TextView
             android:id="@+id/delivering"
             style="@style/widgetFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="2dp"
-            android:paddingLeft="3dp" />
+            android:paddingBottom="5dp"
+            android:paddingLeft="7dp" />
 
         <TextView
             android:id="@+id/delivered"
             style="@style/widgetFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="3dp" />
+            android:paddingLeft="7dp" />
     </LinearLayout>
 
 </FrameLayout>

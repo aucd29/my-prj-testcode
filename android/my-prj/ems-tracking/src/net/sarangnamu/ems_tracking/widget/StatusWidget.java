@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.ems_tracking.widget;
 
+import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.ems_tracking.EmsDataManager;
 import net.sarangnamu.ems_tracking.R;
 import net.sarangnamu.ems_tracking.api.Api;
@@ -35,6 +36,8 @@ public class StatusWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds){
         final int N = appWidgetIds.length;
+
+        DbManager.getInstance().open(context, new EmsDbHelper(context));
 
         for (int i=0; i<N; i++) {
             final int appWidgetId = appWidgetIds[i];
@@ -88,7 +91,7 @@ public class StatusWidget extends AppWidgetProvider {
 
                     views.setTextViewText(R.id.unknown,    "미등록 : " + unknown + "건");
                     views.setTextViewText(R.id.delivering, "배송중 : " + (total - unknown - delivered) + "건");
-                    views.setTextViewText(R.id.delivered,  "완  료 : " + delivered + "건");
+                    views.setTextViewText(R.id.delivered,  "완 \u00A0\u00A0\u00A0료 : " + delivered + "건");
 
                     appWidgetManager.updateAppWidget(appWidgetId, views);
                 }

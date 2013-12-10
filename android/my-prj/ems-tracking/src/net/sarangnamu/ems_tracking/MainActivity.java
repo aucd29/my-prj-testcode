@@ -135,13 +135,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     @Override
     protected void onResume() {
-        DbManager.getInstance().open(MainActivity.this, new EmsDbHelper(MainActivity.this));
+        DbManager.getInstance().open(this, new EmsDbHelper(this));
 
         super.onResume();
     }
 
     private void initData() {
-        DbManager.getInstance().open(MainActivity.this, new EmsDbHelper(MainActivity.this));
+        DbManager.getInstance().open(this, new EmsDbHelper(this));
         loadEmsData();
     }
 
@@ -188,7 +188,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     public void showProgress() {
-        dlg = new ProgressDialog(MainActivity.this);
+        dlg = new ProgressDialog(this);
         dlg.setCancelable(false);
         dlg.setMessage(getString(R.string.plsWait));
         dlg.show();
@@ -203,7 +203,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     private void initListView() {
-        adapter = new EmsAdapter(MainActivity.this, EmsDbHelper.selectDesc());
+        adapter = new EmsAdapter(this, EmsDbHelper.selectDesc());
         setListAdapter(adapter);
         getListView().setEmptyView(empty);
 
@@ -214,7 +214,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     private void showPopup(String msg) {
-        DlgTimer dlg = new DlgTimer(MainActivity.this, R.layout.dlg_timer);
+        DlgTimer dlg = new DlgTimer(this, R.layout.dlg_timer);
         dlg.setMessage(msg);
         dlg.setTime(1000);
         dlg.show();
@@ -222,7 +222,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     private void showDetail(final String emsNum) {
-        EmsDataManager.getInstance().getAsyncEmsData(MainActivity.this, emsNum, new EmsDataListener() {
+        EmsDataManager.getInstance().getAsyncEmsData(this, emsNum, new EmsDataListener() {
             @Override
             public void onEmsData(Ems ems) {
                 if (ems == null) {
@@ -249,7 +249,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     private int dpToPixelInt(int dp) {
-        return DimTool.dpToPixelInt(MainActivity.this, dp);
+        return DimTool.dpToPixelInt(this, dp);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -331,7 +331,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             final Object obj = v.getTag();
 
             if (obj instanceof Integer) {
-                DlgNormal dlg = new DlgNormal(MainActivity.this);
+                DlgNormal dlg = new DlgNormal(this);
                 dlg.setCancelable(false);
                 dlg.setMessage(R.string.deleteMsg);
                 dlg.setOnBtnListener(new DlgBtnListener() {
