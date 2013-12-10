@@ -1,5 +1,6 @@
 /*
  * MainActivity.java
+ * 
  * Copyright 2013 Burke Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
