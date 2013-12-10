@@ -17,13 +17,14 @@
  */
 package net.sarangnamu.common.frgmt;
 
-import java.util.ArrayDeque;
 import java.util.HashMap;
 
 import net.sarangnamu.common.DLog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManager.BackStackEntry;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 
 /**
@@ -31,12 +32,6 @@ import android.support.v4.app.FragmentTransaction;
  * <pre>
     public class Navigator extends FrgmtManager {
         private static Navigator inst;
-
-        public static final String HOME         = "home";
-        public static final String HOME_WRITE   = "homeWrite";
-        public static final String STUDY        = "study";
-        public static final String STUDY_DETAIL = "studyDetail";
-        public static final String QNA          = "qna";
 
         public static Navigator getInstance(FragmentActivity act) {
             if (inst == null) {
@@ -62,20 +57,21 @@ import android.support.v4.app.FragmentTransaction;
     nv.setBase(HomeFrgmt.class);
 
     - change page
-    nv.show(Navigator.STUDY_DETAIL);
+    nv.show(HomeFrgmt.class);
  * </pre>}
  * 
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
  */
-public abstract class FrgmtManager {
+public abstract class FrgmtManager implements OnBackStackChangedListener {
     private static final String TAG = "FrgmtManager";
 
     protected int baseLayoutId;
-    protected String currentName, baseName;
+    protected String currentName;
+    protected Fragment baseFrgmt;
     protected FragmentManager fm;
     protected HashMap<String, Class<?>> classes;
     protected HashMap<String, Fragment> frgmts;
-    protected ArrayDeque<String> history;
+
 
     public FrgmtManager() {
         setMap();
@@ -87,7 +83,10 @@ public abstract class FrgmtManager {
             return ;
         }
 
-        fm = act.getSupportFragmentManager();
+        if (fm == null) {
+            fm = act.getSupportFragmentManager();
+            fm.addOnBackStackChangedListener(this);
+        }
     }
 
     protected void setMap() {
@@ -97,10 +96,6 @@ public abstract class FrgmtManager {
 
         if (frgmts == null) {
             frgmts = new HashMap<String, Fragment>();
-        }
-
-        if (history == null) {
-            history = new ArrayDeque<String>();
         }
     }
 
@@ -141,12 +136,13 @@ public abstract class FrgmtManager {
         }
 
         showBase();
-        if (baseName != null) {
-            trans.remove(frgmts.get(baseName));
+        if (baseFrgmt != null) {
+            trans.remove(frgmts.get(baseFrgmt.getClass().getName()));
         }
 
-        currentName = baseName = name;
-        history.add(baseName);
+        baseFrgmt   = frgmt;
+        currentName = name;
+
         trans.add(baseLayoutId, frgmt);
         trans.commit();
     }
@@ -184,12 +180,10 @@ public abstract class FrgmtManager {
             return frgmt;
         }
 
-        currentName = name;
         setTransition(trans);
-        history.add(name);
 
         trans.replace(baseLayoutId, frgmt);
-        trans.addToBackStack(null);
+        trans.addToBackStack(name);
         trans.commit();
 
         return frgmt;
@@ -206,7 +200,9 @@ public abstract class FrgmtManager {
             fm.popBackStack(i, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
 
-        currentName = baseName;
+        if (baseFrgmt != null) {
+            currentName = baseFrgmt.getClass().getName();
+        }
     }
 
     public void setCurrentName(String name) {
@@ -257,5 +253,24 @@ public abstract class FrgmtManager {
 
     protected void setUpTransition(FragmentTransaction trans) {
         trans.setCustomAnimations(R.anim.slide_up_current, R.anim.slide_up_next, R.anim.slide_down_current, R.anim.slide_down_prev);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // OnBackStackChangedListener
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void onBackStackChanged() {
+        int count = fm.getBackStackEntryCount();
+        if (count > 0) {
+            BackStackEntry frgmt = fm.getBackStackEntryAt(count - 1);
+            currentName = frgmt.getName();
+        } else {
+            currentName = baseFrgmt.getClass().getName();
+        }
+
+        DLog.d(TAG, "backStack : currentName:" + currentName);
     }
 }

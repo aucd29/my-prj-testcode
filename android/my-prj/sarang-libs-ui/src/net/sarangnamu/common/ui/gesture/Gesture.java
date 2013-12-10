@@ -56,7 +56,7 @@ public class Gesture extends GestureDetector {
 
     protected GestureDetectorListener gdListener;
 
-    public static Gesture NEW(Context context) {
+    public static Gesture newInstance(Context context) {
         return new Gesture(context, new GestureDetectorListener());
     }
 

@@ -64,12 +64,12 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        gesture = Gesture.NEW(this);
+        gesture = Gesture.newInstance(this);
         gesture.setOnGestureRightListener(new GestureRightListener() {
             @Override
             public void toRight() {
                 onBackPressed();
-                Navigator.getInstance(MainActivity.this).setCurrentName(StudyFrgmt.class);
+                //Navigator.getInstance(MainActivity.this).setCurrentName(StudyFrgmt.class);
             }
         });
 
