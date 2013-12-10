@@ -171,10 +171,18 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
         String src = String.format("<b>%s</b> <a href='http://sarangnamu.net'>@aucd29</a>", getString(R.string.dev));
         dev.setText(Html.fromHtml(src));
+        //        path.setOnClickListener(new View.OnClickListener() {
+        //            @Override
+        //            public void onClick(View v) {
+        //                path.setSelected(true)
+        //            }
+        //        });
     }
 
     private void setDownloadPath() {
-        String src = String.format("<b>%s</b> : %s", getString(R.string.downloadPath), Cfg.getDownPath(this));
+        String dnPath = Cfg.getDownPath(this);
+
+        String src = String.format("<b>%s</b> : %s", getString(R.string.downloadPath), dnPath.replace(BkCfg.sdPath(), "/sdcard"));
         path.setText(Html.fromHtml(src));
     }
 

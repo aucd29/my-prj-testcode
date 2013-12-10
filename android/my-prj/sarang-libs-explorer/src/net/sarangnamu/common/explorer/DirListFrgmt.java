@@ -20,10 +20,14 @@ package net.sarangnamu.common.explorer;
 import java.io.File;
 import java.util.List;
 
+import net.sarangnamu.common.DimTool;
+import net.sarangnamu.common.fonts.FontLoader;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
+import android.view.Gravity;
+import android.widget.TextView;
 
 import com.ipaulpro.afilechooser.FileChooserActivity;
 import com.ipaulpro.afilechooser.FileListFragment;
@@ -48,8 +52,14 @@ public class DirListFrgmt extends FileListFragment {
     @Override
     public void onLoadFinished(Loader<List<File>> loader, List<File> data) {
         if (data != null && data.size() == 0) {
+            TextView view = new TextView(getActivity());
+            view.setText(R.string.setCurrentDir);
+            view.setPadding(0, DimTool.dpToPixelInt(getActivity(), 15), 0, 0);
+            view.setGravity(Gravity.CENTER | Gravity.CENTER_VERTICAL);
+            view.setTypeface(FontLoader.getInstance(getActivity()).getFont("Roboto-Light"));
+
             new AlertDialog.Builder(getActivity())
-            .setMessage(R.string.setCurrentDir)
+            .setView(view)
             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
                 @Override
                 public void onClick(DialogInterface dialog, int whichButton) {
