@@ -22,10 +22,18 @@ import android.content.Context;
 
 public class Cfg extends BkCfg {
     public static final String PATH = "/apks/";
-    private static final String EMAIL = "email";
 
-    public static String getDownPath() {
-        return BkCfg.sdPath() + PATH;
+    private static final String EMAIL = "email";
+    private static final String USERPATH = "usrPath";
+
+    public static String getDownPath(Context context) {
+        String usrPath = getUserPath(context);
+
+        if (usrPath == null) {
+            return BkCfg.sdPath() + PATH;
+        }
+
+        return usrPath;
     }
 
     public static String getEmail(Context context) {
@@ -34,5 +42,13 @@ public class Cfg extends BkCfg {
 
     public static void setEmail(Context context, String email) {
         set(context, EMAIL, email);
+    }
+
+    public static void setUserPath(Context context, String path) {
+        set(context, USERPATH, path);
+    }
+
+    public static String getUserPath(Context context) {
+        return get(context, USERPATH, null);
     }
 }

@@ -1,0 +1,44 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.sarangnamu.common.explorer"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="14" />
+
+<!--     <application -->
+<!--         android:allowBackup="true" -->
+<!--         android:hardwareAccelerated="true" > -->
+<!--         <activity -->
+<!--             android:name="com.ipaulpro.afilechooser.FileChooserActivity" -->
+<!--             android:exported="false" -->
+<!--             android:label="@string/choose_file" -->
+<!--             android:theme="@android:style/Theme.Holo.Light" > -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.GET_CONTENT" /> -->
+
+<!--                 <category android:name="android.intent.category.DEFAULT" /> -->
+<!--                 <category android:name="android.intent.category.OPENABLE" /> -->
+
+<!--                 <data android:mimeType="*/*" /> -->
+<!--             </intent-filter> -->
+<!--         </activity> -->
+
+<!--         <activity -->
+<!--             android:name="net.sarangnamu.common.explorer.DirChooserActivity" -->
+<!--             android:exported="false" -->
+<!--             android:label="@string/choose_file" -->
+<!--             android:theme="@android:style/Theme.Holo.Light" > -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.GET_CONTENT" /> -->
+
+<!--                 <category android:name="android.intent.category.DEFAULT" /> -->
+<!--                 <category android:name="android.intent.category.OPENABLE" /> -->
+
+<!--                 <data android:mimeType="*/*" /> -->
+<!--             </intent-filter> -->
+<!--         </activity> -->
+<!--     </application> -->
+
+</manifest>

@@ -28,7 +28,7 @@ import android.widget.TextView;
 /**
  * {@code
  * <pre>
-
+      FontLoader.getInstance(this).applyChild("Roboto-Light", layout, Button.class);
  * </pre>}
  * 
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>

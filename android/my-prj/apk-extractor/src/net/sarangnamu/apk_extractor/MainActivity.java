@@ -31,6 +31,7 @@ import net.sarangnamu.common.BkString;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.ani.FadeColor;
+import net.sarangnamu.common.explorer.DirChooserActivity;
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.ui.MenuManager;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
@@ -72,6 +73,9 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final int ET_SDCARD = 0;
     private static final int ET_EMAIL  = 1;
     private static final int ET_MENU   = 2;
+
+    private static final int EMAIL_ACTIVITY = 100;
+    private static final int DIR_ACTIVITY   = 200;
 
     private boolean sendEmail = false, searchedList = false;
     private TextView title, path, dev, tvSearch;
@@ -129,12 +133,24 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 100) {
+        switch (requestCode) {
+        case DIR_ACTIVITY:
+            if (resultCode == RESULT_OK) {
+                String path = data.getStringExtra("path");
+                if (path != null) {
+                    Cfg.setUserPath(this, path);
+                    setDownloadPath();
+                }
+            }
+            break;
+
+        case EMAIL_ACTIVITY:
             if (resultCode == RESULT_OK) {
             } else if (resultCode == RESULT_CANCELED) {
             } else {
                 showPopup(getString(R.string.sendMailFail));
             }
+            break;
         }
     }
 
@@ -151,11 +167,15 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private void initLabel() {
         title.setText(Html.fromHtml(getString(R.string.appName)));
 
-        String src = String.format("<b>%s</b> : %s", getString(R.string.downloadPath), Cfg.getDownPath());
-        path.setText(Html.fromHtml(src));
+        setDownloadPath();
 
-        src = String.format("<b>%s</b> <a href='http://sarangnamu.net'>@aucd29</a>", getString(R.string.dev));
+        String src = String.format("<b>%s</b> <a href='http://sarangnamu.net'>@aucd29</a>", getString(R.string.dev));
         dev.setText(Html.fromHtml(src));
+    }
+
+    private void setDownloadPath() {
+        String src = String.format("<b>%s</b> : %s", getString(R.string.downloadPath), Cfg.getDownPath(this));
+        path.setText(Html.fromHtml(src));
     }
 
     private void initMenu() {
@@ -163,9 +183,10 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                case R.id.mnu_search:  setSearchUi();    break;
-                case R.id.mnu_email:   showEmailDlg();   break;
-                case R.id.mnu_license: showLicenseDlg(); break;
+                case R.id.mnu_search:    setSearchUi();    break;
+                case R.id.mnu_email:     showEmailDlg();   break;
+                case R.id.mnu_license:   showLicenseDlg(); break;
+                case R.id.mnu_setSdPath: showFileExplorer(); break;
                 }
 
                 return false;
@@ -306,7 +327,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             public void run() {
                 try {
                     File src = new File(info.srcDir);
-                    BkFile.copyFile(src, Cfg.getDownPath(), new FileCopyListener() {
+                    BkFile.copyFile(src, Cfg.getDownPath(MainActivity.this), new FileCopyListener() {
                         @Override
                         public void onCancelled() {
                         }
@@ -354,7 +375,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         //intent.putExtra(Intent.EXTRA_TEXT, "");
 
         try {
-            startActivityForResult(Intent.createChooser(intent, "Send mail..."), 100);
+            startActivityForResult(Intent.createChooser(intent, "Send mail..."), EMAIL_ACTIVITY);
         } catch (android.content.ActivityNotFoundException ex) {
             showPopup(getString(R.string.errorEmail));
         }
@@ -370,6 +391,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     private int dpToPixelInt(int dp) {
         return DimTool.dpToPixelInt(getApplicationContext(), dp);
+    }
+
+    private void showFileExplorer() {
+        Intent intent = new Intent(this, DirChooserActivity.class);
+
+        startActivityForResult(intent, DIR_ACTIVITY);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

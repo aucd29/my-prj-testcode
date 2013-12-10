@@ -36,7 +36,7 @@
             android:ems="10"
             android:singleLine="true"
             android:layout_marginLeft="17dp"
-            android:layout_marginRight="50dp"
+            android:layout_marginRight="60dp"
             android:layout_toRightOf="@id/tvSearch"
             android:background="#ffffff"
             android:layout_centerVertical="true"
