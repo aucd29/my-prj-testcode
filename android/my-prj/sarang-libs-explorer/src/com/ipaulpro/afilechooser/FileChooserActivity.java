@@ -45,12 +45,9 @@ import android.widget.Toast;
  * @author paulburke (ipaulpro)
  * 
  */
-public class FileChooserActivity extends FragmentActivity implements
-OnBackStackChangedListener {
-
+public class FileChooserActivity extends FragmentActivity implements OnBackStackChangedListener {
     public static final String PATH = "path";
-    public static final String EXTERNAL_BASE_PATH = Environment
-            .getExternalStorageDirectory().getAbsolutePath();
+    public static final String EXTERNAL_BASE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
 
     private static final boolean HAS_ACTIONBAR = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
 
@@ -111,7 +108,6 @@ OnBackStackChangedListener {
 
     @Override
     public void onBackStackChanged() {
-
         int count = mFragmentManager.getBackStackEntryCount();
         if (count > 0) {
             BackStackEntry fragment = mFragmentManager.getBackStackEntryAt(count - 1);
@@ -155,8 +151,7 @@ OnBackStackChangedListener {
      */
     protected void addFragment() {
         FileListFragment fragment = instListFragment();
-        mFragmentManager.beginTransaction()
-        .add(R.id.explorer_fragment, fragment).commit();
+        mFragmentManager.beginTransaction().add(R.id.explorer_fragment, fragment).commit();
     }
 
     /**

@@ -41,8 +41,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/dirBtn"
+            android:visibility="gone"
             android:text="@string/create_dir" />
 
+<!--         android:layout_marginLeft="1dp" -->
         <Button
             android:id="@+id/setPath"
             android:layout_width="match_parent"

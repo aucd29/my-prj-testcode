@@ -29,5 +29,6 @@
     <style name="dirBtn">
         <item name="android:textSize">13sp</item>
         <item name="android:layout_weight">0.5</item>
+        <item name="android:background">@drawable/explorer_btn_selector</item>
     </style>
 </resources>

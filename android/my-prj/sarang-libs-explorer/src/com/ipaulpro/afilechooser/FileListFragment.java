@@ -36,8 +36,7 @@ import android.widget.ListView;
  * @author paulburke (ipaulpro)
  * 
  */
-public class FileListFragment extends ListFragment implements
-LoaderManager.LoaderCallbacks<List<File>> {
+public class FileListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<List<File>> {
 
     private static final int LOADER_ID = 0;
 
@@ -63,10 +62,13 @@ LoaderManager.LoaderCallbacks<List<File>> {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAdapter = new FileListAdapter(getActivity());
-        mPath = getArguments() != null ? getArguments().getString(
-                FileChooserActivity.PATH) : Environment
-                .getExternalStorageDirectory().getAbsolutePath();
+        mAdapter = instAdapter();
+        mPath = getArguments() != null ? getArguments().getString(FileChooserActivity.PATH)
+                : Environment.getExternalStorageDirectory().getAbsolutePath();
+    }
+
+    protected FileListAdapter instAdapter() {
+        return new FileListAdapter(getActivity());
     }
 
     @Override

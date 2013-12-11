@@ -17,13 +17,18 @@
  */
 package net.sarangnamu.common.explorer;
 
+import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.fonts.FontLoader;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ipaulpro.afilechooser.FileChooserActivity;
 import com.ipaulpro.afilechooser.FileListFragment;
@@ -51,7 +56,7 @@ public class DirChooserActivity extends FileChooserActivity {
         setPath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setPath();
+                setPath(null);
             }
         });
     }
@@ -66,11 +71,26 @@ public class DirChooserActivity extends FileChooserActivity {
         return R.layout.dir_chooser;
     }
 
-    public void setPath() {
-        Intent intent = new Intent();
-        intent.putExtra("path", mPath);
+    public void setPath(final DialogInterface.OnClickListener cancelListener) {
+        TextView view = new TextView(DirChooserActivity.this);
+        view.setText(R.string.setCurrentDir);
+        view.setPadding(0, DimTool.dpToPixelInt(DirChooserActivity.this, 15), 0, 0);
+        view.setGravity(Gravity.CENTER | Gravity.CENTER_VERTICAL);
+        view.setTypeface(FontLoader.getInstance(DirChooserActivity.this).getFont("Roboto-Light"));
 
-        setResult(Activity.RESULT_OK, intent);
-        finish();
+        new AlertDialog.Builder(DirChooserActivity.this)
+        .setView(view)
+        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Intent intent = new Intent();
+                intent.putExtra("path", mPath);
+
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        })
+        .setNegativeButton(android.R.string.no, cancelListener)
+        .show();
     }
 }

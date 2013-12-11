@@ -38,9 +38,8 @@ import android.widget.TextView;
  * 
  */
 public class FileListAdapter extends BaseAdapter {
-
-    private final static int ICON_FOLDER = R.drawable.ic_folder;
-    private final static int ICON_FILE = R.drawable.ic_file;
+    protected static int ICON_FOLDER = R.drawable.ic_folder;
+    protected static int ICON_FILE = R.drawable.ic_file;
 
     private List<File> mFiles = new ArrayList<File>();
     private final LayoutInflater mInflater;
@@ -104,8 +103,7 @@ public class FileListAdapter extends BaseAdapter {
         holder.nameView.setText(file.getName());
 
         // If the item is not a directory, use the file icon
-        holder.iconView.setImageResource(file.isDirectory() ? ICON_FOLDER
-                : ICON_FILE);
+        holder.iconView.setImageResource(file.isDirectory() ? ICON_FOLDER : ICON_FILE);
 
         return row;
     }
@@ -118,5 +116,13 @@ public class FileListAdapter extends BaseAdapter {
             nameView = (TextView) row.findViewById(R.id.file_name);
             iconView = (ImageView) row.findViewById(R.id.file_icon);
         }
+    }
+
+    public static void setFolderIconId(int resid) {
+        ICON_FOLDER = resid;
+    }
+
+    public static void setFileIconId(int resid) {
+        ICON_FILE = resid;
     }
 }
