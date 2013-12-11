@@ -48,7 +48,7 @@ public class HomeFrgmt extends FrgmtBase {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigator.getInstance(getActivity()).show(AddFrgmt.class);
+                Navigator.getInstance(getActivity()).replace(R.id.content, AddFrgmt.class);
             }
         });
     }
