@@ -20,7 +20,6 @@ package net.sarangnamu.common.explorer;
 import java.io.File;
 import java.util.List;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 
@@ -46,16 +45,16 @@ public class DirListFrgmt extends FileListFragment {
 
     @Override
     public void onLoadFinished(Loader<List<File>> loader, List<File> data) {
-        if (data != null && data.size() == 0) {
-            ((DirChooserActivity) getActivity()).setPath(new DialogInterface.OnClickListener(){
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    getActivity().onBackPressed();
-                }
-            });
-
-            return ;
-        }
+        //        if (data != null && data.size() == 0) {
+        //            ((DirChooserActivity) getActivity()).setPath(new DialogInterface.OnClickListener(){
+        //                @Override
+        //                public void onClick(DialogInterface dialog, int whichButton) {
+        //                    getActivity().onBackPressed();
+        //                }
+        //            });
+        //
+        //            return ;
+        //        }
 
         mAdapter.setListItems(data);
 

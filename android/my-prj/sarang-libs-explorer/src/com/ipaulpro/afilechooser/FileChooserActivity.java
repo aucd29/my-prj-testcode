@@ -160,7 +160,7 @@ public class FileChooserActivity extends FragmentActivity implements OnBackStack
      * 
      * @param file The file (directory) to display.
      */
-    private void replaceFragment(File file) {
+    protected void replaceFragment(File file) {
         mPath = file.getAbsolutePath();
 
         FileListFragment fragment = instListFragment();

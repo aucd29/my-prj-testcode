@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <net.sarangnamu.common.fonts.RobotoLightTextView
+        style="@style/fileChooserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_dir"
+        android:layout_marginBottom="10dp"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:alpha="0.9"
+        android:background="@drawable/edt_bg" />
+
+</LinearLayout>

@@ -17,6 +17,8 @@
  */
 package net.sarangnamu.common.explorer;
 
+import java.io.File;
+
 import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.fonts.FontLoader;
 import android.app.Activity;
@@ -25,8 +27,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -50,6 +54,32 @@ public class DirChooserActivity extends FileChooserActivity {
         createDir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final View view = LayoutInflater.from(DirChooserActivity.this).inflate(R.layout.dlg_create_dir, null);
+                final EditText edit = (EditText) view.findViewById(R.id.edit);
+                edit.setTypeface(FontLoader.getInstance(DirChooserActivity.this).getFont("Roboto-Light"));
+
+                new AlertDialog.Builder(DirChooserActivity.this)
+                .setView(view)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String text = edit.getText().toString();
+                        if (text == null || text.length() == 0) {
+                            return ;
+                        }
+
+                        File fp = new File(mPath, text);
+                        if (fp.exists()) {
+                            return ;
+                        }
+
+                        if (fp.mkdirs()) {
+                            replaceFragment(fp);
+                        }
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
             }
         });
 
