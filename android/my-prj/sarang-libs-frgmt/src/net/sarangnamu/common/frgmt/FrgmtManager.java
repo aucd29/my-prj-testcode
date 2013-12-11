@@ -22,7 +22,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.BackStackEntry;
-import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 
 /**
@@ -56,7 +55,7 @@ import android.support.v4.app.FragmentTransaction;
  * 
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
  */
-public abstract class FrgmtManager implements OnBackStackChangedListener {
+public abstract class FrgmtManager {
     private static final String TAG = "FrgmtManager";
 
     protected FragmentManager fm;
@@ -70,12 +69,7 @@ public abstract class FrgmtManager implements OnBackStackChangedListener {
             return ;
         }
 
-        if (fm == null) {
-            fm = act.getSupportFragmentManager();
-            fm.addOnBackStackChangedListener(this);
-        } else {
-            fm = act.getSupportFragmentManager();
-        }
+        fm = act.getSupportFragmentManager();
     }
 
     public void add(int id, Class<?> cls) {
@@ -191,22 +185,5 @@ public abstract class FrgmtManager implements OnBackStackChangedListener {
         }
 
         return fm.findFragmentByTag(cls.getName());
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////
-    //
-    // OnBackStackChangedListener
-    //
-    ////////////////////////////////////////////////////////////////////////////////////
-
-    @Override
-    public void onBackStackChanged() {
-        //        int count = fm.getBackStackEntryCount();
-        //        if (count > 0) {
-        //            BackStackEntry frgmt = fm.getBackStackEntryAt(count - 1);
-        //            //currentName = frgmt.getName();
-        //        } else {
-        //            //currentName = baseFrgmt.getClass().getName();
-        //        }
     }
 }
