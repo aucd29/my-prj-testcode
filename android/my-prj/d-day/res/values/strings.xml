@@ -7,5 +7,15 @@
     <string name="delete">Delete</string>
 
 	<string name="emptyList">Empty list</string>
+	<string name="description">Description</string>
 	<string name="detail">Detail</string>
+	
+	<string name="title">Title</string>
+	<string name="date">Date</string>
+	<string name="reminder">Reminder</string>
+	
+	<string name="year">Year</string>
+	<string name="month">Month</string>
+	<string name="day100">100</string>
+	
 </resources>

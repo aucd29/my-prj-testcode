@@ -106,15 +106,15 @@ public abstract class PageBaseFrgmt extends FrgmtBase {
     }
 
     protected void showFrgmt(Class<?> cls) {
-        Navigator.getInstance(getActivity()).show(cls);
+        Navigator.getInstance(getActivity()).replace(R.id.content, cls);
     }
 
     public void backFrgmt() {
-        Navigator.getInstance(getActivity()).back();
+        Navigator.getInstance(getActivity()).popBack();
     }
 
     public Fragment getFrgmtByName(Class<?> cls) {
-        return Navigator.getInstance(getActivity()).getFragmentByName(cls);
+        return Navigator.getInstance(getActivity()).getFragment(cls);
     }
 
     public void showWriteButton() {

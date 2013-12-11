@@ -27,7 +27,6 @@ import net.sarangnamu.home.page.PageBaseFrgmt;
 import net.sarangnamu.home.page.dlg.DlgLogin;
 import net.sarangnamu.home.page.dlg.DlgLogin.DlgLoginListener;
 import net.sarangnamu.home.page.sub.HomeFrgmt;
-import net.sarangnamu.home.page.sub.HomeWriteFrgmt;
 import net.sarangnamu.home.page.sub.QnaFrgmt;
 import net.sarangnamu.home.page.sub.StudyDetailFrgmt;
 import net.sarangnamu.home.page.sub.StudyFrgmt;
@@ -69,7 +68,6 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void toRight() {
                 onBackPressed();
-                //Navigator.getInstance(MainActivity.this).setCurrentName(StudyFrgmt.class);
             }
         });
 
@@ -80,8 +78,8 @@ public class MainActivity extends FragmentActivity {
         sliding.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Fragment ft = Navigator.getInstance(MainActivity.this).getCurrent();
-                if (ft instanceof StudyDetailFrgmt) {
+                Fragment ft = Navigator.getInstance(MainActivity.this).getCurrentFragment();
+                if (ft != null && ft instanceof StudyDetailFrgmt) {
                     gesture.onTouchEvent(event);
 
                     return true;
@@ -91,9 +89,21 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
-        initNaviation();
+        if (savedInstanceState == null) {
+            initNaviation();
+        }
         initMenu();
         initLogin();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "onSaveInstanceState");
+        DLog.d(TAG, "===================================================================");
+        outState.putString("path", "-");
     }
 
     @Override
@@ -104,14 +114,15 @@ public class MainActivity extends FragmentActivity {
 
     private void initNaviation() {
         Navigator nv = Navigator.getInstance(this);
-        nv.setBaseLayoutId(R.id.content);
-        nv.add(HomeFrgmt.class);
-        nv.add(HomeWriteFrgmt.class);
-        nv.add(QnaFrgmt.class);
-        nv.add(StudyFrgmt.class);
-        nv.add(StudyDetailFrgmt.class);
-        nv.add(QnaFrgmt.class);
-        nv.setBase(HomeFrgmt.class);
+        nv.add(R.id.content, HomeFrgmt.class);
+    }
+
+    @Override
+    protected void onDestroy() {
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "on destory");
+        DLog.d(TAG, "===================================================================");
+        super.onDestroy();
     }
 
     private void initMenu() {
@@ -122,15 +133,15 @@ public class MainActivity extends FragmentActivity {
 
                 switch (checkedId) {
                 case R.id.mnu_home:
-                    nv.setBase(HomeFrgmt.class);
+                    nv.resetAdd(R.id.content, HomeFrgmt.class);
                     break;
 
                 case R.id.mnu_study:
-                    nv.setBase(StudyFrgmt.class);
+                    nv.resetAdd(R.id.content, StudyFrgmt.class);
                     break;
 
                 case R.id.mnu_qna:
-                    nv.setBase(QnaFrgmt.class);
+                    nv.resetAdd(R.id.content, QnaFrgmt.class);
                     break;
                 }
 
@@ -186,9 +197,11 @@ public class MainActivity extends FragmentActivity {
                     Toast.makeText(MainActivity.this, R.string.loginOk, Toast.LENGTH_SHORT).show();
 
                     DLog.e(TAG, "onPostExecute result ok");
-                    PageBaseFrgmt base = (PageBaseFrgmt) Navigator.getInstance(MainActivity.this).getCurrent();
-                    if (base instanceof HomeFrgmt) {
+                    PageBaseFrgmt base = (PageBaseFrgmt) Navigator.getInstance(MainActivity.this).getCurrentFragment();
+                    if (base == null) {
                         DLog.e(TAG, "home fragment");
+
+                        base = (PageBaseFrgmt) Navigator.getInstance(MainActivity.this).getFragment(HomeFrgmt.class);
                         base.showWriteButton();
                     } else {
                         DLog.e(TAG, "onPostExecute error fragment");
@@ -220,7 +233,7 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        PageBaseFrgmt ft = (PageBaseFrgmt) Navigator.getInstance(this).getCurrent();
+        PageBaseFrgmt ft = (PageBaseFrgmt) Navigator.getInstance(this).getCurrentFragment();
 
         if (ft == null || !ft.onBackPressed()) {
             super.onBackPressed();

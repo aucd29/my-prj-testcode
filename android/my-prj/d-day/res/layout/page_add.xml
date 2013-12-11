@@ -17,7 +17,10 @@
             android:id="@+id/eventTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" >
+            android:ems="10"
+            android:background="@drawable/edt_bg"
+            android:hint="@string/title"
+            >
 
             <requestFocus />
         </EditText>
@@ -26,13 +29,24 @@
             android:id="@+id/eventDate"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="date"
+            android:text="@string/date"            
              />
 
-        <TextView
-            android:id="@+id/eventDetail"
+        <EditText
+            android:id="@+id/eventDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="150dp"
+            android:hint="@string/description"
+            android:gravity="top"
+            android:padding="10dp"
+            android:background="@drawable/edt_bg"
+             />
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/reminder"            
+             />
 
         <RadioGroup
             android:id="@+id/eventTypeGroup"
@@ -44,17 +58,25 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/year"
+                style="@style/radio"
                  />
             
             <RadioButton
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/month"
+                style="@style/radio"
+                 />
             
             <RadioButton
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/day100"
+                style="@style/radio"
+                 />
         </RadioGroup>
     </LinearLayout>
 

@@ -32,11 +32,11 @@ import android.view.ViewGroup;
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
  */
 public abstract class FrgmtBase extends Fragment {
-    protected View base;
+    protected ViewGroup base;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        base = inflate(getLayoutId());
+        base = (ViewGroup) inflate(getLayoutId());
         initLayout();
 
         return base;

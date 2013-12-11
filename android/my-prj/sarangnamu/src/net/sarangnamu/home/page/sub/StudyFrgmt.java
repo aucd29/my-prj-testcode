@@ -66,7 +66,8 @@ public class StudyFrgmt extends ListApiTaskFrgmt {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
                 Study study = studies.get(pos);
-                StudyDetailFrgmt frg = (StudyDetailFrgmt) Navigator.getInstance(getActivity()).show(StudyDetailFrgmt.class);
+
+                StudyDetailFrgmt frg = (StudyDetailFrgmt) Navigator.getInstance(getActivity()).replace(R.id.content, StudyDetailFrgmt.class);
                 frg.setStudyData(study);
             }
         });

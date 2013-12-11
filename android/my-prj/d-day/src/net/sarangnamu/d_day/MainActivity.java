@@ -55,5 +55,7 @@ public class MainActivity extends FragmentActivity {
         nv.add(HomeFrgmt.class);
         nv.add(AddFrgmt.class);
         nv.setBase(HomeFrgmt.class);
+
+        //onSaveInstanceState(null);
     }
 }
