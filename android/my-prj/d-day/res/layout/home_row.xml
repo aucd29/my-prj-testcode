@@ -7,8 +7,7 @@
     <RelativeLayout
         android:id="@+id/row"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5dp" >
+        android:layout_height="match_parent" >
 
         <!-- net.sarangnamu.common.fonts.RobotoLight -->
 
@@ -16,26 +15,26 @@
             android:id="@+id/count"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginRight="10dp"
             android:gravity="center|center_vertical"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            android:layout_marginRight="10dp"
             android:textStyle="bold" />
 
         <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/count"
             android:layout_marginTop="7dp"
+            android:layout_toRightOf="@id/count"
             android:textSize="15sp" />
-        
-         <net.sarangnamu.common.fonts.RobotoLightTextView
+
+        <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/count"
             android:layout_below="@id/title"
+            android:layout_toRightOf="@id/count"
             android:textSize="12sp" />
 
         <net.sarangnamu.common.fonts.RobotoLightTextView
@@ -58,17 +57,18 @@
 
     <LinearLayout
         android:id="@+id/btnLayout"
-        android:layout_width="124dp"
-        android:layout_height="62dp"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="-124dp"
+        android:layout_marginRight="-120dp"
         android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/detail"
             style="@style/btnLayout"
-            android:layout_width="62dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="#acacac"
             android:text="@string/detail"
             android:textColor="#ffffff" />
@@ -76,8 +76,9 @@
         <TextView
             android:id="@+id/delete"
             style="@style/btnLayout"
-            android:layout_width="62dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="#ed594e"
             android:text="@string/delete"
             android:textColor="#ffffff" />

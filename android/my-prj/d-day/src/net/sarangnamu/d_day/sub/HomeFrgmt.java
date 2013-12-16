@@ -37,7 +37,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
-    private static final int SLIDING_MARGIN = 124;
+    private static final int SLIDING_MARGIN = 120;
     private ScheduleAdapter adapter;
 
     private TextView empty;
@@ -180,5 +180,8 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if (v instanceof RelativeLayout) {
+            list.showAnimation(v);
+        }
     }
 }
