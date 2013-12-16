@@ -122,14 +122,19 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
     //    }
 
     class ScheduleAdapter extends CursorAdapter {
+        private Date currDate;
+
         public ScheduleAdapter(Context context, Cursor c) {
             super(context, c);
+
+            currDate = new Date();
         }
 
         @Override
         public void bindView(View view, Context context, Cursor cr) {
             ViewHolder vh = new ViewHolder();
 
+            vh.count     = (TextView) view.findViewById(R.id.count);
             vh.title     = (TextView) view.findViewById(R.id.title);
             vh.date      = (TextView) view.findViewById(R.id.date);
             vh.reminder  = (TextView) view.findViewById(R.id.reminder);
@@ -146,12 +151,14 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
             vh.title.setText(cr.getString(pos++));
 
             long date = Long.parseLong(cr.getString(pos++));
-
+            long gap = (currDate.getTime() - date) / 1000 / 86400;
+            vh.count.setText("+" + (gap + 1)  + "");
+            vh.count.setBackgroundColor(0xffdedede);
             vh.date.setText(DateFormat.getDateInstance().format(new Date(date)));
             pos++;
 
-            vh.reminder.setText(cr.getInt(pos++));
-            vh.alarm.setText(cr.getInt(pos++));
+            vh.reminder.setText(cr.getInt(pos++) + "");
+            vh.alarm.setText(cr.getInt(pos++) + "");
 
             vh.detail.setOnClickListener(HomeFrgmt.this);
             vh.row.setOnClickListener(HomeFrgmt.this);
