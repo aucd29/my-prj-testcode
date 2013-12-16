@@ -17,19 +17,30 @@
  */
 package net.sarangnamu.d_day.sub;
 
-import net.sarangnamu.common.FrgmtBase;
+import java.text.DateFormat;
+import java.util.Date;
+
+import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.common.ui.list.AniBtnListView;
 import net.sarangnamu.d_day.Navigator;
 import net.sarangnamu.d_day.R;
+import net.sarangnamu.d_day.db.DbHelper;
+import android.content.Context;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
+import android.widget.CursorAdapter;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class HomeFrgmt extends FrgmtBase {
+public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
     private static final int SLIDING_MARGIN = 124;
+    private ScheduleAdapter adapter;
 
-    private Button add;
-    private TextView title, empty;
+    private TextView empty;
     private AniBtnListView list;
 
 
@@ -39,18 +50,41 @@ public class HomeFrgmt extends FrgmtBase {
     }
 
     @Override
+    public void onResume() {
+        DbManager.getInstance().open(getActivity(), new DbHelper(getActivity()));
+
+        super.onResume();
+    }
+
+    @Override
     protected void initLayout() {
-        add   = (Button) base.findViewById(R.id.add);
-        title = (TextView) base.findViewById(R.id.title);
+        super.initLayout();
+
         empty = (TextView) base.findViewById(android.R.id.empty);
         list  = (AniBtnListView) base.findViewById(android.R.id.list);
+    }
 
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigator.getInstance(getActivity()).replace(R.id.content, AddFrgmt.class);
-            }
-        });
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        DbManager.getInstance().open(getActivity(), new DbHelper(getActivity()));
+        initListView();
+    }
+
+    @Override
+    protected void onAddButton() {
+        Navigator.getInstance(getActivity()).replace(R.id.content, AddFrgmt.class);
+    }
+
+    private void initListView() {
+        adapter = new ScheduleAdapter(getActivity(), DbHelper.selectDesc());
+
+        list.setEmptyView(empty);
+        list.setAdapter(adapter);
+        list.setSlidingMargin(SLIDING_MARGIN);
+        list.setBtnLayoutId(R.id.btnLayout);
+        list.setRowId(R.id.row);
     }
 
     //    private void deleteItem(final int id) {
@@ -63,22 +97,20 @@ public class HomeFrgmt extends FrgmtBase {
     //            showPopup(getString(R.string.deleted));
     //        }
     //    }
-    //    @Override
-    //    private int dpToPixelInt(int dp) {
-    //        return DimTool.dpToPixelInt(MainActivity.this, dp);
-    //    }
-    //    ////////////////////////////////////////////////////////////////////////////////////
-    //    //
-    //    // ADAPTER
-    //    //
-    //    ////////////////////////////////////////////////////////////////////////////////////
+
+
+    ////////////////////////////////////////////////////////////////////////////////////
     //
-    //    class ViewHolder {
-    //        TextView emsNum, date, status, office, delete, detail;
-    //        LinearLayout btnLayout;
-    //        RelativeLayout row;
-    //    }
+    // ADAPTER
     //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    class ViewHolder {
+        TextView count, date, title, reminder, alarm, detail, delete;
+        LinearLayout btnLayout;
+        RelativeLayout row;
+    }
+
     //    class DetailType {
     //        String emsNum;
     //        View row;
@@ -88,47 +120,58 @@ public class HomeFrgmt extends FrgmtBase {
     //            this.row = row;
     //        }
     //    }
+
+    class ScheduleAdapter extends CursorAdapter {
+        public ScheduleAdapter(Context context, Cursor c) {
+            super(context, c);
+        }
+
+        @Override
+        public void bindView(View view, Context context, Cursor cr) {
+            ViewHolder vh = new ViewHolder();
+
+            vh.title     = (TextView) view.findViewById(R.id.title);
+            vh.date      = (TextView) view.findViewById(R.id.date);
+            vh.reminder  = (TextView) view.findViewById(R.id.reminder);
+            vh.alarm     = (TextView) view.findViewById(R.id.alarm);
+            vh.delete    = (TextView) view.findViewById(R.id.delete);
+            vh.detail    = (TextView) view.findViewById(R.id.detail);
+            vh.btnLayout = (LinearLayout) view.findViewById(R.id.btnLayout);
+            vh.row       = (RelativeLayout) view.findViewById(R.id.row);
+
+            int pos = 0;
+
+            vh.delete.setTag(cr.getInt(pos++));
+            vh.delete.setOnClickListener(HomeFrgmt.this);
+            vh.title.setText(cr.getString(pos++));
+
+            long date = Long.parseLong(cr.getString(pos++));
+
+            vh.date.setText(DateFormat.getDateInstance().format(new Date(date)));
+            pos++;
+
+            vh.reminder.setText(cr.getInt(pos++));
+            vh.alarm.setText(cr.getInt(pos++));
+
+            vh.detail.setOnClickListener(HomeFrgmt.this);
+            vh.row.setOnClickListener(HomeFrgmt.this);
+
+            view.setTag(vh);
+        }
+
+        @Override
+        public View newView(Context context, Cursor arg1, ViewGroup parent) {
+            return LayoutInflater.from(context).inflate(R.layout.home_row, parent, false);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
     //
-    //    class EmsAdapter extends CursorAdapter {
-    //        public EmsAdapter(Context context, Cursor c) {
-    //            super(context, c);
-    //        }
+    // View.OnClickListener
     //
-    //        @Override
-    //        public void bindView(View view, Context context, Cursor cr) {
-    //            ViewHolder vh = new ViewHolder();
-    //
-    //            vh.emsNum    = (TextView) view.findViewById(R.id.emsNum);
-    //            vh.date      = (TextView) view.findViewById(R.id.date);
-    //            vh.status    = (TextView) view.findViewById(R.id.status);
-    //            vh.office    = (TextView) view.findViewById(R.id.office);
-    //            vh.delete    = (TextView) view.findViewById(R.id.delete);
-    //            vh.detail    = (TextView) view.findViewById(R.id.detail);
-    //            vh.btnLayout = (LinearLayout) view.findViewById(R.id.btnLayout);
-    //            vh.row       = (RelativeLayout) view.findViewById(R.id.row);
-    //
-    //            int pos = 0;
-    //            vh.delete.setTag(cr.getInt(pos++));
-    //            vh.delete.setOnClickListener(MainActivity.this);
-    //
-    //            String emsNumber = cr.getString(pos++);
-    //            vh.emsNum.setText(emsNumber);
-    //            vh.date.setText(cr.getString(pos++));
-    //
-    //            String statusValue = cr.getString(pos++);
-    //            vh.status.setText(statusValue);
-    //            vh.detail.setTag(new DetailType(emsNumber, vh.row));
-    //            vh.detail.setOnClickListener(MainActivity.this);
-    //
-    //            vh.office.setText(cr.getString(pos++));
-    //            vh.row.setOnClickListener(MainActivity.this);
-    //
-    //            view.setTag(vh);
-    //        }
-    //
-    //        @Override
-    //        public View newView(Context context, Cursor arg1, ViewGroup parent) {
-    //            return LayoutInflater.from(context).inflate(R.layout.item, parent, false);
-    //        }
-    //    }
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void onClick(View v) {
+    }
 }

@@ -39,8 +39,17 @@
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center|center_vertical</item>
     </style>
+    
+    <style name="addLabelText">
+        <item name="android:textSize">25sp</item>
+    </style>
 
     <style name="radio">
         <item name="android:button">@null</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:background">@drawable/rdo_add_bg_selector</item>
+        <item name="android:textColor">@color/rdo_add_text_selector</item>
     </style>
 </resources>

@@ -7,20 +7,29 @@
     <include layout="@layout/cm_title" />
 
     <LinearLayout
+        android:id="@+id/addLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ececec"
+        android:background="@color/dContentBg"
         android:orientation="vertical"
         android:padding="10dp" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            style="@style/addLabelText"
+            android:text="@string/inputs" />
 
         <EditText
             android:id="@+id/eventTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
+            android:layout_height="30dp"
             android:background="@drawable/edt_bg"
+            android:ems="10"
             android:hint="@string/title"
-            >
+            android:textSize="13sp" >
 
             <requestFocus />
         </EditText>
@@ -28,55 +37,85 @@
         <TextView
             android:id="@+id/eventDate"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="@string/date"            
-             />
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edt_bg"
+            android:gravity="center_vertical"
+            android:text="@string/date"
+            android:textColor="#929292"
+            android:textSize="13sp" />
 
         <EditText
             android:id="@+id/eventDescription"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:hint="@string/description"
-            android:gravity="top"
-            android:padding="10dp"
             android:background="@drawable/edt_bg"
-             />
-        
+            android:gravity="top"
+            android:hint="@string/description"
+            android:padding="10dp"
+            android:textSize="13sp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/reminder"            
-             />
+            android:layout_marginTop="10dp"
+            style="@style/addLabelText"
+            android:text="@string/reminder" />
 
         <RadioGroup
-            android:id="@+id/eventTypeGroup"
+            android:id="@+id/eventType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:checkedButton="@+id/rdoTypeNone"
             android:orientation="horizontal" >
 
             <RadioButton
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/year"
+                android:id="@+id/rdoTypeNone"
                 style="@style/radio"
-                 />
-            
+                android:layout_width="wrap_content"
+                android:text="@string/none" />
+
             <RadioButton
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/month"
+                android:id="@+id/rdoYear"
                 style="@style/radio"
-                 />
-            
+                android:layout_width="wrap_content"
+                android:text="@string/year" />
+
             <RadioButton
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/day100"
+                android:id="@+id/rdoDay"
                 style="@style/radio"
-                 />
+                android:layout_width="wrap_content"
+                android:text="@string/day100" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            style="@style/addLabelText"
+            android:text="@string/alarm" />
+
+        <RadioGroup
+            android:id="@+id/eventAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:checkedButton="@+id/rdoAlarmNone"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/rdoAlarmNone"
+                style="@style/radio"
+                android:layout_width="wrap_content"
+                android:text="@string/no" />
+
+            <RadioButton
+                android:id="@+id/rdoAlarm"
+                style="@style/radio"
+                android:layout_width="wrap_content"
+                android:text="@string/yes" />
         </RadioGroup>
     </LinearLayout>
 

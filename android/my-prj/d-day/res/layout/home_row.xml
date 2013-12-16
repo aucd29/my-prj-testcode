@@ -13,7 +13,7 @@
         <!-- net.sarangnamu.common.fonts.RobotoLight -->
 
         <TextView
-            android:id="@+id/emsNum"
+            android:id="@+id/count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -22,15 +22,23 @@
             android:textStyle="bold" />
 
         <net.sarangnamu.common.fonts.RobotoLightTextView
-            android:id="@+id/office"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/emsNum"
+            android:layout_toRightOf="@id/count"
             android:layout_marginTop="7dp"
+            android:textSize="15sp" />
+        
+         <net.sarangnamu.common.fonts.RobotoLightTextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/count"
+            android:layout_below="@id/title"
             android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/status"
+        <net.sarangnamu.common.fonts.RobotoLightTextView
+            android:id="@+id/reminder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -38,11 +46,11 @@
             android:textSize="16sp" />
 
         <net.sarangnamu.common.fonts.RobotoLightTextView
-            android:id="@+id/date"
+            android:id="@+id/alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/status"
+            android:layout_below="@id/reminder"
             android:layout_marginTop="10dp"
             android:textSize="11sp" />
     </RelativeLayout>

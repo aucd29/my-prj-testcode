@@ -21,7 +21,7 @@
             android:contentDescription="@null"
             android:src="@drawable/icon_check" />
 
-        <TextView
+        <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/msg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

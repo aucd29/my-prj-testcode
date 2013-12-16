@@ -17,12 +17,12 @@
  */
 package net.sarangnamu.d_day;
 
-import net.sarangnamu.common.sqlite.DbManager;
-import net.sarangnamu.d_day.db.DbHelper;
+import net.sarangnamu.d_day.dlg.DlgLicense;
 import net.sarangnamu.d_day.sub.HomeFrgmt;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 
 public class MainActivity extends FragmentActivity {
     private static final String TAG = "MainActivity";
@@ -36,16 +36,24 @@ public class MainActivity extends FragmentActivity {
     }
 
     @Override
-    protected void onResume() {
-        DbManager.getInstance().open(this, new DbHelper(this));
-
-        super.onResume();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.action_license:
+            DlgLicense dlg = new DlgLicense(MainActivity.this);
+            dlg.show();
+            break;
+
+        case R.id.action_settings:
+            break;
+        }
+
+        return super.onMenuItemSelected(featureId, item);
     }
 
     private void initNaviation() {

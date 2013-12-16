@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <include layout="@layout/cm_title"/>
+    <include layout="@layout/cm_title" />
 
     <net.sarangnamu.common.ui.list.AniBtnListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:background="@color/dContentBg"
         android:drawSelectorOnTop="false"
         android:listSelector="@drawable/list_bg_selector" />
 

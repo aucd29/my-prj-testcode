@@ -22,6 +22,7 @@ import java.util.HashMap;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.sqlite.DbHelperBase;
 import net.sarangnamu.common.sqlite.DbManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.BaseColumns;
@@ -32,10 +33,10 @@ public class DbHelper extends DbHelperBase {
     private static final String DB_NAME = "db.db";
     private static final int VERSION = 1;
     public static final String[] FIELDS = new String[] {
-        Columns.TYPE,
+        Columns.REMINDER,
         Columns.DATE,
         Columns.TITLE,
-        Columns.DETAIL
+        Columns.DESCRIPTION
     };
 
     public DbHelper(Context context) {
@@ -46,7 +47,7 @@ public class DbHelper extends DbHelperBase {
     }
 
     public static Cursor select() {
-        String[] fields = new String[] {Columns.TYPE, Columns._ID, Columns.TITLE};
+        String[] fields = new String[] {Columns.REMINDER, Columns._ID, Columns.TITLE};
         return DbManager.getInstance().query(Columns.TABLE, fields, null);
     }
 
@@ -54,53 +55,43 @@ public class DbHelper extends DbHelperBase {
         return DbManager.getInstance().query(Columns.TABLE, null, null, "_id DESC");
     }
 
-    //    public static boolean insert(Ems ems) {
-    //        try {
-    //            ContentValues values = new ContentValues();
-    //            values.put(Columns.TYPE, ems.emsNum);
-    //
-    //            EmsData emsData = ems.getLastEmsData();
-    //            values.put(Columns.DATE, emsData.date);
-    //            values.put(Columns.TITLE, emsData.status);
-    //            values.put(Columns.OFFICE, emsData.office);
-    //            values.put(Columns.DETAIL, emsData.detail);
-    //
-    //            return DbManager.getInstance().insert(Columns.TABLE, values) > 0 ? true : false;
-    //        } catch (NullPointerException e) {
-    //            DLog.e(TAG, "insert", e);
-    //        } catch (Exception e) {
-    //            DLog.e(TAG, "insert", e);
-    //        }
-    //
-    //        return false;
-    //    }
-    //
-    //    public static boolean update(int id, Ems ems) {
-    //        try {
-    //            ContentValues values = new ContentValues();
-    //
-    //            EmsData emsData = ems.getLastEmsData();
-    //            values.put(Columns.DATE, emsData.date);
-    //            values.put(Columns.TITLE, emsData.status);
-    //            values.put(Columns.OFFICE, emsData.office);
-    //            values.put(Columns.DETAIL, emsData.detail);
-    //
-    //            int res;
-    //            if (id == 0) {
-    //                res = DbManager.getInstance().update(Columns.TABLE, values, Columns.TYPE + "='" + id + "'");
-    //            } else {
-    //                res = DbManager.getInstance().update(Columns.TABLE, values, "_id=" + id);
-    //            }
-    //
-    //            return res > 0 ? true : false;
-    //        } catch (NullPointerException e) {
-    //            DLog.e(TAG, "update", e);
-    //        } catch (Exception e) {
-    //            DLog.e(TAG, "update", e);
-    //        }
-    //
-    //        return false;
-    //    }
+    public static boolean insert(ScheduleData data) {
+        try {
+            ContentValues values = new ContentValues();
+            values.put(Columns.TITLE, data.title);
+            values.put(Columns.DATE, data.date);
+            values.put(Columns.DESCRIPTION, data.description);
+            values.put(Columns.REMINDER, data.reminder);
+            values.put(Columns.ALARM, data.alarm);
+
+            return DbManager.getInstance().insert(Columns.TABLE, values) > 0 ? true : false;
+        } catch (NullPointerException e) {
+            DLog.e(TAG, "insert", e);
+        } catch (Exception e) {
+            DLog.e(TAG, "insert", e);
+        }
+
+        return false;
+    }
+
+    public static boolean update(int id, ScheduleData data) {
+        try {
+            ContentValues values = new ContentValues();
+            values.put(Columns.TITLE, data.title);
+            values.put(Columns.DATE, data.date);
+            values.put(Columns.DESCRIPTION, data.description);
+            values.put(Columns.REMINDER, data.reminder);
+            values.put(Columns.ALARM, data.alarm);
+
+            return DbManager.getInstance().update(Columns.TABLE, values, "_id=" + id) > 0 ? true : false;
+        } catch (NullPointerException e) {
+            DLog.e(TAG, "update", e);
+        } catch (Exception e) {
+            DLog.e(TAG, "update", e);
+        }
+
+        return false;
+    }
 
     public static boolean delete(int id) {
         try {
@@ -116,18 +107,20 @@ public class DbHelper extends DbHelperBase {
     }
 
     public static final class Columns implements BaseColumns {
-        public static final String TYPE  = "type";
-        public static final String DATE     = "date";
-        public static final String TITLE   = "title";
-        public static final String DETAIL   = "detail";
+        public static final String TITLE        = "title";
+        public static final String DATE         = "date";
+        public static final String DESCRIPTION  = "description";
+        public static final String REMINDER     = "reminder";
+        public static final String ALARM        = "alarm";
 
         public static final String TABLE = "ems";
         public static final String CREATE = "CREATE TABLE " + TABLE + "("
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + TYPE + " TEXT NOT NULL, "
-                + DATE + " TEXT NOT NULL, "
                 + TITLE + " TEXT NOT NULL, "
-                + DETAIL + " TEXT NOT NULL"
+                + DATE + " TEXT NOT NULL, "
+                + DESCRIPTION + " TEXT NOT NULL, "
+                + REMINDER + " INTEGER NOT NULL, "
+                + ALARM + " INTEGER NOT NULL"
                 + ");";
     }
 }

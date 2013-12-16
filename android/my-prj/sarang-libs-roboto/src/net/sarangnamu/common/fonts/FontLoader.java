@@ -80,4 +80,19 @@ public class FontLoader {
             }
         }
     }
+
+    public void applyChild(String fontName, ViewGroup target) {
+        int count = target.getChildCount();
+        Typeface tf = getFont(fontName);
+
+        for (int i=0; i<count; ++i) {
+            View child = target.getChildAt(i);
+
+            if (child instanceof TextView) {
+                ((TextView) child).setTypeface(tf);
+            } else if (child instanceof ViewGroup) {
+                applyChild(fontName, ((ViewGroup) child));
+            }
+        }
+    }
 }
