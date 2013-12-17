@@ -17,7 +17,6 @@
  */
 package net.sarangnamu.ems_tracking.widget;
 
-import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.ems_tracking.EmsDataManager;
 import net.sarangnamu.ems_tracking.R;
@@ -40,7 +39,7 @@ public class StatusWidget extends AppWidgetProvider {
     private static final String BTN_REFRESH = "btnRefresh";
 
     @Override
-    public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds){
+    public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         final int N = appWidgetIds.length;
 
         DbManager.getInstance().open(context, new EmsDbHelper(context));
@@ -83,8 +82,6 @@ public class StatusWidget extends AppWidgetProvider {
         new AsyncTask<Void, Void, Boolean>() {
             @Override
             protected void onPreExecute() {
-                DLog.d(TAG, "pre execute");
-
                 views.setViewVisibility(R.id.prog, View.VISIBLE);
 
                 if (type == 1) {
@@ -113,7 +110,6 @@ public class StatusWidget extends AppWidgetProvider {
 
             @Override
             protected void onPostExecute(Boolean result) {
-                DLog.d(TAG, "post execute");
                 views.setViewVisibility(R.id.prog, View.GONE);
 
                 Cursor cr = EmsDbHelper.selectDesc();

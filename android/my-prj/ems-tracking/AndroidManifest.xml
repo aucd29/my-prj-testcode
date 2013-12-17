@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.sarangnamu.ems_tracking"
-    android:versionCode="7"
-    android:versionName="1.0.6" >
+    android:versionCode="8"
+    android:versionName="1.0.7" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -35,13 +35,17 @@
         <activity
             android:name="com.google.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
-        
-        <receiver android:name=".widget.StatusWidget">
+
+        <receiver
+            android:name=".widget.StatusWidget"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data android:resource="@xml/status_widget" 
-                android:name="android.appwidget.provider"/>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/status_widget" />
         </receiver>
     </application>
 
