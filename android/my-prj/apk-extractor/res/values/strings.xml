@@ -14,10 +14,12 @@
     <string name="sendMailFail">Please check network</string>
     <string name="regAddr">Registered Address</string>
     <string name="save">Save</string>
+    <string name="emptyList">Could not find a App</string>
     
     <!-- MENU -->
     <string name="mnu_email">Set E-mail Addr</string>
     <string name="mnu_search">Search</string>
+    <string name="mnu_showSystemApps">Show System Apps</string>
     <string name="mnu_setSdPath">Set SD Path</string>
     <string name="mnu_license">License</string>
 </resources>

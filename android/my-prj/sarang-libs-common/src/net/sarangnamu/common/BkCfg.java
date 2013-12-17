@@ -41,6 +41,7 @@ import android.view.inputmethod.InputMethodManager;
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
  */
 public class BkCfg {
+    private static final String TAG = "BkCfg";
     private static final String SHARED_PREF = "burke.pref";
 
     public static String get(Context context, String name, String defVal) {
@@ -59,26 +60,36 @@ public class BkCfg {
         return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
-    public static void showKeyboard(final Context context, final View view) {
+    public static void showKeyboard(final View view) {
+        if (view == null) {
+            DLog.e(TAG, "showKeyboard view == null");
+            return ;
+        }
+
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
                 view.requestFocus();
 
-                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
             }
         }, 400);
 
         //view.requestFocus();
-
         //        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         //        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
     }
 
-    public static void hideKeyboard(final Context context) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+    public static void hideKeyboard(View view) {
+        if (view == null) {
+            DLog.e(TAG, "hideKeyboard view == null");
+            return ;
+        }
+
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-        imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
+        //imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

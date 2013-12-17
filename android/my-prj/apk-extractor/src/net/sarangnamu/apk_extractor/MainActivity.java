@@ -78,7 +78,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final int DIR_ACTIVITY   = 200;
 
     private boolean sendEmail = false, searchedList = false;
-    private TextView title, path, dev, tvSearch;
+    private TextView title, path, dev, tvSearch, empty;
     private EditText search;
     private AppAdapter adapter;
     private ImageButton menu;
@@ -121,6 +121,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         path     = (TextView) findViewById(R.id.path);
         dev      = (TextView) findViewById(R.id.dev);
         tvSearch = (TextView) findViewById(R.id.tvSearch);
+        empty    = (TextView) findViewById(android.R.id.empty);
         search   = (EditText) findViewById(R.id.search);
         menu     = (ImageButton) findViewById(R.id.menu);
         titleBar = (RelativeLayout) findViewById(R.id.titleBar);
@@ -164,6 +165,22 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         return super.onKeyUp(keyCode, event);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (searchedList) {
+            searchedData.clear();
+            searchedList = false;
+
+            adapter.notifyDataSetChanged();
+            return ;
+        } else if (search.getVisibility() != View.GONE) {
+            setSearchUi();
+            return ;
+        }
+
+        super.onBackPressed();
+    }
+
     private void initLabel() {
         title.setText(Html.fromHtml(getString(R.string.appName)));
 
@@ -171,12 +188,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
         String src = String.format("<b>%s</b> <a href='http://sarangnamu.net'>@aucd29</a>", getString(R.string.dev));
         dev.setText(Html.fromHtml(src));
-        //        path.setOnClickListener(new View.OnClickListener() {
-        //            @Override
-        //            public void onClick(View v) {
-        //                path.setSelected(true)
-        //            }
-        //        });
     }
 
     private void setDownloadPath() {
@@ -265,14 +276,14 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
             search.setText("");
 
-            BkCfg.showKeyboard(MainActivity.this, search);
+            BkCfg.showKeyboard(search);
         } else {
             search.setVisibility(View.GONE);
             tvSearch.setVisibility(View.GONE);
             title.setVisibility(View.VISIBLE);
             FadeColor.startResource(titleBar, R.color.dBgSearch, R.color.dBg, null);
 
-            BkCfg.hideKeyboard(MainActivity.this);
+            BkCfg.hideKeyboard(search);
         }
     }
 
@@ -315,6 +326,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         list.setSlidingMargin(SLIDING_MARGIN);
         list.setBtnLayoutId(R.id.btnLayout);
         list.setRowId(R.id.row);
+        list.setEmptyView(empty);
     }
 
     private void sendToSd(int position) {
