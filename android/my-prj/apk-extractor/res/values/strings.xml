@@ -19,7 +19,8 @@
     <!-- MENU -->
     <string name="mnu_email">Set E-mail Addr</string>
     <string name="mnu_search">Search</string>
-    <string name="mnu_showSystemApps">Show System Apps</string>
+    <string name="mnu_showAllApps">Show All Apps</string>
+    <string name="mnu_showInstalledApps">Show Installed Apps</string>
     <string name="mnu_setSdPath">Set SD Path</string>
     <string name="mnu_license">License</string>
 </resources>

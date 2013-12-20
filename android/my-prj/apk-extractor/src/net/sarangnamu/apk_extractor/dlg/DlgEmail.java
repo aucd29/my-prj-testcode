@@ -19,10 +19,12 @@ package net.sarangnamu.apk_extractor.dlg;
 
 import net.sarangnamu.apk_extractor.R;
 import net.sarangnamu.apk_extractor.cfg.Cfg;
-import net.sarangnamu.common.fonts.RobotoLightTextView;
 import net.sarangnamu.common.fonts.FontLoader;
+import net.sarangnamu.common.fonts.RobotoLightTextView;
 import net.sarangnamu.common.ui.dlg.DlgBase;
 import android.content.Context;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -75,6 +77,9 @@ public class DlgEmail extends DlgBase {
 
         RobotoLightTextView tv = new RobotoLightTextView(getContext());
         tv.setText(email);
+        tv.setGravity(Gravity.RIGHT);
+        tv.setTextColor(0xff929292);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
 
         layout.addView(tv);
     }

@@ -7,10 +7,10 @@
         android:title="@string/mnu_search"/>
     
     <item
-        android:id="@+id/mnu_showSystemApp"
+        android:id="@+id/mnu_showInstalledApp"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/mnu_showAllApps"/>
+        android:title="@string/mnu_showInstalledApps"/>
     
     <item
         android:id="@+id/mnu_setSdPath"

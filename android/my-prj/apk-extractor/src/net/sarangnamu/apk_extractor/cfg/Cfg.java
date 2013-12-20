@@ -25,6 +25,7 @@ public class Cfg extends BkCfg {
 
     private static final String EMAIL = "email";
     private static final String USERPATH = "usrPath";
+    private static final String SHOW_OPT = "showOpt";
 
     public static String getDownPath(Context context) {
         String usrPath = getUserPath(context);
@@ -50,5 +51,13 @@ public class Cfg extends BkCfg {
 
     public static String getUserPath(Context context) {
         return get(context, USERPATH, null);
+    }
+
+    public static String getShowOption(Context context) {
+        return get(context, SHOW_OPT, "0");
+    }
+
+    public static void setShowOption(Context context, String val) {
+        set(context, SHOW_OPT, val);
     }
 }

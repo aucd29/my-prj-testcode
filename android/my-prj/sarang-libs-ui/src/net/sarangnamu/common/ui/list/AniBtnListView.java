@@ -192,4 +192,14 @@ public class AniBtnListView extends LockListView {
         });
         objAni.start();
     }
+
+    public boolean isCheckedList() {
+        return checkedList;
+    }
+
+    public void resetCheckedList() {
+        checkedList = false;
+        currView = null;
+        lockScroll = false;
+    }
 }

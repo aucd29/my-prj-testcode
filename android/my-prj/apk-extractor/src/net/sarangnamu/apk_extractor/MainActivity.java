@@ -129,7 +129,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         initLabel();
         initMenu();
         initSearch();
-        initData();
+        initData(true);
     }
 
     @Override
@@ -202,10 +202,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                case R.id.mnu_search:    setSearchUi();    break;
-                case R.id.mnu_email:     showEmailDlg();   break;
-                case R.id.mnu_license:   showLicenseDlg(); break;
-                case R.id.mnu_setSdPath: showFileExplorer(); break;
+                case R.id.mnu_search:           setSearchUi();      break;
+                case R.id.mnu_email:            showEmailDlg();     break;
+                case R.id.mnu_license:          showLicenseDlg();   break;
+                case R.id.mnu_setSdPath:        showFileExplorer(); break;
+                case R.id.mnu_showSystemApp:    showSystemApp();    break;
+                case R.id.mnu_showInstalledApp: showInstalledApp(); break;
                 }
 
                 return false;
@@ -225,13 +227,57 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MenuManager.getInstance().showMenu(MainActivity.this, v, R.menu.main);
+                int resid;
+
+                if (getShowOption()) {
+                    resid = R.menu.main;
+                } else {
+                    resid = R.menu.main2;
+                }
+
+                MenuManager.getInstance().showMenu(MainActivity.this, v, resid);
             }
         });
     }
 
     private void initSearch() {
         search.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        //        search.addTextChangedListener(new TextWatcher() {
+        //            @Override
+        //            public void onTextChanged(CharSequence s, int start, int before, int count) {
+        //
+        //            }
+        //
+        //            @Override
+        //            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        //            }
+        //
+        //            @Override
+        //            public void afterTextChanged(Editable s) {
+        //                if (searchedData == null) {
+        //                    searchedData = new ArrayList<PkgInfo>();
+        //                }
+        //
+        //                searchedData.clear();
+        //                String keyword = search.getText().toString();
+        //
+        //                if (keyword != null && keyword.length() > 0) {
+        //                    searchedList = true;
+        //                    keyword = keyword.toLowerCase();
+        //
+        //                    for (PkgInfo info : data) {
+        //                        if (info.appName.toLowerCase().contains(keyword)) {
+        //                            searchedData.add(info);
+        //                        }
+        //                    }
+        //                } else {
+        //                    searchedList = false;
+        //                }
+        //
+        //                adapter.notifyDataSetChanged();
+        //            }
+        //        });
+
         search.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -287,7 +333,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         }
     }
 
-    private void initData() {
+    private void initData(final boolean initList) {
         new AsyncTask<Context, Void, Boolean>() {
             @Override
             protected void onPreExecute() {
@@ -297,7 +343,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             @Override
             protected Boolean doInBackground(Context... contexts) {
                 Context context = contexts[0];
-                data = AppList.getInstance().getInstalledApps(context);
+                data = AppList.getInstance().getAllApps(context, getShowOption());
 
                 return false;
             }
@@ -305,7 +351,17 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             @Override
             protected void onPostExecute(Boolean result) {
                 dlg.dismiss();
-                initListView();
+
+                if (initList) {
+                    initListView();
+                } else {
+                    adapter = null;
+                    adapter = new AppAdapter();
+
+                    AniBtnListView list = (AniBtnListView) getListView();
+                    list.resetCheckedList();
+                    list.setAdapter(adapter);
+                }
             }
         }.execute(getApplicationContext());
     }
@@ -417,6 +473,25 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         Intent intent = new Intent(this, DirChooserActivity.class);
 
         startActivityForResult(intent, DIR_ACTIVITY);
+    }
+
+    private void showSystemApp() {
+        Cfg.setShowOption(MainActivity.this, "1");
+        initData(false);
+    }
+
+    private void showInstalledApp() {
+        Cfg.setShowOption(MainActivity.this, "0");
+        initData(false);
+    }
+
+    private boolean getShowOption() {
+        String opt = Cfg.getShowOption(MainActivity.this);
+        if (opt.equals("0")) {
+            return true;
+        }
+
+        return false;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

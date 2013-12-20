@@ -43,13 +43,19 @@ public class AppList {
     }
 
     public ArrayList<PkgInfo> getInstalledApps(Context context) {
+        return getAllApps(context, true);
+    }
+
+    public ArrayList<PkgInfo> getAllApps(Context context, boolean hideSystemApp) {
         ArrayList<PkgInfo> res = new ArrayList<PkgInfo>();
         List<PackageInfo> packs = context.getPackageManager().getInstalledPackages(0);
 
         for(int i=0;i<packs.size();i++) {
             PackageInfo p = packs.get(i);
-            if ((p.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-                continue;
+            if (hideSystemApp) {
+                if ((p.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                    continue;
+                }
             }
 
             PkgInfo newInfo = new PkgInfo();

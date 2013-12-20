@@ -3,9 +3,9 @@
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:background="@drawable/popup_bg"
-    android:minHeight="150dp"
+    android:minHeight="120dp"
     android:orientation="vertical"
-    android:padding="15dp" >
+    android:padding="13dp" >
 
     <net.sarangnamu.common.fonts.RobotoLightTextView
         android:id="@+id/label"
@@ -18,8 +18,10 @@
         android:id="@+id/edit"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-5dp"
         android:layout_toRightOf="@id/label"
+        android:background="@drawable/edt_bg"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:textSize="14sp" />
 
     <Button
@@ -31,30 +33,32 @@
         android:text="@string/save"
         android:textSize="14sp" />
 
-    <net.sarangnamu.common.fonts.RobotoLightTextView
-        android:id="@+id/emailList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/label"
-        android:layout_marginTop="40dp"
-        android:orientation="vertical"
-        android:text="@string/regAddr" />
-
     <View
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/emailList"
+        android:layout_below="@id/label"
         android:layout_marginBottom="6dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="16dp"
         android:background="#ececec" />
+    
+    <net.sarangnamu.common.fonts.RobotoLightTextView
+        android:id="@+id/emailList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bar"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:textSize="12sp"
+        android:text="@string/regAddr" />
 
     <LinearLayout
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bar"
+        android:layout_below="@id/emailList"
         android:animateLayoutChanges="true"
+        android:paddingTop="2dp"
         android:orientation="vertical" />
 
 </RelativeLayout>
