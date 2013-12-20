@@ -37,6 +37,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
+    private static final String TAG = "HomeFrgmt";
+
     private static final int SLIDING_MARGIN = 120;
     private ScheduleAdapter adapter;
 
@@ -152,13 +154,54 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
 
             long date = Long.parseLong(cr.getString(pos++));
             long gap = (currDate.getTime() - date) / 1000 / 86400;
-            vh.count.setText("+" + (gap + 1)  + "");
-            vh.count.setBackgroundColor(0xffdedede);
-            vh.date.setText(DateFormat.getDateInstance().format(new Date(date)));
             pos++;
 
-            vh.reminder.setText(cr.getInt(pos++) + "");
-            vh.alarm.setText(cr.getInt(pos++) + "");
+            int remainder = cr.getInt(pos++);
+            int alarm = cr.getInt(pos++);
+
+            switch (remainder) {
+            case 0:
+                if (gap == 0) {
+                    vh.count.setText(R.string.today);
+                } else if (gap < 0) {
+                    vh.count.setText("" + gap);
+                } else {
+                    vh.count.setText("+" + gap);
+                }
+
+                vh.reminder.setText(R.string.none);
+                break;
+
+            case 1: {
+                int cal = 365 - (int) (gap % 365);
+                if (cal != 365) {
+                    vh.count.setText("-" + cal);
+                } else {
+                    vh.count.setText(R.string.today);
+                }
+
+                vh.reminder.setText(R.string.year);
+            }
+            break;
+
+            case 2:
+                vh.count.setText((remainder != 1 ? "+" : "")  + (gap + 1)  + "");
+                vh.reminder.setText(R.string.day100);
+                break;
+            }
+
+            vh.count.setBackgroundColor(0xffdedede);
+            vh.date.setText(DateFormat.getDateInstance().format(new Date(date)));
+
+            switch (alarm) {
+            case 1:
+                vh.alarm.setText(R.string.yes);
+                break;
+
+            default:
+                vh.alarm.setText(R.string.no);
+                break;
+            }
 
             vh.detail.setOnClickListener(HomeFrgmt.this);
             vh.row.setOnClickListener(HomeFrgmt.this);

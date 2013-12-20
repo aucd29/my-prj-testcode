@@ -95,7 +95,7 @@ public class AddFrgmt extends SubBaseFrgmt {
         FontLoader.getInstance(getActivity()).applyChild("Roboto-Light", addLayout);
 
         title.setText(R.string.addSchedule);
-        add.setText(R.string.save);
+        add.setText(R.string.done);
         add.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
     }
 

@@ -9,17 +9,20 @@
     <string name="detail">Detail</string>
     <string name="date">Date</string>
     <string name="mnu_license">License</string>
+    
+    <!-- main fragment -->
+    <string name="today">TODAY</string>
 
     <!-- add fragment -->
     <string name="addSchedule">Add a schedule</string>
-    <string name="save">save</string>
+    <string name="done">done</string>
     <string name="inputs">Inputs</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="reminder">Reminder</string>
     <string name="alarm">Alarm</string>
-    <string name="year">Year</string>
     <string name="none">None</string>
+    <string name="year">Year</string>
     <string name="day100">100 Days</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

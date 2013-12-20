@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="dBg">#795997</color>
+    <color name="dBg">#b43fee</color>
     <color name="dMenu">#525252</color>
     <color name="dMenuChecked">#3c3c3c</color>
     <color name="dBgSearch">#6a6a6a</color>
