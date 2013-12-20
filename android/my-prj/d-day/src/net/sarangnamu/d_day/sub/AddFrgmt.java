@@ -159,5 +159,4 @@ public class AddFrgmt extends SubBaseFrgmt {
         dlg.show();
         dlg.setTransparentBaseLayout();
     }
-
 }

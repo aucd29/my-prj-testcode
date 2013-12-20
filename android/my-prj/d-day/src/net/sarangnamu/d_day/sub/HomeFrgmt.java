@@ -190,16 +190,16 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
                 break;
             }
 
-            vh.count.setBackgroundColor(0xffdedede);
             vh.date.setText(DateFormat.getDateInstance().format(new Date(date)));
 
             switch (alarm) {
             case 1:
-                vh.alarm.setText(R.string.yes);
+                vh.alarm.setVisibility(View.VISIBLE);
+                vh.alarm.setText(R.string.alarm);
                 break;
 
             default:
-                vh.alarm.setText(R.string.no);
+                vh.alarm.setVisibility(View.GONE);
                 break;
             }
 

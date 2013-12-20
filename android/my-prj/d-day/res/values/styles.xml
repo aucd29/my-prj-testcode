@@ -54,13 +54,8 @@
     </style>
     
     <style name="rowLabel">
-        <item name="android:textSize">10sp</item>
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:paddingRight">5dp</item>
-        <item name="android:paddingTop">2dp</item>
-        <item name="android:paddingBottom">2dp</item>
-        <item name="android:layout_alignParentBottom">true</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">9sp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:textColor">#a8a8a8</item>
     </style>
 </resources>
