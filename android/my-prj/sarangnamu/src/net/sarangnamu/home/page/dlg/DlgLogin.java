@@ -57,7 +57,7 @@ public class DlgLogin extends DlgBtnBase {
         pw = (EditText) view.findViewById(R.id.pw);
         rememberMe = (CheckBox) view.findViewById(R.id.rememberMe);
 
-        BkCfg.showKeyboard(getContext(), id);
+        BkCfg.showKeyboard(id);
 
         String rememberId = Cfg.getId(getContext());
         if (rememberId.length() > 0) {
@@ -70,7 +70,7 @@ public class DlgLogin extends DlgBtnBase {
 
     @Override
     public void dismiss() {
-        BkCfg.hideKeyboard(getContext());
+        BkCfg.hideKeyboard(id);
 
         super.dismiss();
     }

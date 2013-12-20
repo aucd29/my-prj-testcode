@@ -40,7 +40,7 @@ public class HomeWriteFrgmt extends PageBaseFrgmt {
         msg    = (EditText) view.findViewById(R.id.msg);
         submit = (Button) view.findViewById(R.id.submit);
 
-        BkCfg.showKeyboard(getActivity(), msg);
+        BkCfg.showKeyboard(msg);
         pageRefresh.setVisibility(View.GONE);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -98,7 +98,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
                     @Override
                     protected void onPreExecute() {
-                        BkCfg.hideKeyboard(MainActivity.this);
+                        BkCfg.hideKeyboard(emsNum);
                         showProgress();
                     }
 
