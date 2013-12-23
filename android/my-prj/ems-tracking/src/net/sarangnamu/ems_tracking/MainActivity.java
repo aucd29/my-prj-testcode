@@ -93,6 +93,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                     return ;
                 }
 
+                // set another name
+
                 new AsyncTask<Context, Void, Boolean>() {
                     String errMsg;
 

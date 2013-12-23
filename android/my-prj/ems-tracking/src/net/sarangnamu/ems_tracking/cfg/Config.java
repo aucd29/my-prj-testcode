@@ -17,7 +17,10 @@
  */
 package net.sarangnamu.ems_tracking.cfg;
 
-public class Config {
+import net.sarangnamu.common.BkCfg;
+import android.content.Context;
+
+public class Config extends BkCfg {
     public static final String ADMOB_ID = "a15296eb58325b9";
 
     public static boolean isEmsNumber(String num) {
@@ -26,5 +29,13 @@ public class Config {
         }
 
         return true;
+    }
+
+    public static void setAnotherName(Context context, String emsNum, String name) {
+        set(context, emsNum, name);
+    }
+
+    public static String getAnotherName(Context context, String emsNum) {
+        return get(context, emsNum, null);
     }
 }
