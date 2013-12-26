@@ -50,6 +50,7 @@ public class DlgAnotherName extends DlgBase {
             public void onClick(View v) {
                 String text = edit.getText().toString();
                 Cfg.setAnotherName(getContext(), emsNum, text);
+                BkCfg.hideKeyboard(edit);
                 dismiss();
             }
         });
