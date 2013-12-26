@@ -181,6 +181,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         super.onBackPressed();
     }
 
+    @Override
+    protected void onPause() {
+        BkCfg.hideKeyboard(search);
+
+        super.onPause();
+    }
+
     private void initLabel() {
         title.setText(Html.fromHtml(getString(R.string.appName)));
 
@@ -311,6 +318,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         });
 
         search.setTypeface(FontLoader.getInstance(MainActivity.this).getFont("Roboto-Light"));
+        BkCfg.hideKeyboard(search);
     }
 
     private void setSearchUi() {
