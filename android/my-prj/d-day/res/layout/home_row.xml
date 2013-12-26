@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="110dp"
             android:layout_marginTop="5dp"
-            android:textSize="13sp" />
+            android:textSize="14sp" />
 
         <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/date"
@@ -39,22 +39,34 @@
             android:layout_marginLeft="110dp"
             android:textColor="#b643f0"
             android:textSize="9sp" />
-
+        
         <net.sarangnamu.common.fonts.RobotoLightTextView
-            android:id="@+id/reminder"
-            style="@style/rowLabel"
-            android:visibility="gone"
+            android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#868686" />
+            android:layout_below="@id/date"
+            android:layout_marginLeft="110dp"
+            android:singleLine="true"
+            android:textColor="#a8a8a8"
+            android:layout_marginTop="2dp"
+            android:textSize="9sp" />
 
         <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/alarm"
             style="@style/rowLabel"
-            android:layout_marginLeft="75dp"
-            android:gravity="right"            
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignRight="@id/count"
+            android:layout_marginLeft="5dp"
+            android:gravity="right" 
+            />
+
+        <net.sarangnamu.common.fonts.RobotoLightTextView
+            android:id="@+id/reminder"
+            style="@style/rowLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/alarm"
             />
     </RelativeLayout>
 

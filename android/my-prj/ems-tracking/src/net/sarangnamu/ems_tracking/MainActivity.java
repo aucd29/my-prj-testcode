@@ -56,7 +56,7 @@ import android.widget.TextView;
 
 public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
-    private static final int SLIDING_MARGIN = 124;
+    private static final int SLIDING_MARGIN = 186;
 
     private Button add;
 
@@ -310,7 +310,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     ////////////////////////////////////////////////////////////////////////////////////
 
     class ViewHolder {
-        TextView emsNum, date, status, office, delete, detail;
+        TextView emsNum, date, status, office, delete, detail, modify;
         LinearLayout btnLayout;
         RelativeLayout row;
     }
@@ -350,16 +350,19 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             vh.office    = (TextView) view.findViewById(R.id.office);
             vh.delete    = (TextView) view.findViewById(R.id.delete);
             vh.detail    = (TextView) view.findViewById(R.id.detail);
+            vh.modify    = (TextView) view.findViewById(R.id.modify);
             vh.btnLayout = (LinearLayout) view.findViewById(R.id.btnLayout);
             vh.row       = (RelativeLayout) view.findViewById(R.id.row);
 
             int pos = 0;
             int id = cr.getInt(pos++);
             vh.delete.setOnClickListener(MainActivity.this);
+            vh.modify.setOnClickListener(MainActivity.this);
 
             String emsNumber = cr.getString(pos++);
             String anotherName = Cfg.getAnotherName(MainActivity.this, emsNumber);
             vh.delete.setTag(new DeleteType(id, emsNumber));
+            vh.modify.setTag(emsNumber);
 
             if (anotherName.equals("")) {
                 vh.emsNum.setText(emsNumber);
@@ -423,6 +426,20 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 if (type != null) {
                     showDetail(type.emsNum);
                 }
+            } else if (obj instanceof String) {
+                String num = (String) obj;
+                String anotherName = Cfg.getAnotherName(MainActivity.this, num);
+
+                DlgAnotherName dlg = new DlgAnotherName(MainActivity.this, num, anotherName);
+                dlg.setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (adapter != null) {
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+                dlg.show();
             }
         }
     }

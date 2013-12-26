@@ -108,7 +108,7 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
     ////////////////////////////////////////////////////////////////////////////////////
 
     class ViewHolder {
-        TextView count, date, title, reminder, alarm, detail, delete;
+        TextView count, date, title, reminder, alarm, detail, delete, description;
         LinearLayout btnLayout;
         RelativeLayout row;
     }
@@ -129,22 +129,24 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
         public ScheduleAdapter(Context context, Cursor c) {
             super(context, c);
 
-            currDate = new Date();
+            Date tmpDate = new Date();
+            currDate = new Date(tmpDate.getYear(), tmpDate.getMonth(), tmpDate.getDate());
         }
 
         @Override
         public void bindView(View view, Context context, Cursor cr) {
             ViewHolder vh = new ViewHolder();
 
-            vh.count     = (TextView) view.findViewById(R.id.count);
-            vh.title     = (TextView) view.findViewById(R.id.title);
-            vh.date      = (TextView) view.findViewById(R.id.date);
-            vh.reminder  = (TextView) view.findViewById(R.id.reminder);
-            vh.alarm     = (TextView) view.findViewById(R.id.alarm);
-            vh.delete    = (TextView) view.findViewById(R.id.delete);
-            vh.detail    = (TextView) view.findViewById(R.id.detail);
-            vh.btnLayout = (LinearLayout) view.findViewById(R.id.btnLayout);
-            vh.row       = (RelativeLayout) view.findViewById(R.id.row);
+            vh.count       = (TextView) view.findViewById(R.id.count);
+            vh.title       = (TextView) view.findViewById(R.id.title);
+            vh.date        = (TextView) view.findViewById(R.id.date);
+            vh.reminder    = (TextView) view.findViewById(R.id.reminder);
+            vh.alarm       = (TextView) view.findViewById(R.id.alarm);
+            vh.delete      = (TextView) view.findViewById(R.id.delete);
+            vh.detail      = (TextView) view.findViewById(R.id.detail);
+            vh.description = (TextView) view.findViewById(R.id.description);
+            vh.btnLayout   = (LinearLayout) view.findViewById(R.id.btnLayout);
+            vh.row         = (RelativeLayout) view.findViewById(R.id.row);
 
             int pos = 0;
 
@@ -154,11 +156,15 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
 
             long date = Long.parseLong(cr.getString(pos++));
             long gap = (currDate.getTime() - date) / 1000 / 86400;
-            pos++;
+
+            vh.description.setText(cr.getString(pos++));
 
             int remainder = cr.getInt(pos++);
             int alarm = cr.getInt(pos++);
 
+            //
+            // REMAINDER
+            //
             switch (remainder) {
             case 0:
                 if (gap == 0) {
@@ -169,7 +175,7 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
                     vh.count.setText("+" + gap);
                 }
 
-                vh.reminder.setText(R.string.none);
+                vh.reminder.setText("");
                 break;
 
             case 1: {
@@ -180,18 +186,23 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
                     vh.count.setText(R.string.today);
                 }
 
+                vh.reminder.setVisibility(View.VISIBLE);
                 vh.reminder.setText(R.string.year);
             }
             break;
 
             case 2:
                 vh.count.setText((remainder != 1 ? "+" : "")  + (gap + 1)  + "");
+                vh.reminder.setVisibility(View.VISIBLE);
                 vh.reminder.setText(R.string.day100);
                 break;
             }
 
             vh.date.setText(DateFormat.getDateInstance().format(new Date(date)));
 
+            //
+            // ALARM
+            //
             switch (alarm) {
             case 1:
                 vh.alarm.setVisibility(View.VISIBLE);
@@ -199,7 +210,7 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
                 break;
 
             default:
-                vh.alarm.setVisibility(View.GONE);
+                vh.alarm.setText("");
                 break;
             }
 

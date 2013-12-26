@@ -31,11 +31,18 @@ public class DlgAnotherName extends DlgBase {
     private Button btn;
     private String emsNum;
     private EditText edit;
+    private String anotherName;
 
     public DlgAnotherName(Context context, String emsNum) {
         super(context);
 
         this.emsNum = emsNum;
+    }
+
+    public DlgAnotherName(Context context, String emsNum, String anotherName) {
+        this(context, emsNum);
+
+        this.anotherName = anotherName;
     }
 
     @Override
@@ -54,6 +61,10 @@ public class DlgAnotherName extends DlgBase {
                 dismiss();
             }
         });
+
+        if (anotherName != null) {
+            edit.setText(anotherName);
+        }
 
         BkCfg.showKeyboard(edit);
     }

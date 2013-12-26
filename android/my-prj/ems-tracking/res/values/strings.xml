@@ -22,4 +22,5 @@
 	<string name="done">Done</string>
 	<string name="showDlgForAnotherName">Show Dialog for a Another Name</string>
 	<string name="hideDlgForAnotherName">Hide Dialog for a Another Name</string>
+	<string name="modify">Modify</string>
 </resources>
