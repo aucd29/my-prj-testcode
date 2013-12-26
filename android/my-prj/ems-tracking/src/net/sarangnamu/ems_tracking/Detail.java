@@ -19,7 +19,7 @@ package net.sarangnamu.ems_tracking;
 
 import net.sarangnamu.ems_tracking.api.xml.Ems;
 import net.sarangnamu.ems_tracking.api.xml.Ems.EmsData;
-import net.sarangnamu.ems_tracking.cfg.Config;
+import net.sarangnamu.ems_tracking.cfg.Cfg;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -80,7 +80,7 @@ public class Detail extends Activity {
     }
 
     private void initAdView() {
-        adView = new AdView(this, AdSize.BANNER, Config.ADMOB_ID);
+        adView = new AdView(this, AdSize.BANNER, Cfg.ADMOB_ID);
         adLayout.addView(adView);
         adView.loadAd(new AdRequest());
     }

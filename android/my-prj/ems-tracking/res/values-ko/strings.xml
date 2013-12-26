@@ -17,4 +17,9 @@
     <string name="deleted">삭제되었습니다.</string>
     <string name="deleteMsg">삭제 하시겠습니까?</string>
     <string name="insertErrorMsg">입력시 오류가 발생하였습니다.</string>
+    <string name="anotherName">물품명 (옵션)</string>
+    
+    <string name="done">완료</string>
+    <string name="showDlgForAnotherName">물품명 설정 보이기</string>
+    <string name="hideDlgForAnotherName">물품명 설정 숨기기</string>
 </resources>

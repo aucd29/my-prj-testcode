@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/popup_bg"
+    android:minHeight="100dp"
+    android:orientation="vertical"
+    android:padding="13dp" >
+
+    <net.sarangnamu.common.fonts.RobotoLightTextView
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="13sp"
+        android:text="@string/anotherName" />
+
+    <EditText
+        android:id="@+id/edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label"
+        android:background="@drawable/edt_bg"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/edit"
+        android:background="@drawable/btn_base_selector"
+        android:text="@string/done"
+        android:layout_centerHorizontal="true"
+        android:textSize="14sp" />
+
+</RelativeLayout>

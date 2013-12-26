@@ -28,17 +28,22 @@ import net.sarangnamu.common.ui.list.AniBtnListView;
 import net.sarangnamu.ems_tracking.EmsDataManager.EmsDataListener;
 import net.sarangnamu.ems_tracking.api.Api;
 import net.sarangnamu.ems_tracking.api.xml.Ems;
-import net.sarangnamu.ems_tracking.cfg.Config;
+import net.sarangnamu.ems_tracking.cfg.Cfg;
 import net.sarangnamu.ems_tracking.db.EmsDbHelper;
+import net.sarangnamu.ems_tracking.dlg.DlgAnotherName;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -88,41 +93,24 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                     return ;
                 }
 
-                if (!Config.isEmsNumber(num)) {
+                if (!Cfg.isEmsNumber(num)) {
                     showPopup(getString(R.string.invalidEmsNum));
                     return ;
                 }
 
-                // set another name
-
-                new AsyncTask<Context, Void, Boolean>() {
-                    String errMsg;
-
-                    @Override
-                    protected void onPreExecute() {
-                        BkCfg.hideKeyboard(emsNum);
-                        showProgress();
-                    }
-
-                    @Override
-                    protected Boolean doInBackground(Context... contexts) {
-                        Ems ems = Api.tracking(num);
-                        return EmsDbHelper.insert(ems);
-                    }
-
-                    @Override
-                    protected void onPostExecute(Boolean result) {
-                        hideProgress();
-                        emsNum.setText("");
-
-                        if (result) {
-                            Cursor cr = EmsDbHelper.selectDesc();
-                            adapter.changeCursor(cr);
-                        } else {
-                            showPopup(errMsg);
+                if (Cfg.getOptionName(MainActivity.this)) {
+                    DlgAnotherName dlg = new DlgAnotherName(MainActivity.this, num.toUpperCase());
+                    dlg.setOnDismissListener(new OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            trackingAndInsertDB(num);
                         }
-                    }
-                }.execute(getApplicationContext());
+                    });
+
+                    dlg.show();
+                } else {
+                    trackingAndInsertDB(num);
+                }
             }
         });
 
@@ -135,11 +123,70 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         });
     }
 
+    private void trackingAndInsertDB(final String num) {
+        new AsyncTask<Context, Void, Boolean>() {
+            String errMsg;
+
+            @Override
+            protected void onPreExecute() {
+                BkCfg.hideKeyboard(emsNum);
+                showProgress();
+            }
+
+            @Override
+            protected Boolean doInBackground(Context... contexts) {
+                Ems ems = Api.tracking(num);
+                return EmsDbHelper.insert(ems);
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+                hideProgress();
+                emsNum.setText("");
+
+                if (result) {
+                    Cursor cr = EmsDbHelper.selectDesc();
+                    adapter.changeCursor(cr);
+                } else {
+                    showPopup(errMsg);
+                }
+            }
+        }.execute(getApplicationContext());
+    }
+
     @Override
     protected void onResume() {
         DbManager.getInstance().open(this, new EmsDbHelper(this));
 
         super.onResume();
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
+
+        if (Cfg.getOptionName(MainActivity.this)) {
+            getMenuInflater().inflate(R.menu.main, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.main_another_name, menu);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.mnu_hideDlgForAnotherName:
+            Cfg.setOptionName(MainActivity.this, false);
+            break;
+
+        case R.id.mnu_showDlgForAnotherName:
+            Cfg.setOptionName(MainActivity.this, true);
+            break;
+        }
+
+        return super.onMenuItemSelected(featureId, item);
     }
 
     private void initData() {
@@ -276,6 +323,16 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         }
     }
 
+    class DeleteType {
+        int id;
+        String emsNum;
+
+        DeleteType(int id, String emsNum) {
+            this.id = id;
+            this.emsNum = emsNum;
+        }
+    }
+
     class EmsAdapter extends CursorAdapter {
         public EmsAdapter(Context context, Cursor c) {
             super(context, c, true);
@@ -295,11 +352,19 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             vh.row       = (RelativeLayout) view.findViewById(R.id.row);
 
             int pos = 0;
-            vh.delete.setTag(cr.getInt(pos++));
+            int id = cr.getInt(pos++);
             vh.delete.setOnClickListener(MainActivity.this);
 
             String emsNumber = cr.getString(pos++);
-            vh.emsNum.setText(emsNumber);
+            String anotherName = Cfg.getAnotherName(MainActivity.this, emsNumber);
+            vh.delete.setTag(new DeleteType(id, emsNumber));
+
+            if (anotherName.equals("")) {
+                vh.emsNum.setText(emsNumber);
+            } else {
+                vh.emsNum.setText(anotherName);
+            }
+
             vh.date.setText(cr.getString(pos++));
 
             String statusValue = cr.getString(pos++);
@@ -332,17 +397,20 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         } else if (v instanceof TextView) {
             final Object obj = v.getTag();
 
-            if (obj instanceof Integer) {
+            if (obj instanceof DeleteType) {
                 DlgNormal dlg = new DlgNormal(this);
                 dlg.setCancelable(false);
                 dlg.setMessage(R.string.deleteMsg);
                 dlg.setOnBtnListener(new DlgBtnListener() {
                     @Override
                     public void ok() {
-                        int id = (Integer) obj;
+                        DeleteType typeObj = (DeleteType) obj;
+                        int id = typeObj.id;
                         if (id != 0) {
                             deleteItem(id);
                         }
+
+                        Cfg.setAnotherName(MainActivity.this, typeObj.emsNum, "");
                     }
                 });
                 dlg.show();
@@ -351,9 +419,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             } else if (obj instanceof DetailType) {
                 final DetailType type = (DetailType) obj;
                 if (type != null) {
-                    //((AniBtnListView) getListView()).showAnimation(type.row);
-                    //type.row.performClick();
-
                     showDetail(type.emsNum);
                 }
             }

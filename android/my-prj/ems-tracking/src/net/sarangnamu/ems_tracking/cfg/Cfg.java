@@ -1,5 +1,5 @@
 /*
- * Config.java
+ * Cfg.java
  * Copyright 2013 Burke.Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
@@ -20,8 +20,9 @@ package net.sarangnamu.ems_tracking.cfg;
 import net.sarangnamu.common.BkCfg;
 import android.content.Context;
 
-public class Config extends BkCfg {
+public class Cfg extends BkCfg {
     public static final String ADMOB_ID = "a15296eb58325b9";
+    private static final String OPT_NAME = "OPT_NAME";
 
     public static boolean isEmsNumber(String num) {
         if (!num.matches("[a-zA-Z]{1}[0-9a-zA-Z]{12}")) {
@@ -36,6 +37,18 @@ public class Config extends BkCfg {
     }
 
     public static String getAnotherName(Context context, String emsNum) {
-        return get(context, emsNum, null);
+        return get(context, emsNum, "");
+    }
+
+    public static void setOptionName(Context context, boolean type) {
+        set(context, OPT_NAME, type?"1":"0");
+    }
+
+    public static boolean getOptionName(Context context) {
+        if (get(context, OPT_NAME, "1").equals("0")) {
+            return false;
+        }
+
+        return true;
     }
 }
