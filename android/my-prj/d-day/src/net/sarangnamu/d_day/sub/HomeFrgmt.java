@@ -89,17 +89,23 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
         list.setRowId(R.id.row);
     }
 
-    //    private void deleteItem(final int id) {
-    //        boolean res = EmsDbHelper.delete(id);
-    //
-    //        if (res) {
-    //            Cursor cr = EmsDbHelper.selectDesc();
-    //            adapter.changeCursor(cr);
-    //
-    //            showPopup(getString(R.string.deleted));
-    //        }
-    //    }
+    private void deleteItem(final int id) {
+        boolean res = DbHelper.delete(id);
 
+        if (res) {
+            Cursor cr = DbHelper.selectDesc();
+            adapter.changeCursor(cr);
+
+            showPopup(getString(R.string.deleted));
+        }
+    }
+
+    private void modifyItem(final int id) {
+        Bundle bd = new Bundle();
+        bd.putInt("id", id);
+
+        Navigator.getInstance(getActivity()).replace(R.id.content, AddFrgmt.class, bd);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////
     //
@@ -108,7 +114,7 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
     ////////////////////////////////////////////////////////////////////////////////////
 
     class ViewHolder {
-        TextView count, date, title, reminder, alarm, detail, delete, description;
+        TextView count, date, title, reminder, alarm, modify, delete, description;
         LinearLayout btnLayout;
         RelativeLayout row;
     }
@@ -143,15 +149,18 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
             vh.reminder    = (TextView) view.findViewById(R.id.reminder);
             vh.alarm       = (TextView) view.findViewById(R.id.alarm);
             vh.delete      = (TextView) view.findViewById(R.id.delete);
-            vh.detail      = (TextView) view.findViewById(R.id.detail);
+            vh.modify      = (TextView) view.findViewById(R.id.modify);
             vh.description = (TextView) view.findViewById(R.id.description);
             vh.btnLayout   = (LinearLayout) view.findViewById(R.id.btnLayout);
             vh.row         = (RelativeLayout) view.findViewById(R.id.row);
 
             int pos = 0;
+            int id = cr.getInt(pos++);
 
-            vh.delete.setTag(cr.getInt(pos++));
+            vh.delete.setTag(id);
+            vh.modify.setTag(id);
             vh.delete.setOnClickListener(HomeFrgmt.this);
+            vh.modify.setOnClickListener(HomeFrgmt.this);
             vh.title.setText(cr.getString(pos++));
 
             long date = Long.parseLong(cr.getString(pos++));
@@ -162,9 +171,12 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
             int remainder = cr.getInt(pos++);
             int alarm = cr.getInt(pos++);
 
+            ////////////////////////////////////////////////////////////////////////////////////
             //
             // REMAINDER
             //
+            ////////////////////////////////////////////////////////////////////////////////////
+
             switch (remainder) {
             case 0:
                 if (gap == 0) {
@@ -200,21 +212,28 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
 
             vh.date.setText(DateFormat.getDateInstance().format(new Date(date)));
 
+            ////////////////////////////////////////////////////////////////////////////////////
             //
             // ALARM
             //
+            ////////////////////////////////////////////////////////////////////////////////////
+
+            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) vh.alarm.getLayoutParams();
             switch (alarm) {
             case 1:
                 vh.alarm.setVisibility(View.VISIBLE);
                 vh.alarm.setText(R.string.alarm);
+                lp.leftMargin = dpToPixelInt(5);
                 break;
 
             default:
-                vh.alarm.setText("");
+                vh.alarm.setVisibility(View.INVISIBLE);
+                lp.leftMargin = 0;
                 break;
             }
 
-            vh.detail.setOnClickListener(HomeFrgmt.this);
+            vh.alarm.setLayoutParams(lp);
+            vh.modify.setOnClickListener(HomeFrgmt.this);
             vh.row.setOnClickListener(HomeFrgmt.this);
 
             view.setTag(vh);
@@ -236,6 +255,21 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
     public void onClick(View v) {
         if (v instanceof RelativeLayout) {
             list.showAnimation(v);
+        } else {
+            Object tag = v.getTag();
+
+            if (v instanceof TextView) {
+                TextView tv = (TextView) v;
+
+                if (tag instanceof Integer) {
+                    String msg = tv.getText().toString();
+                    if (msg.equals(getString(R.string.modify))) {
+                        modifyItem((Integer) tag);
+                    } else if (msg.equals(getString(R.string.delete))) {
+                        deleteItem((Integer) tag);
+                    }
+                }
+            }
         }
     }
 }

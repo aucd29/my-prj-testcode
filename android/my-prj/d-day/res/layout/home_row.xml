@@ -20,7 +20,7 @@
             android:layout_marginRight="10dp"
             android:gravity="right|center_vertical"
             android:textColor="#747474"
-            android:textSize="25sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
         <net.sarangnamu.common.fonts.RobotoLightTextView
@@ -46,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/date"
             android:layout_marginLeft="110dp"
+            android:layout_marginRight="10dp"
             android:singleLine="true"
             android:textColor="#a8a8a8"
             android:layout_marginTop="2dp"
@@ -79,13 +80,13 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/detail"
+            android:id="@+id/modify"
             style="@style/btnLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#acacac"
-            android:text="@string/detail"
+            android:text="@string/modify"
             android:textColor="#ffffff" />
 
         <TextView

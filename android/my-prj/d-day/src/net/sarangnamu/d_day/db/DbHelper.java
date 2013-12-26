@@ -55,6 +55,13 @@ public class DbHelper extends DbHelperBase {
         return DbManager.getInstance().query(Columns.TABLE, null, null, "_id DESC");
     }
 
+    public static Cursor select(int id) {
+        Cursor cr = DbManager.getInstance().query(Columns.TABLE, null, "_id=" + id);
+        cr.moveToFirst();
+
+        return cr;
+    }
+
     public static boolean insert(ScheduleData data) {
         try {
             ContentValues values = new ContentValues();

@@ -47,6 +47,8 @@ public class YearPickerView extends ListView implements OnItemClickListener, OnD
     private int mChildSize;
     private TextViewWithCircularIndicator mSelectedView;
 
+    private int textColor;
+
     /**
      * @param context
      */
@@ -111,6 +113,7 @@ public class YearPickerView extends ListView implements OnItemClickListener, OnD
         public View getView(int position, View convertView, ViewGroup parent) {
             TextViewWithCircularIndicator v = (TextViewWithCircularIndicator)
                     super.getView(position, convertView, parent);
+
             v.requestLayout();
             int year = getYearFromTextView(v);
             boolean selected = mController.getSelectedDay().year == year;
@@ -118,6 +121,11 @@ public class YearPickerView extends ListView implements OnItemClickListener, OnD
             if (selected) {
                 mSelectedView = v;
             }
+
+            if (textColor != 0) {
+                v.setCircleColor(textColor);
+            }
+
             return v;
         }
     }
@@ -158,5 +166,9 @@ public class YearPickerView extends ListView implements OnItemClickListener, OnD
             event.setFromIndex(0);
             event.setToIndex(0);
         }
+    }
+
+    public void setTextColor(int color) {
+        textColor = color;
     }
 }

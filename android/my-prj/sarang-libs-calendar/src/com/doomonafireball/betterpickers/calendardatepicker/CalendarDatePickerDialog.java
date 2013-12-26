@@ -24,6 +24,7 @@ import java.util.Locale;
 
 import net.sarangnamu.common.ui.calendar.R;
 import android.app.Activity;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -211,6 +212,19 @@ OnClickListener, CalendarDatePickerController {
         if (baseColor != 0) {
             mSelectedMonthTextView.setTextColor(baseColor);
             mSelectedDayTextView.setTextColor(baseColor);
+
+            ColorStateList colorState = new ColorStateList(new int[][] {
+                    new int[]{android.R.attr.state_pressed},
+                    new int[]{android.R.attr.state_selected},
+                    new int[]{}, //normal
+            }, new int[] {
+                    baseColor,
+                    baseColor,
+                    getResources().getColor(R.color.date_picker_text_normal)
+            });
+
+            mYearView.setTextColor(colorState);
+            //mYearPickerView.setTextColor(baseColor);
         }
 
         int listPosition = -1;
@@ -305,6 +319,8 @@ OnClickListener, CalendarDatePickerController {
                 pulseAnimator.setStartDelay(ANIMATION_DELAY);
                 mDelayAnimation = false;
             }
+
+            mYearPickerView.setTextColor(baseColor); // burke
             mYearPickerView.onDateChanged();
             if (mCurrentView != viewIndex) {
                 mMonthAndDayView.setSelected(false);

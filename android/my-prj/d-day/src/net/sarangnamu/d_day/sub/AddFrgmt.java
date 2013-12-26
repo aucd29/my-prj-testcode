@@ -20,14 +20,15 @@ package net.sarangnamu.d_day.sub;
 import java.text.DateFormat;
 import java.util.Date;
 
+import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.ui.dlg.DlgCalendar;
 import net.sarangnamu.common.ui.dlg.DlgCalendar.DlgCalendarListener;
-import net.sarangnamu.common.ui.dlg.DlgTimer;
 import net.sarangnamu.d_day.Navigator;
 import net.sarangnamu.d_day.R;
 import net.sarangnamu.d_day.db.DbHelper;
 import net.sarangnamu.d_day.db.ScheduleData;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -40,6 +41,7 @@ import android.widget.TextView;
 public class AddFrgmt extends SubBaseFrgmt {
     private static final String TAG = "AddFrgmt";
 
+    private int id;
     private Date dateTime;
     private TextView eventDate;
     private EditText eventTitle, eventDescription;
@@ -83,9 +85,19 @@ public class AddFrgmt extends SubBaseFrgmt {
                         eventDate.setTextColor(0xff000000);
                     }
                 });
-                dlg.show(getActivity());
+
+                if (dateTime == null) {
+                    dlg.show(getActivity());
+                } else {
+                    dlg.show(getActivity(), dateTime.getYear()+1900, dateTime.getMonth(), dateTime.getDate());
+                }
             }
         });
+
+        Bundle bd = getArguments();
+        if (bd != null) {
+            id = bd.getInt("id");
+        }
     }
 
     @Override
@@ -97,6 +109,39 @@ public class AddFrgmt extends SubBaseFrgmt {
         title.setText(R.string.addSchedule);
         add.setText(R.string.done);
         add.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+
+        if (id != 0) {
+            int pos = 0;
+            Cursor cr = DbHelper.select(id);
+            if (cr == null) {
+                DLog.e(TAG, "===================================================================");
+                DLog.e(TAG, "onActivityCreated cr == null");
+                DLog.e(TAG, "===================================================================");
+                return ;
+            }
+
+            pos++; // id
+
+            eventTitle.setText(cr.getString(pos++));
+            dateTime = new Date(Long.parseLong(cr.getString(pos++)));
+            eventDate.setText(DateFormat.getDateInstance().format(dateTime));
+            eventDate.setTextColor(0xff000000);
+            eventDescription.setText(cr.getString(pos++));
+
+            int remainder = cr.getInt(pos++);
+            int alarm = cr.getInt(pos++);
+
+            switch (remainder) {
+            case 1:  rdoYear.performClick();     break;
+            case 2:  rdoDay.performClick();      break;
+            default: rdoTypeNone.performClick(); break;
+            }
+
+            switch (alarm) {
+            case 1: rdoAlarm.performClick(); break;
+            default: rdoAlarmNone.performClick(); break;
+            }
+        }
     }
 
     @Override
@@ -150,13 +195,5 @@ public class AddFrgmt extends SubBaseFrgmt {
         }
 
         return -1;
-    }
-
-    private void showPopup(String msg) {
-        DlgTimer dlg = new DlgTimer(getActivity(), R.layout.dlg_timer);
-        dlg.setMessage(msg);
-        dlg.setTime(1000);
-        dlg.show();
-        dlg.setTransparentBaseLayout();
     }
 }

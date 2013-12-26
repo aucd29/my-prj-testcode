@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.d_day;
 
+import net.sarangnamu.common.ui.dlg.DlgTimer;
 import net.sarangnamu.d_day.dlg.DlgLicense;
 import net.sarangnamu.d_day.sub.HomeFrgmt;
 import android.os.Bundle;
@@ -58,5 +59,13 @@ public class MainActivity extends FragmentActivity {
 
     private void initNaviation() {
         Navigator.getInstance(this).add(R.id.content, HomeFrgmt.class);
+    }
+
+    public void showPopup(String msg) {
+        DlgTimer dlg = new DlgTimer(MainActivity.this, R.layout.dlg_timer);
+        dlg.setMessage(msg);
+        dlg.setTime(1000);
+        dlg.show();
+        dlg.setTransparentBaseLayout();
     }
 }

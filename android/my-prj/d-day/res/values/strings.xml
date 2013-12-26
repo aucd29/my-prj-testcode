@@ -4,16 +4,19 @@
     <string name="app_name">d-day</string>
     <string name="action_settings">Settings</string>
     <string name="plsWait">Please wait..</string>
-    <string name="delete">Delete</string>
-    <string name="emptyList">Empty list</string>
-    <string name="detail">Detail</string>
-    <string name="date">Date</string>
+
+    <!-- menu -->
     <string name="mnu_license">License</string>
-    
+
     <!-- main fragment -->
+    <string name="emptyList">Empty list</string>
     <string name="today">TODAY</string>
+    <string name="deleted">Deleted</string>
+    <string name="modify">Modify</string>
+    <string name="delete">Delete</string>
 
     <!-- add fragment -->
+    <string name="date">Date</string>
     <string name="addSchedule">Add a schedule</string>
     <string name="done">done</string>
     <string name="inputs">Inputs</string>
@@ -26,7 +29,6 @@
     <string name="day100">100 Days</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    
     <string name="plsInsertDate">Please insert date.</string>
     <string name="plsInsertTitle">Please insert title.</string>
 

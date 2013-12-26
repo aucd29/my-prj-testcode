@@ -18,6 +18,7 @@ package com.doomonafireball.betterpickers.calendardatepicker;
 
 import net.sarangnamu.common.ui.calendar.R;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -83,5 +84,20 @@ public class TextViewWithCircularIndicator extends TextView {
         } else {
             return itemText;
         }
+    }
+
+    public void setCircleColor(int color) {
+        mCirclePaint.setColor(color);
+        mCirclePaint.setAlpha(SELECTED_CIRCLE_ALPHA);
+
+        ColorStateList colorState = new ColorStateList(new int[][] {
+                new int[]{android.R.attr.state_pressed},
+                new int[]{} //normal
+        }, new int[] {
+                color,
+                getResources().getColor(R.color.date_picker_text_normal)
+        });
+
+        setTextColor(colorState);
     }
 }

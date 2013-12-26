@@ -64,6 +64,14 @@ public class DlgCalendar implements CalendarDatePickerDialog.OnDateSetListener {
         dlg.show(act.getSupportFragmentManager(), "fragment_date_picker_name");
     }
 
+    public void show(FragmentActivity act, int year, int month, int day) {
+        dlg = CalendarDatePickerDialog.newInstance(this, year, month, day);
+        if (baseColor != 0) {
+            dlg.setBaseColor(baseColor);
+        }
+        dlg.show(act.getSupportFragmentManager(), "fragment_date_picker_name");
+    }
+
     @Override
     public void onDateSet(CalendarDatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
         if (listener != null) {

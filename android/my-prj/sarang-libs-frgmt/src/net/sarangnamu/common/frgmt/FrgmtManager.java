@@ -18,6 +18,7 @@
 package net.sarangnamu.common.frgmt;
 
 import net.sarangnamu.common.DLog;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -93,14 +94,18 @@ public abstract class FrgmtManager {
     }
 
     public void resetAdd(int id, Class<?> cls) {
-        replace(id, cls, false);
+        replace(id, cls, false, null);
     }
 
     public Fragment replace(int id, Class<?> cls) {
-        return replace(id, cls, true);
+        return replace(id, cls, true, null);
     }
 
-    private Fragment replace(int id, Class<?> cls, boolean stack) {
+    public Fragment replace(int id, Class<?> cls, Bundle bundle) {
+        return replace(id, cls, true, bundle);
+    }
+
+    private Fragment replace(int id, Class<?> cls, boolean stack, Bundle bundle) {
         try {
             Fragment frgmt = fm.findFragmentByTag(cls.getName());
             FragmentTransaction trans = fm.beginTransaction();
@@ -113,6 +118,10 @@ public abstract class FrgmtManager {
             if (frgmt == null) {
                 DLog.e(TAG, "replace frgmt == null");
                 return null;
+            }
+
+            if (bundle != null) {
+                frgmt.setArguments(bundle);
             }
 
             if (stack) {

@@ -19,6 +19,7 @@ package net.sarangnamu.d_day.sub;
 
 import net.sarangnamu.common.FrgmtBase;
 import net.sarangnamu.common.fonts.FontLoader;
+import net.sarangnamu.d_day.MainActivity;
 import net.sarangnamu.d_day.R;
 import android.os.Bundle;
 import android.view.View;
@@ -50,6 +51,10 @@ public abstract class SubBaseFrgmt extends FrgmtBase {
                 onAddButton();
             }
         });
+    }
+
+    protected void showPopup(String msg) {
+        ((MainActivity) getActivity()).showPopup(msg);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
