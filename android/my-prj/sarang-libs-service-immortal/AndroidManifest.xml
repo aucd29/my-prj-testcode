@@ -1,0 +1,18 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.sarangnamu.common.service.immortal"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="14" />
+
+    <receiver
+        android:name="net.sarangnamu.common.service.immortal.ImmortalReceiver"
+        android:process=":remote" >
+        <intent-filter>
+            <action android:name="net.sarangnamu.common.service.ACTION.ImmortalReceiver" />
+        </intent-filter>
+    </receiver>
+
+</manifest>

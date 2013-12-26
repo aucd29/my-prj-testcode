@@ -20,6 +20,7 @@ package net.sarangnamu.d_day;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
 import net.sarangnamu.d_day.dlg.DlgLicense;
 import net.sarangnamu.d_day.sub.HomeFrgmt;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -34,6 +35,8 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
 
         initNaviation();
+
+        startService(new Intent("net.sarangnamu.common.service.ACTION.ALARMSERVICE"));
     }
 
     @Override

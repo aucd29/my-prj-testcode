@@ -20,6 +20,7 @@ package net.sarangnamu.d_day.sub;
 import java.text.DateFormat;
 import java.util.Date;
 
+import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.ui.dlg.DlgCalendar;
@@ -164,11 +165,21 @@ public class AddFrgmt extends SubBaseFrgmt {
             return ;
         }
 
-        if (DbHelper.insert(data)) {
-            Navigator.getInstance(getActivity()).popBack();
+        if (id != 0) {
+            if (DbHelper.update(id, data)) {
+                Navigator.getInstance(getActivity()).popBack();
+            } else {
+                // error
+            }
         } else {
-            // error
+            if (DbHelper.insert(data)) {
+                Navigator.getInstance(getActivity()).popBack();
+            } else {
+                // error
+            }
         }
+
+        BkCfg.hideKeyboard(eventTitle);
     }
 
     private int getCheckedEventType() {

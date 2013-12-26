@@ -14,7 +14,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
         <activity
             android:name="net.sarangnamu.d_day.MainActivity"
             android:label="@string/app_name"
@@ -26,6 +25,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".service.AlarmService"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="net.sarangnamu.common.service.ACTION.ALARMSERVICE" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".service.AlarmReceiver"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="net.sarangnamu.common.service.ACTION.ALARMRECEIVER" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
