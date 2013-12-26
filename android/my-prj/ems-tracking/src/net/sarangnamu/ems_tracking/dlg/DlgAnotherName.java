@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.ems_tracking.dlg;
 
+import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.ui.dlg.DlgBase;
 import net.sarangnamu.ems_tracking.R;
@@ -48,14 +49,12 @@ public class DlgAnotherName extends DlgBase {
             @Override
             public void onClick(View v) {
                 String text = edit.getText().toString();
-                if (text == null || text.length() == 0) {
-                    return ;
-                }
-
                 Cfg.setAnotherName(getContext(), emsNum, text);
                 dismiss();
             }
         });
+
+        BkCfg.showKeyboard(edit);
     }
 
     @Override

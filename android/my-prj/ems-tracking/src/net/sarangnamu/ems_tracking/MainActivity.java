@@ -121,6 +121,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 loadEmsData();
             }
         });
+
+        BkCfg.engKeyboard(emsNum);
     }
 
     private void trackingAndInsertDB(final String num) {

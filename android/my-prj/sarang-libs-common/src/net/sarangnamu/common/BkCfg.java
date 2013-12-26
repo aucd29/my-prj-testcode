@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 /**
  * {@code
@@ -91,5 +92,9 @@ public class BkCfg {
         //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
         //imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static void engKeyboard(EditText edt) {
+        edt.setPrivateImeOptions("defaultInputmode=english;");
     }
 }
