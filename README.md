@@ -56,5 +56,6 @@ aucd29's Libraries & Test code
 - Macro for Editplus [link](https://github.com/aucd29/my-prj-testcode/tree/master/macro/iphone)
 
 ## OTHERS
-- Home : http://www.sarangnamu.net
+- Home Page : http://www.sarangnamu.net
 - glib & gssdp for android : https://github.com/aucd29/glib-2.35.8-for-android
+- Android icon resizer : https://github.com/aucd29/Android-Icon-Resizer
