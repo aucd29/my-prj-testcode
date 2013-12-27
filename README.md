@@ -9,23 +9,23 @@ aucd29's Libraries & Test code
 - Jellybean 4.2.2 [link] (https://github.com/aucd29/my-prj-testcode/tree/master/android/platform-libs/4.2.2-r2)
  
 ## My App Project
-- apk-extractor src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/apk-extractor) bin - [link2](https://play.google.com/store/apps/details?id=net.sarangnamu.apk_extractor)
-- ems-tracking src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/ems-tracking) bin - [linke2](https://play.google.com/store/apps/details?id=net.sarangnamu.ems_tracking)
-- sarangnamu src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarangnamu) bin - [link2](https://play.google.com/store/apps/details?id=net.sarangnamu.home)
-- d-day src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/d-day)
+- apk-extractor src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/apk-extractor) bin - [link](https://play.google.com/store/apps/details?id=net.sarangnamu.apk_extractor)
+- ems-tracking src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/ems-tracking) bin - [link](https://play.google.com/store/apps/details?id=net.sarangnamu.ems_tracking)
+- sarangnamu src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarangnamu) bin - [link](https://play.google.com/store/apps/details?id=net.sarangnamu.home)
+- d-day src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/d-day)
 
 ## My Lib Project
-- sarang-libs-ani src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-ani)
-- sarang-libs-calendar src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-calendar)
-- sarang-libs-common src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-common)
-- sarang-libs-explorer src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-explorer)
-- sarang-libs-frgmt src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-frgmt)
-- sarang-libs-json src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-json)
-- sarang-libs-network src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-network)
-- sarang-libs-roboto src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-roboto)
-- sarang-libs-service-immortal src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-service-immortal)
-- sarang-libs-sqlite src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-sqlite)
-- sarang-libs-ui src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-ui)
+- sarang-libs-ani src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-ani)
+- sarang-libs-calendar src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-calendar)
+- sarang-libs-common src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-common)
+- sarang-libs-explorer src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-explorer)
+- sarang-libs-frgmt src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-frgmt)
+- sarang-libs-json src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-json)
+- sarang-libs-network src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-network)
+- sarang-libs-roboto src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-roboto)
+- sarang-libs-service-immortal src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-service-immortal)
+- sarang-libs-sqlite src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-sqlite)
+- sarang-libs-ui src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-ui)
 
 
 ## Test Projects
