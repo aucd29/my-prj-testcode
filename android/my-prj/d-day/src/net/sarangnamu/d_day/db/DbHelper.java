@@ -46,8 +46,8 @@ public class DbHelper extends DbHelperBase {
         tables.put(Columns.TABLE, Columns.CREATE);
     }
 
-    public static Cursor select() {
-        String[] fields = new String[] {Columns.REMINDER, Columns._ID, Columns.TITLE};
+    public static Cursor selectAlarm() {
+        String[] fields = new String[] {Columns._ID, Columns.TITLE, Columns.ALARM};
         return DbManager.getInstance().query(Columns.TABLE, fields, null);
     }
 

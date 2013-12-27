@@ -17,9 +17,10 @@
  */
 package net.sarangnamu.d_day.service;
 
-import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.service.immortal.ImmortalService;
+import net.sarangnamu.d_day.db.DbHelper;
 import android.content.Intent;
+import android.database.Cursor;
 
 public class AlarmService extends ImmortalService {
     private static final String TAG = "AlarmService";
@@ -28,23 +29,23 @@ public class AlarmService extends ImmortalService {
     public void onCreate() {
         super.onCreate();
 
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "on create");
-        DLog.d(TAG, "===================================================================");
+        startAlarm();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    private void startAlarm() {
+        Cursor cr = DbHelper.selectAlarm();
+        while (cr.moveToNext()) {
+            if (cr.getInt(2) == 0) {
+                continue;
+            }
 
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "on destory");
-        DLog.d(TAG, "===================================================================");
+
+        }
     }
 
     @Override
     public String getActionString() {
-        return AlarmReceiver.ACTION;
+        return ResurrectionReceiver.ACTION;
     }
 
     @Override

@@ -1,5 +1,5 @@
 /*
- * AlarmReceiver.java
+ * ResurrectionReceiver.java
  * Copyright 2013 Burke Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
@@ -19,9 +19,9 @@ package net.sarangnamu.d_day.service;
 
 import net.sarangnamu.common.service.immortal.ImmortalReceiver;
 
-public class AlarmReceiver extends ImmortalReceiver {
-    public static final String ACTION = "net.sarangnamu.common.service.ACTION.ALARMRECEIVER";
-    public static final String SERVICE = "net.sarangnamu.common.service.ACTION.ALARMSERVICE";
+public class ResurrectionReceiver extends ImmortalReceiver {
+    public static final String ACTION = "net.sarangnamu.service.ACTION.RESURRECTION_RECEIVER";
+    public static final String SERVICE = "net.sarangnamu.service.ACTION.ALARMSERVICE";
 
     @Override
     public String getActionString() {
