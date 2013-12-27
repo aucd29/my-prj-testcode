@@ -20,19 +20,19 @@ package net.sarangnamu.common.ui.imgloader;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
-import android.util.Log;
 
 public abstract class ImageLoaderBase {
     private static final String TAG = "ImageLoaderBase";
 
     protected static final String DRAWABLE = "drawable";
 
-    public static final int DISABLED = 0X1;
-    public static final int PRESSED  = 0X2;
-    public static final int NORMAL   = 0X4;
-    public static final int ALL      = (0X1|0X2|0X4);
+    public static final int MASK        = 0X1;
+    public static final int TP_DISABLED = 0X1;
+    public static final int TP_PRESSED  = 0X2;
+    public static final int TP_NORMAL   = 0X4;
 
-    public static final int MASK     = 0X1;
+    public static final int TP_DEFAULT  = TP_NORMAL|TP_PRESSED;
+    public static final int TP_ALL      = TP_DISABLED|TP_PRESSED|TP_NORMAL;
 
     public StateListDrawable loadImage(Context context, String name, int type) {
         int pressed;
@@ -43,20 +43,17 @@ public abstract class ImageLoaderBase {
 
         for (int i=0; i<3; ++i) {
             switch (type & (MASK << i)) {
-            case NORMAL:
-                Log.d(TAG, "NORMAL");
+            case TP_NORMAL:
                 normal = getDrawableIdByName(context, name + getNormalSuffix());
                 states.addState(new int[] { }, getDrawable(context, normal));
                 break;
 
-            case PRESSED:
-                Log.d(TAG, "PRESSED");
+            case TP_PRESSED:
                 pressed = getDrawableIdByName(context, name + getPressedSuffix());
                 states.addState(new int[] {android.R.attr.state_pressed}, getDrawable(context, pressed));
                 break;
 
-            case DISABLED:
-                Log.d(TAG, "DISABLED");
+            case TP_DISABLED:
                 disabled = getDrawableIdByName(context, name + getDisableSuffix());
                 states.addState(new int[] {-android.R.attr.state_enabled}, getDrawable(context, disabled));
                 break;
