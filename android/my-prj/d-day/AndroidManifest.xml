@@ -44,6 +44,14 @@
                 <action android:name="net.sarangnamu.service.ACTION.RESURRECTION_RECEIVER" />
             </intent-filter>
         </receiver>
+        
+        <receiver
+            android:name=".service.AlertReceiver"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="net.sarangnamu.service.ACTION.ALARMRECEIVER" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
