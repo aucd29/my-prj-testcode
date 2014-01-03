@@ -47,7 +47,7 @@ public class DbHelper extends DbHelperBase {
     }
 
     public static Cursor selectAlarm() {
-        String[] fields = new String[] {Columns._ID, Columns.TITLE, Columns.ALARM};
+        String[] fields = new String[] {Columns._ID, Columns.TITLE, Columns.ALARM, Columns.ALARM_TIME};
         return DbManager.getInstance().query(Columns.TABLE, fields, null);
     }
 
@@ -57,7 +57,11 @@ public class DbHelper extends DbHelperBase {
 
     public static Cursor select(int id) {
         Cursor cr = DbManager.getInstance().query(Columns.TABLE, null, "_id=" + id);
-        cr.moveToFirst();
+        if (cr != null) {
+            cr.moveToFirst();
+        } else {
+            DLog.e(TAG, "select cr == null");
+        }
 
         return cr;
     }
@@ -119,15 +123,17 @@ public class DbHelper extends DbHelperBase {
         public static final String DESCRIPTION  = "description";
         public static final String REMINDER     = "reminder";
         public static final String ALARM        = "alarm";
+        public static final String ALARM_TIME   = "alarmTime";
 
-        public static final String TABLE = "ems";
+        public static final String TABLE = "dday";
         public static final String CREATE = "CREATE TABLE " + TABLE + "("
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TITLE + " TEXT NOT NULL, "
                 + DATE + " TEXT NOT NULL, "
                 + DESCRIPTION + " TEXT NOT NULL, "
                 + REMINDER + " INTEGER NOT NULL, "
-                + ALARM + " INTEGER NOT NULL"
+                + ALARM + " INTEGER NOT NULL, "
+                + ALARM_TIME + " TEXT NOT NULL"
                 + ");";
     }
 }
