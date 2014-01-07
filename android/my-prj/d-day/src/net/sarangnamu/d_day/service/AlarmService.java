@@ -17,7 +17,6 @@
  */
 package net.sarangnamu.d_day.service;
 
-import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.service.immortal.ImmortalService;
 import android.content.Intent;
 
@@ -28,18 +27,6 @@ public class AlarmService extends ImmortalService {
     public void onCreate() {
         super.onCreate();
 
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "on create");
-        DLog.d(TAG, "===================================================================");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "on destory");
-        DLog.d(TAG, "===================================================================");
     }
 
     @Override
