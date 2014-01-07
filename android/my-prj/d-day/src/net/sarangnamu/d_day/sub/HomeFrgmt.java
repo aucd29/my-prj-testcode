@@ -80,7 +80,11 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
     }
 
     private void initListView() {
-        adapter = new ScheduleAdapter(getActivity(), DbHelper.selectDesc());
+        Cursor cr = DbHelper.selectDesc();
+
+        if (cr != null) {
+            adapter = new ScheduleAdapter(getActivity(), cr);
+        }
 
         list.setEmptyView(empty);
         list.setAdapter(adapter);

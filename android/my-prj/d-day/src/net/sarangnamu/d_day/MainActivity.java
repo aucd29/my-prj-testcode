@@ -19,6 +19,7 @@ package net.sarangnamu.d_day;
 
 import net.sarangnamu.common.ui.dlg.DlgTimer;
 import net.sarangnamu.d_day.dlg.DlgLicense;
+import net.sarangnamu.d_day.service.ResurrectionReceiver;
 import net.sarangnamu.d_day.sub.HomeFrgmt;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,8 +36,7 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
 
         initNaviation();
-
-        startService(new Intent("net.sarangnamu.common.service.ACTION.ALARMSERVICE"));
+        startService(new Intent(ResurrectionReceiver.SERVICE));
     }
 
     @Override

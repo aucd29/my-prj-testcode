@@ -8,6 +8,10 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="14" />
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
@@ -30,15 +34,23 @@
             android:name=".service.AlarmService"
             android:process=":remote" >
             <intent-filter>
-                <action android:name="net.sarangnamu.common.service.ACTION.ALARMSERVICE" />
+                <action android:name="net.sarangnamu.service.ACTION.ALARMSERVICE" />
             </intent-filter>
         </service>
 
         <receiver
-            android:name=".service.AlarmReceiver"
+            android:name=".service.ResurrectionReceiver"
             android:process=":remote" >
             <intent-filter>
-                <action android:name="net.sarangnamu.common.service.ACTION.ALARMRECEIVER" />
+                <action android:name="net.sarangnamu.service.ACTION.RESURRECTION_RECEIVER" />
+            </intent-filter>
+        </receiver>
+        
+        <receiver
+            android:name=".service.AlertReceiver"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="net.sarangnamu.service.ACTION.ALARMRECEIVER" />
             </intent-filter>
         </receiver>
     </application>

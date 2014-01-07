@@ -1,5 +1,5 @@
 /*
- * AlarmService.java
+ * ResurrectionReceiver.java
  * Copyright 2013 Burke Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
@@ -17,25 +17,19 @@
  */
 package net.sarangnamu.d_day.service;
 
-import net.sarangnamu.common.service.immortal.ImmortalService;
-import android.content.Intent;
+import net.sarangnamu.common.service.immortal.ImmortalReceiver;
 
-public class AlarmService extends ImmortalService {
-    private static final String TAG = "AlarmService";
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-    }
+public class ResurrectionReceiver extends ImmortalReceiver {
+    public static final String ACTION = "net.sarangnamu.service.ACTION.RESURRECTION_RECEIVER";
+    public static final String SERVICE = "net.sarangnamu.service.ACTION.ALARMSERVICE";
 
     @Override
     public String getActionString() {
-        return AlarmReceiver.ACTION;
+        return ACTION;
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_STICKY;
+    public String getServiceString() {
+        return SERVICE;
     }
 }

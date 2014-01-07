@@ -8,9 +8,24 @@ aucd29's Libraries & Test code
 - Jellybean 4.1.2 [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/platform-libs/4.1.2-r2)
 - Jellybean 4.2.2 [link] (https://github.com/aucd29/my-prj-testcode/tree/master/android/platform-libs/4.2.2-r2)
  
-## My Project
-- apk-extractor src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/apk-extractor) bin - [link2](https://play.google.com/store/apps/details?id=net.sarangnamu.apk_extractor)
-- ems-tracking src - [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/ems-tracking) bin - [linke2](https://play.google.com/store/apps/details?id=net.sarangnamu.ems_tracking)
+## My App Project
+- apk-extractor src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/apk-extractor), bin - [link](https://play.google.com/store/apps/details?id=net.sarangnamu.apk_extractor)
+- ems-tracking src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/ems-tracking), bin - [link](https://play.google.com/store/apps/details?id=net.sarangnamu.ems_tracking)
+- sarangnamu src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarangnamu), bin - [link](https://play.google.com/store/apps/details?id=net.sarangnamu.home)
+- d-day src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/d-day)
+
+## My Lib Project
+- sarang-libs-ani [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-ani)
+- sarang-libs-calendar [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-calendar)
+- sarang-libs-common [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-common)
+- sarang-libs-explorer [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-explorer)
+- sarang-libs-frgmt [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-frgmt)
+- sarang-libs-json [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-json)
+- sarang-libs-network [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-network)
+- sarang-libs-roboto [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-roboto)
+- sarang-libs-service-immortal [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-service-immortal)
+- sarang-libs-sqlite [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-sqlite)
+- sarang-libs-ui [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-ui)
 
 
 ## Test Projects
@@ -41,5 +56,6 @@ aucd29's Libraries & Test code
 - Macro for Editplus [link](https://github.com/aucd29/my-prj-testcode/tree/master/macro/iphone)
 
 ## OTHERS
-- Home : http://www.sarangnamu.net
+- Home Page : http://www.sarangnamu.net
 - glib & gssdp for android : https://github.com/aucd29/glib-2.35.8-for-android
+- Android icon resizer : https://github.com/aucd29/Android-Icon-Resizer
