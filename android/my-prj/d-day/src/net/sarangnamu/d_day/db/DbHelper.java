@@ -74,6 +74,7 @@ public class DbHelper extends DbHelperBase {
             values.put(Columns.DESCRIPTION, data.description);
             values.put(Columns.REMINDER, data.reminder);
             values.put(Columns.ALARM, data.alarm);
+            values.put(Columns.ALARM_TIME, "");
 
             return DbManager.getInstance().insert(Columns.TABLE, values) > 0 ? true : false;
         } catch (NullPointerException e) {
