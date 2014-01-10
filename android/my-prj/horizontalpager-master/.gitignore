@@ -1,9 +1,0 @@
-.DS_Store
-.metadata
-*.class
-*.swp
-gen/*
-bin/*
-.checkstyle
-.classpath
-.project
