@@ -30,7 +30,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Vibrator;
 
 public class AlarmService extends ImmortalService {
     private static final String TAG = "AlarmService";
@@ -68,7 +67,7 @@ public class AlarmService extends ImmortalService {
         DbManager.getInstance().open(getApplicationContext(), new DbHelper(getApplicationContext()));
 
         Date date = new Date();
-        Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        //Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         //vb.vibrate(100);
 
         DLog.d(TAG, "===================================================================");

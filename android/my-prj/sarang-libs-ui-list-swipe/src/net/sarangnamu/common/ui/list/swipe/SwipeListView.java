@@ -1,6 +1,6 @@
 /*
  * SwipeListView.java
- * Copyright 2013 Burke.Choi All rights reserved.
+ * Copyright 2013 Burke Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,60 @@
  */
 package net.sarangnamu.common.ui.list.swipe;
 
-public class SwipeListView {
+import net.sarangnamu.common.ui.gesture.Gesture;
+import net.sarangnamu.common.ui.gesture.Gesture.GestureListener;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.widget.ListView;
+
+public class SwipeListView extends ListView {
+    private Gesture gesture;
+
+    public SwipeListView(Context context) {
+        super(context);
+        initLayout();
+    }
+
+    public SwipeListView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initLayout();
+    }
+
+    public SwipeListView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        initLayout();
+    }
+
+    protected void initLayout() {
+        gesture = Gesture.newInstance(getContext());
+        gesture.setOnGestureListener(new GestureListener() {
+            @Override
+            public void toUp() {
+            }
+
+            @Override
+            public void toRight() {
+            }
+
+            @Override
+            public void toLeft() {
+            }
+
+            @Override
+            public void toDown() {
+            }
+        });
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (gesture != null) {
+            gesture.onTouchEvent(ev);
+        }
+
+        return true;
+        //return super.onInterceptTouchEvent(ev);
+    }
 
 }

@@ -1,6 +1,6 @@
 /*
  * Gesture.java
- * Copyright 2013 Burke.Choi All rights reserved.
+ * Copyright 2013 Burke Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,7 +45,7 @@ import android.view.MotionEvent;
         }
     });
  * </pre>}
- * @author <a href="mailto:Burke.Choi@obigo.com">krinbuch</a>
+ * @author <a href="mailto:Burke Choi@obigo.com">krinbuch</a>
  *
  */
 public class Gesture extends GestureDetector {
