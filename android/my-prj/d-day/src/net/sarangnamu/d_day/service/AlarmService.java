@@ -17,7 +17,7 @@
  */
 package net.sarangnamu.d_day.service;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -66,13 +66,21 @@ public class AlarmService extends ImmortalService {
     private void startAlarm() {
         DbManager.getInstance().open(getApplicationContext(), new DbHelper(getApplicationContext()));
 
-        Date date = new Date();
         //Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         //vb.vibrate(100);
 
+        Calendar cal = Calendar.getInstance();
+
+        int day  = cal.get(Calendar.DATE);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+
         DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "" + date.toLocaleString());
+        DLog.d(TAG, "" + day + " " + hour);
         DLog.d(TAG, "===================================================================");
+
+        if (hour != 12) {
+            return ;
+        }
 
         Cursor cr = DbHelper.selectAlarm();
         while (cr.moveToNext()) {
@@ -111,7 +119,7 @@ public class AlarmService extends ImmortalService {
         DLog.d(TAG, "===================================================================");
         int period;
 
-        period = 1000 * 60 * 60 * 6;    // 6 hour
+        period = 1000 * 60 * 30;    // 30 min
         period = 1000 * 10;
 
         tm = new Timer();
