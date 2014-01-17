@@ -30,6 +30,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Vibrator;
 
 public class AlarmService extends ImmortalService {
     private static final String TAG = "AlarmService";
@@ -65,9 +66,6 @@ public class AlarmService extends ImmortalService {
 
     private void startAlarm() {
         DbManager.getInstance().open(getApplicationContext(), new DbHelper(getApplicationContext()));
-
-        //Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        //vb.vibrate(100);
 
         Calendar cal   = Calendar.getInstance();
         Calendar dbCal = Calendar.getInstance();
@@ -152,5 +150,9 @@ public class AlarmService extends ImmortalService {
 
     private void setNotification(Cursor cr) {
         DLog.d(TAG, "notification ");
+
+        Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vb.vibrate(1000);
+
     }
 }
