@@ -47,8 +47,8 @@ public class DbHelper extends DbHelperBase {
     }
 
     public static Cursor selectAlarm() {
-        String[] fields = new String[] {Columns._ID, Columns.TITLE, Columns.ALARM, Columns.ALARM_TIME};
-        return DbManager.getInstance().query(Columns.TABLE, fields, null);
+        String where = Columns.ALARM + "=1";
+        return DbManager.getInstance().query(Columns.TABLE, null, where);
     }
 
     public static Cursor selectDesc() {

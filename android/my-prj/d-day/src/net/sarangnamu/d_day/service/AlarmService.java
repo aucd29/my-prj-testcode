@@ -69,25 +69,26 @@ public class AlarmService extends ImmortalService {
         //Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         //vb.vibrate(100);
 
-        Calendar cal = Calendar.getInstance();
+        Calendar cal   = Calendar.getInstance();
+        Calendar dbCal = Calendar.getInstance();
 
-        int day  = cal.get(Calendar.DATE);
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int year  = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day   = cal.get(Calendar.DATE);
+        int hour  = cal.get(Calendar.HOUR_OF_DAY);
+
+        cal.set(year, month, day, 0, 0, 0);
 
         DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "" + day + " " + hour);
+        DLog.d(TAG, "" + month + " " + day + " " + hour);
         DLog.d(TAG, "===================================================================");
 
         if (hour != 12) {
-            return ;
+            // return ;
         }
 
         Cursor cr = DbHelper.selectAlarm();
         while (cr.moveToNext()) {
-            if (cr.getInt(2) == 0) {
-                continue;
-            }
-
             // alram 은 이벤트 전달 오전 12시 고정으로 진행
             //
             // timer는 현재 시간에서 오후 12시 전으로 시간으로 주고
@@ -97,9 +98,30 @@ public class AlarmService extends ImmortalService {
             // 실행 될 녀석이 있으면 알림을 주고 알림 시킨 시간을
             // 디비에 갱신 재 실행 되지 않도록 설정
             //
-            //
-            DLog.d(TAG, "db loop");
-            DLog.d(TAG, "start a alarm " + cr.getString(1));
+            long dbDate = Long.parseLong(cr.getString(2));
+            dbCal.setTimeInMillis(dbDate);
+
+            int dbMonth = dbCal.get(Calendar.MONTH);
+            int dbDay   = dbCal.get(Calendar.DATE);
+            int dbType  = cr.getInt(4);
+            DLog.d(TAG, "title " + cr.getString(1) + " db month " + dbMonth + " db day " + dbDay + " type " + dbType);
+
+            switch (dbType) {
+            case 1: // year
+                if (month == dbMonth && day - 1 == dbDay) {
+                    setNotification(cr);
+                }
+                break;
+
+            case 2: // 100
+                long gap = ((cal.getTimeInMillis() - dbDate) / 1000 / 86400) + 1;
+                DLog.d(TAG, "gap " + gap + " mod " + gap % 100) ;
+
+                if (gap > 98 && gap % 100 == 99) {
+                    setNotification(cr);
+                }
+                break;
+            }
         }
     }
 
@@ -114,24 +136,21 @@ public class AlarmService extends ImmortalService {
     }
 
     private void startTimer() {
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "start timer");
-        DLog.d(TAG, "===================================================================");
         int period;
 
-        period = 1000 * 60 * 30;    // 30 min
-        period = 1000 * 10;
+        period = 1000 * 60 * 60;    // 30 min
+        //period = 1000 * 10;
 
         tm = new Timer();
         tm.schedule(new TimerTask() {
             @Override
             public void run() {
-                DLog.d(TAG, "===================================================================");
-                DLog.d(TAG, "timer");
-                DLog.d(TAG, "===================================================================");
-
                 startAlarm();
             }
         }, 0, period); //
+    }
+
+    private void setNotification(Cursor cr) {
+        DLog.d(TAG, "notification ");
     }
 }

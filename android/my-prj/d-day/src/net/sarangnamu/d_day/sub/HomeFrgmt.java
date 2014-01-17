@@ -168,7 +168,7 @@ public class HomeFrgmt extends SubBaseFrgmt implements View.OnClickListener {
             vh.title.setText(cr.getString(pos++));
 
             long date = Long.parseLong(cr.getString(pos++));
-            long gap = (currDate.getTime() - date) / 1000 / 86400;
+            long gap  = (currDate.getTime() - date) / 1000 / 86400;
 
             vh.description.setText(cr.getString(pos++));
 
