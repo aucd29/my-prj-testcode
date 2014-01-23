@@ -351,6 +351,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             @Override
             protected Boolean doInBackground(Context... contexts) {
                 Context context = contexts[0];
+
+                if (data != null) {
+                    data.clear();
+                    data = null;
+                }
+
                 data = AppList.getInstance().getAllApps(context, getShowOption());
 
                 return false;

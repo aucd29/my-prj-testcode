@@ -25,6 +25,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * {@code
@@ -138,11 +139,11 @@ public class AniBtnListView extends LockListView {
     }
 
     public void setBtnLayoutId(int id) {
-        rowId = id;
+        btnLayoutId = id;
     }
 
     public void setRowId(int id) {
-        btnLayoutId = id;
+        rowId = id;
     }
 
     public void showAnimation(final View view) {
@@ -168,8 +169,31 @@ public class AniBtnListView extends LockListView {
         checkedList = !checkedList;
         setLock();
 
-        final View btnLayout = tempView.findViewById(btnLayoutId);
-        final View row       = tempView.findViewById(rowId);
+        final ViewGroup row       = (ViewGroup) tempView.findViewById(rowId);
+        final ViewGroup btnLayout = (ViewGroup) tempView.findViewById(btnLayoutId);
+
+        // resize button height
+        ViewGroup.LayoutParams lp = btnLayout.getLayoutParams();
+        //lp.height = view.getHeight();
+        //btnLayout.setLayoutParams(lp);
+
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "child info " + btnLayout.getChildCount());
+        DLog.d(TAG, "row info " + row.getChildCount());
+
+        for (int i=0; i<btnLayout.getChildCount(); ++i) {
+            //DLog.d(TAG, "before height " + btnLayout.getChildAt(i).getHeight());
+
+            //lp = btnLayout.getChildAt(i).getLayoutParams();
+            //lp.height = view.getHeight();
+            //btnLayout.getChildAt(i).setLayoutParams(lp);
+
+            btnLayout.requestLayout();
+
+            //DLog.d(TAG, "child height " + btnLayout.getChildAt(i).getHeight());
+        }
+
+        DLog.d(TAG, "===================================================================");
 
         ObjectAnimator.ofFloat(btnLayout, "translationX", endX).start();
         final ObjectAnimator objAni = ObjectAnimator.ofFloat(row, "translationX", endX);

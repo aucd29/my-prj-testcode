@@ -47,7 +47,7 @@
             android:layout_alignLeft="@+id/name"
             android:layout_below="@+id/name"
             android:layout_marginTop="5dp"
-            android:maxWidth="200dp"
+            android:maxWidth="@dimen/list_max"
             android:textSize="11sp" />
 
         <net.sarangnamu.common.fonts.RobotoLightTextView
@@ -64,7 +64,7 @@
     <LinearLayout
         android:id="@+id/btnLayout"
         android:layout_width="130dp"
-        android:layout_height="65dp"
+        android:layout_height="70dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="-130dp"
         android:orientation="horizontal" >
