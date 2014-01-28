@@ -30,6 +30,7 @@ import android.widget.RemoteViews;
 public class WifiBatteryWidget extends AppWidgetProvider {
     private static final String TAG = "WifiBatteryWidget";
     private String battery;
+		// test code
 
     @Override
     public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
