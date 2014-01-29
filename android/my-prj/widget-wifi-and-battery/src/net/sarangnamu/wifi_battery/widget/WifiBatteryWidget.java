@@ -30,30 +30,33 @@ import android.widget.RemoteViews;
 public class WifiBatteryWidget extends AppWidgetProvider {
     private static final String TAG = "WifiBatteryWidget";
     private String battery;
-		// test code
 
     @Override
-    public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    public void onUpdate(Context context,
+            final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         final int N = appWidgetIds.length;
 
         if (battery == null) {
 
         }
 
-        for (int i=0; i<N; i++) {
+        for (int i = 0; i < N; i++) {
             final int appWidgetId = appWidgetIds[i];
-            final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
+            final RemoteViews views = new RemoteViews(context.getPackageName(),
+                    R.layout.widget);
 
             views.setTextViewText(R.id.battery, battery);
 
-            //            views.setOnClickPendingIntent(R.id.widgetLayout, getPendingSelfIntent(context, BTN_REFRESH, appWidgetId));
-            //            loadWidgetInfo(context, views, appWidgetManager, appWidgetId, 0);
+            // views.setOnClickPendingIntent(R.id.widgetLayout,
+            // getPendingSelfIntent(context, BTN_REFRESH, appWidgetId));
+            // loadWidgetInfo(context, views, appWidgetManager, appWidgetId, 0);
         }
 
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
-    protected PendingIntent getPendingSelfIntent(Context context, String action, int id) {
+    protected PendingIntent getPendingSelfIntent(Context context,
+            String action, int id) {
         Intent intent = new Intent(context, getClass());
         intent.setAction(action);
         intent.putExtra("id", id);
@@ -67,9 +70,11 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
         final String action = intent.getAction();
 
-        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG,
+                "===================================================================");
         DLog.d(TAG, "ACTION " + intent.getAction());
-        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG,
+                "===================================================================");
 
         if (Intent.ACTION_BATTERY_CHANGED.equals(action)) {
             int level = intent.getIntExtra("level", 0);
@@ -77,82 +82,89 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
             battery = String.format("Battery : %d%% ", (level * 100 / scale));
 
-
         } else if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(action)) {
 
         }
 
-
-        //        if (BTN_REFRESH.equals(intent.getAction())) {
-        //            DbManager.getInstance().open(context, new EmsDbHelper(context));
+        // if (BTN_REFRESH.equals(intent.getAction())) {
+        // DbManager.getInstance().open(context, new EmsDbHelper(context));
         //
-        //            final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        //            final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
+        // final AppWidgetManager appWidgetManager =
+        // AppWidgetManager.getInstance(context);
+        // final RemoteViews views = new RemoteViews(context.getPackageName(),
+        // R.layout.widget);
         //
-        //            loadWidgetInfo(context, views, appWidgetManager, intent.getIntExtra("id", 0), 1);
-        //        }
+        // loadWidgetInfo(context, views, appWidgetManager,
+        // intent.getIntExtra("id", 0), 1);
+        // }
     }
 
-    //    protected void loadWidgetInfo(final Context context, final RemoteViews views, final AppWidgetManager appWidgetManager, final int appWidgetId, final int type) {
-    //        new AsyncTask<Void, Void, Boolean>() {
-    //            @Override
-    //            protected void onPreExecute() {
-    //                views.setViewVisibility(R.id.prog, View.VISIBLE);
+    // protected void loadWidgetInfo(final Context context, final RemoteViews
+    // views, final AppWidgetManager appWidgetManager, final int appWidgetId,
+    // final int type) {
+    // new AsyncTask<Void, Void, Boolean>() {
+    // @Override
+    // protected void onPreExecute() {
+    // views.setViewVisibility(R.id.prog, View.VISIBLE);
     //
-    //                if (type == 1) {
-    //                    ComponentName watchWidget = new ComponentName(context, StatusWidget.class);
-    //                    appWidgetManager.updateAppWidget(watchWidget, views);
-    //                }
-    //            }
+    // if (type == 1) {
+    // ComponentName watchWidget = new ComponentName(context,
+    // StatusWidget.class);
+    // appWidgetManager.updateAppWidget(watchWidget, views);
+    // }
+    // }
     //
-    //            @Override
-    //            protected Boolean doInBackground(Void... vd) {
-    //                Cursor cr = EmsDbHelper.select();
+    // @Override
+    // protected Boolean doInBackground(Void... vd) {
+    // Cursor cr = EmsDbHelper.select();
     //
-    //                while (cr.moveToNext()) {
-    //                    String num    = cr.getString(0);
-    //                    String status = cr.getString(2);
+    // while (cr.moveToNext()) {
+    // String num = cr.getString(0);
+    // String status = cr.getString(2);
     //
-    //                    if (!status.equals("배달완료")) {
-    //                        Ems ems = Api.tracking(num);
-    //                        EmsDataManager.getInstance().setEmsData(num, ems);
-    //                        EmsDbHelper.update(cr.getInt(1), ems);
-    //                    }
-    //                }
+    // if (!status.equals("배달완료")) {
+    // Ems ems = Api.tracking(num);
+    // EmsDataManager.getInstance().setEmsData(num, ems);
+    // EmsDbHelper.update(cr.getInt(1), ems);
+    // }
+    // }
     //
-    //                return false;
-    //            }
+    // return false;
+    // }
     //
-    //            @Override
-    //            protected void onPostExecute(Boolean result) {
-    //                views.setViewVisibility(R.id.prog, View.GONE);
+    // @Override
+    // protected void onPostExecute(Boolean result) {
+    // views.setViewVisibility(R.id.prog, View.GONE);
     //
-    //                Cursor cr = EmsDbHelper.selectDesc();
-    //                int total = cr.getCount();
-    //                int unknown = 0;
-    //                int delivered = 0;
+    // Cursor cr = EmsDbHelper.selectDesc();
+    // int total = cr.getCount();
+    // int unknown = 0;
+    // int delivered = 0;
     //
-    //                while (cr.moveToNext()) {
-    //                    String status = cr.getString(3);
+    // while (cr.moveToNext()) {
+    // String status = cr.getString(3);
     //
-    //                    if (status.equals("미등록")) {
-    //                        ++unknown;
-    //                    } else if (status.equals("배달완료")) {
-    //                        ++delivered;
-    //                    }
-    //                }
+    // if (status.equals("미등록")) {
+    // ++unknown;
+    // } else if (status.equals("배달완료")) {
+    // ++delivered;
+    // }
+    // }
     //
-    //                views.setTextViewText(R.id.unknown,    "미등록 : " + unknown + "건");
-    //                views.setTextViewText(R.id.delivering, "배송중 : " + (total - unknown - delivered) + "건");
-    //                views.setTextViewText(R.id.delivered,  "완 \u00A0\u00A0료 : " + delivered + "건");
+    // views.setTextViewText(R.id.unknown, "미등록 : " + unknown + "건");
+    // views.setTextViewText(R.id.delivering, "배송중 : " + (total - unknown -
+    // delivered) + "건");
+    // views.setTextViewText(R.id.delivered, "완 \u00A0\u00A0료 : " + delivered +
+    // "건");
     //
-    //                if (type == 1) {
-    //                    ComponentName watchWidget = new ComponentName(context, StatusWidget.class);
-    //                    appWidgetManager.updateAppWidget(watchWidget, views);
-    //                } else {
-    //                    appWidgetManager.updateAppWidget(appWidgetId, views);
-    //                }
-    //            }
-    //        }.execute();
-    //    }
+    // if (type == 1) {
+    // ComponentName watchWidget = new ComponentName(context,
+    // StatusWidget.class);
+    // appWidgetManager.updateAppWidget(watchWidget, views);
+    // } else {
+    // appWidgetManager.updateAppWidget(appWidgetId, views);
+    // }
+    // }
+    // }.execute();
+    // }
 }
