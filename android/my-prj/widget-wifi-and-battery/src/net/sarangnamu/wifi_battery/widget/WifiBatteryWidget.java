@@ -24,26 +24,35 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.widget.RemoteViews;
 
 public class WifiBatteryWidget extends AppWidgetProvider {
     private static final String TAG = "WifiBatteryWidget";
     private String battery;
+    private Intent batteryStatus;
+
+
+    public WifiBatteryWidget() {
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "WIFI BATTERY WIDGET CONSTRUCTOR");
+        DLog.d(TAG, "===================================================================");
+    }
+
+    private void initBatteryStatusReceiver() {
+
+    }
 
     @Override
-    public void onUpdate(Context context,
-            final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         final int N = appWidgetIds.length;
 
-        if (battery == null) {
-
-        }
+        getBatteryStatus(context);
 
         for (int i = 0; i < N; i++) {
             final int appWidgetId = appWidgetIds[i];
-            final RemoteViews views = new RemoteViews(context.getPackageName(),
-                    R.layout.widget);
+            final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
 
             views.setTextViewText(R.id.battery, battery);
 
@@ -55,13 +64,32 @@ public class WifiBatteryWidget extends AppWidgetProvider {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
-    protected PendingIntent getPendingSelfIntent(Context context,
-            String action, int id) {
+    protected PendingIntent getPendingSelfIntent(Context context, String action, int id) {
         Intent intent = new Intent(context, getClass());
         intent.setAction(action);
         intent.putExtra("id", id);
 
         return PendingIntent.getBroadcast(context, 0, intent, 0);
+    }
+
+    private void getBatteryStatus(Context context) {
+        int level, scale;
+        batteryStatus = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+
+        if (batteryStatus != null) {
+            level = batteryStatus.getIntExtra("level", -1);
+            scale = batteryStatus.getIntExtra("scale", -1);
+
+            battery = String.format("Battery : %d%% ", (level * 100 / scale));
+
+            DLog.d(TAG, "===================================================================");
+            DLog.d(TAG, "" + battery);
+            DLog.d(TAG, "===================================================================");
+        } else {
+            DLog.d(TAG, "===================================================================");
+            DLog.d(TAG, "getBatteryStatus null");
+            DLog.d(TAG, "===================================================================");
+        }
     }
 
     @Override
@@ -70,20 +98,21 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
         final String action = intent.getAction();
 
-        DLog.d(TAG,
-                "===================================================================");
+        DLog.d(TAG, "===================================================================");
         DLog.d(TAG, "ACTION " + intent.getAction());
-        DLog.d(TAG,
-                "===================================================================");
+        DLog.d(TAG, "===================================================================");
 
-        if (Intent.ACTION_BATTERY_CHANGED.equals(action)) {
-            int level = intent.getIntExtra("level", 0);
-            int scale = intent.getIntExtra("scale", 100);
+        if (Intent.ACTION_POWER_CONNECTED.equals(action)) {
+            DLog.d(TAG, "ACTION_POWER_CONNECTED");
 
-            battery = String.format("Battery : %d%% ", (level * 100 / scale));
+        } else if (Intent.ACTION_POWER_DISCONNECTED.equals(action)) {
+            DLog.d(TAG, "ACTION_POWER_DISCONNECTED");
 
         } else if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(action)) {
-
+            DLog.d(TAG, "WIFI STATE CHANGED");
+        } else if (action.equals(AppWidgetManager.ACTION_APPWIDGET_ENABLED)) {
+            DLog.d(TAG, "APPWIDGET ENABLED");
+            //getBatteryStatus(context);
         }
 
         // if (BTN_REFRESH.equals(intent.getAction())) {

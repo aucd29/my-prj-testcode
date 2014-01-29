@@ -50,7 +50,7 @@ public class AppList {
         ArrayList<PkgInfo> res = new ArrayList<PkgInfo>();
         List<PackageInfo> packs = context.getPackageManager().getInstalledPackages(0);
 
-        for(int i=0;i<packs.size();i++) {
+        for (int i = 0; i < packs.size(); i++) {
             PackageInfo p = packs.get(i);
             if (hideSystemApp) {
                 if ((p.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
@@ -74,21 +74,20 @@ public class AppList {
         return res;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////////////
     //
     // PkgInfo
     //
-    ////////////////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////////////
 
     public static class PkgInfo {
-        public String appName;
-        public String pkgName;
-        public String versionName;
-        public String appSize;
-        public String srcDir;
-        public int versionCode = 0;
-        public long size;
+        public String   appName;
+        public String   pkgName;
+        public String   versionName;
+        public String   appSize;
+        public String   srcDir;
+        public int      versionCode = 0;
+        public long     size;
         public Drawable icon;
     }
 }
-
