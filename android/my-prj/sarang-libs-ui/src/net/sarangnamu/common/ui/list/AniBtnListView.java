@@ -135,7 +135,7 @@ public class AniBtnListView extends LockListView {
     }
 
     public void setSlidingMargin(int dp) {
-        slidingMargin = dpToPixelInt(dp);
+        slidingMargin = dpToPixelInt(dp) - 1;
     }
 
     public void setBtnLayoutId(int id) {
@@ -177,23 +177,23 @@ public class AniBtnListView extends LockListView {
         //lp.height = view.getHeight();
         //btnLayout.setLayoutParams(lp);
 
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "child info " + btnLayout.getChildCount());
-        DLog.d(TAG, "row info " + row.getChildCount());
+        //DLog.d(TAG, "===================================================================");
+        //DLog.d(TAG, "child info " + btnLayout.getChildCount());
+        //DLog.d(TAG, "row info " + row.getChildCount());
 
-        for (int i=0; i<btnLayout.getChildCount(); ++i) {
-            //DLog.d(TAG, "before height " + btnLayout.getChildAt(i).getHeight());
+        //for (int i=0; i<btnLayout.getChildCount(); ++i) {
+        //DLog.d(TAG, "before height " + btnLayout.getChildAt(i).getHeight());
 
-            //lp = btnLayout.getChildAt(i).getLayoutParams();
-            //lp.height = view.getHeight();
-            //btnLayout.getChildAt(i).setLayoutParams(lp);
+        //lp = btnLayout.getChildAt(i).getLayoutParams();
+        //lp.height = view.getHeight();
+        //btnLayout.getChildAt(i).setLayoutParams(lp);
 
-            btnLayout.requestLayout();
+        //btnLayout.requestLayout();
 
-            //DLog.d(TAG, "child height " + btnLayout.getChildAt(i).getHeight());
-        }
+        //DLog.d(TAG, "child height " + btnLayout.getChildAt(i).getHeight());
+        //}
 
-        DLog.d(TAG, "===================================================================");
+        //DLog.d(TAG, "===================================================================");
 
         ObjectAnimator.ofFloat(btnLayout, "translationX", endX).start();
         final ObjectAnimator objAni = ObjectAnimator.ofFloat(row, "translationX", endX);
