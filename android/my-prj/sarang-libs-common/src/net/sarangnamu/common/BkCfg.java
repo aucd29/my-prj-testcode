@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -92,6 +94,14 @@ public class BkCfg {
         //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
         //imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static void forceHideKeyboard(Window window) {
+        if (window == null) {
+            return ;
+        }
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     public static void engKeyboard(EditText edt) {

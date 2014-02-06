@@ -250,7 +250,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     private void initSearch() {
-        getListView().setTextFilterEnabled(true);
+        BkCfg.forceHideKeyboard(getWindow());
 
         search.setImeOptions(EditorInfo.IME_ACTION_DONE);
         search.addTextChangedListener(new TextWatcher() {
@@ -290,28 +290,28 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    if (searchedData == null) {
-                        searchedData = new ArrayList<PkgInfo>();
-                    }
-
-                    searchedData.clear();
-                    String keyword = search.getText().toString();
-
-                    if (keyword != null && keyword.length() > 0) {
-                        searchedList = true;
-                        keyword = keyword.toLowerCase();
-
-                        for (PkgInfo info : data) {
-                            if (info.appName.toLowerCase().contains(keyword)) {
-                                searchedData.add(info);
-                            }
-                        }
-                    } else {
-                        searchedList = false;
-                    }
+                    //                    if (searchedData == null) {
+                    //                        searchedData = new ArrayList<PkgInfo>();
+                    //                    }
+                    //
+                    //                    searchedData.clear();
+                    //                    String keyword = search.getText().toString();
+                    //
+                    //                    if (keyword != null && keyword.length() > 0) {
+                    //                        searchedList = true;
+                    //                        keyword = keyword.toLowerCase();
+                    //
+                    //                        for (PkgInfo info : data) {
+                    //                            if (info.appName.toLowerCase().contains(keyword)) {
+                    //                                searchedData.add(info);
+                    //                            }
+                    //                        }
+                    //                    } else {
+                    //                        searchedList = false;
+                    //                    }
 
                     setSearchUi();
-                    adapter.notifyDataSetChanged();
+                    //                    adapter.notifyDataSetChanged();
                 }
 
                 return false;
@@ -619,6 +619,15 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         PosHolder ph = (PosHolder) v.getTag();
 
         if (ph.type == ET_MENU) {
+            if (search.getVisibility() != View.GONE) {
+                search.setVisibility(View.GONE);
+                tvSearch.setVisibility(View.GONE);
+                title.setVisibility(View.VISIBLE);
+                FadeColor.startResource(titleBar, R.color.dBgSearch, R.color.dBg, null);
+
+                BkCfg.hideKeyboard(search);
+            }
+
             ((AniBtnListView) getListView()).showAnimation(v);
         } else {
             sendEmail = ph.type == 0 ? false : true;
