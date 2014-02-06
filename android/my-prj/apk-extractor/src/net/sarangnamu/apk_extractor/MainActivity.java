@@ -45,7 +45,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -248,42 +250,41 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     private void initSearch() {
+        getListView().setTextFilterEnabled(true);
+
         search.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        //        search.addTextChangedListener(new TextWatcher() {
-        //            @Override
-        //            public void onTextChanged(CharSequence s, int start, int before, int count) {
-        //
-        //            }
-        //
-        //            @Override
-        //            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        //            }
-        //
-        //            @Override
-        //            public void afterTextChanged(Editable s) {
-        //                if (searchedData == null) {
-        //                    searchedData = new ArrayList<PkgInfo>();
-        //                }
-        //
-        //                searchedData.clear();
-        //                String keyword = search.getText().toString();
-        //
-        //                if (keyword != null && keyword.length() > 0) {
-        //                    searchedList = true;
-        //                    keyword = keyword.toLowerCase();
-        //
-        //                    for (PkgInfo info : data) {
-        //                        if (info.appName.toLowerCase().contains(keyword)) {
-        //                            searchedData.add(info);
-        //                        }
-        //                    }
-        //                } else {
-        //                    searchedList = false;
-        //                }
-        //
-        //                adapter.notifyDataSetChanged();
-        //            }
-        //        });
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (searchedData == null) {
+                    searchedData = new ArrayList<PkgInfo>();
+                }
+
+                searchedData.clear();
+                String keyword = search.getText().toString();
+
+                if (keyword != null && keyword.length() > 0) {
+                    searchedList = true;
+                    keyword = keyword.toLowerCase();
+
+                    for (PkgInfo info : data) {
+                        if (info.appName.toLowerCase().contains(keyword)) {
+                            searchedData.add(info);
+                        }
+                    }
+                } else {
+                    searchedList = false;
+                }
+
+                adapter.notifyDataSetChanged();
+            }
+        });
 
         search.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
