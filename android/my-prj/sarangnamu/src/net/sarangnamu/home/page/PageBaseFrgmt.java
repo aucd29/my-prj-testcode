@@ -88,10 +88,18 @@ public abstract class PageBaseFrgmt extends FrgmtBase {
     }
 
     protected void showDlgProgress() {
+        if (getActivity() == null) {
+            return ;
+        }
+
         ((MainActivity) getActivity()).showDlgProgress();
     }
 
     protected void hideDlgProgress() {
+        if (getActivity() == null) {
+            return ;
+        }
+
         ((MainActivity) getActivity()).hideDlgProgress();
     }
 
@@ -106,14 +114,26 @@ public abstract class PageBaseFrgmt extends FrgmtBase {
     }
 
     protected void showFrgmt(Class<?> cls) {
+        if (getActivity() == null) {
+            return ;
+        }
+
         Navigator.getInstance(getActivity()).replace(R.id.content, cls);
     }
 
     public void backFrgmt() {
+        if (getActivity() == null) {
+            return ;
+        }
+
         Navigator.getInstance(getActivity()).popBack();
     }
 
     public Fragment getFrgmtByName(Class<?> cls) {
+        if (getActivity() == null) {
+            return null;
+        }
+
         return Navigator.getInstance(getActivity()).getFragment(cls);
     }
 

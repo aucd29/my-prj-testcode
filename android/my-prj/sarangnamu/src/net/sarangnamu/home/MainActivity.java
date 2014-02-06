@@ -92,6 +92,7 @@ public class MainActivity extends FragmentActivity {
         if (savedInstanceState == null) {
             initNaviation();
         }
+
         initMenu();
         initLogin();
     }
