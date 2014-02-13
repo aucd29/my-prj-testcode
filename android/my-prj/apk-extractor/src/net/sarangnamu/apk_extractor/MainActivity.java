@@ -282,6 +282,10 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                     searchedList = false;
                 }
 
+                if (adapter == null) {
+                    return ;
+                }
+
                 adapter.notifyDataSetChanged();
             }
         });
