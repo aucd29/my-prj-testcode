@@ -282,11 +282,10 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                     searchedList = false;
                 }
 
-                if (adapter == null) {
-                    return ;
+                BaseAdapter tmpAdapter = (BaseAdapter) getListAdapter();
+                if (tmpAdapter != null) {
+                    tmpAdapter.notifyDataSetChanged();
                 }
-
-                adapter.notifyDataSetChanged();
             }
         });
 
