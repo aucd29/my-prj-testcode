@@ -17,7 +17,9 @@
  */
 package net.sarangnamu.d_day;
 
+import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
+import net.sarangnamu.d_day.db.DbHelper;
 import net.sarangnamu.d_day.dlg.DlgLicense;
 import net.sarangnamu.d_day.service.ResurrectionReceiver;
 import net.sarangnamu.d_day.sub.HomeFrgmt;
@@ -58,6 +60,13 @@ public class MainActivity extends FragmentActivity {
         }
 
         return super.onMenuItemSelected(featureId, item);
+    }
+
+    @Override
+    protected void onResume() {
+        DbManager.getInstance().open(this, new DbHelper(this));
+
+        super.onResume();
     }
 
     private void initNaviation() {
