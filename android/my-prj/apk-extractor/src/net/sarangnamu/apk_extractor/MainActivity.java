@@ -297,28 +297,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    //                    if (searchedData == null) {
-                    //                        searchedData = new ArrayList<PkgInfo>();
-                    //                    }
-                    //
-                    //                    searchedData.clear();
-                    //                    String keyword = search.getText().toString();
-                    //
-                    //                    if (keyword != null && keyword.length() > 0) {
-                    //                        searchedList = true;
-                    //                        keyword = keyword.toLowerCase();
-                    //
-                    //                        for (PkgInfo info : data) {
-                    //                            if (info.appName.toLowerCase().contains(keyword)) {
-                    //                                searchedData.add(info);
-                    //                            }
-                    //                        }
-                    //                    } else {
-                    //                        searchedList = false;
-                    //                    }
-
                     setSearchUi();
-                    //                    adapter.notifyDataSetChanged();
                 }
 
                 return false;
@@ -361,6 +340,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 Context context = contexts[0];
 
                 if (data != null) {
+                    // Hmm OutOfMemory point!
                     data.clear();
                     data = null;
                 }
@@ -601,7 +581,9 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 info = data.get(position);
             }
 
-            holder.icon.setBackgroundDrawable(info.icon);
+            if (info.icon != null) {
+                holder.icon.setBackgroundDrawable(info.icon);
+            }
             holder.name.setText(info.appName);
             holder.size.setText(info.appSize);
             holder.pkgName.setText(info.pkgName);

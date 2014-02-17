@@ -25,9 +25,12 @@ import net.sarangnamu.common.BkMath;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
 public class AppList {
+    private static final String TAG = "AppList";
+
     private static AppList inst;
 
     public static AppList getInstance() {
@@ -74,6 +77,17 @@ public class AppList {
         return res;
     }
 
+    //    public void freeIcon(ArrayList<PkgInfo> pkgInfo) {
+    //        for (PkgInfo info : pkgInfo) {
+    //            if (info.icon instanceof BitmapDrawable) {
+    //                ((BitmapDrawable) info.icon).getBitmap().recycle();
+    //                info.icon = null;
+    //            } else {
+    //                DLog.d(TAG, "no !");
+    //            }
+    //        }
+    //    }
+
     // //////////////////////////////////////////////////////////////////////////////////
     //
     // PkgInfo
@@ -89,5 +103,6 @@ public class AppList {
         public int      versionCode = 0;
         public long     size;
         public Drawable icon;
+        public Bitmap   bitmap;
     }
 }
