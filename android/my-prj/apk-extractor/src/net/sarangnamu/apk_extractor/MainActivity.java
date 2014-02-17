@@ -173,7 +173,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             searchedData.clear();
             searchedList = false;
 
-            adapter.notifyDataSetChanged();
+            BaseAdapter tmpAdapter = (BaseAdapter) getListAdapter();
+            if (tmpAdapter != null) {
+                tmpAdapter.notifyDataSetChanged();
+            }
+
             return ;
         } else if (search.getVisibility() != View.GONE) {
             setSearchUi();
