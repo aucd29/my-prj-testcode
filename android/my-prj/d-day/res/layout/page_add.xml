@@ -96,7 +96,6 @@
             android:layout_marginTop="10dp"
             style="@style/addLabelText"
             android:text="@string/alarm"
-            android:visibility="gone"
              />
 
         <RadioGroup
@@ -106,7 +105,6 @@
             android:layout_marginTop="10dp"
             android:checkedButton="@+id/rdoAlarmNone"
             android:orientation="horizontal"
-            android:visibility="gone"
              >
 
             <RadioButton

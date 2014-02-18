@@ -18,6 +18,7 @@
 package net.sarangnamu.wifi_battery.service;
 
 import net.sarangnamu.common.DLog;
+import net.sarangnamu.wifi_battery.widget.WifiBatteryWidget;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -28,31 +29,15 @@ import android.os.IBinder;
 public class WifiBatteryService extends Service {
     private static final String TAG = "WifiBatteryService";
 
+    public static final String BATTERY_INFO = "batteryInfo";
+
     private String battery;
     private Intent batteryStatus;
 
     BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            DLog.d(TAG, "battery receiver");
-
             getBatteryStatus(context);
-
-            /*try {
-                if (!mReceivedBatteryStatus) {
-                    mReceivedBatteryStatus = true;
-                    int level = intent.getIntExtra("level", 0);
-
-                    if (level < mThreshold) {
-                        showNotification("Battery down to " + String.valueOf(level) + "%");
-                    } else {
-                        mNM.cancel(R.string.alarm_service_started);
-                    }
-                }
-            } finally {
-                unregisterReceiver(mBatInfoReceiver);
-                BatteryAlarmService.this.stopSelf();
-            }*/
         }
     };
 
@@ -64,6 +49,10 @@ public class WifiBatteryService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "START SERVICE FOR BATTERY AND WIFI STATUS");
+        DLog.d(TAG, "===================================================================");
 
         registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
@@ -87,10 +76,19 @@ public class WifiBatteryService extends Service {
         level = batteryStatus.getIntExtra("level", -1);
         scale = batteryStatus.getIntExtra("scale", -1);
 
-        battery = String.format("Battery : %d%% ", (level * 100 / scale));
+        String tmpBattery = String.format("Battery : %d%% ", (level * 100 / scale));
+        if (!tmpBattery.equals(battery)) {
+            battery = tmpBattery;
 
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "" + battery);
-        DLog.d(TAG, "===================================================================");
+            DLog.d(TAG, "===================================================================");
+            DLog.d(TAG, "CHANGE BATTERY INFO : " + battery);
+            DLog.d(TAG, "===================================================================");
+
+            Intent intent = new Intent(context, WifiBatteryWidget.class);
+            intent.setAction(BATTERY_INFO);
+            intent.putExtra(BATTERY_INFO, battery);
+
+            sendBroadcast(intent);
+        }
     }
 }
