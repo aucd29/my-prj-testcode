@@ -37,6 +37,27 @@ public class BkString {
         return filename;
     }
 
+    public static String getFilePath(String file) {
+        // input data : /sdcard/name/name.ext
+
+        if (file == null) {
+            DLog.e(TAG, "getFilePath file == null");
+            return "";
+        }
+
+        int pos = file.lastIndexOf("/");
+        if (pos < 0) {
+            DLog.e(TAG, "getFilePath not found /");
+            return "";
+        }
+
+        String path = file.substring(0, pos);
+
+        DLog.d(TAG, "TEST CODE " + path);
+
+        return path;
+    }
+
     public static String getRemoveFileExtension(String filename) {
         int lastIndex = filename.indexOf(".");
         if (lastIndex == -1) {

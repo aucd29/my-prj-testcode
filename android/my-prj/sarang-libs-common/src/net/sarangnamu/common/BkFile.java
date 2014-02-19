@@ -69,6 +69,47 @@ public class BkFile {
         copyFile(fpSrc, destPathName, null);
     }
 
+    public static void copyFileTo(File fpSrc, String destFileName, FileCopyListener l) throws Exception {
+        String fileName = BkString.getFileName(fpSrc.getAbsolutePath());
+        String destFilePath = BkString.getFilePath(destFileName);
+
+        File fpDestDir = new File(destFilePath);
+        if (!fpDestDir.exists()) {
+            boolean res = fpDestDir.mkdirs();
+            DLog.d(TAG, "make dir " + res);
+        }
+
+        File fpDest = new File(destFileName, fileName);
+        InputStream in = new FileInputStream(fpSrc);
+        OutputStream out = new FileOutputStream(fpDest);
+
+        // Copy the bits from instream to outstream
+        byte[] buf = new byte[4096];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            if (l.isCancelled()) {
+                break;
+            }
+
+            out.write(buf, 0, len);
+        }
+
+        out.flush();
+        in.close();
+        out.close();
+
+        if (l != null) {
+            if (l.isCancelled()) {
+                l.onCancelled();
+
+                return ;
+            }
+
+            l.copyFile(fpDest.getAbsolutePath());
+            Thread.sleep(1);
+        }
+    }
+
     public static void copyFile(File fpSrc, String destPathName, FileCopyListener l) throws Exception {
         String fileName = BkString.getFileName(fpSrc.getAbsolutePath());
 
