@@ -73,13 +73,23 @@ public class WifiBatteryWidget extends AppWidgetProvider {
             DLog.d(TAG, "RECEIVED BATTERY INFO " + batteryInfo);
             DLog.d(TAG, "===================================================================");
 
-            ComponentName watchWidget = new ComponentName(context, WifiBatteryWidget.class);
-            appWidgetManager.updateAppWidget(watchWidget, views);
+            views.setTextViewText(R.id.battery, batteryInfo);
+        } else if (action.equals(WifiBatteryService.WIFI_CONNECTED)) {
+            DLog.d(TAG, "===================================================================");
+            DLog.d(TAG, "RECEIVED WIFI CONNECTED");
+            DLog.d(TAG, "===================================================================");
 
-            views.setTextViewText(R.id.battery,    "BATTERY : " + batteryInfo + "%");
+            views.setTextViewText(R.id.wifiStatus, "WIFI CONNTECTED");
+        } else if (action.equals(WifiBatteryService.WIFI_DISCONNECTED)) {
+            DLog.d(TAG, "===================================================================");
+            DLog.d(TAG, "RECEIVED WIFI DICONNECTED");
+            DLog.d(TAG, "===================================================================");
 
-            appWidgetManager.updateAppWidget(watchWidget, views);
+            views.setTextViewText(R.id.wifiStatus, "WIFI DISCONNECTED");
         }
+
+        ComponentName watchWidget = new ComponentName(context, WifiBatteryWidget.class);
+        appWidgetManager.updateAppWidget(watchWidget, views);
 
         // if (BTN_REFRESH.equals(intent.getAction())) {
         // DbManager.getInstance().open(context, new EmsDbHelper(context));
@@ -93,6 +103,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
         // intent.getIntExtra("id", 0), 1);
         // }
     }
+
 
     protected void loadWidgetInfo(final Context context, final RemoteViews views, final AppWidgetManager appWidgetManager, final int appWidgetId, final int type) {
 

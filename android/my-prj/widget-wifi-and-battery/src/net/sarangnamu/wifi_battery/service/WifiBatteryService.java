@@ -18,6 +18,9 @@
 package net.sarangnamu.wifi_battery.service;
 
 import net.sarangnamu.common.DLog;
+import net.sarangnamu.common.network.BkWifiStateReceiver;
+import net.sarangnamu.common.network.BkWifiStateReceiver.IWiFIConnected;
+import net.sarangnamu.common.network.BkWifiStateReceiver.IWiFiDisconnecting;
 import net.sarangnamu.wifi_battery.widget.WifiBatteryWidget;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -30,9 +33,12 @@ public class WifiBatteryService extends Service {
     private static final String TAG = "WifiBatteryService";
 
     public static final String BATTERY_INFO = "batteryInfo";
+    public static final String WIFI_CONNECTED = "wifiConnected";
+    public static final String WIFI_DISCONNECTED = "wifiConnected";
 
     private String battery;
     private Intent batteryStatus;
+    private BkWifiStateReceiver wifiReceiver;
 
     BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
         @Override
@@ -55,11 +61,32 @@ public class WifiBatteryService extends Service {
         DLog.d(TAG, "===================================================================");
 
         registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+
+        if (wifiReceiver == null) {
+            wifiReceiver = new BkWifiStateReceiver();
+        }
+
+        wifiReceiver.register(this, new IWiFIConnected() {
+            @Override
+            public void onWiFiConnected() {
+                sendIntentToWidget(WIFI_CONNECTED, null);
+            }
+        });
+
+        wifiReceiver.addListener(new IWiFiDisconnecting() {
+            @Override
+            public void onWiFiDisconnecting() {
+                sendIntentToWidget(WIFI_DISCONNECTED, null);
+            }
+        });
     }
 
     @Override
     public void onDestroy() {
         unregisterReceiver(batteryReceiver);
+        if (wifiReceiver != null) {
+            wifiReceiver.unregister(this);
+        }
 
         super.onDestroy();
     }
@@ -84,11 +111,18 @@ public class WifiBatteryService extends Service {
             DLog.d(TAG, "CHANGE BATTERY INFO : " + battery);
             DLog.d(TAG, "===================================================================");
 
-            Intent intent = new Intent(context, WifiBatteryWidget.class);
-            intent.setAction(BATTERY_INFO);
-            intent.putExtra(BATTERY_INFO, battery);
-
-            sendBroadcast(intent);
+            sendIntentToWidget(BATTERY_INFO, battery);
         }
+    }
+
+    private void sendIntentToWidget(final String action, final String extraValue) {
+        Intent intent = new Intent(this, WifiBatteryWidget.class);
+        intent.setAction(action);
+
+        if (extraValue != null) {
+            intent.putExtra(action, extraValue);
+        }
+
+        sendBroadcast(intent);
     }
 }
