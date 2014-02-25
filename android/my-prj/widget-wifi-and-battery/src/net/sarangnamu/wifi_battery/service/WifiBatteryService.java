@@ -30,99 +30,108 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 
 public class WifiBatteryService extends Service {
-    private static final String TAG = "WifiBatteryService";
+	private static final String TAG = "WifiBatteryService";
 
-    public static final String BATTERY_INFO = "batteryInfo";
-    public static final String WIFI_CONNECTED = "wifiConnected";
-    public static final String WIFI_DISCONNECTED = "wifiConnected";
+	public static final String BATTERY_INFO = "batteryInfo";
+	public static final String WIFI_CONNECTED = "wifiConnected";
+	public static final String WIFI_DISCONNECTED = "wifiConnected";
 
-    private String battery;
-    private Intent batteryStatus;
-    private BkWifiStateReceiver wifiReceiver;
+	private String battery;
+	private Intent batteryStatus;
+	private BkWifiStateReceiver wifiReceiver;
 
-    BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            getBatteryStatus(context);
-        }
-    };
+	BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			getBatteryStatus(context);
+		}
+	};
 
-    @Override
-    public IBinder onBind(Intent arg0) {
-        return null;
-    }
+	@Override
+	public IBinder onBind(Intent arg0) {
+		return null;
+	}
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+	@Override
+	public void onCreate() {
+		super.onCreate();
 
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "START SERVICE FOR BATTERY AND WIFI STATUS");
-        DLog.d(TAG, "===================================================================");
+		DLog.d(TAG, "===================================================================");
+		DLog.d(TAG, "START SERVICE FOR BATTERY AND WIFI STATUS");
+		DLog.d(TAG, "===================================================================");
 
-        registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+		registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
-        if (wifiReceiver == null) {
-            wifiReceiver = new BkWifiStateReceiver();
-        }
+		if (wifiReceiver == null) {
+			wifiReceiver = new BkWifiStateReceiver();
+		}
 
-        wifiReceiver.register(this, new IWiFIConnected() {
-            @Override
-            public void onWiFiConnected() {
-                sendIntentToWidget(WIFI_CONNECTED, null);
-            }
-        });
+		wifiReceiver.register(this, new IWiFIConnected() {
+			@Override
+			public void onWiFiConnected() {
+				DLog.d(TAG, "===================================================================");
+				DLog.d(TAG, "onWiFiConnected");
+				DLog.d(TAG, "===================================================================");
 
-        wifiReceiver.addListener(new IWiFiDisconnecting() {
-            @Override
-            public void onWiFiDisconnecting() {
-                sendIntentToWidget(WIFI_DISCONNECTED, null);
-            }
-        });
-    }
+				sendIntentToWidget(WIFI_CONNECTED, null);
+			}
+		});
 
-    @Override
-    public void onDestroy() {
-        unregisterReceiver(batteryReceiver);
-        if (wifiReceiver != null) {
-            wifiReceiver.unregister(this);
-        }
+		wifiReceiver.addListener(new IWiFiDisconnecting() {
+			@Override
+			public void onWiFiDisconnecting() {
+				DLog.d(TAG, "===================================================================");
+				DLog.d(TAG, "onWiFiDisconnecting");
+				DLog.d(TAG, "===================================================================");
 
-        super.onDestroy();
-    }
+				sendIntentToWidget(WIFI_DISCONNECTED, null);
+			}
+		});
+	}
 
-    private void getBatteryStatus(Context context) {
-        batteryStatus = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+	@Override
+	public void onDestroy() {
+		unregisterReceiver(batteryReceiver);
+		if (wifiReceiver != null) {
+			wifiReceiver.clearListener();
+			wifiReceiver.unregister(this);
+		}
 
-        if (batteryStatus == null) {
-            DLog.e(TAG, "batteryStatus == null");
-            return ;
-        }
+		super.onDestroy();
+	}
 
-        int level, scale;
-        level = batteryStatus.getIntExtra("level", -1);
-        scale = batteryStatus.getIntExtra("scale", -1);
+	private void getBatteryStatus(Context context) {
+		batteryStatus = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
-        String tmpBattery = String.format("Battery : %d%% ", (level * 100 / scale));
-        if (!tmpBattery.equals(battery)) {
-            battery = tmpBattery;
+		if (batteryStatus == null) {
+			DLog.e(TAG, "batteryStatus == null");
+			return;
+		}
 
-            DLog.d(TAG, "===================================================================");
-            DLog.d(TAG, "CHANGE BATTERY INFO : " + battery);
-            DLog.d(TAG, "===================================================================");
+		int level, scale;
+		level = batteryStatus.getIntExtra("level", -1);
+		scale = batteryStatus.getIntExtra("scale", -1);
 
-            sendIntentToWidget(BATTERY_INFO, battery);
-        }
-    }
+		String tmpBattery = String.format("Battery : %d%% ", (level * 100 / scale));
+		if (!tmpBattery.equals(battery)) {
+			battery = tmpBattery;
 
-    private void sendIntentToWidget(final String action, final String extraValue) {
-        Intent intent = new Intent(this, WifiBatteryWidget.class);
-        intent.setAction(action);
+			DLog.d(TAG, "===================================================================");
+			DLog.d(TAG, "CHANGE BATTERY INFO : " + battery);
+			DLog.d(TAG, "===================================================================");
 
-        if (extraValue != null) {
-            intent.putExtra(action, extraValue);
-        }
+			sendIntentToWidget(BATTERY_INFO, battery);
+		}
+	}
 
-        sendBroadcast(intent);
-    }
+	private void sendIntentToWidget(final String action, final String extraValue) {
+		Intent intent = new Intent(this, WifiBatteryWidget.class);
+		intent.setAction(action);
+
+		if (extraValue != null) {
+			intent.putExtra(action, extraValue);
+		}
+
+		sendBroadcast(intent);
+	}
 }
