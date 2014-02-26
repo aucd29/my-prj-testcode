@@ -18,6 +18,7 @@
 package net.sarangnamu.wifi_battery.service;
 
 import net.sarangnamu.common.DLog;
+import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.common.network.BkWifiStateReceiver;
 import net.sarangnamu.common.network.BkWifiStateReceiver.IWiFIConnected;
 import net.sarangnamu.common.network.BkWifiStateReceiver.IWiFiDisconnecting;
@@ -34,7 +35,7 @@ public class WifiBatteryService extends Service {
 
 	public static final String BATTERY_INFO = "batteryInfo";
 	public static final String WIFI_CONNECTED = "wifiConnected";
-	public static final String WIFI_DISCONNECTED = "wifiConnected";
+	public static final String WIFI_DISCONNECTED = "wifiDisconnected";
 
 	private String battery;
 	private Intent batteryStatus;
@@ -60,12 +61,21 @@ public class WifiBatteryService extends Service {
 		DLog.d(TAG, "START SERVICE FOR BATTERY AND WIFI STATUS");
 		DLog.d(TAG, "===================================================================");
 
+		// CHECK CURRENT WIFI STATUS
+		if (BkWifiManager.getInstance(this).isEnabled()) {
+			sendIntentToWidget(WIFI_CONNECTED, null);
+		} else {
+			sendIntentToWidget(WIFI_DISCONNECTED, null);
+		}
+
+		// REGISTRATION A BATTERY RECEIVER
 		registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
 		if (wifiReceiver == null) {
 			wifiReceiver = new BkWifiStateReceiver();
 		}
 
+		// REGISTRATION A WIFI STATUS RECEIVER
 		wifiReceiver.register(this, new IWiFIConnected() {
 			@Override
 			public void onWiFiConnected() {

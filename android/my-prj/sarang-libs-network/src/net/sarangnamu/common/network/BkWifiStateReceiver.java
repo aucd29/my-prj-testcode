@@ -27,7 +27,7 @@ import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 
 public class BkWifiStateReceiver extends BroadcastReceiver {
-	private static final String TAG = "BkWifi";
+	private static final String TAG = "BkWifiStateReceiver";
 
 	private final ArrayList<IWiFiDisconnecting> listenerList = new ArrayList<IWiFiDisconnecting>();
 	private IWiFIConnected l = null;

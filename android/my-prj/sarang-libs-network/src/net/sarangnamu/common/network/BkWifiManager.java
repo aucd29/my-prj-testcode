@@ -23,67 +23,65 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
 public class BkWifiManager {
-    private static final String TAG = "BkWifiManager";
+	private static final String TAG = "BkWifiManager";
 
-    private static BkWifiManager inst = null;
-    private WifiManager manager = null;
+	private static BkWifiManager inst = null;
+	private WifiManager manager = null;
 
-    private BkWifiManager(Context context) {
-        try {
-            manager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
-        } catch (NullPointerException e) {
-            DLog.e(TAG, "ObWifiManager", e);
-        }
-    }
+	private BkWifiManager(Context context) {
+		try {
+			manager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+		} catch (NullPointerException e) {
+			DLog.e(TAG, "BkWifiManager", e);
+		}
+	}
 
-    public static BkWifiManager getInstance(Context context) {
-        if (inst == null) {
-            inst = new BkWifiManager(context);
-        }
+	public static BkWifiManager getInstance(Context context) {
+		if (inst == null) {
+			inst = new BkWifiManager(context);
+		}
 
-        return inst;
-    }
+		return inst;
+	}
 
-    public boolean isEnabled() {
-        if (manager == null) {
-            DLog.e(TAG, "manager is null");
-            return false;
-        }
+	public boolean isEnabled() {
+		if (manager == null) {
+			DLog.e(TAG, "manager is null");
+			return false;
+		}
 
-        return manager.isWifiEnabled();
-    }
+		return manager.isWifiEnabled();
+	}
 
-    public String getIPAddr() {
-        String ipAddr = "";
+	public String getIPAddr() {
+		String ipAddr = "";
 
-        try {
-            WifiInfo wifiInfo = manager.getConnectionInfo();
-            int ipAddress = wifiInfo.getIpAddress();
-            ipAddr = String.format("%d.%d.%d.%d",
-                    (ipAddress & 0xff), (ipAddress >> 8 & 0xff),
-                    (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+		try {
+			WifiInfo wifiInfo = manager.getConnectionInfo();
+			int ipAddress = wifiInfo.getIpAddress();
+			ipAddr = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
 
-        } catch (Exception e) {
-            DLog.e(TAG, "getIPAddr", e);
-            return "";
-        }
+		} catch (Exception e) {
+			DLog.e(TAG, "getIPAddr", e);
+			return "";
+		}
 
-        return ipAddr;
-    }
+		return ipAddr;
+	}
 
-    public void wifiEnable() {
-        try {
-            manager.setWifiEnabled(true);
-        } catch (NullPointerException e) {
-            DLog.e(TAG, "wifiEnable", e);
-        }
-    }
+	public void wifiEnable() {
+		try {
+			manager.setWifiEnabled(true);
+		} catch (NullPointerException e) {
+			DLog.e(TAG, "wifiEnable", e);
+		}
+	}
 
-    public void wifiDisable() {
-        try {
-            manager.setWifiEnabled(false);
-        } catch (NullPointerException e) {
-            DLog.e(TAG, "wifiDisable", e);
-        }
-    }
+	public void wifiDisable() {
+		try {
+			manager.setWifiEnabled(false);
+		} catch (NullPointerException e) {
+			DLog.e(TAG, "wifiDisable", e);
+		}
+	}
 }
