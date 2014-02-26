@@ -79,10 +79,6 @@ public class WifiBatteryService extends Service {
 		wifiReceiver.register(this, new IWiFIConnected() {
 			@Override
 			public void onWiFiConnected() {
-				DLog.d(TAG, "===================================================================");
-				DLog.d(TAG, "onWiFiConnected");
-				DLog.d(TAG, "===================================================================");
-
 				sendIntentToWidget(WIFI_CONNECTED, null);
 			}
 		});
@@ -90,10 +86,6 @@ public class WifiBatteryService extends Service {
 		wifiReceiver.addListener(new IWiFiDisconnecting() {
 			@Override
 			public void onWiFiDisconnecting() {
-				DLog.d(TAG, "===================================================================");
-				DLog.d(TAG, "onWiFiDisconnecting");
-				DLog.d(TAG, "===================================================================");
-
 				sendIntentToWidget(WIFI_DISCONNECTED, null);
 			}
 		});
@@ -125,11 +117,6 @@ public class WifiBatteryService extends Service {
 		String tmpBattery = String.format("Battery : %d%% ", (level * 100 / scale));
 		if (!tmpBattery.equals(battery)) {
 			battery = tmpBattery;
-
-			DLog.d(TAG, "===================================================================");
-			DLog.d(TAG, "CHANGE BATTERY INFO : " + battery);
-			DLog.d(TAG, "===================================================================");
-
 			sendIntentToWidget(BATTERY_INFO, battery);
 		}
 	}
