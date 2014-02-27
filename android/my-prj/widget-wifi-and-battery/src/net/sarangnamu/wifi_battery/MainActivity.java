@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.wifi_battery;
 
+import net.sarangnamu.common.DLog;
 import net.sarangnamu.wifi_battery.service.WifiBatteryService;
 import android.app.Activity;
 import android.content.Intent;
@@ -29,6 +30,10 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		DLog.d(TAG, "===================================================================");
+		DLog.d(TAG, "HELLO WIFI AND BATTERY STATUS WIDGET");
+		DLog.d(TAG, "===================================================================");
 
 		startService(new Intent(this, WifiBatteryService.class));
 	}

@@ -34,6 +34,7 @@ public class WifiBatteryService extends Service {
 	private static final String TAG = "WifiBatteryService";
 
 	public static final String BATTERY_INFO = "batteryInfo";
+	public static final String ADD_CLICK_EVENT = "addClickEvent";
 	public static final String WIFI_CONNECTED = "wifiConnected";
 	public static final String WIFI_DISCONNECTED = "wifiDisconnected";
 
@@ -60,6 +61,8 @@ public class WifiBatteryService extends Service {
 		DLog.d(TAG, "===================================================================");
 		DLog.d(TAG, "START SERVICE FOR BATTERY AND WIFI STATUS");
 		DLog.d(TAG, "===================================================================");
+
+		sendIntentToWidget(ADD_CLICK_EVENT, null);
 
 		// CHECK CURRENT WIFI STATUS
 		if (BkWifiManager.getInstance(this).isEnabled()) {

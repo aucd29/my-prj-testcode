@@ -41,6 +41,10 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 	public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		final int N = appWidgetIds.length;
 
+		DLog.d(TAG, "===================================================================");
+		DLog.d(TAG, "WIFI AND BATTERY WIDGET START");
+		DLog.d(TAG, "===================================================================");
+
 		for (int i = 0; i < N; i++) {
 			final int appWidgetId = appWidgetIds[i];
 			final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
@@ -72,26 +76,12 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
 		if (action.equals(WifiBatteryService.BATTERY_INFO)) {
 			String batteryInfo = intent.getStringExtra(WifiBatteryService.BATTERY_INFO);
-
-			DLog.d(TAG, "===================================================================");
-			DLog.d(TAG, "RECEIVED BATTERY INFO " + batteryInfo);
-			DLog.d(TAG, "===================================================================");
-
 			views.setTextViewText(R.id.battery, batteryInfo);
 		} else if (action.equals(WifiBatteryService.WIFI_CONNECTED)) {
-			DLog.d(TAG, "===================================================================");
-			DLog.d(TAG, "RECEIVED WIFI CONNECTED");
-			DLog.d(TAG, "===================================================================");
-
-			views.setTextViewText(R.id.wifiStatus, "WIFI CONNTECTED");
+			views.setTextViewText(R.id.wifiStatus, "WIFI ON");
 			views.setViewVisibility(R.id.prog, View.GONE);
-
 		} else if (action.equals(WifiBatteryService.WIFI_DISCONNECTED)) {
-			DLog.d(TAG, "===================================================================");
-			DLog.d(TAG, "RECEIVED WIFI DICONNECTED");
-			DLog.d(TAG, "===================================================================");
-
-			views.setTextViewText(R.id.wifiStatus, "WIFI DISCONNECTED");
+			views.setTextViewText(R.id.wifiStatus, "WIFI OFF");
 			views.setViewVisibility(R.id.prog, View.GONE);
 		} else if (action.equals(TOGGLE_WIFI)) {
 			if (changingWifi) {
@@ -117,6 +107,8 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 			synchronized (changingWifi) {
 				changingWifi = false;
 			}
+		} else if (action.equals(WifiBatteryService.ADD_CLICK_EVENT)) {
+			views.setOnClickPendingIntent(R.id.widgetLayout, getPendingSelfIntent(context, TOGGLE_WIFI, 0));
 		}
 
 		ComponentName watchWidget = new ComponentName(context, WifiBatteryWidget.class);
