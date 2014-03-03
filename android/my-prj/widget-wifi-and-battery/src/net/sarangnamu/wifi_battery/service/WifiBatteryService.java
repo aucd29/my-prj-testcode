@@ -31,107 +31,109 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 
 public class WifiBatteryService extends Service {
-	private static final String TAG = "WifiBatteryService";
+    private static final String TAG = "WifiBatteryService";
 
-	public static final String BATTERY_INFO = "batteryInfo";
-	public static final String ADD_CLICK_EVENT = "addClickEvent";
-	public static final String WIFI_CONNECTED = "wifiConnected";
-	public static final String WIFI_DISCONNECTED = "wifiDisconnected";
+    public static final String BATTERY_INFO = "batteryInfo";
+    public static final String ADD_CLICK_EVENT = "addClickEvent";
+    public static final String WIFI_CONNECTED = "wifiConnected";
+    public static final String WIFI_DISCONNECTED = "wifiDisconnected";
 
-	private String battery;
-	private Intent batteryStatus;
-	private BkWifiStateReceiver wifiReceiver;
+    private String battery;
+    private Intent batteryStatus;
+    private BkWifiStateReceiver wifiReceiver;
 
-	BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			getBatteryStatus(context);
-		}
-	};
+    BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            getBatteryStatus(context);
+        }
+    };
 
-	@Override
-	public IBinder onBind(Intent arg0) {
-		return null;
-	}
+    @Override
+    public IBinder onBind(Intent arg0) {
+        return null;
+    }
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-		DLog.d(TAG, "===================================================================");
-		DLog.d(TAG, "START SERVICE FOR BATTERY AND WIFI STATUS");
-		DLog.d(TAG, "===================================================================");
+        // DLog.d(TAG,
+        // "===================================================================");
+        // DLog.d(TAG, "START SERVICE FOR BATTERY AND WIFI STATUS");
+        // DLog.d(TAG,
+        // "===================================================================");
 
-		sendIntentToWidget(ADD_CLICK_EVENT, null);
+        sendIntentToWidget(ADD_CLICK_EVENT, null);
 
-		// CHECK CURRENT WIFI STATUS
-		if (BkWifiManager.getInstance(this).isEnabled()) {
-			sendIntentToWidget(WIFI_CONNECTED, null);
-		} else {
-			sendIntentToWidget(WIFI_DISCONNECTED, null);
-		}
+        // CHECK CURRENT WIFI STATUS
+        if (BkWifiManager.getInstance(this).isEnabled()) {
+            sendIntentToWidget(WIFI_CONNECTED, null);
+        } else {
+            sendIntentToWidget(WIFI_DISCONNECTED, null);
+        }
 
-		// REGISTRATION A BATTERY RECEIVER
-		registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        // REGISTRATION A BATTERY RECEIVER
+        registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
-		if (wifiReceiver == null) {
-			wifiReceiver = new BkWifiStateReceiver();
-		}
+        if (wifiReceiver == null) {
+            wifiReceiver = new BkWifiStateReceiver();
+        }
 
-		// REGISTRATION A WIFI STATUS RECEIVER
-		wifiReceiver.register(this, new IWiFIConnected() {
-			@Override
-			public void onWiFiConnected() {
-				sendIntentToWidget(WIFI_CONNECTED, null);
-			}
-		});
+        // REGISTRATION A WIFI STATUS RECEIVER
+        wifiReceiver.register(this, new IWiFIConnected() {
+            @Override
+            public void onWiFiConnected() {
+                sendIntentToWidget(WIFI_CONNECTED, null);
+            }
+        });
 
-		wifiReceiver.addListener(new IWiFiDisconnecting() {
-			@Override
-			public void onWiFiDisconnecting() {
-				sendIntentToWidget(WIFI_DISCONNECTED, null);
-			}
-		});
-	}
+        wifiReceiver.addListener(new IWiFiDisconnecting() {
+            @Override
+            public void onWiFiDisconnecting() {
+                sendIntentToWidget(WIFI_DISCONNECTED, null);
+            }
+        });
+    }
 
-	@Override
-	public void onDestroy() {
-		unregisterReceiver(batteryReceiver);
-		if (wifiReceiver != null) {
-			wifiReceiver.clearListener();
-			wifiReceiver.unregister(this);
-		}
+    @Override
+    public void onDestroy() {
+        unregisterReceiver(batteryReceiver);
+        if (wifiReceiver != null) {
+            wifiReceiver.clearListener();
+            wifiReceiver.unregister(this);
+        }
 
-		super.onDestroy();
-	}
+        super.onDestroy();
+    }
 
-	private void getBatteryStatus(Context context) {
-		batteryStatus = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+    private void getBatteryStatus(Context context) {
+        batteryStatus = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
-		if (batteryStatus == null) {
-			DLog.e(TAG, "batteryStatus == null");
-			return;
-		}
+        if (batteryStatus == null) {
+            DLog.e(TAG, "batteryStatus == null");
+            return;
+        }
 
-		int level, scale;
-		level = batteryStatus.getIntExtra("level", -1);
-		scale = batteryStatus.getIntExtra("scale", -1);
+        int level, scale;
+        level = batteryStatus.getIntExtra("level", -1);
+        scale = batteryStatus.getIntExtra("scale", -1);
 
-		String tmpBattery = String.format("Battery : %d%% ", (level * 100 / scale));
-		if (!tmpBattery.equals(battery)) {
-			battery = tmpBattery;
-			sendIntentToWidget(BATTERY_INFO, battery);
-		}
-	}
+        String tmpBattery = String.format("Battery : %d%% ", (level * 100 / scale));
+        if (!tmpBattery.equals(battery)) {
+            battery = tmpBattery;
+            sendIntentToWidget(BATTERY_INFO, battery);
+        }
+    }
 
-	private void sendIntentToWidget(final String action, final String extraValue) {
-		Intent intent = new Intent(this, WifiBatteryWidget.class);
-		intent.setAction(action);
+    private void sendIntentToWidget(final String action, final String extraValue) {
+        Intent intent = new Intent(this, WifiBatteryWidget.class);
+        intent.setAction(action);
 
-		if (extraValue != null) {
-			intent.putExtra(action, extraValue);
-		}
+        if (extraValue != null) {
+            intent.putExtra(action, extraValue);
+        }
 
-		sendBroadcast(intent);
-	}
+        sendBroadcast(intent);
+    }
 }

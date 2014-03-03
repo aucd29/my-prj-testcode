@@ -57,10 +57,6 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 	}
 
 	protected PendingIntent getPendingSelfIntent(Context context, String action, int id) {
-		DLog.d(TAG, "===================================================================");
-		DLog.d(TAG, "CLICKED EVENT " + action);
-		DLog.d(TAG, "===================================================================");
-
 		Intent intent = new Intent(context, getClass());
 		intent.setAction(action);
 		intent.putExtra("id", id);
@@ -94,9 +90,9 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
 			views.setViewVisibility(R.id.prog, View.VISIBLE);
 
-			DLog.d(TAG, "===================================================================");
-			DLog.d(TAG, "TOGGLE WIFI ");
-			DLog.d(TAG, "===================================================================");
+//			DLog.d(TAG, "===================================================================");
+//			DLog.d(TAG, "TOGGLE WIFI ");
+//			DLog.d(TAG, "===================================================================");
 
 			if (BkWifiManager.getInstance(context).isEnabled()) {
 				BkWifiManager.getInstance(context).wifiDisable();

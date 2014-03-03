@@ -3,4 +3,6 @@
     <string name="app_name">WIFI and Battery</string>
     <string name="plsWait">Please wait..</string>
     <string name="mainTxt">WIFI and Battery Widget</string>
+    <string name="pls">Please</string>
+    <string name="wait">wait</string>
 </resources>

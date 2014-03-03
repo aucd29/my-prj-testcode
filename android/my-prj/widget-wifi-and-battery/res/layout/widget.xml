@@ -9,10 +9,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center|center_vertical"
-        android:visibility="gone"
-        />
-
-    <!-- android:background="@drawable/widget_bg" -->
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/widgetLayout"
@@ -28,7 +25,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:text="50%" />
+            android:text="@string/pls" />
 
         <TextView
             android:id="@+id/wifiStatus"
@@ -36,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
-            android:text="connected" />
+            android:text="@string/wait" />
     </LinearLayout>
 
 </FrameLayout>
