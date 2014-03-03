@@ -42,6 +42,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -420,9 +421,15 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 					File src = new File(info.srcDir);
 
 					String fileName = BkString.getFileName(info.srcDir);
-					fileName = fileName.replace("-2.apk", "-" + info.versionName + ".apk");
+					int pos = fileName.lastIndexOf("-");
+					if (pos != -1) {
+						fileName = fileName.substring(0, pos);
+						fileName += "-" + info.versionName + ".apk";
+					} else {
+						fileName = fileName.replace(".apk", "-" + info.versionName + ".apk");
+					}
 
-					BkFile.copyFileTo(src, Cfg.getDownPath(MainActivity.this) + "/" + fileName, new FileCopyListener() {
+					BkFile.copyFileTo(src, Cfg.getDownPath(MainActivity.this) + fileName, new FileCopyListener() {
 						@Override
 						public void onCancelled() {
 						}
@@ -599,7 +606,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 			}
 
 			if (info.icon != null) {
-				holder.icon.setBackgroundDrawable(info.icon);
+				if (Build.VERSION_CODES.JELLY_BEAN > Build.VERSION.SDK_INT) {
+					holder.icon.setBackground(info.icon);
+				} else {
+					holder.icon.setBackgroundDrawable(info.icon);
+				}
 			}
 			holder.name.setText(info.appName);
 			holder.size.setText(info.appSize);

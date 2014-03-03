@@ -44,18 +44,14 @@ public class BkFile {
 
 	public static void mkdirs(File fp) throws Exception {
 		if (!fp.exists()) {
-			if (!fp.mkdirs()) {
-				throw new Exception("Unable to create folder " + fp.getAbsolutePath());
-			}
+			fp.mkdirs();
 		}
 	}
 
 	public static void mkdirs(final String path) throws Exception {
 		File fp = new File(path);
 		if (!fp.exists()) {
-			if (!fp.mkdirs()) {
-				throw new Exception("Unable to create folder " + fp.getAbsolutePath());
-			}
+			fp.mkdirs();
 		}
 	}
 
@@ -65,20 +61,16 @@ public class BkFile {
 	//
 	// //////////////////////////////////////////////////////////////////////////////////
 
-	public static void copyFile(File fpSrc, String destPathName) throws Exception {
-		copyFile(fpSrc, destPathName, null);
+	public static void copyFileTo(File fpSrc, String destFullPathName) throws Exception {
+		copyFileTo(fpSrc, destFullPathName, null);
 	}
 
 	public static void copyFileTo(File fpSrc, String destFullPathName, FileCopyListener l) throws Exception {
 		String destFilePath = BkString.getFilePath(destFullPathName);
 
-		File fpDestDir = new File(destFilePath);
-		if (!fpDestDir.exists()) {
-			boolean res = fpDestDir.mkdirs();
-			DLog.d(TAG, "make dir " + res);
-		}
+		mkdirs(destFilePath);
 
-		File fpDest = new File(destFilePath, destFullPathName);
+		File fpDest = new File(destFullPathName);
 		InputStream in = new FileInputStream(fpSrc);
 		OutputStream out = new FileOutputStream(fpDest);
 
@@ -91,6 +83,7 @@ public class BkFile {
 			}
 
 			out.write(buf, 0, len);
+			Thread.sleep(1);
 		}
 
 		out.flush();
@@ -105,18 +98,13 @@ public class BkFile {
 			}
 
 			l.copyFile(fpDest.getAbsolutePath());
-			Thread.sleep(1);
 		}
 	}
 
 	public static void copyFile(File fpSrc, String destPathName, FileCopyListener l) throws Exception {
 		String fileName = BkString.getFileName(fpSrc.getAbsolutePath());
 
-		File fpDestDir = new File(destPathName);
-		if (!fpDestDir.exists()) {
-			boolean res = fpDestDir.mkdirs();
-			DLog.d(TAG, "make dir " + res);
-		}
+		mkdirs(destPathName);
 
 		File fpDest = new File(destPathName, fileName);
 		InputStream in = new FileInputStream(fpSrc);
@@ -131,6 +119,7 @@ public class BkFile {
 			}
 
 			out.write(buf, 0, len);
+			Thread.sleep(1);
 		}
 
 		out.flush();
@@ -145,7 +134,6 @@ public class BkFile {
 			}
 
 			l.copyFile(fpDest.getAbsolutePath());
-			Thread.sleep(1);
 		}
 	}
 
