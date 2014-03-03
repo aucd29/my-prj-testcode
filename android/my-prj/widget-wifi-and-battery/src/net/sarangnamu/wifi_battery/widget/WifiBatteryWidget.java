@@ -109,6 +109,8 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 			}
 		} else if (action.equals(WifiBatteryService.ADD_CLICK_EVENT)) {
 			views.setOnClickPendingIntent(R.id.widgetLayout, getPendingSelfIntent(context, TOGGLE_WIFI, 0));
+		} else if (action.equals("android.intent.action.BOOT_COMPLETED")) {
+			context.startService(new Intent(context, WifiBatteryService.class));
 		}
 
 		ComponentName watchWidget = new ComponentName(context, WifiBatteryWidget.class);
