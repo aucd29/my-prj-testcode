@@ -37,6 +37,7 @@ public class WifiBatteryService extends Service {
     public static final String ADD_CLICK_EVENT = "addClickEvent";
     public static final String WIFI_CONNECTED = "wifiConnected";
     public static final String WIFI_DISCONNECTED = "wifiDisconnected";
+    public static final String WIFI_IP = "wifiIp";
 
     private String battery;
     private Intent batteryStatus;
@@ -58,17 +59,11 @@ public class WifiBatteryService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        // DLog.d(TAG,
-        // "===================================================================");
-        // DLog.d(TAG, "START SERVICE FOR BATTERY AND WIFI STATUS");
-        // DLog.d(TAG,
-        // "===================================================================");
-
         sendIntentToWidget(ADD_CLICK_EVENT, null);
 
         // CHECK CURRENT WIFI STATUS
         if (BkWifiManager.getInstance(this).isEnabled()) {
-            sendIntentToWidget(WIFI_CONNECTED, null);
+            sendIntentToWidget(WIFI_CONNECTED, BkWifiManager.getInstance(getApplicationContext()).getIPAddr());
         } else {
             sendIntentToWidget(WIFI_DISCONNECTED, null);
         }
@@ -84,7 +79,7 @@ public class WifiBatteryService extends Service {
         wifiReceiver.register(this, new IWiFIConnected() {
             @Override
             public void onWiFiConnected() {
-                sendIntentToWidget(WIFI_CONNECTED, null);
+                sendIntentToWidget(WIFI_CONNECTED, BkWifiManager.getInstance(getApplicationContext()).getIPAddr());
             }
         });
 

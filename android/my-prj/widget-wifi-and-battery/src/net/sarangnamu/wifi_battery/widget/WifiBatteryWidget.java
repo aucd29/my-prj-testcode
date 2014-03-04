@@ -31,85 +31,94 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 public class WifiBatteryWidget extends AppWidgetProvider {
-	private static final String TAG = "WifiBatteryWidget";
-	private static final String TOGGLE_WIFI = "toggleWifi";
+    private static final String TAG = "WifiBatteryWidget";
+    private static final String TOGGLE_WIFI = "toggleWifi";
 
-	private String battery;
-	private Boolean changingWifi = false;
+    private String battery;
+    private Boolean changingWifi = false;
 
-	@Override
-	public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-		final int N = appWidgetIds.length;
+    @Override
+    public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        final int N = appWidgetIds.length;
 
-		DLog.d(TAG, "===================================================================");
-		DLog.d(TAG, "WIFI AND BATTERY WIDGET START");
-		DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "WIFI AND BATTERY WIDGET START");
+        DLog.d(TAG, "===================================================================");
 
-		for (int i = 0; i < N; i++) {
-			final int appWidgetId = appWidgetIds[i];
-			final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
+        for (int i = 0; i < N; i++) {
+            final int appWidgetId = appWidgetIds[i];
+            final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
 
-			views.setTextViewText(R.id.battery, battery);
-			views.setOnClickPendingIntent(R.id.widgetLayout, getPendingSelfIntent(context, TOGGLE_WIFI, appWidgetId));
-		}
+            views.setTextViewText(R.id.battery, battery);
+            views.setOnClickPendingIntent(R.id.widgetLayout, getPendingSelfIntent(context, TOGGLE_WIFI, appWidgetId));
+        }
 
-		super.onUpdate(context, appWidgetManager, appWidgetIds);
-	}
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
+    }
 
-	protected PendingIntent getPendingSelfIntent(Context context, String action, int id) {
-		Intent intent = new Intent(context, getClass());
-		intent.setAction(action);
-		intent.putExtra("id", id);
+    protected PendingIntent getPendingSelfIntent(Context context, String action, int id) {
+        Intent intent = new Intent(context, getClass());
+        intent.setAction(action);
+        intent.putExtra("id", id);
 
-		return PendingIntent.getBroadcast(context, 0, intent, 0);
-	}
+        return PendingIntent.getBroadcast(context, 0, intent, 0);
+    }
 
-	@Override
-	public void onReceive(Context context, final Intent intent) {
-		final String action = intent.getAction();
-		final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-		final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
+    @Override
+    public void onReceive(Context context, final Intent intent) {
+        final String action = intent.getAction();
+        final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
 
-		if (action.equals(WifiBatteryService.BATTERY_INFO)) {
-			String batteryInfo = intent.getStringExtra(WifiBatteryService.BATTERY_INFO);
-			views.setTextViewText(R.id.battery, batteryInfo);
-		} else if (action.equals(WifiBatteryService.WIFI_CONNECTED)) {
-			views.setTextViewText(R.id.wifiStatus, "WIFI ON");
-			views.setViewVisibility(R.id.prog, View.GONE);
-		} else if (action.equals(WifiBatteryService.WIFI_DISCONNECTED)) {
-			views.setTextViewText(R.id.wifiStatus, "WIFI OFF");
-			views.setViewVisibility(R.id.prog, View.GONE);
-		} else if (action.equals(TOGGLE_WIFI)) {
-			if (changingWifi) {
-				return;
-			}
+        if (action.equals(WifiBatteryService.BATTERY_INFO)) {
+            String batteryInfo = intent.getStringExtra(WifiBatteryService.BATTERY_INFO);
+            views.setTextViewText(R.id.battery, batteryInfo);
+        } else if (action.equals(WifiBatteryService.WIFI_CONNECTED)) {
+            String ip = intent.getStringExtra(action);
 
-			synchronized (changingWifi) {
-				changingWifi = true;
-			}
+            views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOn));
+            if (ip != null) {
+                views.setTextViewText(R.id.ip, ip);
+            }
 
-			views.setViewVisibility(R.id.prog, View.VISIBLE);
+            views.setViewVisibility(R.id.prog, View.GONE);
+        } else if (action.equals(WifiBatteryService.WIFI_DISCONNECTED)) {
+            views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
+            views.setTextViewText(R.id.ip, context.getString(R.string.invalidIp));
+            views.setViewVisibility(R.id.prog, View.GONE);
+        } else if (action.equals(TOGGLE_WIFI)) {
+            if (changingWifi) {
+                return;
+            }
 
-//			DLog.d(TAG, "===================================================================");
-//			DLog.d(TAG, "TOGGLE WIFI ");
-//			DLog.d(TAG, "===================================================================");
+            synchronized (changingWifi) {
+                changingWifi = true;
+            }
 
-			if (BkWifiManager.getInstance(context).isEnabled()) {
-				BkWifiManager.getInstance(context).wifiDisable();
-			} else {
-				BkWifiManager.getInstance(context).wifiEnable();
-			}
+            views.setViewVisibility(R.id.prog, View.VISIBLE);
 
-			synchronized (changingWifi) {
-				changingWifi = false;
-			}
-		} else if (action.equals(WifiBatteryService.ADD_CLICK_EVENT)) {
-			views.setOnClickPendingIntent(R.id.widgetLayout, getPendingSelfIntent(context, TOGGLE_WIFI, 0));
-		} else if (action.equals("android.intent.action.BOOT_COMPLETED")) {
-			context.startService(new Intent(context, WifiBatteryService.class));
-		}
+            // DLog.d(TAG,
+            // "===================================================================");
+            // DLog.d(TAG, "TOGGLE WIFI ");
+            // DLog.d(TAG,
+            // "===================================================================");
 
-		ComponentName watchWidget = new ComponentName(context, WifiBatteryWidget.class);
-		appWidgetManager.updateAppWidget(watchWidget, views);
-	}
+            if (BkWifiManager.getInstance(context).isEnabled()) {
+                BkWifiManager.getInstance(context).wifiDisable();
+            } else {
+                BkWifiManager.getInstance(context).wifiEnable();
+            }
+
+            synchronized (changingWifi) {
+                changingWifi = false;
+            }
+        } else if (action.equals(WifiBatteryService.ADD_CLICK_EVENT)) {
+            views.setOnClickPendingIntent(R.id.widgetLayout, getPendingSelfIntent(context, TOGGLE_WIFI, 0));
+        } else if (action.equals("android.intent.action.BOOT_COMPLETED")) {
+            context.startService(new Intent(context, WifiBatteryService.class));
+        }
+
+        ComponentName watchWidget = new ComponentName(context, WifiBatteryWidget.class);
+        appWidgetManager.updateAppWidget(watchWidget, views);
+    }
 }

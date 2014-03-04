@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WIFI and Battery</string>
+    <string name="app_name">WiFi and Battery</string>
     <string name="plsWait">Please wait..</string>
-    <string name="mainTxt">WIFI and Battery Widget</string>
+    <string name="mainTxt">WiFi and Battery Widget</string>
     <string name="pls">Please</string>
     <string name="wait">wait</string>
+    <string name="invalidIp">0.0.0.0</string>
+    <string name="wifiOff">Wi-Fi OFF</string>
+    <string name="wifiOn">Wi-Fi ON</string>
 </resources>
