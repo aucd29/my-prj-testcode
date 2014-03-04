@@ -97,12 +97,6 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
             views.setViewVisibility(R.id.prog, View.VISIBLE);
 
-            // DLog.d(TAG,
-            // "===================================================================");
-            // DLog.d(TAG, "TOGGLE WIFI ");
-            // DLog.d(TAG,
-            // "===================================================================");
-
             if (BkWifiManager.getInstance(context).isEnabled()) {
                 BkWifiManager.getInstance(context).wifiDisable();
             } else {

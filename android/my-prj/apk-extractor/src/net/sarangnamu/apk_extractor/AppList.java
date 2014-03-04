@@ -76,17 +76,6 @@ public class AppList {
         return res;
     }
 
-    // public void freeIcon(ArrayList<PkgInfo> pkgInfo) {
-    // for (PkgInfo info : pkgInfo) {
-    // if (info.icon instanceof BitmapDrawable) {
-    // ((BitmapDrawable) info.icon).getBitmap().recycle();
-    // info.icon = null;
-    // } else {
-    // DLog.d(TAG, "no !");
-    // }
-    // }
-    // }
-
     // //////////////////////////////////////////////////////////////////////////////////
     //
     // PkgInfo
