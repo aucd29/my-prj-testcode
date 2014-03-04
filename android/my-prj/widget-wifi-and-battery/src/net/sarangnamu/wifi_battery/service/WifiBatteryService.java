@@ -33,11 +33,14 @@ import android.os.IBinder;
 public class WifiBatteryService extends Service {
     private static final String TAG = "WifiBatteryService";
 
-    public static final String BATTERY_INFO = "batteryInfo";
-    public static final String ADD_CLICK_EVENT = "addClickEvent";
-    public static final String WIFI_CONNECTED = "wifiConnected";
-    public static final String WIFI_DISCONNECTED = "wifiDisconnected";
-    public static final String WIFI_IP = "wifiIp";
+    public static final String BATTERY_INFO = "BATTERY_INFO";
+    public static final String ADD_CLICK_EVENT = "ADD_CLICK_EVENT";
+    public static final String WIFI_CONNECTED = "WIFI_CONNECTED";
+    public static final String WIFI_DISCONNECTED = "WIFI_DISCONNECTED";
+    public static final String WIFI_IP = "WIFI_IP";
+
+    public static final String LEVEL = "level";
+    public static final String SCALE = "scale";
 
     private String battery;
     private Intent batteryStatus;
@@ -111,8 +114,8 @@ public class WifiBatteryService extends Service {
         }
 
         int level, scale;
-        level = batteryStatus.getIntExtra("level", -1);
-        scale = batteryStatus.getIntExtra("scale", -1);
+        level = batteryStatus.getIntExtra(LEVEL, -1);
+        scale = batteryStatus.getIntExtra(SCALE, -1);
 
         String tmpBattery = String.format("Battery : %d%% ", (level * 100 / scale));
         if (!tmpBattery.equals(battery)) {

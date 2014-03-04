@@ -17,24 +17,25 @@
  */
 package net.sarangnamu.wifi_battery;
 
-import net.sarangnamu.common.DLog;
+import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.wifi_battery.service.WifiBatteryService;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity {
-	private static final String TAG = "MainActivity";
+    private RelativeLayout main;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-		DLog.d(TAG, "===================================================================");
-		DLog.d(TAG, "HELLO WIFI AND BATTERY STATUS WIDGET");
-		DLog.d(TAG, "===================================================================");
+        main = (RelativeLayout) findViewById(R.id.main);
 
-		startService(new Intent(this, WifiBatteryService.class));
-	}
+        FontLoader.getInstance(getApplicationContext()).applyChild("Roboto-Light", main);
+
+        startService(new Intent(this, WifiBatteryService.class));
+    }
 }
