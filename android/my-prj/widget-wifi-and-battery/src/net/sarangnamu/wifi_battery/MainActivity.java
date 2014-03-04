@@ -33,7 +33,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         main = (RelativeLayout) findViewById(R.id.main);
-
         FontLoader.getInstance(getApplicationContext()).applyChild("Roboto-Light", main);
 
         startService(new Intent(this, WifiBatteryService.class));

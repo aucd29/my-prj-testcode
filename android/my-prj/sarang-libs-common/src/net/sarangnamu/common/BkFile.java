@@ -40,222 +40,222 @@ import java.io.OutputStream;
  * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
  */
 public class BkFile {
-	private static final String TAG = "BkFile";
+    private static final String TAG = "BkFile";
 
-	public static void mkdirs(File fp) throws Exception {
-		if (!fp.exists()) {
-			fp.mkdirs();
-		}
-	}
+    public static void mkdirs(File fp) throws Exception {
+        if (!fp.exists()) {
+            fp.mkdirs();
+        }
+    }
 
-	public static void mkdirs(final String path) throws Exception {
-		File fp = new File(path);
-		if (!fp.exists()) {
-			fp.mkdirs();
-		}
-	}
+    public static void mkdirs(final String path) throws Exception {
+        File fp = new File(path);
+        if (!fp.exists()) {
+            fp.mkdirs();
+        }
+    }
 
-	// //////////////////////////////////////////////////////////////////////////////////
-	//
-	// COPY
-	//
-	// //////////////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////////////
+    //
+    // COPY
+    //
+    // //////////////////////////////////////////////////////////////////////////////////
 
-	public static void copyFileTo(File fpSrc, String destFullPathName) throws Exception {
-		copyFileTo(fpSrc, destFullPathName, null);
-	}
+    public static void copyFileTo(File fpSrc, String destFullPathName) throws Exception {
+        copyFileTo(fpSrc, destFullPathName, null);
+    }
 
-	public static void copyFileTo(File fpSrc, String destFullPathName, FileCopyListener l) throws Exception {
-		String destFilePath = BkString.getFilePath(destFullPathName);
+    public static void copyFileTo(File fpSrc, String destFullPathName, FileCopyListener l) throws Exception {
+        String destFilePath = BkString.getFilePath(destFullPathName);
 
-		mkdirs(destFilePath);
+        mkdirs(destFilePath);
 
-		File fpDest = new File(destFullPathName);
-		InputStream in = new FileInputStream(fpSrc);
-		OutputStream out = new FileOutputStream(fpDest);
+        File fpDest = new File(destFullPathName);
+        InputStream in = new FileInputStream(fpSrc);
+        OutputStream out = new FileOutputStream(fpDest);
 
-		// Copy the bits from instream to outstream
-		byte[] buf = new byte[4096];
-		int len;
-		while ((len = in.read(buf)) > 0) {
-			if (l.isCancelled()) {
-				break;
-			}
+        // Copy the bits from instream to outstream
+        byte[] buf = new byte[4096];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            if (l.isCancelled()) {
+                break;
+            }
 
-			out.write(buf, 0, len);
-			Thread.sleep(1);
-		}
+            out.write(buf, 0, len);
+            Thread.sleep(1);
+        }
 
-		out.flush();
-		in.close();
-		out.close();
+        out.flush();
+        in.close();
+        out.close();
 
-		if (l != null) {
-			if (l.isCancelled()) {
-				l.onCancelled();
+        if (l != null) {
+            if (l.isCancelled()) {
+                l.onCancelled();
 
-				return;
-			}
+                return;
+            }
 
-			l.copyFile(fpDest.getAbsolutePath());
-		}
-	}
+            l.copyFile(fpDest.getAbsolutePath());
+        }
+    }
 
-	public static void copyFile(File fpSrc, String destPathName, FileCopyListener l) throws Exception {
-		String fileName = BkString.getFileName(fpSrc.getAbsolutePath());
+    public static void copyFile(File fpSrc, String destPathName, FileCopyListener l) throws Exception {
+        String fileName = BkString.getFileName(fpSrc.getAbsolutePath());
 
-		mkdirs(destPathName);
+        mkdirs(destPathName);
 
-		File fpDest = new File(destPathName, fileName);
-		InputStream in = new FileInputStream(fpSrc);
-		OutputStream out = new FileOutputStream(fpDest);
+        File fpDest = new File(destPathName, fileName);
+        InputStream in = new FileInputStream(fpSrc);
+        OutputStream out = new FileOutputStream(fpDest);
 
-		// Copy the bits from instream to outstream
-		byte[] buf = new byte[4096];
-		int len;
-		while ((len = in.read(buf)) > 0) {
-			if (l.isCancelled()) {
-				break;
-			}
+        // Copy the bits from instream to outstream
+        byte[] buf = new byte[4096];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            if (l.isCancelled()) {
+                break;
+            }
 
-			out.write(buf, 0, len);
-			Thread.sleep(1);
-		}
+            out.write(buf, 0, len);
+            Thread.sleep(1);
+        }
 
-		out.flush();
-		in.close();
-		out.close();
+        out.flush();
+        in.close();
+        out.close();
 
-		if (l != null) {
-			if (l.isCancelled()) {
-				l.onCancelled();
+        if (l != null) {
+            if (l.isCancelled()) {
+                l.onCancelled();
 
-				return;
-			}
+                return;
+            }
 
-			l.copyFile(fpDest.getAbsolutePath());
-		}
-	}
+            l.copyFile(fpDest.getAbsolutePath());
+        }
+    }
 
-	public static void copyDirectory(File srcPath, File destPath) throws Exception {
-		copyDirectory(srcPath, destPath, null);
-	}
+    public static void copyDirectory(File srcPath, File destPath) throws Exception {
+        copyDirectory(srcPath, destPath, null);
+    }
 
-	public static void copyDirectory(File srcPath, File destPath, FileCopyListener l) throws Exception {
-		if (srcPath.isDirectory()) {
-			if (!destPath.exists() && !destPath.mkdirs()) {
-				throw new IOException("Cannot create dir " + destPath.getAbsolutePath());
-			}
+    public static void copyDirectory(File srcPath, File destPath, FileCopyListener l) throws Exception {
+        if (srcPath.isDirectory()) {
+            if (!destPath.exists() && !destPath.mkdirs()) {
+                throw new IOException("Cannot create dir " + destPath.getAbsolutePath());
+            }
 
-			String[] children = srcPath.list();
-			for (String element : children) {
-				if (l.isCancelled()) {
-					l.onCancelled();
-					break;
-				}
+            String[] children = srcPath.list();
+            for (String element : children) {
+                if (l.isCancelled()) {
+                    l.onCancelled();
+                    break;
+                }
 
-				copyDirectory(new File(srcPath, element), new File(destPath, element), l);
-			}
-		} else {
-			// make sure the directory we plan to store the recording in exists
-			File directory = destPath.getParentFile();
-			if (directory != null && !directory.exists() && !directory.mkdirs()) {
-				throw new IOException("Cannot create dir " + directory.getAbsolutePath());
-			}
+                copyDirectory(new File(srcPath, element), new File(destPath, element), l);
+            }
+        } else {
+            // make sure the directory we plan to store the recording in exists
+            File directory = destPath.getParentFile();
+            if (directory != null && !directory.exists() && !directory.mkdirs()) {
+                throw new IOException("Cannot create dir " + directory.getAbsolutePath());
+            }
 
-			InputStream in = new FileInputStream(srcPath);
-			OutputStream out = new FileOutputStream(destPath);
+            InputStream in = new FileInputStream(srcPath);
+            OutputStream out = new FileOutputStream(destPath);
 
-			// Copy the bits from instream to outstream
-			byte[] buf = new byte[4096];
-			int len;
-			while ((len = in.read(buf)) > 0) {
-				if (l.isCancelled()) {
-					break;
-				}
+            // Copy the bits from instream to outstream
+            byte[] buf = new byte[4096];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                if (l.isCancelled()) {
+                    break;
+                }
 
-				out.write(buf, 0, len);
-				Thread.sleep(1);
-			}
+                out.write(buf, 0, len);
+                Thread.sleep(1);
+            }
 
-			out.flush();
-			in.close();
-			out.close();
+            out.flush();
+            in.close();
+            out.close();
 
-			if (l != null) {
-				if (l.isCancelled()) {
-					l.onCancelled();
+            if (l != null) {
+                if (l.isCancelled()) {
+                    l.onCancelled();
 
-					return;
-				}
+                    return;
+                }
 
-				l.copyFile(srcPath.getAbsolutePath());
-			}
-		}
-	}
+                l.copyFile(srcPath.getAbsolutePath());
+            }
+        }
+    }
 
-	public interface FileCopyListener {
-		public void copyFile(String name);
+    public interface FileCopyListener {
+        public void copyFile(String name);
 
-		public boolean isCancelled();
+        public boolean isCancelled();
 
-		public void onCancelled();
-	}
+        public void onCancelled();
+    }
 
-	// //////////////////////////////////////////////////////////////////////////////////
-	//
-	// MOVE
-	//
-	// //////////////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////////////
+    //
+    // MOVE
+    //
+    // //////////////////////////////////////////////////////////////////////////////////
 
-	public static boolean moveTo(final String srcPath, final String destPath) {
-		try {
-			File src = new File(srcPath);
-			File dest = new File(destPath);
+    public static boolean moveTo(final String srcPath, final String destPath) {
+        try {
+            File src = new File(srcPath);
+            File dest = new File(destPath);
 
-			mkdirs(dest);
-			src.renameTo(dest);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
+            mkdirs(dest);
+            src.renameTo(dest);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	// //////////////////////////////////////////////////////////////////////////////////
-	//
-	// DELETE
-	//
-	// //////////////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////////////
+    //
+    // DELETE
+    //
+    // //////////////////////////////////////////////////////////////////////////////////
 
-	public static void deleteAll(final File fp) {
-		try {
-			if (!fp.exists()) {
-				return;
-			}
+    public static void deleteAll(final File fp) {
+        try {
+            if (!fp.exists()) {
+                return;
+            }
 
-			File[] files = fp.listFiles();
-			for (File file : files) {
-				if (file.isDirectory()) {
-					deleteAll(file);
-				} else {
-					file.delete();
-				}
-			}
+            File[] files = fp.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteAll(file);
+                } else {
+                    file.delete();
+                }
+            }
 
-			fp.delete();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+            fp.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	public static void deleteFile(final String path) {
-		File fp = new File(path);
-		if (!fp.exists()) {
-			return;
-		}
+    public static void deleteFile(final String path) {
+        File fp = new File(path);
+        if (!fp.exists()) {
+            return;
+        }
 
-		fp.delete();
-	}
+        fp.delete();
+    }
 }

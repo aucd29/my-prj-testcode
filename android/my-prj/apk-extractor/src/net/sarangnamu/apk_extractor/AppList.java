@@ -28,79 +28,79 @@ import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 
 public class AppList {
-	private static final String TAG = "AppList";
+    private static final String TAG = "AppList";
 
-	private static AppList inst;
+    private static AppList inst;
 
-	public static AppList getInstance() {
-		if (inst == null) {
-			inst = new AppList();
-		}
+    public static AppList getInstance() {
+        if (inst == null) {
+            inst = new AppList();
+        }
 
-		return inst;
-	}
+        return inst;
+    }
 
-	private AppList() {
+    private AppList() {
 
-	}
+    }
 
-	public ArrayList<PkgInfo> getInstalledApps(Context context) {
-		return getAllApps(context, true);
-	}
+    public ArrayList<PkgInfo> getInstalledApps(Context context) {
+        return getAllApps(context, true);
+    }
 
-	public ArrayList<PkgInfo> getAllApps(Context context, boolean hideSystemApp) {
-		ArrayList<PkgInfo> res = new ArrayList<PkgInfo>();
-		List<PackageInfo> packs = context.getPackageManager().getInstalledPackages(0);
+    public ArrayList<PkgInfo> getAllApps(Context context, boolean hideSystemApp) {
+        ArrayList<PkgInfo> res = new ArrayList<PkgInfo>();
+        List<PackageInfo> packs = context.getPackageManager().getInstalledPackages(0);
 
-		for (int i = 0; i < packs.size(); i++) {
-			PackageInfo p = packs.get(i);
-			if (hideSystemApp) {
-				if ((p.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-					continue;
-				}
-			}
+        for (int i = 0; i < packs.size(); i++) {
+            PackageInfo p = packs.get(i);
+            if (hideSystemApp) {
+                if ((p.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                    continue;
+                }
+            }
 
-			PkgInfo newInfo = new PkgInfo();
-			newInfo.appName = p.applicationInfo.loadLabel(context.getPackageManager()).toString();
-			newInfo.pkgName = p.packageName;
-			newInfo.versionName = p.versionName;
-			newInfo.versionCode = p.versionCode;
-			newInfo.icon = p.applicationInfo.loadIcon(context.getPackageManager());
-			newInfo.srcDir = p.applicationInfo.sourceDir;
-			newInfo.size = new File(p.applicationInfo.sourceDir).length();
-			newInfo.appSize = BkMath.toFileSizeString(newInfo.size);
+            PkgInfo newInfo = new PkgInfo();
+            newInfo.appName = p.applicationInfo.loadLabel(context.getPackageManager()).toString();
+            newInfo.pkgName = p.packageName;
+            newInfo.versionName = p.versionName;
+            newInfo.versionCode = p.versionCode;
+            newInfo.icon = p.applicationInfo.loadIcon(context.getPackageManager());
+            newInfo.srcDir = p.applicationInfo.sourceDir;
+            newInfo.size = new File(p.applicationInfo.sourceDir).length();
+            newInfo.appSize = BkMath.toFileSizeString(newInfo.size);
 
-			res.add(newInfo);
-		}
+            res.add(newInfo);
+        }
 
-		return res;
-	}
+        return res;
+    }
 
-	// public void freeIcon(ArrayList<PkgInfo> pkgInfo) {
-	// for (PkgInfo info : pkgInfo) {
-	// if (info.icon instanceof BitmapDrawable) {
-	// ((BitmapDrawable) info.icon).getBitmap().recycle();
-	// info.icon = null;
-	// } else {
-	// DLog.d(TAG, "no !");
-	// }
-	// }
-	// }
+    // public void freeIcon(ArrayList<PkgInfo> pkgInfo) {
+    // for (PkgInfo info : pkgInfo) {
+    // if (info.icon instanceof BitmapDrawable) {
+    // ((BitmapDrawable) info.icon).getBitmap().recycle();
+    // info.icon = null;
+    // } else {
+    // DLog.d(TAG, "no !");
+    // }
+    // }
+    // }
 
-	// //////////////////////////////////////////////////////////////////////////////////
-	//
-	// PkgInfo
-	//
-	// //////////////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////////////
+    //
+    // PkgInfo
+    //
+    // //////////////////////////////////////////////////////////////////////////////////
 
-	public static class PkgInfo {
-		public String appName;
-		public String pkgName;
-		public String versionName;
-		public String appSize;
-		public String srcDir;
-		public int versionCode = 0;
-		public long size;
-		public Drawable icon;
-	}
+    public static class PkgInfo {
+        public String appName;
+        public String pkgName;
+        public String versionName;
+        public String appSize;
+        public String srcDir;
+        public int versionCode = 0;
+        public long size;
+        public Drawable icon;
+    }
 }
