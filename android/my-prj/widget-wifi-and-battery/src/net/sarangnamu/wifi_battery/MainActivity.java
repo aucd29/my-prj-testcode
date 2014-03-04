@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity {
+    private static final String FONT_NAME = "Roboto-Light";
     private RelativeLayout main;
 
     @Override
@@ -33,7 +34,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         main = (RelativeLayout) findViewById(R.id.main);
-        FontLoader.getInstance(getApplicationContext()).applyChild("Roboto-Light", main);
+        FontLoader.getInstance(getApplicationContext()).applyChild(FONT_NAME, main);
 
         startService(new Intent(this, WifiBatteryService.class));
     }

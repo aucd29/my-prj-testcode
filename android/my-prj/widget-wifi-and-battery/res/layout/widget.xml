@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:gravity="center|center_vertical" >
 
     <ProgressBar
         android:id="@+id/prog"
         style="?android:attr/progressBarStyleLarge"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/progressSize"
+        android:layout_height="@dimen/progressSize"
         android:layout_gravity="center|center_vertical"
         android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/widgetLayout"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:layout_width="@dimen/widgetSize"
+        android:layout_height="@dimen/widgetSize"
         android:background="#14000000"
         android:orientation="vertical"
         android:gravity="center_vertical" >

@@ -41,10 +41,6 @@ public class WifiBatteryWidget extends AppWidgetProvider {
     public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         final int N = appWidgetIds.length;
 
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "WIFI AND BATTERY WIDGET START");
-        DLog.d(TAG, "===================================================================");
-
         for (int i = 0; i < N; i++) {
             final int appWidgetId = appWidgetIds[i];
             final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
@@ -86,6 +82,10 @@ public class WifiBatteryWidget extends AppWidgetProvider {
             views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
             views.setTextViewText(R.id.ip, context.getString(R.string.invalidIp));
             views.setViewVisibility(R.id.prog, View.GONE);
+
+            DLog.d(TAG, "===================================================================");
+            DLog.d(TAG, "WIFI DISCONNECTED");
+            DLog.d(TAG, "===================================================================");
         } else if (action.equals(TOGGLE_WIFI)) {
             if (changingWifi) {
                 return;
