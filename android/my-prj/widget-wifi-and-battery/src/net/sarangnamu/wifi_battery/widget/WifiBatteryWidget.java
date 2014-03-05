@@ -38,14 +38,39 @@ public class WifiBatteryWidget extends AppWidgetProvider {
     private Boolean changingWifi = false;
 
     @Override
+    public void onEnabled(Context context) {
+        super.onEnabled(context);
+
+        DLog.d(TAG, "on-enabled");
+
+        context.startService(new Intent(context, WifiBatteryService.class));
+
+        final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
+
+        if (BkWifiManager.getInstance(context).isEnabled()) {
+            views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOn));
+        } else {
+            views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
+        }
+
+        ComponentName watchWidget = new ComponentName(context, WifiBatteryWidget.class);
+        appWidgetManager.updateAppWidget(watchWidget, views);
+    }
+
+    @Override
     public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         final int N = appWidgetIds.length;
+
+        DLog.d(TAG, "on update");
 
         for (int i = 0; i < N; i++) {
             final int appWidgetId = appWidgetIds[i];
             final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
 
             views.setTextViewText(R.id.battery, battery);
+            views.setTextViewText(R.id.ip, BkWifiManager.getInstance(context).getIPAddr());
+
             views.setOnClickPendingIntent(R.id.widgetLayout, getPendingSelfIntent(context, TOGGLE_WIFI, appWidgetId));
         }
 
@@ -62,9 +87,19 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, final Intent intent) {
+        super.onReceive(context, intent);
+
         final String action = intent.getAction();
         final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
+
+        /*
+         * DLog.d(TAG,
+         * "==================================================================="
+         * ); DLog.d(TAG, "ON RECEIVE " + action); DLog.d(TAG,
+         * "==================================================================="
+         * );
+         */
 
         if (action.equals(WifiBatteryService.BATTERY_INFO)) {
             String batteryInfo = intent.getStringExtra(WifiBatteryService.BATTERY_INFO);
@@ -82,10 +117,6 @@ public class WifiBatteryWidget extends AppWidgetProvider {
             views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
             views.setTextViewText(R.id.ip, context.getString(R.string.invalidIp));
             views.setViewVisibility(R.id.prog, View.GONE);
-
-            DLog.d(TAG, "===================================================================");
-            DLog.d(TAG, "WIFI DISCONNECTED");
-            DLog.d(TAG, "===================================================================");
         } else if (action.equals(TOGGLE_WIFI)) {
             if (changingWifi) {
                 return;

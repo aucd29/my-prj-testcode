@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.wifi_battery.service;
 
+import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.common.network.BkWifiStateReceiver;
 import net.sarangnamu.common.network.BkWifiStateReceiver.IWiFIConnected;
@@ -29,6 +30,8 @@ import android.content.Intent;
 import android.os.IBinder;
 
 public class WifiBatteryService extends Service {
+    private static final String TAG = "WifiBatteryService";
+
     public static final String BATTERY_INFO = "BATTERY_INFO";
     public static final String ADD_CLICK_EVENT = "ADD_CLICK_EVENT";
     public static final String WIFI_CONNECTED = "WIFI_CONNECTED";
@@ -53,6 +56,9 @@ public class WifiBatteryService extends Service {
         sendIntentToWidget(ADD_CLICK_EVENT, null);
 
         // CHECK CURRENT WIFI STATUS
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "create widget");
+        DLog.d(TAG, "===================================================================");
         if (BkWifiManager.getInstance(this).isEnabled()) {
             sendIntentToWidget(WIFI_CONNECTED, BkWifiManager.getInstance(getApplicationContext()).getIPAddr());
         } else {
