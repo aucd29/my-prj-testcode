@@ -1,6 +1,6 @@
 /*
  * AppList.java
- * Copyright 2013 Burke.Choi All rights reserved.
+ * Copyright 2013 Burke Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,8 +28,6 @@ import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 
 public class AppList {
-    private static final String TAG = "AppList";
-
     private static AppList inst;
 
     public static AppList getInstance() {

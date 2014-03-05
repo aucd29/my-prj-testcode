@@ -61,6 +61,34 @@ public class BkFile {
     //
     // //////////////////////////////////////////////////////////////////////////////////
 
+    private static void copyStream(File fpDest, InputStream in, OutputStream out, FileCopyListener l) throws Exception {
+        byte[] buf = new byte[4096];
+        int len;
+
+        while ((len = in.read(buf)) > 0) {
+            if (l.isCancelled()) {
+                break;
+            }
+
+            out.write(buf, 0, len);
+            Thread.sleep(1);
+        }
+
+        out.flush();
+        in.close();
+        out.close();
+
+        if (l != null) {
+            if (l.isCancelled()) {
+                l.onCancelled();
+
+                return;
+            }
+
+            l.copyFile(fpDest.getAbsolutePath());
+        }
+    }
+
     public static void copyFileTo(File fpSrc, String destFullPathName) throws Exception {
         copyFileTo(fpSrc, destFullPathName, null);
     }
@@ -74,31 +102,11 @@ public class BkFile {
         InputStream in = new FileInputStream(fpSrc);
         OutputStream out = new FileOutputStream(fpDest);
 
-        // Copy the bits from instream to outstream
-        byte[] buf = new byte[4096];
-        int len;
-        while ((len = in.read(buf)) > 0) {
-            if (l.isCancelled()) {
-                break;
-            }
+        copyStream(fpDest, in, out, l);
+    }
 
-            out.write(buf, 0, len);
-            Thread.sleep(1);
-        }
-
-        out.flush();
-        in.close();
-        out.close();
-
-        if (l != null) {
-            if (l.isCancelled()) {
-                l.onCancelled();
-
-                return;
-            }
-
-            l.copyFile(fpDest.getAbsolutePath());
-        }
+    public static void copyFile(File fpSrc, String destPathName) throws Exception {
+        copyFile(fpSrc, destPathName, null);
     }
 
     public static void copyFile(File fpSrc, String destPathName, FileCopyListener l) throws Exception {
@@ -110,31 +118,7 @@ public class BkFile {
         InputStream in = new FileInputStream(fpSrc);
         OutputStream out = new FileOutputStream(fpDest);
 
-        // Copy the bits from instream to outstream
-        byte[] buf = new byte[4096];
-        int len;
-        while ((len = in.read(buf)) > 0) {
-            if (l.isCancelled()) {
-                break;
-            }
-
-            out.write(buf, 0, len);
-            Thread.sleep(1);
-        }
-
-        out.flush();
-        in.close();
-        out.close();
-
-        if (l != null) {
-            if (l.isCancelled()) {
-                l.onCancelled();
-
-                return;
-            }
-
-            l.copyFile(fpDest.getAbsolutePath());
-        }
+        copyStream(fpDest, in, out, l);
     }
 
     public static void copyDirectory(File srcPath, File destPath) throws Exception {
@@ -166,31 +150,7 @@ public class BkFile {
             InputStream in = new FileInputStream(srcPath);
             OutputStream out = new FileOutputStream(destPath);
 
-            // Copy the bits from instream to outstream
-            byte[] buf = new byte[4096];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                if (l.isCancelled()) {
-                    break;
-                }
-
-                out.write(buf, 0, len);
-                Thread.sleep(1);
-            }
-
-            out.flush();
-            in.close();
-            out.close();
-
-            if (l != null) {
-                if (l.isCancelled()) {
-                    l.onCancelled();
-
-                    return;
-                }
-
-                l.copyFile(srcPath.getAbsolutePath());
-            }
+            copyStream(srcPath, in, out, l);
         }
     }
 
@@ -216,7 +176,7 @@ public class BkFile {
             mkdirs(dest);
             src.renameTo(dest);
         } catch (Exception e) {
-            e.printStackTrace();
+            DLog.e(TAG, "moveTo", e);
             return false;
         }
 
@@ -246,7 +206,7 @@ public class BkFile {
 
             fp.delete();
         } catch (Exception e) {
-            e.printStackTrace();
+            DLog.e(TAG, "deleteAll", e);
         }
     }
 

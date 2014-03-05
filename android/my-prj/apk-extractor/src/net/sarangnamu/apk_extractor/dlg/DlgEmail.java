@@ -1,6 +1,6 @@
 /*
  * DlgEmail.java
- * Copyright 2013 Burke.Choi All rights reserved.
+ * Copyright 2013 Burke Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,9 +41,9 @@ public class DlgEmail extends DlgBase {
 
     @Override
     protected void initLayout() {
-        btn     = (Button) findViewById(R.id.btn);
-        edit    = (EditText) findViewById(R.id.edit);
-        layout  = (LinearLayout) findViewById(R.id.list);
+        btn = (Button) findViewById(R.id.btn);
+        edit = (EditText) findViewById(R.id.edit);
+        layout = (LinearLayout) findViewById(R.id.list);
 
         edit.setTypeface(FontLoader.getInstance(getContext()).getFont("Roboto-Light"));
         btn.setTypeface(FontLoader.getInstance(getContext()).getFont("Roboto-Light"));
@@ -52,7 +52,7 @@ public class DlgEmail extends DlgBase {
             public void onClick(View v) {
                 String email = edit.getText().toString();
                 if (email == null || email.length() == 0) {
-                    return ;
+                    return;
                 }
 
                 Cfg.setEmail(getContext(), email);
