@@ -17,22 +17,18 @@
  */
 package net.sarangnamu.wifi_battery.service;
 
-import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.common.network.BkWifiStateReceiver;
 import net.sarangnamu.common.network.BkWifiStateReceiver.IWiFIConnected;
 import net.sarangnamu.common.network.BkWifiStateReceiver.IWiFiDisconnecting;
+import net.sarangnamu.wifi_battery.BatteryInfo;
+import net.sarangnamu.wifi_battery.BatteryInfo.BatteryInfoListener;
 import net.sarangnamu.wifi_battery.widget.WifiBatteryWidget;
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.IBinder;
 
 public class WifiBatteryService extends Service {
-    private static final String TAG = "WifiBatteryService";
-
     public static final String BATTERY_INFO = "BATTERY_INFO";
     public static final String ADD_CLICK_EVENT = "ADD_CLICK_EVENT";
     public static final String WIFI_CONNECTED = "WIFI_CONNECTED";
@@ -42,16 +38,8 @@ public class WifiBatteryService extends Service {
     public static final String LEVEL = "level";
     public static final String SCALE = "scale";
 
-    private String battery;
-    private Intent batteryStatus;
     private BkWifiStateReceiver wifiReceiver;
-
-    BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            getBatteryStatus(context);
-        }
-    };
+    private BatteryInfo batteryInfo;
 
     @Override
     public IBinder onBind(Intent arg0) {
@@ -71,14 +59,43 @@ public class WifiBatteryService extends Service {
             sendIntentToWidget(WIFI_DISCONNECTED, null);
         }
 
-        // REGISTRATION A BATTERY RECEIVER
-        registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        initBatteryInfo();
+        initWifiStatus();
+    }
 
+    @Override
+    public void onDestroy() {
+        if (batteryInfo != null) {
+            batteryInfo.unregister(this);
+        }
+
+        if (wifiReceiver != null) {
+            wifiReceiver.clearListener();
+            wifiReceiver.unregister(this);
+        }
+
+        super.onDestroy();
+    }
+
+    private void initBatteryInfo() {
+        if (batteryInfo == null) {
+            batteryInfo = new BatteryInfo();
+        }
+
+        batteryInfo.register(this);
+        batteryInfo.setListener(new BatteryInfoListener() {
+            @Override
+            public void onChangeBattery(int battery) {
+                sendIntentToWidget(BATTERY_INFO, "Battery : " + battery + "%");
+            }
+        });
+    }
+
+    private void initWifiStatus() {
         if (wifiReceiver == null) {
             wifiReceiver = new BkWifiStateReceiver();
         }
 
-        // REGISTRATION A WIFI STATUS RECEIVER
         wifiReceiver.register(this, new IWiFIConnected() {
             @Override
             public void onWiFiConnected() {
@@ -92,36 +109,6 @@ public class WifiBatteryService extends Service {
                 sendIntentToWidget(WIFI_DISCONNECTED, null);
             }
         });
-    }
-
-    @Override
-    public void onDestroy() {
-        unregisterReceiver(batteryReceiver);
-        if (wifiReceiver != null) {
-            wifiReceiver.clearListener();
-            wifiReceiver.unregister(this);
-        }
-
-        super.onDestroy();
-    }
-
-    private void getBatteryStatus(Context context) {
-        batteryStatus = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-
-        if (batteryStatus == null) {
-            DLog.e(TAG, "batteryStatus == null");
-            return;
-        }
-
-        int level, scale;
-        level = batteryStatus.getIntExtra(LEVEL, -1);
-        scale = batteryStatus.getIntExtra(SCALE, -1);
-
-        String tmpBattery = String.format("Battery : %d%% ", (level * 100 / scale));
-        if (!tmpBattery.equals(battery)) {
-            battery = tmpBattery;
-            sendIntentToWidget(BATTERY_INFO, battery);
-        }
     }
 
     private void sendIntentToWidget(final String action, final String extraValue) {
