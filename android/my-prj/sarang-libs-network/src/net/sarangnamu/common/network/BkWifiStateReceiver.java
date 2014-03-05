@@ -41,15 +41,12 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
         public void onWiFiDisconnecting();
     }
 
-    /**
-     * Receive WiFi status
-     */
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(WifiManager.WIFI_STATE_CHANGED_ACTION)) {
             int status = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_DISABLED);
 
-            if (status == WifiManager.WIFI_STATE_DISABLING) {
+            if (status == WifiManager.WIFI_STATE_DISABLED) {
                 sendDisconnecting();
             } else if (status == WifiManager.WIFI_STATE_ENABLED) {
                 sendConnected(context);
@@ -57,9 +54,6 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
         }
     }
 
-    /**
-     * Add listener
-     */
     public void addListener(IWiFiDisconnecting status) {
         if (status == null) {
             DLog.e(TAG, "addListener status null");
@@ -71,18 +65,12 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
         }
     }
 
-    /**
-     * Clear listener
-     */
     public void clearListener() {
         synchronized (listenerList) {
             listenerList.clear();
         }
     }
 
-    /**
-     * Register receiver
-     */
     public void register(Context context, IWiFIConnected listener) {
         if (listener == null) {
             DLog.e(TAG, "register listenr null");
@@ -95,9 +83,6 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
         context.registerReceiver(this, filter);
     }
 
-    /**
-     * Unregister receiver
-     */
     public void unregister(Context context) {
         if (context == null) {
             DLog.e(TAG, "unregister context null");
@@ -108,9 +93,6 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
         context.unregisterReceiver(this);
     }
 
-    /**
-     * Send connection message to listener
-     */
     private synchronized void sendConnected(final Context context) {
         if (thread == null) {
             thread = new Thread(new Runnable() {
@@ -138,7 +120,7 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
     private synchronized void sendDisconnecting() {
         killIpCheckThread();
 
-        DLog.d(TAG, "disconnecting size : " + listenerList.size());
+        // DLog.d(TAG, "disconnecting size : " + listenerList.size());
 
         synchronized (listenerList) {
             for (IWiFiDisconnecting l : listenerList) {
