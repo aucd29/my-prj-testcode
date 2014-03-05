@@ -41,7 +41,7 @@ import android.widget.EditText;
     BkCfg.hideKeyboard(context);
  * </pre>}
  * 
- * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class BkCfg {
     private static final String TAG = "BkCfg";
@@ -66,7 +66,7 @@ public class BkCfg {
     public static void showKeyboard(final View view) {
         if (view == null) {
             DLog.e(TAG, "showKeyboard view == null");
-            return ;
+            return;
         }
 
         view.postDelayed(new Runnable() {
@@ -78,27 +78,23 @@ public class BkCfg {
                 imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
             }
         }, 400);
-
-        //view.requestFocus();
-        //        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        //        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
     }
 
     public static void hideKeyboard(View view) {
         if (view == null) {
             DLog.e(TAG, "hideKeyboard view == null");
-            return ;
+            return;
         }
 
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-        //imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
+        // imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        // imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     public static void forceHideKeyboard(Window window) {
         if (window == null) {
-            return ;
+            return;
         }
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);

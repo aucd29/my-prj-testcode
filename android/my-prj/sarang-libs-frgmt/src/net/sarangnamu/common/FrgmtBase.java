@@ -29,7 +29,7 @@ import android.view.ViewGroup;
 
  * </pre>}
  * 
- * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public abstract class FrgmtBase extends Fragment {
     protected ViewGroup base;

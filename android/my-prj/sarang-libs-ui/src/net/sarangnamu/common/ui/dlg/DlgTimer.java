@@ -28,7 +28,7 @@ import android.widget.TextView;
 
  * </pre>}
  * 
- * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class DlgTimer extends DlgBtnBase {
     private int time = 1000, layoutId;

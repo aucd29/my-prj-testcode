@@ -26,7 +26,7 @@ import android.os.Message;
 
  * </pre>}
  * 
- * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public abstract class BkHandler extends Handler {
     protected static final int SUCCESS    = 0;

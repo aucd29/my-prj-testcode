@@ -36,7 +36,7 @@ import net.sarangnamu.common.DLog;
     dn.downloadThread("http://", "/mnt/sdcard/down", null);
  * </pre>}
  * 
- * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class BkDownloader extends BkHandler {
     private static final String TAG = "BkDownloader";

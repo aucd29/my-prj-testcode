@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
  * </pre>}
  * 
- * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class ParameterEncoder {
     public String encode = "UTF-8";

@@ -27,18 +27,18 @@ import android.view.View;
     Fade.start(hideView, showView, null);
  * </pre>}
  * 
- * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class Fade {
-    private static final String TAG = "Fade";
+    private static final String ALPHA = "alpha";
 
     public static void start(View hideView, View showView, AnimatorListener l) {
         if (hideView == null || showView == null) {
-            return ;
+            return;
         }
 
-        ObjectAnimator.ofFloat(hideView, "alpha", 0.25f, 1, 1).start();
-        ObjectAnimator obj = ObjectAnimator.ofFloat(showView, "alpha", 1f, 1, 1);
+        ObjectAnimator.ofFloat(hideView, ALPHA, 0.25f, 1, 1).start();
+        ObjectAnimator obj = ObjectAnimator.ofFloat(showView, ALPHA, 1f, 1, 1);
 
         if (l != null) {
             obj.addListener(l);
@@ -47,4 +47,3 @@ public class Fade {
         obj.start();
     }
 }
-

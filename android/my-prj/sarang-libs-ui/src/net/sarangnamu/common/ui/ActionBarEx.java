@@ -28,7 +28,7 @@ import android.view.View;
     actionBar.init(R.layout.actionbar);
  * </pre>}
  * 
- * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class ActionBarEx {
     protected int displayOpt = ActionBar.DISPLAY_SHOW_CUSTOM;

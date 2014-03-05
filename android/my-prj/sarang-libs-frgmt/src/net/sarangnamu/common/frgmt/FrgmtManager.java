@@ -54,7 +54,7 @@ import android.support.v4.app.FragmentTransaction;
     nv.replace(OtherFrgmt.class);
  * </pre>}
  * 
- * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public abstract class FrgmtManager {
     private static final String TAG = "FrgmtManager";

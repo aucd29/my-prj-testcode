@@ -29,7 +29,7 @@ import android.widget.ListView;
 
  * </pre>}
  * 
- * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public abstract class ListSwipeListener extends SwipeListenerBase {
     private ListView list;

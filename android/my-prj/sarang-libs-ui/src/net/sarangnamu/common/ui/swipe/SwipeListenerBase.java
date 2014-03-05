@@ -28,7 +28,7 @@ import android.view.View;
 
  * </pre>}
  * 
- * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public abstract class SwipeListenerBase implements GestureDetector.OnGestureListener, View.OnTouchListener {
     public static int SWIPE_THRESHOLD = 300;

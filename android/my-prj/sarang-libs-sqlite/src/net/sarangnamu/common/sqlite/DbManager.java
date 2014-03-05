@@ -29,7 +29,7 @@ import android.database.sqlite.SQLiteDatabase;
 
  * </pre>}
  * 
- * @author <a href="mailto:aucd29@gmail.com.com">Burke Choi</a>
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class DbManager {
     private static final String TAG = "DbManager";
