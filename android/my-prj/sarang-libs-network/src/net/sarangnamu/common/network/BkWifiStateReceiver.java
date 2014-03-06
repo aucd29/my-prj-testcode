@@ -1,5 +1,5 @@
 /*
- * BkWifi.java
+ * BkWifiStateReceiver.java
  * Copyright 2014 Burke Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
@@ -120,19 +120,11 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
     private synchronized void sendDisconnecting() {
         killIpCheckThread();
 
-        // DLog.d(TAG, "disconnecting size : " + listenerList.size());
-
         synchronized (listenerList) {
             for (IWiFiDisconnecting l : listenerList) {
                 l.onWiFiDisconnecting();
             }
-
-            // for (int i = 0; i < listenerList.size(); ++i) {
-            // listenerList.remove(0);
-            // }
         }
-
-        // clearListener();
     }
 
     private void killIpCheckThread() {

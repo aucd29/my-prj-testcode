@@ -17,7 +17,6 @@
  */
 package net.sarangnamu.wifi_battery.widget;
 
-import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.wifi_battery.R;
 import net.sarangnamu.wifi_battery.service.WifiBatteryService;
@@ -40,8 +39,6 @@ public class WifiBatteryWidget extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-
-        DLog.d(TAG, "on-enabled");
 
         context.startService(new Intent(context, WifiBatteryService.class));
 
@@ -69,7 +66,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
     public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         final int N = appWidgetIds.length;
 
-        DLog.d(TAG, "on update");
+        context.startService(new Intent(context, WifiBatteryService.class));
 
         for (int i = 0; i < N; i++) {
             final int appWidgetId = appWidgetIds[i];
@@ -77,6 +74,12 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
             views.setTextViewText(R.id.battery, battery);
             views.setTextViewText(R.id.ip, BkWifiManager.getInstance(context).getIPAddr());
+
+            if (BkWifiManager.getInstance(context).isEnabled()) {
+                views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOn));
+            } else {
+                views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
+            }
 
             views.setOnClickPendingIntent(R.id.widgetLayout, getPendingSelfIntent(context, TOGGLE_WIFI, appWidgetId));
         }
@@ -99,14 +102,6 @@ public class WifiBatteryWidget extends AppWidgetProvider {
         final String action = intent.getAction();
         final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
-
-        /*
-         * DLog.d(TAG,
-         * "==================================================================="
-         * ); DLog.d(TAG, "ON RECEIVE " + action); DLog.d(TAG,
-         * "==================================================================="
-         * );
-         */
 
         if (action.equals(WifiBatteryService.BATTERY_INFO)) {
             String batteryInfo = intent.getStringExtra(WifiBatteryService.BATTERY_INFO);

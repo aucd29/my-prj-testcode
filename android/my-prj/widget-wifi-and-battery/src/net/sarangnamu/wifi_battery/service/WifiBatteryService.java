@@ -59,6 +59,7 @@ public class WifiBatteryService extends Service {
         DLog.d(TAG, "===================================================================");
         DLog.d(TAG, "create widget");
         DLog.d(TAG, "===================================================================");
+
         if (BkWifiManager.getInstance(this).isEnabled()) {
             sendIntentToWidget(WIFI_CONNECTED, BkWifiManager.getInstance(getApplicationContext()).getIPAddr());
         } else {
@@ -105,6 +106,7 @@ public class WifiBatteryService extends Service {
         wifiReceiver.register(this, new IWiFIConnected() {
             @Override
             public void onWiFiConnected() {
+                DLog.d(TAG, "on wifi");
                 sendIntentToWidget(WIFI_CONNECTED, BkWifiManager.getInstance(getApplicationContext()).getIPAddr());
             }
         });
@@ -112,6 +114,7 @@ public class WifiBatteryService extends Service {
         wifiReceiver.addListener(new IWiFiDisconnecting() {
             @Override
             public void onWiFiDisconnecting() {
+                DLog.d(TAG, "off wifi");
                 sendIntentToWidget(WIFI_DISCONNECTED, null);
             }
         });
