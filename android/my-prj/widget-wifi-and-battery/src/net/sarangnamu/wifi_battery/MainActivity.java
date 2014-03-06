@@ -17,10 +17,7 @@
  */
 package net.sarangnamu.wifi_battery;
 
-import net.sarangnamu.common.fonts.FontLoader;
-import net.sarangnamu.wifi_battery.service.WifiBatteryService;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
 
@@ -33,9 +30,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        main = (RelativeLayout) findViewById(R.id.main);
-        FontLoader.getInstance(getApplicationContext()).applyChild(FONT_NAME, main);
-
-        startService(new Intent(this, WifiBatteryService.class));
+        /*
+         * main = (RelativeLayout) findViewById(R.id.main);
+         * FontLoader.getInstance(getApplicationContext()).applyChild(FONT_NAME,
+         * main);
+         * 
+         * startService(new Intent(this, WifiBatteryService.class));
+         */
     }
 }
