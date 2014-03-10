@@ -68,7 +68,7 @@ import android.widget.TextView.OnEditorActionListener;
 public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
 
-    private static final long SHOW_PROGRESS = 10000000;
+    private static final long SHOW_PROGRESS = 2000000;
     private static final int SHOW_POPUP = 1;
     private static final int SLIDING_MARGIN = 130;
 
@@ -95,11 +95,10 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             switch (msg.what) {
             case SHOW_POPUP:
                 String fileName = (String) msg.obj;
-                String dlgMsg = String.format("<b>%s</b><br/>%s", getString(R.string.extractOk), fileName);
 
-                DlgTimer dlg = new DlgTimer(MainActivity.this, R.layout.dlg_timer);
-                dlg.setMessage(Html.fromHtml(dlgMsg));
-                dlg.setTime(2000);
+                DlgTimer dlg = new DlgTimer(MainActivity.this, R.layout.dlg_timer_extract_file);
+                dlg.setMessage(fileName);
+                dlg.setTime(1500);
                 dlg.show();
                 dlg.setTransparentBaseLayout();
                 break;
