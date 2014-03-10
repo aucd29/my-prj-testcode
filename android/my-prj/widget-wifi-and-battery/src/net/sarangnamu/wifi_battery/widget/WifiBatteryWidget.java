@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.wifi_battery.widget;
 
+import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.wifi_battery.R;
 import net.sarangnamu.wifi_battery.service.WifiBatteryService;
@@ -38,6 +39,8 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
+        DLog.d(TAG, "on enabled");
+
         super.onEnabled(context);
 
         context.startService(new Intent(context, WifiBatteryService.class));
@@ -57,6 +60,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
     @Override
     public void onDisabled(Context context) {
+        DLog.d(TAG, "on disabled");
         context.stopService(new Intent(context, WifiBatteryService.class));
 
         super.onDisabled(context);
@@ -64,6 +68,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        DLog.d(TAG, "on update");
         final int N = appWidgetIds.length;
 
         context.startService(new Intent(context, WifiBatteryService.class));
