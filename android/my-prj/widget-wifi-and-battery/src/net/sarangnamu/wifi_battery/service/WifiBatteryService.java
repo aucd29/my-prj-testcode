@@ -84,6 +84,11 @@ public class WifiBatteryService extends Service {
         super.onDestroy();
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return START_STICKY;
+    }
+
     private void initBatteryInfo() {
         if (batteryInfo == null) {
             batteryInfo = new BatteryInfo();
