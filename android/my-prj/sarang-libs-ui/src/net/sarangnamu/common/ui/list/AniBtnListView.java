@@ -173,7 +173,7 @@ public class AniBtnListView extends LockListView {
         final ViewGroup btnLayout = (ViewGroup) tempView.findViewById(btnLayoutId);
 
         // resize button height
-        ViewGroup.LayoutParams lp = btnLayout.getLayoutParams();
+        //ViewGroup.LayoutParams lp = btnLayout.getLayoutParams();
         //lp.height = view.getHeight();
         //btnLayout.setLayoutParams(lp);
 

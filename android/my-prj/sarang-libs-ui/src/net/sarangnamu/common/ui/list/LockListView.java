@@ -47,7 +47,7 @@ import android.widget.ListView;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class LockListView extends ListView {
-    private static final String TAG = "LockListView";
+    //    private static final String TAG = "LockListView";
     protected boolean lockScroll;
     private TouchUpListener listener;
 

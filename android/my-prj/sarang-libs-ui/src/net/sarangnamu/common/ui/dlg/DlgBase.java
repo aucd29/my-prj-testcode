@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -125,6 +126,10 @@ public abstract class DlgBase extends Dialog {
         lp.gravity = Gravity.TOP | Gravity.LEFT;
         lp.x = left;
         lp.y = v.getHeight() + v.getHeight() + bottom;
+    }
+
+    protected void setFullscreen() {
+        getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

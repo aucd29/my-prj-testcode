@@ -22,8 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 
 public abstract class ImmortalReceiver extends BroadcastReceiver {
-    private static final String TAG = "ImmortalReceiver";
-
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(getActionString())) {

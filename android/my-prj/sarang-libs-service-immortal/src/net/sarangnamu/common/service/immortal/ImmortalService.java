@@ -25,8 +25,6 @@ import android.os.IBinder;
 import android.os.SystemClock;
 
 public abstract class ImmortalService extends Service {
-    private static final String TAG = "ImmortalService";
-
     @Override
     public IBinder onBind(Intent intent) {
         return null;
