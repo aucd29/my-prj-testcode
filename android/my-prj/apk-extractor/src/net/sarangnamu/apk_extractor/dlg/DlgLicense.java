@@ -38,7 +38,7 @@ public class DlgLicense extends DlgBase {
     @Override
     protected void initLayout() {
         setFullscreen();
-
+        
         web = (WebView) findViewById(R.id.web);
         web.setWebViewClient(new WebViewClient() {
             @Override
