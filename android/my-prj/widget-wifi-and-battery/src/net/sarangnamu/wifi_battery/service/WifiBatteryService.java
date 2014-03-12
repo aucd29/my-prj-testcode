@@ -32,6 +32,9 @@ import android.os.IBinder;
 public class WifiBatteryService extends Service {
     private static final String TAG = "WifiBatteryService";
 
+    private BkWifiStateReceiver wifiReceiver;
+    private BatteryInfo batteryInfo;
+
     public static final String BATTERY_INFO = "BATTERY_INFO";
     public static final String ADD_CLICK_EVENT = "ADD_CLICK_EVENT";
     public static final String WIFI_CONNECTED = "WIFI_CONNECTED";
@@ -40,9 +43,6 @@ public class WifiBatteryService extends Service {
 
     public static final String LEVEL = "level";
     public static final String SCALE = "scale";
-
-    private BkWifiStateReceiver wifiReceiver;
-    private BatteryInfo batteryInfo;
 
     @Override
     public IBinder onBind(Intent arg0) {
@@ -54,11 +54,6 @@ public class WifiBatteryService extends Service {
         super.onCreate();
 
         sendIntentToWidget(ADD_CLICK_EVENT, null);
-
-        // CHECK CURRENT WIFI STATUS
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "create widget");
-        DLog.d(TAG, "===================================================================");
 
         if (BkWifiManager.getInstance(this).isEnabled()) {
             sendIntentToWidget(WIFI_CONNECTED, BkWifiManager.getInstance(getApplicationContext()).getIPAddr());
@@ -80,6 +75,10 @@ public class WifiBatteryService extends Service {
             wifiReceiver.clearListener();
             wifiReceiver.unregister(this);
         }
+
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "DESTROY WIFI AND BATTERY SERVICE");
+        DLog.d(TAG, "===================================================================");
 
         super.onDestroy();
     }

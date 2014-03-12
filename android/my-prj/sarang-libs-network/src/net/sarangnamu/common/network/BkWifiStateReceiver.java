@@ -17,8 +17,6 @@
  */
 package net.sarangnamu.common.network;
 
-import java.util.ArrayList;
-
 import net.sarangnamu.common.DLog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,20 +24,20 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 
+/**
+ * <pre>
+ * 
+ * </pre>
+ * 
+ * @author aucd29@gmail.com
+ * 
+ */
 public class BkWifiStateReceiver extends BroadcastReceiver {
     private static final String TAG = "BkWifiStateReceiver";
 
-    private final ArrayList<IWiFiDisconnecting> listenerList = new ArrayList<IWiFiDisconnecting>();
-    private IWiFIConnected l = null;
     private Thread thread = null;
-
-    public interface IWiFIConnected {
-        public void onWiFiConnected();
-    }
-
-    public interface IWiFiDisconnecting {
-        public void onWiFiDisconnecting();
-    }
+    private WiFIConnectedListener listenerConnected;
+    private WiFiDisconnectedListener listenerDisconnected;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -47,37 +45,21 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
             int status = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_DISABLED);
 
             if (status == WifiManager.WIFI_STATE_DISABLED) {
-                sendDisconnecting();
+                sendDisconnected();
             } else if (status == WifiManager.WIFI_STATE_ENABLED) {
                 sendConnected(context);
             }
         }
     }
 
-    public void addListener(IWiFiDisconnecting status) {
-        if (status == null) {
-            DLog.e(TAG, "addListener status null");
-            return;
-        }
-
-        synchronized (listenerList) {
-            listenerList.add(status);
-        }
-    }
-
-    public void clearListener() {
-        synchronized (listenerList) {
-            listenerList.clear();
-        }
-    }
-
-    public void register(Context context, IWiFIConnected listener) {
-        if (listener == null) {
+    public void register(Context context, WiFIConnectedListener listenerConntected, WiFiDisconnectedListener listenerDisconnected) {
+        if (listenerConntected == null) {
             DLog.e(TAG, "register listenr null");
             return;
         }
 
-        l = listener;
+        this.listenerConnected = listenerConntected;
+        this.listenerDisconnected = listenerDisconnected;
 
         IntentFilter filter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
         context.registerReceiver(this, filter);
@@ -89,7 +71,7 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
             return;
         }
 
-        sendDisconnecting();
+        sendDisconnected();
         context.unregisterReceiver(this);
     }
 
@@ -104,8 +86,14 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
 
                                 Thread.sleep(500);
                             } else {
-                                l.onWiFiConnected();
+                                if (listenerConnected != null) {
+                                    listenerConnected.onWiFiConnected();
+                                } else {
+                                    DLog.e(TAG, "sendConnected listenerConnected is null");
+                                }
+
                                 thread = null;
+
                                 break;
                             }
                         }
@@ -117,13 +105,13 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
         }
     }
 
-    private synchronized void sendDisconnecting() {
+    private synchronized void sendDisconnected() {
         killIpCheckThread();
 
-        synchronized (listenerList) {
-            for (IWiFiDisconnecting l : listenerList) {
-                l.onWiFiDisconnecting();
-            }
+        if (listenerDisconnected != null) {
+            listenerDisconnected.onWiFiDisconnected();
+        } else {
+            DLog.e(TAG, "sendDisconnected listenerDisconnected is null");
         }
     }
 
@@ -132,5 +120,19 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
             thread.interrupt();
             thread = null;
         }
+    }
+
+    // //////////////////////////////////////////////////////////////////////////////////
+    //
+    // LISTENER
+    //
+    // //////////////////////////////////////////////////////////////////////////////////
+
+    public interface WiFIConnectedListener {
+        public void onWiFiConnected();
+    }
+
+    public interface WiFiDisconnectedListener {
+        public void onWiFiDisconnected();
     }
 }

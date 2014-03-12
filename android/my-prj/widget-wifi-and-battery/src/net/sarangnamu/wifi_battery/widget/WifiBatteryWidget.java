@@ -39,11 +39,11 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
-        DLog.d(TAG, "on enabled");
-
         super.onEnabled(context);
 
-        context.startService(new Intent(context, WifiBatteryService.class));
+        DLog.d(TAG, "on enabled");
+
+        startService(context);
 
         final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
@@ -71,7 +71,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
         DLog.d(TAG, "on update");
         final int N = appWidgetIds.length;
 
-        context.startService(new Intent(context, WifiBatteryService.class));
+        startService(context);
 
         for (int i = 0; i < N; i++) {
             final int appWidgetId = appWidgetIds[i];
@@ -92,14 +92,6 @@ public class WifiBatteryWidget extends AppWidgetProvider {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
-    protected PendingIntent getPendingSelfIntent(Context context, String action, int id) {
-        Intent intent = new Intent(context, getClass());
-        intent.setAction(action);
-        intent.putExtra("id", id);
-
-        return PendingIntent.getBroadcast(context, 0, intent, 0);
-    }
-
     @Override
     public void onReceive(Context context, final Intent intent) {
         super.onReceive(context, intent);
@@ -112,6 +104,8 @@ public class WifiBatteryWidget extends AppWidgetProvider {
             String batteryInfo = intent.getStringExtra(WifiBatteryService.BATTERY_INFO);
             views.setTextViewText(R.id.battery, batteryInfo);
         } else if (action.equals(WifiBatteryService.WIFI_CONNECTED)) {
+            startService(context);
+
             String ip = intent.getStringExtra(action);
 
             views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOn));
@@ -121,6 +115,8 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
             views.setViewVisibility(R.id.prog, View.GONE);
         } else if (action.equals(WifiBatteryService.WIFI_DISCONNECTED)) {
+            startService(context);
+
             views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
             views.setTextViewText(R.id.ip, context.getString(R.string.invalidIp));
             views.setViewVisibility(R.id.prog, View.GONE);
@@ -152,5 +148,17 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
         ComponentName watchWidget = new ComponentName(context, WifiBatteryWidget.class);
         appWidgetManager.updateAppWidget(watchWidget, views);
+    }
+
+    private PendingIntent getPendingSelfIntent(Context context, String action, int id) {
+        Intent intent = new Intent(context, getClass());
+        intent.setAction(action);
+        intent.putExtra("id", id);
+
+        return PendingIntent.getBroadcast(context, 0, intent, 0);
+    }
+
+    private void startService(Context context) {
+        context.startService(new Intent(context, WifiBatteryService.class));
     }
 }
