@@ -45,13 +45,15 @@ public class BatteryInfo extends BroadcastReceiver {
         }
     }
 
-    public void register(Context context) {
+    public void register(Context context, BatteryInfoListener l) {
         if (context == null) {
             DLog.e(TAG, "register");
             return;
         }
 
-        context.registerReceiver(this, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        this.l = l;
+        context.registerReceiver(this, new IntentFilter(
+                Intent.ACTION_BATTERY_CHANGED));
     }
 
     public void unregister(Context context) {
@@ -61,10 +63,6 @@ public class BatteryInfo extends BroadcastReceiver {
         }
 
         context.unregisterReceiver(this);
-    }
-
-    public void setListener(BatteryInfoListener l) {
-        this.l = l;
     }
 
     // //////////////////////////////////////////////////////////////////////////////////

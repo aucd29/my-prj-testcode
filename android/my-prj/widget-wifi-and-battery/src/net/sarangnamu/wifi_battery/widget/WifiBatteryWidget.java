@@ -1,6 +1,6 @@
 /*
  * WifiBatteryWidget.java
- * Copyright 2013 Burke.Choi All rights reserved.
+ * Copyright 2014 Burke.Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,6 @@
  */
 package net.sarangnamu.wifi_battery.widget;
 
-import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.wifi_battery.R;
 import net.sarangnamu.wifi_battery.service.WifiBatteryService;
@@ -31,7 +30,6 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 public class WifiBatteryWidget extends AppWidgetProvider {
-    private static final String TAG = "WifiBatteryWidget";
     private static final String TOGGLE_WIFI = "toggleWifi";
 
     private String battery;
@@ -40,8 +38,6 @@ public class WifiBatteryWidget extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-
-        DLog.d(TAG, "on enabled");
 
         startService(context);
 
@@ -60,7 +56,6 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
     @Override
     public void onDisabled(Context context) {
-        DLog.d(TAG, "on disabled");
         context.stopService(new Intent(context, WifiBatteryService.class));
 
         super.onDisabled(context);
@@ -68,7 +63,6 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        DLog.d(TAG, "on update");
         final int N = appWidgetIds.length;
 
         startService(context);
@@ -104,8 +98,6 @@ public class WifiBatteryWidget extends AppWidgetProvider {
             String batteryInfo = intent.getStringExtra(WifiBatteryService.BATTERY_INFO);
             views.setTextViewText(R.id.battery, batteryInfo);
         } else if (action.equals(WifiBatteryService.WIFI_CONNECTED)) {
-            startService(context);
-
             String ip = intent.getStringExtra(action);
 
             views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOn));
@@ -115,8 +107,6 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
             views.setViewVisibility(R.id.prog, View.GONE);
         } else if (action.equals(WifiBatteryService.WIFI_DISCONNECTED)) {
-            startService(context);
-
             views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
             views.setTextViewText(R.id.ip, context.getString(R.string.invalidIp));
             views.setViewVisibility(R.id.prog, View.GONE);

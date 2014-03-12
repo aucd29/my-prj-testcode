@@ -29,8 +29,6 @@ import android.net.wifi.WifiManager;
  * 
  * </pre>
  * 
- * @author aucd29@gmail.com
- * 
  */
 public class BkWifiStateReceiver extends BroadcastReceiver {
     private static final String TAG = "BkWifiStateReceiver";
@@ -73,6 +71,9 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
 
         sendDisconnected();
         context.unregisterReceiver(this);
+
+        this.listenerConnected = null;
+        this.listenerDisconnected = null;
     }
 
     private synchronized void sendConnected(final Context context) {
@@ -82,7 +83,8 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
                 public void run() {
                     try {
                         while (true) {
-                            if (BkWifiManager.getInstance(context).getIPAddr().equals("0.0.0.0") || BkWifiManager.getInstance(context).getIPAddr() == "") {
+                            if (BkWifiManager.getInstance(context).getIPAddr().equals("0.0.0.0") ||
+                                    BkWifiManager.getInstance(context).getIPAddr() == "") {
 
                                 Thread.sleep(500);
                             } else {

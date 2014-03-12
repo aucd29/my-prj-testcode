@@ -20,8 +20,8 @@ package net.sarangnamu.wifi_battery.service;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.common.network.BkWifiStateReceiver;
-import net.sarangnamu.common.network.BkWifiStateReceiver.IWiFIConnected;
-import net.sarangnamu.common.network.BkWifiStateReceiver.IWiFiDisconnecting;
+import net.sarangnamu.common.network.BkWifiStateReceiver.WiFIConnectedListener;
+import net.sarangnamu.common.network.BkWifiStateReceiver.WiFiDisconnectedListener;
 import net.sarangnamu.wifi_battery.BatteryInfo;
 import net.sarangnamu.wifi_battery.BatteryInfo.BatteryInfoListener;
 import net.sarangnamu.wifi_battery.widget.WifiBatteryWidget;
@@ -72,7 +72,6 @@ public class WifiBatteryService extends Service {
         }
 
         if (wifiReceiver != null) {
-            wifiReceiver.clearListener();
             wifiReceiver.unregister(this);
         }
 
@@ -93,8 +92,7 @@ public class WifiBatteryService extends Service {
             batteryInfo = new BatteryInfo();
         }
 
-        batteryInfo.register(this);
-        batteryInfo.setListener(new BatteryInfoListener() {
+        batteryInfo.register(this, new BatteryInfoListener() {
             @Override
             public void onChangeBattery(int battery) {
                 sendIntentToWidget(BATTERY_INFO, "Battery : " + battery + "%");
@@ -107,16 +105,14 @@ public class WifiBatteryService extends Service {
             wifiReceiver = new BkWifiStateReceiver();
         }
 
-        wifiReceiver.register(this, new IWiFIConnected() {
+        wifiReceiver.register(this, new WiFIConnectedListener() {
             @Override
             public void onWiFiConnected() {
                 sendIntentToWidget(WIFI_CONNECTED, BkWifiManager.getInstance(getApplicationContext()).getIPAddr());
             }
-        });
-
-        wifiReceiver.addListener(new IWiFiDisconnecting() {
+        }, new WiFiDisconnectedListener() {
             @Override
-            public void onWiFiDisconnecting() {
+            public void onWiFiDisconnected() {
                 sendIntentToWidget(WIFI_DISCONNECTED, null);
             }
         });
