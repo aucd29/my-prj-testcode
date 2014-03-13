@@ -34,6 +34,8 @@ public abstract class SubBaseFrgmt extends FrgmtBase {
 
     @Override
     protected void initLayout() {
+        base.setClickable(true);
+
         add      = (Button) base.findViewById(R.id.add);
         title    = (TextView) base.findViewById(R.id.title);
         titleBar = (RelativeLayout) base.findViewById(R.id.titleBar);

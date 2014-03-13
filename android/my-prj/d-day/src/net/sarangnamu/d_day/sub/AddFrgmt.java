@@ -85,7 +85,6 @@ public class AddFrgmt extends SubBaseFrgmt {
                         calendar = Calendar.getInstance();
                         calendar.set(year, month - 1, day);
 
-                        //dateTime = new Date(year-1900, month-1, day);
                         eventDate.setText(df.format(calendar.getTime()));
                         eventDate.setTextColor(0xff000000);
                     }
