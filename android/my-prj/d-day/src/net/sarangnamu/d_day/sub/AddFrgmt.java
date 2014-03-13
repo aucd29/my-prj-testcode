@@ -18,7 +18,7 @@
 package net.sarangnamu.d_day.sub;
 
 import java.text.DateFormat;
-import java.util.Date;
+import java.util.Calendar;
 
 import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.DLog;
@@ -43,7 +43,8 @@ public class AddFrgmt extends SubBaseFrgmt {
     private static final String TAG = "AddFrgmt";
 
     private int id;
-    private Date dateTime;
+    //private Date dateTime;
+    private Calendar calendar;
     private TextView eventDate;
     private EditText eventTitle, eventDescription;
     private RadioGroup eventType, eventAlarm;
@@ -81,16 +82,20 @@ public class AddFrgmt extends SubBaseFrgmt {
                     public void ok(int year, int month, int day) {
                         DateFormat df = DateFormat.getDateInstance();
 
-                        dateTime = new Date(year-1900, month-1, day);
-                        eventDate.setText(df.format(dateTime));
+                        calendar = Calendar.getInstance();
+                        calendar.set(year, month - 1, day);
+
+                        //dateTime = new Date(year-1900, month-1, day);
+                        eventDate.setText(df.format(calendar.getTime()));
                         eventDate.setTextColor(0xff000000);
                     }
                 });
 
-                if (dateTime == null) {
+                if (calendar == null) {
                     dlg.show(getActivity());
                 } else {
-                    dlg.show(getActivity(), dateTime.getYear()+1900, dateTime.getMonth(), dateTime.getDate());
+                    dlg.show(getActivity(), calendar.get(Calendar.YEAR) + 1900,
+                            calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
                 }
             }
         });
@@ -124,8 +129,9 @@ public class AddFrgmt extends SubBaseFrgmt {
             pos++; // id
 
             eventTitle.setText(cr.getString(pos++));
-            dateTime = new Date(Long.parseLong(cr.getString(pos++)));
-            eventDate.setText(DateFormat.getDateInstance().format(dateTime));
+            calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(Long.parseLong(cr.getString(pos++)));
+            eventDate.setText(DateFormat.getDateInstance().format(calendar.getTime()));
             eventDate.setTextColor(0xff000000);
             eventDescription.setText(cr.getString(pos++));
 
@@ -149,13 +155,13 @@ public class AddFrgmt extends SubBaseFrgmt {
     protected void onAddButton() {
         ScheduleData data = new ScheduleData();
 
-        if (dateTime == null) {
+        if (calendar == null) {
             showPopup(getString(R.string.plsInsertDate));
             return;
         }
 
         data.title       = eventTitle.getText().toString();
-        data.date        = dateTime.getTime();
+        data.date        = calendar.getTimeInMillis();
         data.description = eventDescription.getText().toString();
         data.reminder    = getCheckedEventType();
         data.alarm       = getCheckedAlarmType();

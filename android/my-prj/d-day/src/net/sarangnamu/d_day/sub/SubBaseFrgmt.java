@@ -54,6 +54,10 @@ public abstract class SubBaseFrgmt extends FrgmtBase {
     }
 
     protected void showPopup(String msg) {
+        if (getActivity() == null) {
+            return ;
+        }
+
         ((MainActivity) getActivity()).showPopup(msg);
     }
 
