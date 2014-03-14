@@ -606,7 +606,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             }
 
             if (info.icon != null) {
-                if (Build.VERSION_CODES.JELLY_BEAN > Build.VERSION.SDK_INT) {
+                if (Build.VERSION_CODES.JELLY_BEAN < Build.VERSION.SDK_INT) {
                     holder.icon.setBackground(info.icon);
                 } else {
                     holder.icon.setBackgroundDrawable(info.icon);
