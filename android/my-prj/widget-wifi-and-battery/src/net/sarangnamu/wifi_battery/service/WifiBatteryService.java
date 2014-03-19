@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.wifi_battery.service;
 
+import net.sarangnamu.common.BkSystem;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.common.network.BkWifiStateReceiver;
@@ -83,7 +84,13 @@ public class WifiBatteryService extends Service {
     }
 
     @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        BkSystem.restartService(getApplicationContext());
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        // dont work on kitkat
         return START_STICKY;
     }
 
