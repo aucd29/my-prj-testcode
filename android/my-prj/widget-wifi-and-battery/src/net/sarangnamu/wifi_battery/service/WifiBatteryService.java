@@ -17,7 +17,6 @@
  */
 package net.sarangnamu.wifi_battery.service;
 
-import net.sarangnamu.common.BkSystem;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.common.network.BkWifiStateReceiver;
@@ -26,9 +25,13 @@ import net.sarangnamu.common.network.BkWifiStateReceiver.WiFiDisconnectedListene
 import net.sarangnamu.wifi_battery.BatteryInfo;
 import net.sarangnamu.wifi_battery.BatteryInfo.BatteryInfoListener;
 import net.sarangnamu.wifi_battery.widget.WifiBatteryWidget;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.SystemClock;
 
 public class WifiBatteryService extends Service {
     private static final String TAG = "WifiBatteryService";
@@ -85,7 +88,14 @@ public class WifiBatteryService extends Service {
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
-        BkSystem.restartService(getApplicationContext());
+        //BkSystem.restartService(getApplicationContext());
+
+        Intent restartService = new Intent(getApplicationContext(), this.getClass());
+        restartService.setPackage(getPackageName());
+        PendingIntent restartServicePI = PendingIntent.getService(
+                getApplicationContext(), 1, restartService, PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmService = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        alarmService.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, restartServicePI);
     }
 
     @Override
