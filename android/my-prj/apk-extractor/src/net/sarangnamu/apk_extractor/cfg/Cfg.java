@@ -18,6 +18,7 @@
 package net.sarangnamu.apk_extractor.cfg;
 
 import net.sarangnamu.common.BkCfg;
+import net.sarangnamu.common.BkString;
 import android.content.Context;
 
 public class Cfg extends BkCfg {
@@ -34,7 +35,7 @@ public class Cfg extends BkCfg {
             return BkCfg.sdPath() + PATH;
         }
 
-        return usrPath;
+        return BkString.setLastSlash(usrPath);
     }
 
     public static String getEmail(Context context) {
