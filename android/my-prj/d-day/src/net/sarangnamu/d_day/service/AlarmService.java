@@ -124,11 +124,6 @@ public class AlarmService extends ImmortalService {
     }
 
     @Override
-    public String getActionString() {
-        return ResurrectionReceiver.ACTION;
-    }
-
-    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return START_STICKY;
     }
@@ -153,6 +148,16 @@ public class AlarmService extends ImmortalService {
 
         Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vb.vibrate(1000);
+    }
 
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // ImmortalService
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public String getActionString() {
+        return ResurrectionReceiver.ACTION;
     }
 }

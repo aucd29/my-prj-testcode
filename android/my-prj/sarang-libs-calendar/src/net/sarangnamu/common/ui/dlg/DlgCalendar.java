@@ -24,8 +24,8 @@ import android.support.v4.app.FragmentActivity;
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 
 /**
- * {@code
  * <pre>
+ * {@code
     DlgCalendar dlg = new DlgCalendar();
     dlg.setBaseColor(getResources().getColor(R.color.dBg));
     dlg.setOnDlgCalendarListener(new DlgCalendarListener() {
@@ -35,8 +35,9 @@ import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDi
         }
     });
     dlg.show(getActivity());
- * </pre>}
- * 
+ * }
+ * </pre>
+ *
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class DlgCalendar implements CalendarDatePickerDialog.OnDateSetListener {

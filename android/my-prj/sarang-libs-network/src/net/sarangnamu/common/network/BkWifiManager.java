@@ -22,6 +22,15 @@ import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
+/**
+ * <pre>
+ * {@code
+ * BkWifiManager.getInstance(getApplicationContext()).isEnabled();
+ * }
+ * </pre>
+ *
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
+ */
 public class BkWifiManager {
     private static final String TAG = "BkWifiManager";
 

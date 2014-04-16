@@ -24,8 +24,20 @@
         <service
             android:name=".service.WifiBatteryService"
             android:enabled="true"
-            android:process=":remote" />
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="net.sarangnamu.wifi_battery.ACTION.WIFI_BATTERY_SERVICE" />
+            </intent-filter>
+        </service>
 
+        <receiver
+            android:name=".service.ResurrectionReceiver"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="net.sarangnamu.wifi_battery.ACTION.RESURRECTION_RECEIVER" />
+            </intent-filter>
+        </receiver>
+        
         <receiver android:name=".widget.WifiBatteryWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

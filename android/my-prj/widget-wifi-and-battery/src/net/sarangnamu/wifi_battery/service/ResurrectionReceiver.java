@@ -1,5 +1,5 @@
 /*
- * DlgAlert.java
+ * ResurrectionReceiver.java
  * Copyright 2013 Burke Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
@@ -15,23 +15,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sarangnamu.common.ui.dlg;
+package net.sarangnamu.wifi_battery.service;
 
-import android.content.Context;
+import net.sarangnamu.common.service.immortal.ImmortalReceiver;
 
-/**
- * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
- */
-public class DlgAlert extends DlgNormal {
-    public DlgAlert(Context context, int layoutId) {
-        super(context, layoutId);
+public class ResurrectionReceiver extends ImmortalReceiver {
+    public static final String ACTION = "net.sarangnamu.wifi_battery.ACTION.RESURRECTION_RECEIVER";
+    public static final String SERVICE = "net.sarangnamu.wifi_battery.ACTION.WIFI_BATTERY_SERVICE";
+
+    @Override
+    public String getActionString() {
+        return ACTION;
     }
 
     @Override
-    protected void initLayout() {
-        super.initLayout();
-
-        setOneButton();
+    public String getServiceString() {
+        return SERVICE;
     }
 }
-

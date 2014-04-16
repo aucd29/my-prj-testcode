@@ -56,7 +56,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
     @Override
     public void onDisabled(Context context) {
-        context.stopService(new Intent(context, WifiBatteryService.class));
+        stopService(context);
 
         super.onDisabled(context);
     }
@@ -150,5 +150,9 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
     private void startService(Context context) {
         context.startService(new Intent(context, WifiBatteryService.class));
+    }
+
+    private void stopService(Context context) {
+        context.stopService(new Intent(context, WifiBatteryService.class));
     }
 }

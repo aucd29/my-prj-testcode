@@ -6,9 +6,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,8 +23,8 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 
 /**
- * {@code
  * <pre>
+ * {@code
     private Gesture gesture;
 
     gesture = Gesture.NEW(this);
@@ -44,9 +44,10 @@ import android.view.MotionEvent;
             return true;
         }
     });
- * </pre>}
- * @author <a href="mailto:Burke Choi@obigo.com">krinbuch</a>
+ * }
+ * </pre>
  *
+ * @author <a href="mailto:Burke Choi@obigo.com">krinbuch</a>
  */
 public class Gesture extends GestureDetector {
     private static final String TAG = "Gesture";

@@ -26,33 +26,34 @@ import android.support.v4.app.FragmentManager.BackStackEntry;
 import android.support.v4.app.FragmentTransaction;
 
 /**
- * {@code
  * <pre>
-    public class Navigator extends FrgmtManager {
-        private static Navigator inst;
-
-        public static Navigator getInstance(FragmentActivity act) {
-            if (inst == null) {
-                inst = new Navigator();
-            }
-
-            inst.setFragmentManager(act);
-
-            return inst;
-        }
-
-        private Navigator() {
-
-        }
-    }
-
-    - example
-    Navigator nv = Navigator.getInstance(this);
-    nv.setBase(HomeFrgmt.class);
-
-    - change page
-    nv.replace(OtherFrgmt.class);
- * </pre>}
+ * {@code
+ *     public class Navigator extends FrgmtManager {
+ *         private static Navigator inst;
+ * 
+ *         public static Navigator getInstance(FragmentActivity act) {
+ *             if (inst == null) {
+ *                 inst = new Navigator();
+ *             }
+ * 
+ *             inst.setFragmentManager(act);
+ * 
+ *             return inst;
+ *         }
+ * 
+ *         private Navigator() {
+ * 
+ *         }
+ *     }
+ * 
+ *     - example
+ *     Navigator nv = Navigator.getInstance(this);
+ *     nv.setBase(HomeFrgmt.class);
+ * 
+ *     - change page
+ *     nv.replace(OtherFrgmt.class);
+ * }
+ * </pre>
  * 
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
@@ -67,7 +68,7 @@ public abstract class FrgmtManager {
     public void setFragmentManager(FragmentActivity act) {
         if (act == null) {
             DLog.e(TAG, "setFragmentManager act is null");
-            return ;
+            return;
         }
 
         fm = act.getSupportFragmentManager();
@@ -78,12 +79,12 @@ public abstract class FrgmtManager {
             Fragment frgmt = (Fragment) cls.newInstance();
             if (frgmt == null) {
                 DLog.e(TAG, "setBase frgmt == null");
-                return ;
+                return;
             }
 
             FragmentTransaction trans = fm.beginTransaction();
             if (frgmt.isVisible()) {
-                return ;
+                return;
             }
 
             trans.add(id, frgmt, frgmt.getClass().getName());
@@ -153,11 +154,11 @@ public abstract class FrgmtManager {
     public void popBackAll() {
         if (fm == null) {
             DLog.e(TAG, "setFragmentManager fm is null");
-            return ;
+            return;
         }
 
         int count = fm.getBackStackEntryCount();
-        for (int i=0; i<count; ++i) {
+        for (int i = 0; i < count; ++i) {
             fm.popBackStack(i, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
@@ -167,11 +168,13 @@ public abstract class FrgmtManager {
     }
 
     protected void setSlideTransition(FragmentTransaction trans) {
-        trans.setCustomAnimations(R.anim.slide_in_current, R.anim.slide_in_next, R.anim.slide_out_current, R.anim.slide_out_prev);
+        trans.setCustomAnimations(R.anim.slide_in_current, R.anim.slide_in_next,
+                R.anim.slide_out_current, R.anim.slide_out_prev);
     }
 
     protected void setUpTransition(FragmentTransaction trans) {
-        trans.setCustomAnimations(R.anim.slide_up_current, R.anim.slide_up_next, R.anim.slide_down_current, R.anim.slide_down_prev);
+        trans.setCustomAnimations(R.anim.slide_up_current, R.anim.slide_up_next,
+                R.anim.slide_down_current, R.anim.slide_down_prev);
     }
 
     public Fragment getCurrentFragment() {

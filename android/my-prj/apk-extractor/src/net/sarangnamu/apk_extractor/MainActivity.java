@@ -6,9 +6,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -118,13 +118,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        title = (TextView) findViewById(R.id.title);
-        path = (TextView) findViewById(R.id.path);
-        dev = (TextView) findViewById(R.id.dev);
+        title    = (TextView) findViewById(R.id.title);
+        path     = (TextView) findViewById(R.id.path);
+        dev      = (TextView) findViewById(R.id.dev);
         tvSearch = (TextView) findViewById(R.id.tvSearch);
-        empty = (TextView) findViewById(android.R.id.empty);
-        search = (EditText) findViewById(R.id.search);
-        menu = (ImageButton) findViewById(R.id.menu);
+        empty    = (TextView) findViewById(android.R.id.empty);
+        search   = (EditText) findViewById(R.id.search);
+        menu     = (ImageButton) findViewById(R.id.menu);
         titleBar = (RelativeLayout) findViewById(R.id.titleBar);
 
         initLabel();
@@ -191,6 +191,15 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         BkCfg.hideKeyboard(search);
 
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "on stop");
+        DLog.d(TAG, "===================================================================");
     }
 
     private void initLabel() {
@@ -579,14 +588,14 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 convertView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item, null);
 
                 holder = new ViewHolder();
-                holder.icon = (ImageView) convertView.findViewById(R.id.icon);
-                holder.name = (TextView) convertView.findViewById(R.id.name);
-                holder.size = (TextView) convertView.findViewById(R.id.size);
-                holder.pkgName = (TextView) convertView.findViewById(R.id.pkgName);
-                holder.version = (TextView) convertView.findViewById(R.id.version);
-                holder.sd = (TextView) convertView.findViewById(R.id.sd);
-                holder.email = (TextView) convertView.findViewById(R.id.email);
-                holder.row = (RelativeLayout) convertView.findViewById(R.id.row);
+                holder.icon      = (ImageView) convertView.findViewById(R.id.icon);
+                holder.name      = (TextView) convertView.findViewById(R.id.name);
+                holder.size      = (TextView) convertView.findViewById(R.id.size);
+                holder.pkgName   = (TextView) convertView.findViewById(R.id.pkgName);
+                holder.version   = (TextView) convertView.findViewById(R.id.version);
+                holder.sd        = (TextView) convertView.findViewById(R.id.sd);
+                holder.email     = (TextView) convertView.findViewById(R.id.email);
+                holder.row       = (RelativeLayout) convertView.findViewById(R.id.row);
                 holder.btnLayout = (LinearLayout) convertView.findViewById(R.id.btnLayout);
 
                 holder.sd.setOnClickListener(MainActivity.this);

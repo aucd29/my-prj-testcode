@@ -24,11 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * {@code
- * <pre>
-
- * </pre>}
- * 
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public abstract class FrgmtBase extends Fragment {
@@ -54,12 +49,13 @@ public abstract class FrgmtBase extends Fragment {
         return LayoutInflater.from(getActivity()).inflate(id, null);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////////////
     //
     // ABSTRACT
     //
-    ////////////////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////////////
 
     protected abstract int getLayoutId();
+
     protected abstract void initLayout();
 }

@@ -22,11 +22,12 @@ import android.animation.ObjectAnimator;
 import android.view.View;
 
 /**
- * {@code
  * <pre>
-    Transition.startX(view, 100, null);
- * </pre>}
- * 
+ * {@code
+ * Transition.startX(view, 100, null);
+ * }
+ * </pre>
+ *
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class Transition {

@@ -6,9 +6,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -45,17 +45,6 @@ public class DirListFrgmt extends FileListFragment {
 
     @Override
     public void onLoadFinished(Loader<List<File>> loader, List<File> data) {
-        //        if (data != null && data.size() == 0) {
-        //            ((DirChooserActivity) getActivity()).setPath(new DialogInterface.OnClickListener(){
-        //                @Override
-        //                public void onClick(DialogInterface dialog, int whichButton) {
-        //                    getActivity().onBackPressed();
-        //                }
-        //            });
-        //
-        //            return ;
-        //        }
-
         mAdapter.setListItems(data);
 
         if (isResumed()) {

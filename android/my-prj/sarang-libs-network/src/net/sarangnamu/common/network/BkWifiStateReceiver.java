@@ -25,10 +25,7 @@ import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 
 /**
- * <pre>
- * 
- * </pre>
- * 
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class BkWifiStateReceiver extends BroadcastReceiver {
     private static final String TAG = "BkWifiStateReceiver";
