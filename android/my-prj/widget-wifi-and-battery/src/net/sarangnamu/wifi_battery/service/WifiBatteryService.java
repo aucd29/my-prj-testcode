@@ -17,7 +17,6 @@
  */
 package net.sarangnamu.wifi_battery.service;
 
-import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.common.network.BkWifiStateReceiver;
 import net.sarangnamu.common.network.BkWifiStateReceiver.WiFIConnectedListener;
@@ -74,10 +73,6 @@ public class WifiBatteryService extends ImmortalService {
         if (wifiReceiver != null) {
             wifiReceiver.unregister(this);
         }
-
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "DESTROY WIFI AND BATTERY SERVICE");
-        DLog.d(TAG, "===================================================================");
 
         super.onDestroy();
     }
