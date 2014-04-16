@@ -23,6 +23,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+/**
+ * <pre>
+ * {@code
+ * - registration
+   if (batteryInfo == null) {
+       batteryInfo = new BatteryInfo();
+   }
+
+   batteryInfo.register(this, new BatteryInfoListener() {
+        @Override
+        public void onChangeBattery(int battery) {
+            sendIntentToWidget(BATTERY_INFO, "Battery : " + battery + "%");
+        }
+   });
+
+   - unregistration
+   if (batteryInfo != null) {
+       batteryInfo.unregister(this);
+   }
+ * }
+ * </pre>
+ *
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
+ */
 public class BatteryInfo extends BroadcastReceiver {
     private static final String TAG = "BatteryInfo";
     private static final String LEVEL = "level";

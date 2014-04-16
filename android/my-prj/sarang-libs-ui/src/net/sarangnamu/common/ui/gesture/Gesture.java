@@ -27,7 +27,7 @@ import android.view.MotionEvent;
  * {@code
     private Gesture gesture;
 
-    gesture = Gesture.NEW(this);
+    gesture = Gesture.newInstance(this);
     gesture.setOnGestureRightListener(new GestureRightListener() {
         @Override
         public void toRight() {
