@@ -1,6 +1,6 @@
 /*
  * BkSystem.java
- * Copyright 2014 Burke.Choi All rights reserved.
+ * Copyright 2014 Burke Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,11 +17,7 @@
  */
 package net.sarangnamu.common;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 
 import android.app.ActivityManager;
@@ -33,7 +29,14 @@ import android.os.StatFs;
 /**
  * <pre>
  * {@code
- * BkSystem.restartService(getApplicationContext());
+ * BkSystem.isRunningApp(getApplicationContext());
+ *
+ * BkSystem.isExistSdCard();
+ *
+ * BkSystem.getStorageSize();
+ * BkSystem.getExternalStorageSize();
+ *
+ *
  * }
  * </pre>
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
@@ -103,25 +106,33 @@ public class BkSystem {
         return Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
     }
 
-//    public static boolean getStorageSize(long fileSize) {
-//        long extMemory = 0;
-//        long intMemory = getBlockSize(Environment.getDataDirectory());
-//
-//        if (isExistSdCard()) {
-//            extMemory = getBlockSize(Environment.getExternalStorageDirectory());
-//            //extMemory = byteToMb(extMemory);
-//        }
-////
-////        intMemory = byteToMb(intMemory);
-////
-////        if (fileSize < extMemory || fileSize < intMemory) {
-////            return true;
-////        } else {
-////            return false;
-////        }
-//
-//        return true;
-//    }
+    public static String getStorageSize() {
+        long size = getBlockSize(Environment.getDataDirectory());
+        return BkMath.toFileSizeString(size);
+    }
+
+    public static String getExternalStorageSize() {
+        long size = getBlockSize(Environment.getExternalStorageDirectory());
+        return BkMath.toFileSizeString(size);
+    }
+
+    public static boolean isAvaliableStorage(long size) {
+        long blockSize = getBlockSize(Environment.getDataDirectory());
+        if (blockSize - size > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean isAvaliableExternalStorage(long size) {
+        long blockSize = getBlockSize(Environment.getExternalStorageDirectory());
+        if (blockSize - size > 0) {
+            return true;
+        }
+
+        return false;
+    }
 
     @SuppressWarnings("deprecation")
     private static long getBlockSize(File path) {
@@ -138,69 +149,5 @@ public class BkSystem {
         }
 
         return availableBlocks * blockSize;
-    }
-
-    public static StringBuffer ls(String path) throws RuntimeException, IOException, InterruptedException, NullPointerException {
-        return exec("ls " + path);
-    }
-
-    public static StringBuffer exec(final String command) throws RuntimeException, IOException, InterruptedException, NullPointerException {
-        return exec(command, null);
-    }
-
-    public static StringBuffer exec(String command, String[] envp) throws RuntimeException, IOException, InterruptedException, NullPointerException {
-        if (command == null) {
-            throw new NullPointerException("command is null");
-        }
-
-        Process process;
-        if (envp == null) {
-            process = Runtime.getRuntime().exec(command);
-        } else {
-            process = Runtime.getRuntime().exec(command, envp);
-        }
-
-        StringBuffer res = new StringBuffer();
-        res.append(readStream(process.getInputStream()));
-        res.append(readStream(process.getErrorStream()));
-
-        process.waitFor();
-
-        return res;
-    }
-
-    public static StringBuffer execNoWait(String command, String[] envp) throws RuntimeException, IOException, InterruptedException, NullPointerException {
-        if (command == null) {
-            throw new NullPointerException("command is null");
-        }
-
-        Process process;
-        if (envp == null) {
-            process = Runtime.getRuntime().exec(command);
-        } else {
-            process = Runtime.getRuntime().exec(command, envp);
-        }
-
-        StringBuffer res = new StringBuffer();
-        res.append(readStream(process.getInputStream()));
-        res.append(readStream(process.getErrorStream()));
-
-        return res;
-    }
-
-
-    public static StringBuffer readStream(InputStream stream) throws IOException {
-        int read = 0;
-        char[] buffer = new char[1024];
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-        StringBuffer output = new StringBuffer();
-
-        while ((read = reader.read(buffer)) > 0) {
-            output.append(buffer, 0, read);
-        }
-
-        reader.close();
-
-        return output;
     }
 }

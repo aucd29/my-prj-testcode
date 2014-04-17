@@ -20,17 +20,22 @@ package net.sarangnamu.common;
 /**
  * <pre>
  * {@code
-    BkMath.toFileSizeString(size);
+   BkMath.toFileSizeString(size);
  * }
  * </pre>
  *
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class BkMath {
+    /**
+     * Surprisingly for me but loop based algorithm is about 10% faster.
+     *
+     * @see http://stackoverflow.com/questions/3263892/format-file-size-as-mb-gb-etc
+     */
     public static String toFileSizeString(long size) {
         int u = 0;
 
-        for (;size > 1024*1024; size >>= 10) {
+        for (;size > 1024 * 1024; size >>= 10) {
             u++;
         }
 
