@@ -48,7 +48,7 @@ public class DES extends CipherBase {
             return null;
         }
 
-        return doEncrypt(option, "DES", data, key);
+        return doEncrypt(option, null, "DES", data, key);
     }
 
     public static String decrypt(final String option, final String data, final String key) {
@@ -56,7 +56,7 @@ public class DES extends CipherBase {
             return null;
         }
 
-        return doDecrypt(option, "DES", data, key);
+        return doDecrypt(option, null, "DES", data, key);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
