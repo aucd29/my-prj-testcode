@@ -9,13 +9,14 @@ import net.sarangnamu.common.DLog;
 
 public class TripleDES extends CipherBase {
     private static final String TAG = "TripleDES";
+    private static final String TYPE = "DESede";
 
     public static String encrypt(final String option, final String iv, final String data, final String key) {
         if (!checkKeyLength(key)) {
             return null;
         }
 
-        return doEncrypt(option, iv, "DESede", data, key);
+        return doEncrypt(option, iv, TYPE, data, key);
     }
 
     public static String decrypt(final String option, final String iv, final String data, final String key) {
@@ -23,7 +24,7 @@ public class TripleDES extends CipherBase {
             return null;
         }
 
-        return doDecrypt(option, iv, "DESede", data, key);
+        return doDecrypt(option, iv, TYPE, data, key);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

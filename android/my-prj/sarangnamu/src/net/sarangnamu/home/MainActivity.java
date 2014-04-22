@@ -6,9 +6,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -55,8 +55,6 @@ public class MainActivity extends FragmentActivity {
     private SlidingPaneLayout sliding;
     private ProgressDialog popup;
     private Gesture gesture;
-    public static int SWIPE_THRESHOLD = 300;
-    public static int SWIPE_VELOCITY_THRESHOLD = 300;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +99,6 @@ public class MainActivity extends FragmentActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "onSaveInstanceState");
-        DLog.d(TAG, "===================================================================");
         outState.putString("path", "-");
     }
 
@@ -116,14 +111,6 @@ public class MainActivity extends FragmentActivity {
     private void initNaviation() {
         Navigator nv = Navigator.getInstance(this);
         nv.add(R.id.content, HomeFrgmt.class);
-    }
-
-    @Override
-    protected void onDestroy() {
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "on destory");
-        DLog.d(TAG, "===================================================================");
-        super.onDestroy();
     }
 
     private void initMenu() {
@@ -197,11 +184,8 @@ public class MainActivity extends FragmentActivity {
                 if (result) {
                     Toast.makeText(MainActivity.this, R.string.loginOk, Toast.LENGTH_SHORT).show();
 
-                    DLog.e(TAG, "onPostExecute result ok");
                     PageBaseFrgmt base = (PageBaseFrgmt) Navigator.getInstance(MainActivity.this).getCurrentFragment();
                     if (base == null) {
-                        DLog.e(TAG, "home fragment");
-
                         base = (PageBaseFrgmt) Navigator.getInstance(MainActivity.this).getFragment(HomeFrgmt.class);
                         base.showWriteButton();
                     } else {

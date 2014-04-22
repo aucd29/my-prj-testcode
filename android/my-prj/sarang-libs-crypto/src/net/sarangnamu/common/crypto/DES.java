@@ -26,13 +26,14 @@ import net.sarangnamu.common.DLog;
  */
 public class DES extends CipherBase {
     private static final String TAG = "DES";
+    private static final String TYPE = "DES";
 
     public static String encrypt(final String data, final String key) {
         if (!checkKeyLength(key)) {
             return null;
         }
 
-        return doEncrypt("DES", data, key);
+        return doEncrypt(TYPE, data, key);
     }
 
     public static String decrypt(final String data, final String key) {
@@ -40,7 +41,7 @@ public class DES extends CipherBase {
             return null;
         }
 
-        return doDecrypt("DES", data, key);
+        return doDecrypt(TYPE, data, key);
     }
 
     public static String encrypt(final String option, final String data, final String key) {
@@ -48,7 +49,7 @@ public class DES extends CipherBase {
             return null;
         }
 
-        return doEncrypt(option, null, "DES", data, key);
+        return doEncrypt(option, null, TYPE, data, key);
     }
 
     public static String decrypt(final String option, final String data, final String key) {
@@ -56,7 +57,23 @@ public class DES extends CipherBase {
             return null;
         }
 
-        return doDecrypt(option, null, "DES", data, key);
+        return doDecrypt(option, null, TYPE, data, key);
+    }
+
+    public static String encrypt(final String option, final String iv, final String data, final String key) {
+        if (!checkKeyLength(key)) {
+            return null;
+        }
+
+        return doEncrypt(option, iv, TYPE, data, key);
+    }
+
+    public static String decrypt(final String option, final String iv, final String data, final String key) {
+        if (!checkKeyLength(key)) {
+            return null;
+        }
+
+        return doDecrypt(option, iv, TYPE, data, key);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -67,7 +84,7 @@ public class DES extends CipherBase {
 
     private static boolean checkKeyLength(final String key) {
         if (key.length() > 8) {
-            DLog.e(TAG, "ERROR::encrypt::DES key too long - should be 8 bytes");
+            DLog.e(TAG, "ERROR::checkKeyLength::DES key too long - should be 8 bytes");
             return false;
         }
 
