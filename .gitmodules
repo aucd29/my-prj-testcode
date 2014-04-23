@@ -1,7 +1,6 @@
 [submodule "java/open-src/android-zip4j"]
 	path = java/open-src/android-zip4j
 	url = https://github.com/imasm/Android-Zip4j
-
 [submodule "cpp/my-prj/external/boost"]
 	path = cpp/my-prj/external/boost
 	url = https://github.com/boostorg/boost
