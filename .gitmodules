@@ -4,3 +4,12 @@
 [submodule "cpp/my-prj/external/boost"]
 	path = cpp/my-prj/external/boost
 	url = https://github.com/boostorg/boost
+[submodule "cpp/my-prj/external/openssl"]
+	path = cpp/my-prj/external/openssl
+	url = https://github.com/openssl/openssl
+[submodule "cpp/my-prj/external/curl"]
+	path = cpp/my-prj/external/curl
+	url = https://github.com/bagder/curl
+[submodule "cpp/my-prj/external/sqlite"]
+	path = cpp/my-prj/external/sqlite
+	url = https://github.com/smparkes/sqlite
