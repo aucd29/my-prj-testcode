@@ -13,3 +13,27 @@
 [submodule "cpp/my-prj/external/sqlite"]
 	path = cpp/my-prj/external/sqlite
 	url = https://github.com/smparkes/sqlite
+[submodule "cpp/my-prj/external/libxml2"]
+	path = cpp/my-prj/external/libxml2
+	url = https://git.gnome.org/browse/libxml2/
+[submodule "android/open-srcs/image/universal-image-loader"]
+	path = android/open-srcs/image/universal-image-loader
+	url = https://github.com/nostra13/Android-Universal-Image-Loader.git
+[submodule "android/open-srcs/ui/dlg/app-rate"]
+	path = android/open-srcs/ui/dlg/app-rate
+	url = http://github.com/TimotheeJeannin/AppRate
+[submodule "android/open-srcs/ui/dlg/color-picker"]
+	path = android/open-srcs/ui/dlg/color-picker
+	url = http://github.com/attenzione/android-ColorPickerPreference.git
+[submodule "android/open-srcs/ui/dlg/change-log"]
+	path = android/open-srcs/ui/dlg/change-log
+	url = http://github.com/MartinvanZ/Inscription.git
+[submodule "android/open-srcs/ui/card-ui"]
+	path = android/open-srcs/ui/card-ui
+	url = http://github.com/nadavfima/cardsui-for-android.git
+[submodule "android/open-srcs/ui/menu/circle-menu"]
+	path = android/open-srcs/ui/menu/circle-menu
+	url = http://github.com/szugyi/CircleMenu.git
+[submodule "android/open-srcs/ui/menu/dropdown-menu"]
+	path = android/open-srcs/ui/menu/dropdown-menu
+	url = http://github.com/szugyi/DropDown

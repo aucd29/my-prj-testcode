@@ -69,6 +69,10 @@ public class FontLoader {
         return typeface;
     }
 
+    public Typeface getRobotoLight() {
+        return getFont("Roboto-Light");
+    }
+
     public void applyChild(String fontName, ViewGroup target, Class<?> type) {
         int count = target.getChildCount();
         Typeface tf = getFont(fontName);
