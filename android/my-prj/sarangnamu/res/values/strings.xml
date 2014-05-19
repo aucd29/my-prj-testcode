@@ -19,11 +19,11 @@
     <string name="loginOk">Login OK!</string>
     <string name="rememberMe">Remember Me</string>
     
-    
+    <!-- title -->
     <string name="mnu_home">Home</string>
-    <string name="mnu_homewrite">Write</string>
+    <string name="mnu_home_write">Write</string>
     <string name="mnu_study">Study</string>
-    <string name="mnu_studydetail">Study</string>
+    <string name="mnu_study_detail">Study</string>
     <string name="mnu_profile">Profile</string>
     <string name="mnu_openprj">Open Project</string>
     <string name="mnu_qna">Q&amp;A</string>

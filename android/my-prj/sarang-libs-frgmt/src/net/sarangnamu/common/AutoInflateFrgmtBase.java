@@ -40,14 +40,17 @@ public abstract class AutoInflateFrgmtBase extends FrgmtBase {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         base = (ViewGroup) inflate(getLayoutId());
 
-        initLayout();
         autoInflate();
+        initLayout();
 
         return base;
     }
 
     private void autoInflate() {
-        int id = getLayoutIdentifier(getClassSimpleName());
+        int id = getLayoutIdentifier();
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "inflate id : " + id);
+        DLog.d(TAG, "===================================================================");
 
         // base <- pageContent <- other View (class_name.xml)
         pageContent = (ViewGroup) base.findViewById(getPageContentId());
@@ -67,8 +70,10 @@ public abstract class AutoInflateFrgmtBase extends FrgmtBase {
 
         StringBuilder sb = new StringBuilder();
         String tmpName = getClass().getSimpleName().replace(getSuffixForFragment(), "");
+        sb.append(Character.toLowerCase(tmpName.charAt(0)));
+        for (int i = 1; i < tmpName.length(); ++i) {
+            char c = tmpName.charAt(i);
 
-        for (char c : tmpName.toCharArray()) {
             if (Character.isUpperCase(c)) {
                 sb.append('_');
                 sb.append(Character.toLowerCase(c));
@@ -88,8 +93,8 @@ public abstract class AutoInflateFrgmtBase extends FrgmtBase {
      * @param name
      * @return
      */
-    private int getStringIdentifier(String name) {
-        return getResources().getIdentifier(getPrefixForMenu() + name.toLowerCase(),
+    protected int getStringTitleIdentifier() {
+        return getResources().getIdentifier(getPrefixForMenu() + getClassSimpleName(),
                 IDENTIFIER_STRING, getActivity().getPackageName());
     }
 
@@ -99,9 +104,12 @@ public abstract class AutoInflateFrgmtBase extends FrgmtBase {
      * @param name
      * @return
      */
-    protected int getLayoutIdentifier(String name) {
-        return getResources().getIdentifier(
-                getPrefixForPage() + getClassSimpleName().toLowerCase(), IDENTIFIER_LAYOUT,
+    protected int getLayoutIdentifier() {
+        String layoutFileName = getPrefixForPage() + getClassSimpleName();
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "layoutName " + layoutFileName);
+        DLog.d(TAG, "===================================================================");
+        return getResources().getIdentifier(layoutFileName, IDENTIFIER_LAYOUT,
                 getActivity().getPackageName());
     }
 
@@ -123,5 +131,5 @@ public abstract class AutoInflateFrgmtBase extends FrgmtBase {
     //
     // //////////////////////////////////////////////////////////////////////////////////
 
-    abstract int getPageContentId();
+    protected abstract int getPageContentId();
 }
