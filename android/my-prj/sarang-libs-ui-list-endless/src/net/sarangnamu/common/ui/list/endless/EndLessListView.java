@@ -45,6 +45,7 @@ import android.widget.ListView;
  * }
  * </pre>
  *
+ * @see http://benjii.me/2010/08/endless-scrolling-listview-in-android/
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class EndLessListView extends ListView implements OnScrollListener {
