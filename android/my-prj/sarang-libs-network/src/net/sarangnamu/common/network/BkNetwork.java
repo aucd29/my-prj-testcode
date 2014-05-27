@@ -17,6 +17,10 @@
  */
 package net.sarangnamu.common.network;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+import net.sarangnamu.common.DLog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -25,6 +29,7 @@ import android.net.NetworkInfo;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class BkNetwork {
+    private static final String TAG = "BkNetwork";
     private static final int BLEUTOOH = 0x00000007; // not defined at android sdk
 
     public static boolean checkNetworkInfo(Context context) {
@@ -50,5 +55,32 @@ public class BkNetwork {
         }
 
         return false;
+    }
+
+    /**
+     * requires the following permission.
+     * <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+     *
+     * @see http://stackoverflow.com/questions/12535101/how-can-i-turn-off-3g-data-programmatically-on-android     *
+     * @param context
+     * @param state
+     * @return
+     */
+    public static void changeNetworkState(Context context, boolean state) {
+        try {
+            final ConnectivityManager conman = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            final Class conmanClass = Class.forName(conman.getClass().getName());
+            final Field iConnectivityManagerField = conmanClass.getDeclaredField("mService");
+            iConnectivityManagerField.setAccessible(true);
+
+            final Object iConnectivityManager = iConnectivityManagerField.get(conman);
+            final Class iConnectivityManagerClass = Class.forName(iConnectivityManager.getClass().getName());
+            final Method setMobileDataEnabledMethod = iConnectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
+            setMobileDataEnabledMethod.setAccessible(true);
+
+            setMobileDataEnabledMethod.invoke(iConnectivityManager, state);
+        } catch (Exception e) {
+            DLog.e(TAG, "changeNetworkState", e);
+        }
     }
 }

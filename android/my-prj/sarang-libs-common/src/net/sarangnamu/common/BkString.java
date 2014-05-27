@@ -81,4 +81,8 @@ public class BkString {
 
         return str;
     }
+
+    public static String euckrToUtf8(byte[] buffer) {
+        return null;
+    }
 }

@@ -29,7 +29,7 @@ import java.io.InputStreamReader;
  * Native.ls("/sdcard/apks");
  * Native.exec("/sdcard/your-native-bin");
  *
- * - with environment commadn
+ * - with environment command
  * StringBuilder sb = new StringBuilder();
    sb.append("LD_LIBRARY_PATH=");
    sb.append("yourAppPath");

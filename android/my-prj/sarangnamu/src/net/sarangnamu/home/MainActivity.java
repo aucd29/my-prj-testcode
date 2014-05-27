@@ -165,8 +165,6 @@ public class MainActivity extends FragmentActivity {
 
             @Override
             protected Boolean doInBackground(Context... contexts) {
-                Context context = contexts[0];
-
                 boolean res = false;
                 try {
                     res = Api.login(id, pw);
