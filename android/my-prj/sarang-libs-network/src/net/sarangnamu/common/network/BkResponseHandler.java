@@ -24,6 +24,16 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 
+/**
+ * <pre>
+ * {@code
+    HttpGet get = new HttpGet("http://www.sportalkorea.com/news/rss/news_top.xml");
+    String tmp = http.execute(get, new BkResponseHandler("EUC-KR"));
+ * }
+ * </pre>
+ *
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
+ */
 public class BkResponseHandler implements ResponseHandler {
     private String encoding; // EUC-KR
     private byte data[] = new byte[2048];

@@ -106,7 +106,7 @@ public class BkHttp {
                 pe.add(key, parameters.get(key));
             }
 
-            params = "?" + pe.getParameter();
+            params = "?" + pe.encode();
         }
 
         HttpGet httpGet = new HttpGet(getUrl + params);

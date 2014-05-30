@@ -193,15 +193,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         super.onPause();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "on stop");
-        DLog.d(TAG, "===================================================================");
-    }
-
     private void initLabel() {
         title.setText(Html.fromHtml(getString(R.string.appName)));
 

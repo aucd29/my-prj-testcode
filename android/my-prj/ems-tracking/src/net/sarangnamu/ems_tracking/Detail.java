@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.ems_tracking;
 
+import net.sarangnamu.common.admob.AdMobDelegator;
 import net.sarangnamu.ems_tracking.api.xml.Ems;
 import net.sarangnamu.ems_tracking.api.xml.Ems.EmsData;
 import net.sarangnamu.ems_tracking.cfg.Cfg;
@@ -30,18 +31,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
-
 public class Detail extends Activity {
     private Ems ems;
     private EmsHistory adapter;
 
-    private AdView adView;
+//    private AdView adView;
     private TextView emsNum;
     private ListView list;
     private LinearLayout adLayout;
+    private AdMobDelegator admob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +64,7 @@ public class Detail extends Activity {
 
     @Override
     protected void onDestroy() {
-        adView.destroy();
+        admob.free();
 
         super.onDestroy();
     }
@@ -80,9 +78,8 @@ public class Detail extends Activity {
     }
 
     private void initAdView() {
-        adView = new AdView(this, AdSize.BANNER, Cfg.ADMOB_ID);
-        adLayout.addView(adView);
-        adView.loadAd(new AdRequest());
+        admob = new AdMobDelegator(this, Cfg.ADMOB_ID);
+        admob.setLayout(adLayout);
     }
 
     private void initListView() {

@@ -20,10 +20,16 @@ package net.sarangnamu.common.network;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import net.sarangnamu.common.DLog;
+
 /**
+ * @see http://tools.ietf.org/html/rfc3986
+ *
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class ParameterEncoder {
+    private static final String TAG = "ParameterEncoder";
+
     public String encode = "UTF-8";
     private ArrayList<String> fields = new ArrayList<String>();
     private ArrayList<String> values = new ArrayList<String>();
@@ -41,7 +47,7 @@ public class ParameterEncoder {
         values.add(value);
     }
 
-    public String getParameter() {
+    public String encode() {
         StringBuilder parameters = new StringBuilder();
 
         try {
@@ -53,7 +59,7 @@ public class ParameterEncoder {
                 parameters.append("&");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            DLog.e(TAG, "encode", e);
         }
 
         int count = parameters.length();
