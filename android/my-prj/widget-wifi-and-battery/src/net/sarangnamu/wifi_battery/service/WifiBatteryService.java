@@ -55,7 +55,9 @@ public class WifiBatteryService extends ImmortalService {
         sendIntentToWidget(ADD_CLICK_EVENT, null);
 
         if (BkWifiManager.getInstance(this).isEnabled()) {
-            sendIntentToWidget(WIFI_CONNECTED, BkWifiManager.getInstance(getApplicationContext()).getIPAddr());
+            sendIntentToWidget(WIFI_CONNECTED,
+                    BkWifiManager.getInstance(getApplicationContext())
+                    .getIPAddr());
         } else {
             sendIntentToWidget(WIFI_DISCONNECTED, null);
         }
@@ -103,7 +105,9 @@ public class WifiBatteryService extends ImmortalService {
         wifiReceiver.register(this, new WiFIConnectedListener() {
             @Override
             public void onWiFiConnected() {
-                sendIntentToWidget(WIFI_CONNECTED, BkWifiManager.getInstance(getApplicationContext()).getIPAddr());
+                sendIntentToWidget(WIFI_CONNECTED,
+                        BkWifiManager.getInstance(getApplicationContext())
+                        .getIPAddr());
             }
         }, new WiFiDisconnectedListener() {
             @Override
@@ -124,11 +128,11 @@ public class WifiBatteryService extends ImmortalService {
         sendBroadcast(intent);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////////////
     //
     // ImmortalService
     //
-    ////////////////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public String getActionString() {
