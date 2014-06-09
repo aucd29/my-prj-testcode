@@ -35,7 +35,6 @@ public class Detail extends Activity {
     private Ems ems;
     private EmsHistory adapter;
 
-//    private AdView adView;
     private TextView emsNum;
     private ListView list;
     private LinearLayout adLayout;
@@ -64,7 +63,7 @@ public class Detail extends Activity {
 
     @Override
     protected void onDestroy() {
-        admob.free();
+        admob.destroy();
 
         super.onDestroy();
     }
@@ -74,12 +73,17 @@ public class Detail extends Activity {
             return ;
         }
 
-        emsNum.setText(ems.emsNum);
+        String anotherName = Cfg.getAnotherName(getApplicationContext(), ems.emsNum);
+        if (anotherName == null) {
+            emsNum.setText(ems.emsNum);
+        } else {
+            emsNum.setText(anotherName);
+        }
     }
 
     private void initAdView() {
         admob = new AdMobDelegator(this, Cfg.ADMOB_ID);
-        admob.setLayout(adLayout);
+        admob.load(adLayout);
     }
 
     private void initListView() {
@@ -129,7 +133,7 @@ public class Detail extends Activity {
 
                 vh.office = (TextView) view.findViewById(R.id.office);
                 vh.status = (TextView) view.findViewById(R.id.status);
-                vh.date = (TextView) view.findViewById(R.id.date);
+                vh.date   = (TextView) view.findViewById(R.id.date);
 
                 view.setTag(vh);
             } else {

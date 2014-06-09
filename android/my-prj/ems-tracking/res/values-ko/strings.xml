@@ -22,4 +22,5 @@
     <string name="done">완료</string>
     <string name="showDlgForAnotherName">물품명 설정 보이기</string>
     <string name="hideDlgForAnotherName">물품명 설정 숨기기</string>
+    <string name="modify">수정</string>
 </resources>

@@ -56,12 +56,12 @@ public class AdMobDelegator {
         adView = new AdView(act, size, id);
     }
 
-    public void setLayout(ViewGroup parnet) {
+    public void load(ViewGroup parnet) {
         parnet.addView(adView);
         adView.loadAd(new AdRequest());
     }
 
-    public void free() {
+    public void destroy() {
         adView.destroy();
     }
 }
