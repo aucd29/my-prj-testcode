@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/popup_bg"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@android:color/white" >
 
-    <net.sarangnamu.common.fonts.RobotoLightTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="@string/mnu_license"
+        android:text="@string/ui_dlg_license"
+        android:id="@+id/title"
         android:textSize="20sp" />
 
     <View

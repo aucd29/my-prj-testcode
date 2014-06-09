@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import net.sarangnamu.apk_extractor.AppList.PkgInfo;
 import net.sarangnamu.apk_extractor.cfg.Cfg;
 import net.sarangnamu.apk_extractor.dlg.DlgEmail;
-import net.sarangnamu.apk_extractor.dlg.DlgLicense;
 import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.BkFile;
 import net.sarangnamu.common.BkFile.FileCopyListener;
@@ -34,12 +33,14 @@ import net.sarangnamu.common.ani.FadeColor;
 import net.sarangnamu.common.explorer.DirChooserActivity;
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.ui.MenuManager;
+import net.sarangnamu.common.ui.dlg.DlgLicense;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
 import net.sarangnamu.common.ui.list.AniBtnListView;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -244,6 +245,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
             void showLicenseDlg() {
                 DlgLicense dlg = new DlgLicense(MainActivity.this);
+                Typeface tf = FontLoader.getInstance(getApplicationContext()).getRobotoLight();
+                dlg.setTitleTypeface(tf);
                 dlg.show();
             }
         });
@@ -519,11 +522,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         return false;
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // APP ADAPTER
     //
-    // //////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
 
     class ViewHolder {
         ImageView icon;
