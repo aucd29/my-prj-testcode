@@ -31,12 +31,12 @@ import com.google.ads.AdView;
 
     private void initAdView() {
         admob = new AdMobDelegator(this, Cfg.ADMOB_ID);
-        admob.setLayout(adLayout);
+        admob.load(adLayout);
     }
 
     @Override
     protected void onDestroy() {
-        admob.free();
+        admob.destroy();
 
         super.onDestroy();
     }
