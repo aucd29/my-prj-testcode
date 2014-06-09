@@ -17,10 +17,11 @@
  */
 package net.sarangnamu.d_day;
 
+import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.sqlite.DbManager;
+import net.sarangnamu.common.ui.dlg.DlgLicense;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
 import net.sarangnamu.d_day.db.DbHelper;
-import net.sarangnamu.d_day.dlg.DlgLicense;
 import net.sarangnamu.d_day.service.ResurrectionReceiver;
 import net.sarangnamu.d_day.sub.HomeFrgmt;
 import android.content.Intent;
@@ -52,6 +53,7 @@ public class MainActivity extends FragmentActivity {
         switch (item.getItemId()) {
         case R.id.action_license:
             DlgLicense dlg = new DlgLicense(MainActivity.this);
+            dlg.setTitleTypeface(FontLoader.getInstance(getApplicationContext()).getRobotoLight());
             dlg.show();
             break;
 

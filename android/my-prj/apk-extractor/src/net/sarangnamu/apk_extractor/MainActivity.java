@@ -40,7 +40,6 @@ import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -245,8 +244,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
             void showLicenseDlg() {
                 DlgLicense dlg = new DlgLicense(MainActivity.this);
-                Typeface tf = FontLoader.getInstance(getApplicationContext()).getRobotoLight();
-                dlg.setTitleTypeface(tf);
+                dlg.setTitleTypeface(FontLoader.getInstance(getApplicationContext()).getRobotoLight());
                 dlg.show();
             }
         });
