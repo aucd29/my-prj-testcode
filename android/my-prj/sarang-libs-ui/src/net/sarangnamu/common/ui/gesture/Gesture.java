@@ -47,7 +47,7 @@ import android.view.MotionEvent;
  * }
  * </pre>
  *
- * @author <a href="mailto:Burke Choi@obigo.com">krinbuch</a>
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class Gesture extends GestureDetector {
     private static final String TAG = "Gesture";
