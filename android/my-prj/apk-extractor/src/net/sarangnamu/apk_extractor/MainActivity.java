@@ -25,7 +25,7 @@ import net.sarangnamu.apk_extractor.cfg.Cfg;
 import net.sarangnamu.apk_extractor.dlg.DlgEmail;
 import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.BkFile;
-import net.sarangnamu.common.BkFile.FileCopyListener;
+import net.sarangnamu.common.BkFile.FileCopyDetailListener;
 import net.sarangnamu.common.BkString;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.DimTool;
@@ -429,7 +429,9 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                         fileName = fileName.replace(".apk", "-" + info.versionName + ".apk");
                     }
 
-                    BkFile.copyFileTo(src, Cfg.getDownPath(MainActivity.this) + fileName, new FileCopyListener() {
+                    BkFile.copyFileTo(src, Cfg.getDownPath(MainActivity.this) + fileName, new FileCopyDetailListener() {
+                        long fileSize;
+
                         @Override
                         public void onCancelled() {
                         }
@@ -440,7 +442,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                         }
 
                         @Override
-                        public void copyFile(String name) {
+                        public void onFinish(String name) {
                             if (sendEmail) {
                                 sendToEmail(info, name);
                             } else {
@@ -451,6 +453,21 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                                 String fileName = BkString.getFileName(name);
                                 sendMessage(SHOW_POPUP, fileName);
                             }
+                        }
+
+                        @Override
+                        public void onProcess(int percent) {
+
+                        }
+
+                        @Override
+                        public void onFileSize(long size) {
+                            fileSize = size;
+                        }
+
+                        @Override
+                        public long getFileSize() {
+                            return fileSize;
                         }
                     });
                 } catch (Exception e) {

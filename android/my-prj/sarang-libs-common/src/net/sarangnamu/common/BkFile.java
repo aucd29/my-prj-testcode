@@ -56,19 +56,31 @@ public class BkFile {
         }
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // COPY
     //
-    // //////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
 
     private static void copyStream(File fpDest, InputStream in, OutputStream out, FileCopyListener l) throws Exception {
-        byte[] buf = new byte[4096];
         int len;
+        byte[] buf = new byte[4096];
+        FileCopyDetailListener dl = null;
 
+        if (l != null && l instanceof FileCopyDetailListener) {
+            dl = (FileCopyDetailListener) l;
+        }
+
+        long total = 0;
         while ((len = in.read(buf)) > 0) {
             if (l.isCancelled()) {
                 break;
+            }
+
+            if (dl != null) {
+                total += len;
+                double percent = total * 100f / dl.getFileSize();
+                dl.onProcess((int) percent);
             }
 
             out.write(buf, 0, len);
@@ -86,7 +98,7 @@ public class BkFile {
                 return;
             }
 
-            l.copyFile(fpDest.getAbsolutePath());
+            l.onFinish(fpDest.getAbsolutePath());
         }
     }
 
@@ -99,9 +111,13 @@ public class BkFile {
 
         mkdirs(destFilePath);
 
-        File fpDest = new File(destFullPathName);
-        InputStream in = new FileInputStream(fpSrc);
+        File fpDest      = new File(destFullPathName);
+        InputStream in   = new FileInputStream(fpSrc);
         OutputStream out = new FileOutputStream(fpDest);
+
+        if (l != null && l instanceof FileCopyDetailListener) {
+            ((FileCopyDetailListener)l).onFileSize(fpSrc.length());
+        }
 
         copyStream(fpDest, in, out, l);
     }
@@ -115,9 +131,13 @@ public class BkFile {
 
         mkdirs(destPathName);
 
-        File fpDest = new File(destPathName, fileName);
-        InputStream in = new FileInputStream(fpSrc);
+        File fpDest      = new File(destPathName, fileName);
+        InputStream in   = new FileInputStream(fpSrc);
         OutputStream out = new FileOutputStream(fpDest);
+
+        if (l != null && l instanceof FileCopyDetailListener) {
+            ((FileCopyDetailListener)l).onFileSize(fpSrc.length());
+        }
 
         copyStream(fpDest, in, out, l);
     }
@@ -148,7 +168,7 @@ public class BkFile {
                 throw new IOException("Cannot create dir " + directory.getAbsolutePath());
             }
 
-            InputStream in = new FileInputStream(srcPath);
+            InputStream in   = new FileInputStream(srcPath);
             OutputStream out = new FileOutputStream(destPath);
 
             copyStream(srcPath, in, out, l);
@@ -156,18 +176,22 @@ public class BkFile {
     }
 
     public interface FileCopyListener {
-        public void copyFile(String name);
-
+        public void onFinish(String name);
         public boolean isCancelled();
-
         public void onCancelled();
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////
+    public interface FileCopyDetailListener extends FileCopyListener {
+        public void onProcess(int percent);
+        public void onFileSize(long size);
+        public long getFileSize();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // MOVE
     //
-    // //////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
 
     public static boolean moveTo(final String srcPath, final String destPath) {
         try {
@@ -184,11 +208,11 @@ public class BkFile {
         return true;
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // DELETE
     //
-    // //////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
 
     public static void deleteAll(final File fp) {
         try {

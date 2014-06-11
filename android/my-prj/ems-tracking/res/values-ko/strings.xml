@@ -4,13 +4,11 @@
     <string name="app_name">EMS 조회</string>
     <string name="plsWait">잠시만 기다려주세요..</string>
     <string name="appName">&lt;b&gt;EMS/국제등기&lt;/b&gt; 조회</string>
-    
     <string name="delete">삭제</string>
     <string name="add">등록 </string>
     <string name="detail">상세정보</string>
     <string name="emsNumber">EMS/등기 번호 </string>
     <string name="emptyList">내용이 없습니다.</string>
-
     <string name="plsInputNum">EMS 번호를 입력하세요</string>
     <string name="invalidEmsNum">EMS 번호 형식과 맞지 않습니다.</string>
     <string name="detailedInfo">세부 정보</string>
@@ -18,9 +16,10 @@
     <string name="deleteMsg">삭제 하시겠습니까?</string>
     <string name="insertErrorMsg">입력시 오류가 발생하였습니다.</string>
     <string name="anotherName">물품명 (옵션)</string>
-    
     <string name="done">완료</string>
     <string name="showDlgForAnotherName">물품명 설정 보이기</string>
     <string name="hideDlgForAnotherName">물품명 설정 숨기기</string>
     <string name="modify">수정</string>
+    <string name="license">라이센스</string>
+
 </resources>

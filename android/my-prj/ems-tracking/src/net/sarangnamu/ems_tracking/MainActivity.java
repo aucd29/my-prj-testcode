@@ -20,8 +20,10 @@ package net.sarangnamu.ems_tracking;
 import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.DimTool;
+import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.common.ui.dlg.DlgBtnBase.DlgBtnListener;
+import net.sarangnamu.common.ui.dlg.DlgLicense;
 import net.sarangnamu.common.ui.dlg.DlgNormal;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
 import net.sarangnamu.common.ui.list.AniBtnListView;
@@ -182,9 +184,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         case R.id.mnu_hideDlgForAnotherName:
             Cfg.setOptionName(MainActivity.this, false);
             break;
-
         case R.id.mnu_showDlgForAnotherName:
             Cfg.setOptionName(MainActivity.this, true);
+            break;
+        case R.id.mnu_license:
+            DlgLicense dlg = new DlgLicense(MainActivity.this);
+            dlg.setTitleTypeface(FontLoader.getInstance(getApplicationContext()).getRobotoLight());
+            dlg.show();
             break;
         }
 

@@ -5,22 +5,22 @@
     <string name="plsWait">Please wait..</string>
     <string name="appName">&lt;b&gt;EMS&lt;/b&gt; Tracking</string>
     <string name="myid">dev <![CDATA["@"]]>aucd29</string>
-        
     <string name="delete">Delete</string>
     <string name="add">Add</string>
     <string name="emsNumber">EMS Number</string>
-	<string name="emptyList">Empty list</string>
-	<string name="plsInputNum">Please insert EMS Number</string>
-	<string name="invalidEmsNum">Invalid EMS Number</string>
-	<string name="detailedInfo">Detail information</string>
-	<string name="deleted">Deleted</string>
-	<string name="detail">Detail</string>
-	<string name="deleteMsg">Sure that you want to delete?</string>
-	<string name="insertErrorMsg">Input Error</string>
-	
-	<string name="anotherName">Another Name (Optional)</string>
-	<string name="done">Done</string>
-	<string name="showDlgForAnotherName">Show Dialog for a Another Name</string>
-	<string name="hideDlgForAnotherName">Hide Dialog for a Another Name</string>
-	<string name="modify">Modify</string>
+    <string name="emptyList">Empty list</string>
+    <string name="plsInputNum">Please insert EMS Number</string>
+    <string name="invalidEmsNum">Invalid EMS Number</string>
+    <string name="detailedInfo">Detail information</string>
+    <string name="deleted">Deleted</string>
+    <string name="detail">Detail</string>
+    <string name="deleteMsg">Sure that you want to delete?</string>
+    <string name="insertErrorMsg">Input Error</string>
+    <string name="anotherName">Another Name (Optional)</string>
+    <string name="done">Done</string>
+    <string name="showDlgForAnotherName">Show Dialog for a Another Name</string>
+    <string name="hideDlgForAnotherName">Hide Dialog for a Another Name</string>
+    <string name="modify">Modify</string>
+    <string name="license">License</string>
+
 </resources>
