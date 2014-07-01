@@ -6,6 +6,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import net.sarangnamu.common.DLog;
+import net.sarangnamu.common.ui.dlg.DlgProgressBarFlat;
 import net.sarangnamu.common.ui.list.swipe.SwipeListView;
 import android.app.Activity;
 import android.app.Fragment;
@@ -26,7 +27,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        testProgressbar();
+    }
+
+    private void showDlg() {
+        DlgProgressBarFlat dlg = new DlgProgressBarFlat(MainActivity.this);
+        dlg.show();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

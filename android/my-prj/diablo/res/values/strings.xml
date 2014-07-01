@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">APK Extractor</string>
+    <string name="plsWait">Please wait..</string>
+    <string name="appName">&lt;b&gt;APK&lt;/b&gt; Extractor</string>
+    <string name="downloadPath">Download path</string>
+    <string name="dev">Developer</string>
+    <string name="extractOk">Extract OK!</string>
+    <string name="sdcard">sd</string>
+    <string name="email">e-mail</string>
+    <string name="dlgEmail">E-Mail : </string>
+    <string name="errorEmail">There are no email clients installed.</string>
+    <string name="sendMailFail">Please check network</string>
+    <string name="regAddr">Registered Address</string>
+    <string name="save">Save</string>
+    <string name="emptyList">Could not find a App</string>
+    
+    <!-- MENU -->
+    <string name="mnu_email">Set E-mail Addr</string>
+    <string name="mnu_search">Search</string>
+    <string name="mnu_showAllApps">Show All Apps</string>
+    <string name="mnu_showInstalledApps">Show Installed Apps</string>
+    <string name="mnu_setSdPath">Set SD Path</string>
+    <string name="mnu_license">License</string>
+</resources>

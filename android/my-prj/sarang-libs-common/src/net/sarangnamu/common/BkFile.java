@@ -43,17 +43,21 @@ import java.io.OutputStream;
 public class BkFile {
     private static final String TAG = "BkFile";
 
-    public static void mkdirs(File fp) throws Exception {
+    public static boolean mkdirs(File fp) throws Exception {
         if (!fp.exists()) {
-            fp.mkdirs();
+            return fp.mkdirs();
         }
+
+        return true;
     }
 
-    public static void mkdirs(final String path) throws Exception {
+    public static boolean mkdirs(final String path) throws Exception {
         File fp = new File(path);
         if (!fp.exists()) {
-            fp.mkdirs();
+            return fp.mkdirs();
         }
+
+        return true;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
