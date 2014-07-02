@@ -20,8 +20,6 @@ package net.sarangnamu.diablo.api.json;
 import java.util.ArrayList;
 
 import net.sarangnamu.diablo.api.json.profile.Heroes;
-import net.sarangnamu.diablo.api.json.profile.Kills;
-import net.sarangnamu.diablo.api.json.profile.TimePlayed;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -37,8 +35,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class Profile {
-    @JsonProperty
-    public ArrayList<Heroes> horoes;
+    @JsonProperty("heroes")
+    public ArrayList<Heroes> heroes;
 
     @JsonProperty
     public long lastHeroPlayed;
@@ -46,14 +44,14 @@ public class Profile {
     @JsonProperty
     public long lastUpdated;
 
-    @JsonProperty
-    public Kills kills;
-
-    @JsonProperty
-    public TimePlayed timePlayed;
-
-    @JsonProperty
-    public ArrayList<String> fallenHeroes; // temp
+//    @JsonProperty
+//    public Kills kills;
+//
+//    @JsonProperty
+//    public TimePlayed timePlayed;
+//
+//    @JsonProperty
+//    public ArrayList<String> fallenHeroes; // temp
 
     @JsonProperty
     public int paragonLevel;
@@ -64,6 +62,6 @@ public class Profile {
     @JsonProperty
     public String battleTag;
 
-    @JsonProperty
-    public ArrayList<String> progression;
+//    @JsonProperty
+//    public ArrayList<String> progression;
 }

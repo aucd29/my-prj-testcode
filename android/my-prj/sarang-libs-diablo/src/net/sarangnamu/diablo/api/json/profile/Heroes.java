@@ -44,6 +44,6 @@ public class Heroes {
     @JsonProperty
     public String classType;
 
-    @JsonProperty
+    @JsonProperty("last-updated")
     public long lastUpdated;
 }
