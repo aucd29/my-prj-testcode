@@ -18,9 +18,17 @@
 package net.sarangnamu.diablo.api.json;
 
 import net.sarangnamu.diablo.api.json.hero.Items;
+import net.sarangnamu.diablo.api.json.hero.Stats;
+import net.sarangnamu.diablo.api.json.hero.progression.Progression;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * @see http://blizzard.github.io/d3-api-docs/#
+ * @see http://kr.battle.net/api/d3/profile/burke-1935/hero/12541198
+ *
+ * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
+ */
 public class Hero {
     @JsonProperty
     public int id;
@@ -47,4 +55,12 @@ public class Hero {
 
     @JsonProperty("stats")
     public Stats stats;
+
+    // kills
+
+    @JsonProperty("progression")
+    public Progression progression;
+
+    @JsonProperty("last-updated")
+    public long lastUpdated;
 }

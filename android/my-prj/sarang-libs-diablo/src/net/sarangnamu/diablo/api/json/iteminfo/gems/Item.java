@@ -1,5 +1,5 @@
 /*
- * Profile.java
+ * Item.java
  * Copyright 2014 Burke Choi All right reserverd.
  *             http://www.sarangnamu.net
  *
@@ -15,48 +15,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sarangnamu.diablo.api.json;
-
-import java.util.ArrayList;
-
-import net.sarangnamu.diablo.api.json.profile.Heroes;
+package net.sarangnamu.diablo.api.json.iteminfo.gems;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * @see http://blizzard.github.io/d3-api-docs/#
- * @see http://kr.battle.net/api/d3/profile/burke-1935/
- *
- * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
- */
-public class Profile {
-    @JsonProperty("heroes")
-    public ArrayList<Heroes> heroes;
+public class Item {
+    @JsonProperty
+    public String id;
 
     @JsonProperty
-    public long lastHeroPlayed;
+    public String name;
 
     @JsonProperty
-    public long lastUpdated;
-
-//    @JsonProperty
-//    public Kills kills;
-//
-//    @JsonProperty
-//    public TimePlayed timePlayed;
-//
-//    @JsonProperty
-//    public ArrayList<String> fallenHeroes; // temp
+    public String icon;
 
     @JsonProperty
-    public int paragonLevel;
+    public String displayColor;
 
     @JsonProperty
-    public int paragonLevelHardcore;
-
-    @JsonProperty
-    public String battleTag;
-
-//    @JsonProperty
-//    public ArrayList<String> progression;
+    public String tooltipParams;
 }
