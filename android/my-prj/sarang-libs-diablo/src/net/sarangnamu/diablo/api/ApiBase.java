@@ -73,7 +73,7 @@ public class ApiBase {
         // ex) http://kr.battle.net/api/d3/profile/burke-1935/hero/$heroId
         try {
             String userProfileUrl = getProfileUrl(context, hostType, tagName, tagCode);
-            return userProfileUrl + "/hero/" + heroId;
+            return userProfileUrl + "hero/" + heroId;
         } catch (Exception e) {
             DLog.e(TAG, "getItemInfoUrl", e);
         }

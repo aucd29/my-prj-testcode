@@ -50,6 +50,7 @@ public class BkHttp {
     protected void initHttp() {
         if (http == null) {
             http = new DefaultHttpClient();
+            timeout();
         }
     }
 
@@ -61,6 +62,20 @@ public class BkHttp {
 
         int timeoutSocket = 5000;
         HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+
+        http.setParams(httpParameters);
+    }
+
+    public void setTimeout(int connTimeout, int socketTimeout) {
+        if (http == null) {
+            return ;
+        }
+
+        HttpParams httpParameters = new BasicHttpParams();
+        HttpConnectionParams.setConnectionTimeout(httpParameters, connTimeout);
+        HttpConnectionParams.setSoTimeout(httpParameters, socketTimeout);
+
+        http.setParams(httpParameters);
     }
 
     public void setMethod(final String method) {
@@ -110,7 +125,6 @@ public class BkHttp {
         }
 
         HttpGet httpGet = new HttpGet(getUrl + params);
-        timeout();
         HttpResponse response = http.execute(httpGet);
 
         return response.getEntity();
@@ -120,7 +134,6 @@ public class BkHttp {
         initHttp();
 
         HttpPost httpPost = new HttpPost(getUrl);
-        timeout();
         List<NameValuePair> pair = new ArrayList<NameValuePair>();
 
         for (String key : parameters.keySet()) {
