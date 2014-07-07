@@ -63,7 +63,7 @@ public class LibsTest extends AndroidTestCase {
 
         try {
             BkHttp http = new BkHttp();
-            http.setTimeout(10000, 10000);
+            http.setTimeout(20000, 20000);
             http.setMethod("GET");
             return http.submit(url, null);
         } catch (Exception e) {
