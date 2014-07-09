@@ -41,7 +41,7 @@ public class ApiBase {
     // APIS
     public static final String USER_PROFILE = "/api/d3/profile/";
 //    public static final String HER0_PROFILE = "/api/d3/profile/hero/";
-    public static final String ITEM_INFO    = "/api/d3/data/item/";
+    public static final String ITEM_INFO    = "/api/d3/data/";
 
     // HOSTS
     public static final String HOST_DEFAULT = ".battle.net";

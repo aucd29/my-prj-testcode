@@ -10,7 +10,10 @@ import net.sarangnamu.common.json.JsonTool;
 import net.sarangnamu.common.network.BkHttp;
 import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.diablo.api.ApiBase;
+import net.sarangnamu.diablo.api.json.Hero;
+import net.sarangnamu.diablo.api.json.ItemInfo;
 import net.sarangnamu.diablo.api.json.Profile;
+import net.sarangnamu.diablo.api.json.hero.Items;
 import net.sarangnamu.diablo.api.json.profile.Heroes;
 import android.content.Context;
 import android.test.AndroidTestCase;
@@ -95,15 +98,44 @@ public class LibsTest extends AndroidTestCase {
             assertNotNull(url);
 
             String response = downloadUrlData(url);
-            DLog.e(TAG, "===================================================================");
-            DLog.d(TAG, "response");
-            DLog.e(TAG, "===================================================================");
-            DLog.d(TAG, response);
-
-
+//            DLog.e(TAG, "===================================================================");
+//            DLog.d(TAG, "response");
+//            DLog.e(TAG, "===================================================================");
+//            DLog.d(TAG, response);
             assertNotNull(response);
+
+            Hero objHero = (Hero) JsonTool.toObj(response, Hero.class);
+            DLog.e(TAG, "===================================================================");
+            DLog.d(TAG, "name " + objHero.name);
+            DLog.d(TAG, "class " + objHero.classType);
+            DLog.d(TAG, "gender " + objHero.gender);
+            DLog.e(TAG, "===================================================================");
+
+            Items items = objHero.items;
+            DLog.d(TAG, "===================================================================");
+            DLog.d(TAG, "head item");
+            DLog.d(TAG, "name  : " + items.head.name);
+            DLog.d(TAG, "icon  : " + items.head.icon);
+            DLog.d(TAG, "color : " + items.head.displayColor);
+            DLog.d(TAG, "tip   : " + items.head.tooltipParams);
+
+            parseItem(items.head.tooltipParams);
+
+            DLog.d(TAG, "===================================================================");
         }
 
         DLog.e(TAG, "===================================================================");
+    }
+
+    public void parseItem(final String itemCode) {
+        // http://kr.battle.net/api/d3/data/item/CoYBCKOn8NoJEgcIBBUVuTOJHdPMB2MdcYt38B07J28kHfiEvYwdZiMGUB3J-rygMIsCOJMCQABQElgEYJMCaikKDAgAEKP_1_eAgICAKxIZCKughPUBEgcIBBWFJ5SxMI8COABAAZABAIABRqUB-IS9jK0B5hXbDbUBf_lOXbgBtY7nvgLAAQEY1Zvi7A5QAFgCoAHVm-LsDqABlZ3y4Q6gAZO9xvwFoAHqg-iTBqABvsGNqw8
+        Context context = getContext();
+        String url = ApiBase.getItemInfoUrl(context, LANG, itemCode);
+        DLog.d(TAG, "url : " + url);
+
+        String response = downloadUrlData(url);
+        assertNotNull(response);
+
+        ItemInfo itemInfo = (ItemInfo) JsonTool.toObj(response, ItemInfo.class);
     }
 }

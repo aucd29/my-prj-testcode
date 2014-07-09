@@ -18,6 +18,7 @@
 package net.sarangnamu.diablo.api.json;
 
 import net.sarangnamu.diablo.api.json.hero.Items;
+import net.sarangnamu.diablo.api.json.hero.Skills;
 import net.sarangnamu.diablo.api.json.hero.Stats;
 import net.sarangnamu.diablo.api.json.hero.progression.Progression;
 
@@ -45,8 +46,14 @@ public class Hero {
     @JsonProperty
     public int level;
 
+    @JsonProperty
+    public int paragonLevel;
+
+    @JsonProperty
+    public boolean hardcore;
+
     @JsonProperty("skills")
-    public int skills;
+    public Skills skills;
 
     @JsonProperty("items")
     public Items items;
@@ -60,6 +67,9 @@ public class Hero {
 
     @JsonProperty("progression")
     public Progression progression;
+
+    @JsonProperty
+    public boolean dead;
 
     @JsonProperty("last-updated")
     public long lastUpdated;
