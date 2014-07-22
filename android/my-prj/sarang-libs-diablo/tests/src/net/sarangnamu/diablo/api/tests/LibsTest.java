@@ -5,6 +5,7 @@
  */
 package net.sarangnamu.diablo.api.tests;
 
+import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.json.JsonTool;
 import net.sarangnamu.common.network.BkHttp;
@@ -174,5 +175,12 @@ public class LibsTest extends AndroidTestCase {
 
         ItemInfo itemInfo = (ItemInfo) JsonTool.toObj(response, ItemInfo.class);
         assertNotNull(itemInfo);
+    }
+
+    public void testBkDataFolder() {
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "data path     : " + BkCfg.sdPath());
+        DLog.d(TAG, "external path : " + BkCfg.externalFilePath(getContext()));
+        DLog.d(TAG, "===================================================================");
     }
 }

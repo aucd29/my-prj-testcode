@@ -86,7 +86,7 @@ public class ApiBase {
 
     public static Drawable getItemDrawable(Context context, String url, String itemCode) {
         StringBuilder sb = new StringBuilder();
-        sb.append(BkCfg.sdDataPath());
+        sb.append(BkCfg.externalFilePath(context));
         sb.append("/");
         sb.append(itemCode);
         sb.append(".png");

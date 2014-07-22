@@ -64,12 +64,12 @@ public class BkCfg {
         return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
-    public static String sdDataPath() {
-        if (!Environment.getDataDirectory().exists()) {
-            Environment.getDataDirectory().mkdirs();
+    public static String externalFilePath(Context context) {
+        if (context == null) {
+            return null;
         }
 
-        return Environment.getDataDirectory().getAbsolutePath();
+        return context.getExternalFilesDir(null).getAbsolutePath();
     }
 
     public static void showKeyboard(final View view) {
