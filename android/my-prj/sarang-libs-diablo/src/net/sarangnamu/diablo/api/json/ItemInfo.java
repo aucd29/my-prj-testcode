@@ -51,11 +51,11 @@ public class ItemInfo {
     @JsonProperty
     public String itemLevel;
 
-    @JsonProperty
-    public int bonusAffixes;
+    //@JsonProperty
+    //public int bonusAffixes;
 
-    @JsonProperty
-    public String bonusAffixesMax;
+    //@JsonProperty
+    //public String bonusAffixesMax;
 
     @JsonProperty
     public boolean accountBound;
@@ -68,12 +68,12 @@ public class ItemInfo {
 
     // type
 
-    @JsonProperty
-    public String armor;
+    //@JsonProperty
+    //public String armor;
 
     // attributes
-    @JsonProperty("attributes")
-    public String attributes;
+    //@JsonProperty("attributes")
+    //public String attributes;
 
     // attributesRaw
 

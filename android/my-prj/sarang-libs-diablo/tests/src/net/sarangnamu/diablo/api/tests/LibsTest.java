@@ -14,6 +14,7 @@ import net.sarangnamu.diablo.api.json.Hero;
 import net.sarangnamu.diablo.api.json.ItemInfo;
 import net.sarangnamu.diablo.api.json.Profile;
 import net.sarangnamu.diablo.api.json.hero.Items;
+import net.sarangnamu.diablo.api.json.hero.items.Item;
 import net.sarangnamu.diablo.api.json.profile.Heroes;
 import android.content.Context;
 import android.test.AndroidTestCase;
@@ -112,19 +113,61 @@ public class LibsTest extends AndroidTestCase {
             DLog.e(TAG, "===================================================================");
 
             Items items = objHero.items;
+
             DLog.d(TAG, "===================================================================");
             DLog.d(TAG, "head item");
-            DLog.d(TAG, "name  : " + items.head.name);
-            DLog.d(TAG, "icon  : " + items.head.icon);
-            DLog.d(TAG, "color : " + items.head.displayColor);
-            DLog.d(TAG, "tip   : " + items.head.tooltipParams);
+            printAndParseItem(items.head);
 
-            parseItem(items.head.tooltipParams);
+            DLog.d(TAG, "shoulders item");
+            printAndParseItem(items.shoulders);
 
+            DLog.d(TAG, "neck item");
+            printAndParseItem(items.neck);
+
+            DLog.d(TAG, "hands item");
+            printAndParseItem(items.hands);
+
+            DLog.d(TAG, "torso item");
+            printAndParseItem(items.torso);
+
+            DLog.d(TAG, "bracers item");
+            printAndParseItem(items.bracers);
+
+            DLog.d(TAG, "leftFinger item");
+            printAndParseItem(items.leftFinger);
+
+            DLog.d(TAG, "waist item");
+            printAndParseItem(items.waist);
+
+            DLog.d(TAG, "rightFinger item");
+            printAndParseItem(items.rightFinger);
+
+            DLog.d(TAG, "mainHand item");
+            printAndParseItem(items.mainHand);
+
+            DLog.d(TAG, "legs item");
+            printAndParseItem(items.legs);
+
+            DLog.d(TAG, "offHand item");
+            printAndParseItem(items.offHand);
+
+            DLog.d(TAG, "feet item");
+            printAndParseItem(items.feet);
             DLog.d(TAG, "===================================================================");
         }
 
         DLog.e(TAG, "===================================================================");
+    }
+
+    public void printAndParseItem(Item out) {
+        if (out != null) {
+            DLog.d(TAG, "name  : " + out.name);
+            DLog.d(TAG, "icon  : " + out.icon);
+            DLog.d(TAG, "color : " + out.displayColor);
+            DLog.d(TAG, "tip   : " + out.tooltipParams);
+
+            parseItem(out.tooltipParams);
+        }
     }
 
     public void parseItem(final String itemCode) {
@@ -137,5 +180,6 @@ public class LibsTest extends AndroidTestCase {
         assertNotNull(response);
 
         ItemInfo itemInfo = (ItemInfo) JsonTool.toObj(response, ItemInfo.class);
+        assertNotNull(itemInfo);
     }
 }
