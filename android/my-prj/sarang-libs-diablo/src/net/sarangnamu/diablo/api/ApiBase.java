@@ -17,10 +17,15 @@
  */
 package net.sarangnamu.diablo.api;
 
+import java.io.File;
+
+import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.DLog;
+import net.sarangnamu.common.network.BkDownloader;
 import net.sarangnamu.common.network.BkHttp;
 import net.sarangnamu.common.network.BkWifiManager;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 
 /**
@@ -39,9 +44,10 @@ public class ApiBase {
     private static final String TAG = "ApiBase";
 
     // APIS
-    public static final String USER_PROFILE = "/api/d3/profile/";
-//    public static final String HER0_PROFILE = "/api/d3/profile/hero/";
-    public static final String ITEM_INFO    = "/api/d3/data/";
+    public static final String USER_PROFILE = "http://%s/api/d3/profile/%s/";           // domain, battle tag
+    public static final String HER0_PROFILE = "http://%s/api/d3/profile/%s/hero/%d";    // domain, battle tag, hero id
+    public static final String ITEM_INFO    = "http://%s/api/d3/data/%s";               // domain, item code
+    public static final String ICON_INFO    = "http://media.blizzard.com/d3/icons/items/large/%s.png";
 
     // HOSTS
     public static final String HOST_DEFAULT = ".battle.net";
@@ -50,53 +56,58 @@ public class ApiBase {
     // PROTOCOL
     public static final String PROTOCOL = "http://";
 
-    public static String getProfileUrl(Context context, String  hostType, String tagName, int tagCode) {
-        // ex) http://kr.battle.net/api/d3/profile/burke-1935/
-
-        try {
-            String host = null;
-            if (hostType.equals("ch")) {
-                host = HOST_CH;
-            } else {
-                host = hostType + HOST_DEFAULT;
-            }
-
-            return String.format("%s%s%s%s-%d/", PROTOCOL, host, USER_PROFILE, tagName, tagCode);
-        } catch (Exception e) {
-            DLog.e(TAG, "getProfileUrl", e);
+    private static String getHost(String hostType) {
+        if (hostType.equals("ch")) {
+            return HOST_CH;
         }
 
-        return null;
+        return hostType + HOST_DEFAULT;
     }
 
-    public static String getHeroInfoUrl(Context context, String hostType, String tagName, int tagCode, int heroId) {
-        // ex) http://kr.battle.net/api/d3/profile/burke-1935/hero/$heroId
-        try {
-            String userProfileUrl = getProfileUrl(context, hostType, tagName, tagCode);
-            return userProfileUrl + "hero/" + heroId;
-        } catch (Exception e) {
-            DLog.e(TAG, "getItemInfoUrl", e);
-        }
+    public static String getProfileUrl(Context context, String hostType, String battleTag) {
+        // ex) http://kr.battle.net/api/d3/profile/burke-1935/
+        return String.format(USER_PROFILE, getHost(hostType), battleTag);
+    }
 
-        return null;
+    public static String getHeroInfoUrl(Context context, String hostType, String battleTag, int heroId) {
+        // ex) http://kr.battle.net/api/d3/profile/burke-1935/hero/$heroId
+        return String.format(HER0_PROFILE, getHost(hostType), battleTag, heroId);
     }
 
     public static String getItemInfoUrl(Context context, String hostType, String itemCode) {
         // ex) /api/d3/data/item/COGHsoAIEgcIBBXIGEoRHYQRdRUdnWyzFB2qXu51MA04kwNAAFAKYJMD
-        try {
-            String host = null;
-            if (hostType.equals("ch")) {
-                host = HOST_CH;
-            } else {
-                host = hostType + HOST_DEFAULT;
-            }
+        return String.format(ITEM_INFO, getHost(hostType), itemCode);
+    }
 
-            return String.format("%s%s%s%s", PROTOCOL, host, ITEM_INFO, itemCode);
-        } catch (Exception e) {
-            DLog.e(TAG, "getItemInfoUrl", e);
+    public static String getItemPngUrl(Context context, String itemCode) {
+        // ex) http://media.blizzard.com/d3/icons/items/large/unique_helm_set_07_x1_demonhunter_male.png
+        return String.format(ICON_INFO, itemCode);
+    }
+
+    public static Drawable getItemDrawable(Context context, String url, String itemCode) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(BkCfg.sdDataPath());
+        sb.append("/");
+        sb.append(itemCode);
+        sb.append(".png");
+
+        boolean exist = true;
+        File img = new File(sb.toString());
+        if (!img.exists()) {
+            try {
+                BkDownloader dn = new BkDownloader();
+                dn.download(url, sb.toString(), null);
+            } catch (Exception e) {
+                exist = false;
+                DLog.e(TAG, "getItemDrawable", e);
+            }
         }
 
-        return null;
+        if (exist) {
+            return Drawable.createFromPath(sb.toString());
+        } else {
+            return null;
+        }
     }
 
     public String getLocale(Context context) throws Exception {
@@ -257,5 +268,4 @@ public class ApiBase {
     public void getProfile(Context context) {
 
     }
-
 }

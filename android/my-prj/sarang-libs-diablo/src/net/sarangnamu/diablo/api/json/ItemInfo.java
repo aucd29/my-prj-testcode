@@ -26,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @see http://blizzard.github.io/d3-api-docs/#item-information/item-information-example
  * @see http://bit.ly/1z9ANVs
+ * @see http://media.blizzard.com/d3/icons/items/large/unique_helm_003_x1_demonhunter_male.png
  *
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */

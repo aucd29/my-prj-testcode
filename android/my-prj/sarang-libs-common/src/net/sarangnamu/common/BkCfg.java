@@ -64,6 +64,14 @@ public class BkCfg {
         return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
+    public static String sdDataPath() {
+        if (!Environment.getDataDirectory().exists()) {
+            Environment.getDataDirectory().mkdirs();
+        }
+
+        return Environment.getDataDirectory().getAbsolutePath();
+    }
+
     public static void showKeyboard(final View view) {
         if (view == null) {
             DLog.e(TAG, "showKeyboard view == null");

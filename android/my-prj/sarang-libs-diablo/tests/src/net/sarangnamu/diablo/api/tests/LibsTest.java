@@ -22,18 +22,17 @@ import android.test.AndroidTestCase;
 public class LibsTest extends AndroidTestCase {
     private static final String TAG = "DiabloLibsTest";
     private static final String LANG = "kr";
-    private static final String BID = "burke";
-    private static final int BTAG = 1935;
+    private static final String BATTLE_TAG = "burke-1935";
 
     public void testProfileUrl() {
         Context context = getContext();
-        String url = ApiBase.getProfileUrl(context, LANG, BID, BTAG);
+        String url = ApiBase.getProfileUrl(context, LANG, BATTLE_TAG);
         assertEquals(url, "http://kr.battle.net/api/d3/profile/burke-1935/");
     }
 
     public void testGetProfileData() {
         Context context = getContext();
-        String url = ApiBase.getProfileUrl(context, LANG, BID, BTAG);
+        String url = ApiBase.getProfileUrl(context, LANG, BATTLE_TAG);
 
         assertEquals(url, "http://kr.battle.net/api/d3/profile/burke-1935/");
         assertTrue(BkWifiManager.getInstance(context).isEnabled());
@@ -49,10 +48,8 @@ public class LibsTest extends AndroidTestCase {
 
             DLog.d(TAG, "===================================================================");
             DLog.d(TAG, profile.battleTag);
-            DLog.d(TAG, BID + "#" + BTAG);
+            DLog.d(TAG, BATTLE_TAG);
             DLog.d(TAG, "===================================================================");
-
-            assertNotSame(profile.battleTag.toLowerCase(), BID + "#" + BTAG);
 
             parseHeroes(profile);
 
@@ -93,16 +90,12 @@ public class LibsTest extends AndroidTestCase {
             DLog.e(TAG, "===================================================================");
             DLog.d(TAG, "NAME : " + hero.name);
 
-            String url = ApiBase.getHeroInfoUrl(context, LANG, BID, BTAG, hero.id);
+            String url = ApiBase.getHeroInfoUrl(context, LANG, BATTLE_TAG, hero.id);
             DLog.e(TAG, "===================================================================");
             DLog.d(TAG, url);
             assertNotNull(url);
 
             String response = downloadUrlData(url);
-//            DLog.e(TAG, "===================================================================");
-//            DLog.d(TAG, "response");
-//            DLog.e(TAG, "===================================================================");
-//            DLog.d(TAG, response);
             assertNotNull(response);
 
             Hero objHero = (Hero) JsonTool.toObj(response, Hero.class);
