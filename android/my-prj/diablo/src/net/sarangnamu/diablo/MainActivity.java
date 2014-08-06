@@ -17,8 +17,20 @@
  */
 package net.sarangnamu.diablo;
 
+import java.io.StringReader;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
+
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 
 public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
@@ -27,5 +39,23 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        try {
+            String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root><ip>210.216.54.2</ip></root>";
+            String res = getIp(xml);
+            Log.d(TAG, res);
+        } catch (Exception e) {
+            Log.e(TAG, "onCreate", e);
+        }
+    }
+
+    String getIp(String xml) throws Exception {
+        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = builderFactory.newDocumentBuilder();
+        XPath xpath = XPathFactory.newInstance().newXPath();
+
+        Document document = builder.parse(new InputSource(new StringReader(xml)));
+        String expression = "/root/ip/text()";
+
+        return xpath.evaluate(expression, document, XPathConstants.STRING).toString();
     }
 }

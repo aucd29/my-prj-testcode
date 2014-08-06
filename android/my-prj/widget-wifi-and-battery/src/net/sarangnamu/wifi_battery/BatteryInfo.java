@@ -76,8 +76,7 @@ public class BatteryInfo extends BroadcastReceiver {
         }
 
         this.l = l;
-        context.registerReceiver(this, new IntentFilter(
-                Intent.ACTION_BATTERY_CHANGED));
+        context.registerReceiver(this, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
     public void unregister(Context context) {

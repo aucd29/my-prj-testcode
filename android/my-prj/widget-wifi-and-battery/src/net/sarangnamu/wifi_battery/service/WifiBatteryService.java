@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.wifi_battery.service;
 
+import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.common.network.BkWifiStateReceiver;
 import net.sarangnamu.common.network.BkWifiStateReceiver.WiFIConnectedListener;
@@ -52,13 +53,19 @@ public class WifiBatteryService extends ImmortalService {
     public void onCreate() {
         super.onCreate();
 
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "wifi and battery widget on create");
+        DLog.d(TAG, "===================================================================");
+
         sendIntentToWidget(ADD_CLICK_EVENT, null);
 
         if (BkWifiManager.getInstance(this).isEnabled()) {
-            sendIntentToWidget(WIFI_CONNECTED,
-                    BkWifiManager.getInstance(getApplicationContext())
-                    .getIPAddr());
+            DLog.d(TAG, "wifi enabled");
+            String ip = BkWifiManager.getInstance(getApplicationContext()).getIPAddr();
+            DLog.d(TAG, "ip " + ip);
+            sendIntentToWidget(WIFI_CONNECTED, ip);
         } else {
+            DLog.d(TAG, "wifi disabled");
             sendIntentToWidget(WIFI_DISCONNECTED, null);
         }
 
@@ -92,6 +99,7 @@ public class WifiBatteryService extends ImmortalService {
         batteryInfo.register(this, new BatteryInfoListener() {
             @Override
             public void onChangeBattery(int battery) {
+                DLog.d(TAG, "battery info " + battery + "%");
                 sendIntentToWidget(BATTERY_INFO, "Battery : " + battery + "%");
             }
         });
@@ -105,13 +113,14 @@ public class WifiBatteryService extends ImmortalService {
         wifiReceiver.register(this, new WiFIConnectedListener() {
             @Override
             public void onWiFiConnected() {
+                DLog.d(TAG, "wifi connected");
                 sendIntentToWidget(WIFI_CONNECTED,
-                        BkWifiManager.getInstance(getApplicationContext())
-                        .getIPAddr());
+                        BkWifiManager.getInstance(getApplicationContext()).getIPAddr());
             }
         }, new WiFiDisconnectedListener() {
             @Override
             public void onWiFiDisconnected() {
+                DLog.d(TAG, "wifi disconnected");
                 sendIntentToWidget(WIFI_DISCONNECTED, null);
             }
         });

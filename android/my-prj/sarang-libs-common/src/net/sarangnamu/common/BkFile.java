@@ -181,6 +181,7 @@ public class BkFile {
 
     public interface FileCopyListener {
         public void onFinish(String name);
+        public void onError(String errMsg);
         public boolean isCancelled();
         public void onCancelled();
     }
