@@ -469,6 +469,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                         public long getFileSize() {
                             return fileSize;
                         }
+
+                        @Override
+                        public void onError(String errMsg) {
+                            // TODO Auto-generated method stub
+                        }
                     });
                 } catch (Exception e) {
                     DLog.e(TAG, "onItemClick", e);

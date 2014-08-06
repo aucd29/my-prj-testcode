@@ -18,10 +18,7 @@
 package net.sarangnamu.wifi_battery.service;
 
 import net.sarangnamu.common.DLog;
-import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.common.network.BkWifiStateReceiver;
-import net.sarangnamu.common.network.BkWifiStateReceiver.WiFIConnectedListener;
-import net.sarangnamu.common.network.BkWifiStateReceiver.WiFiDisconnectedListener;
 import net.sarangnamu.common.service.immortal.ImmortalService;
 import net.sarangnamu.wifi_battery.BatteryInfo;
 import net.sarangnamu.wifi_battery.BatteryInfo.BatteryInfoListener;
@@ -59,18 +56,18 @@ public class WifiBatteryService extends ImmortalService {
 
         sendIntentToWidget(ADD_CLICK_EVENT, null);
 
-        if (BkWifiManager.getInstance(this).isEnabled()) {
-            DLog.d(TAG, "wifi enabled");
-            String ip = BkWifiManager.getInstance(getApplicationContext()).getIPAddr();
-            DLog.d(TAG, "ip " + ip);
-            sendIntentToWidget(WIFI_CONNECTED, ip);
-        } else {
-            DLog.d(TAG, "wifi disabled");
-            sendIntentToWidget(WIFI_DISCONNECTED, null);
-        }
+        //        if (BkWifiManager.getInstance(this).isEnabled()) {
+        //            DLog.d(TAG, "wifi enabled");
+        //            String ip = BkWifiManager.getInstance(getApplicationContext()).getIPAddr();
+        //            DLog.d(TAG, "ip " + ip);
+        //            sendIntentToWidget(WIFI_CONNECTED, ip);
+        //        } else {
+        //            DLog.d(TAG, "wifi disabled");
+        //            sendIntentToWidget(WIFI_DISCONNECTED, null);
+        //        }
 
         initBatteryInfo();
-        initWifiStatus();
+        //        initWifiStatus();
     }
 
     @Override
@@ -79,9 +76,9 @@ public class WifiBatteryService extends ImmortalService {
             batteryInfo.unregister(this);
         }
 
-        if (wifiReceiver != null) {
-            wifiReceiver.unregister(this);
-        }
+        //        if (wifiReceiver != null) {
+        //            wifiReceiver.unregister(this);
+        //        }
 
         super.onDestroy();
     }
@@ -105,26 +102,26 @@ public class WifiBatteryService extends ImmortalService {
         });
     }
 
-    private void initWifiStatus() {
-        if (wifiReceiver == null) {
-            wifiReceiver = new BkWifiStateReceiver();
-        }
-
-        wifiReceiver.register(this, new WiFIConnectedListener() {
-            @Override
-            public void onWiFiConnected() {
-                DLog.d(TAG, "wifi connected");
-                sendIntentToWidget(WIFI_CONNECTED,
-                        BkWifiManager.getInstance(getApplicationContext()).getIPAddr());
-            }
-        }, new WiFiDisconnectedListener() {
-            @Override
-            public void onWiFiDisconnected() {
-                DLog.d(TAG, "wifi disconnected");
-                sendIntentToWidget(WIFI_DISCONNECTED, null);
-            }
-        });
-    }
+    //    private void initWifiStatus() {
+    //        if (wifiReceiver == null) {
+    //            wifiReceiver = new BkWifiStateReceiver();
+    //        }
+    //
+    //        wifiReceiver.register(this, new WiFIConnectedListener() {
+    //            @Override
+    //            public void onWiFiConnected() {
+    //                DLog.d(TAG, "wifi connected");
+    //                sendIntentToWidget(WIFI_CONNECTED,
+    //                        BkWifiManager.getInstance(getApplicationContext()).getIPAddr());
+    //            }
+    //        }, new WiFiDisconnectedListener() {
+    //            @Override
+    //            public void onWiFiDisconnected() {
+    //                DLog.d(TAG, "wifi disconnected");
+    //                sendIntentToWidget(WIFI_DISCONNECTED, null);
+    //            }
+    //        });
+    //    }
 
     private void sendIntentToWidget(final String action, final String extraValue) {
         Intent intent = new Intent(this, WifiBatteryWidget.class);
