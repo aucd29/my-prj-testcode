@@ -137,12 +137,10 @@ public class WifiBatteryWidget extends AppWidgetProvider {
                 views.setViewVisibility(R.id.prog, View.VISIBLE);
 
                 if (BkWifiManager.getInstance(context).isEnabled()) {
-                    DLog.d(TAG, "call disable");
                     BkWifiManager.getInstance(context).wifiDisable();
 
                     changingWifi = false;
                 } else {
-                    DLog.d(TAG, "call enable");
                     BkWifiManager.getInstance(context).wifiEnable();
                 }
             }
@@ -163,6 +161,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
     }
 
     private void startService(Context context) {
+        context.stopService(new Intent(context, WifiBatteryService.class));
         context.startService(new Intent(context, WifiBatteryService.class));
     }
 }
