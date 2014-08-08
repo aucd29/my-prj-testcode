@@ -18,7 +18,6 @@
 package net.sarangnamu.wifi_battery.service;
 
 import net.sarangnamu.common.DLog;
-import net.sarangnamu.common.network.BkWifiStateReceiver;
 import net.sarangnamu.common.service.immortal.ImmortalService;
 import net.sarangnamu.wifi_battery.BatteryInfo;
 import net.sarangnamu.wifi_battery.BatteryInfo.BatteryInfoListener;
@@ -29,15 +28,9 @@ import android.os.IBinder;
 public class WifiBatteryService extends ImmortalService {
     private static final String TAG = "WifiBatteryService";
 
-    private BkWifiStateReceiver wifiReceiver;
     private BatteryInfo batteryInfo;
 
     public static final String BATTERY_INFO = "BATTERY_INFO";
-    public static final String ADD_CLICK_EVENT = "ADD_CLICK_EVENT";
-    public static final String WIFI_CONNECTED = "WIFI_CONNECTED";
-    public static final String WIFI_DISCONNECTED = "WIFI_DISCONNECTED";
-    public static final String WIFI_IP = "WIFI_IP";
-
     public static final String LEVEL = "level";
     public static final String SCALE = "scale";
 
@@ -50,24 +43,7 @@ public class WifiBatteryService extends ImmortalService {
     public void onCreate() {
         super.onCreate();
 
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "wifi and battery widget on create");
-        DLog.d(TAG, "===================================================================");
-
-        sendIntentToWidget(ADD_CLICK_EVENT, null);
-
-        //        if (BkWifiManager.getInstance(this).isEnabled()) {
-        //            DLog.d(TAG, "wifi enabled");
-        //            String ip = BkWifiManager.getInstance(getApplicationContext()).getIPAddr();
-        //            DLog.d(TAG, "ip " + ip);
-        //            sendIntentToWidget(WIFI_CONNECTED, ip);
-        //        } else {
-        //            DLog.d(TAG, "wifi disabled");
-        //            sendIntentToWidget(WIFI_DISCONNECTED, null);
-        //        }
-
         initBatteryInfo();
-        //        initWifiStatus();
     }
 
     @Override
@@ -75,10 +51,6 @@ public class WifiBatteryService extends ImmortalService {
         if (batteryInfo != null) {
             batteryInfo.unregister(this);
         }
-
-        //        if (wifiReceiver != null) {
-        //            wifiReceiver.unregister(this);
-        //        }
 
         super.onDestroy();
     }
@@ -102,27 +74,6 @@ public class WifiBatteryService extends ImmortalService {
         });
     }
 
-    //    private void initWifiStatus() {
-    //        if (wifiReceiver == null) {
-    //            wifiReceiver = new BkWifiStateReceiver();
-    //        }
-    //
-    //        wifiReceiver.register(this, new WiFIConnectedListener() {
-    //            @Override
-    //            public void onWiFiConnected() {
-    //                DLog.d(TAG, "wifi connected");
-    //                sendIntentToWidget(WIFI_CONNECTED,
-    //                        BkWifiManager.getInstance(getApplicationContext()).getIPAddr());
-    //            }
-    //        }, new WiFiDisconnectedListener() {
-    //            @Override
-    //            public void onWiFiDisconnected() {
-    //                DLog.d(TAG, "wifi disconnected");
-    //                sendIntentToWidget(WIFI_DISCONNECTED, null);
-    //            }
-    //        });
-    //    }
-
     private void sendIntentToWidget(final String action, final String extraValue) {
         Intent intent = new Intent(this, WifiBatteryWidget.class);
         intent.setAction(action);
@@ -134,11 +85,11 @@ public class WifiBatteryService extends ImmortalService {
         sendBroadcast(intent);
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // ImmortalService
     //
-    // //////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public String getActionString() {
