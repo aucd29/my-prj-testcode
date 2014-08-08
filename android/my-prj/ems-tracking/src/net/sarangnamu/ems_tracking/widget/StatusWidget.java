@@ -6,9 +6,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.ems_tracking.widget;
 
+import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.ems_tracking.EmsDataManager;
 import net.sarangnamu.ems_tracking.R;
@@ -36,7 +37,7 @@ import android.widget.RemoteViews;
 
 public class StatusWidget extends AppWidgetProvider {
     private static final String TAG = "StatusWidget";
-    private static final String BTN_REFRESH = "btnRefresh";
+    public static final String BTN_REFRESH = "btnRefresh";
 
     @Override
     public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -69,6 +70,9 @@ public class StatusWidget extends AppWidgetProvider {
         super.onReceive(context, intent);
 
         if (BTN_REFRESH.equals(intent.getAction())) {
+            DLog.d(TAG, "===================================================================");
+            DLog.d(TAG, "btn refresh");
+            DLog.d(TAG, "===================================================================");
             DbManager.getInstance().open(context, new EmsDbHelper(context));
 
             final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);

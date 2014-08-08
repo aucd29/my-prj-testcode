@@ -18,6 +18,7 @@
 package net.sarangnamu.ems_tracking;
 
 import net.sarangnamu.common.BkCfg;
+import net.sarangnamu.common.BkSystem;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.DimTool;
 import net.sarangnamu.common.fonts.FontLoader;
@@ -33,6 +34,7 @@ import net.sarangnamu.ems_tracking.api.xml.Ems;
 import net.sarangnamu.ems_tracking.cfg.Cfg;
 import net.sarangnamu.ems_tracking.db.EmsDbHelper;
 import net.sarangnamu.ems_tracking.dlg.DlgAnotherName;
+import net.sarangnamu.ems_tracking.widget.StatusWidget;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -154,6 +156,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 } else {
                     showPopup(errMsg);
                 }
+
+                reloadWidget();
             }
         }.execute(getApplicationContext());
     }
@@ -218,7 +222,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                         String num = cr.getString(0);
                         String status = cr.getString(2);
 
-                        // 배달완료된 항목은 로딩시 체크하지 않는다.
+                            // 배달완료된 항목은 로딩시 체크하지 않는다.
                         if (!status.equals("배달완료")) {
                             Ems ems = Api.tracking(num);
                             EmsDataManager.getInstance().setEmsData(num, ems);
@@ -270,7 +274,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         list.setRowId(R.id.row);
     }
 
-    private void showPopup(String msg) {
+    private void showPopup(final String msg) {
         DlgTimer dlg = new DlgTimer(this, R.layout.dlg_timer);
         dlg.setMessage(msg);
         dlg.setTime(1000);
@@ -302,11 +306,16 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             adapter.changeCursor(cr);
 
             showPopup(getString(R.string.deleted));
+            reloadWidget();
         }
     }
 
     private int dpToPixelInt(int dp) {
         return DimTool.dpToPixelInt(this, dp);
+    }
+
+    private void reloadWidget() {
+        BkSystem.sendBroadcast(getApplicationContext(), StatusWidget.class, StatusWidget.BTN_REFRESH, null);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

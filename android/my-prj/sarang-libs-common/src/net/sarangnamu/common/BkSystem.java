@@ -22,6 +22,7 @@ import java.util.List;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
@@ -149,5 +150,21 @@ public class BkSystem {
         }
 
         return availableBlocks * blockSize;
+    }
+
+    public static void sendBroadcast(Context context, Class<?> target,  String action, String data) {
+        if (context == null) {
+            DLog.e(TAG, "sendBroadcast <context == null>");
+            return ;
+        }
+
+        Intent intent = new Intent(context, target);
+        intent.setAction(action);
+
+        if (data != null) {
+            intent.putExtra(action, data);
+        }
+
+        context.sendBroadcast(intent);
     }
 }
