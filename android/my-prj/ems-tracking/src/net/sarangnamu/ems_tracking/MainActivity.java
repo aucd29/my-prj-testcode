@@ -127,6 +127,9 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         });
 
         BkCfg.engKeyboard(emsNum);
+
+        //        getWindow().setSoftInputMode(
+        //                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     private void trackingAndInsertDB(final String num) {
@@ -222,7 +225,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                         String num = cr.getString(0);
                         String status = cr.getString(2);
 
-                            // 배달완료된 항목은 로딩시 체크하지 않는다.
+                        // 배달완료된 항목은 로딩시 체크하지 않는다.
                         if (!status.equals("배달완료")) {
                             Ems ems = Api.tracking(num);
                             EmsDataManager.getInstance().setEmsData(num, ems);

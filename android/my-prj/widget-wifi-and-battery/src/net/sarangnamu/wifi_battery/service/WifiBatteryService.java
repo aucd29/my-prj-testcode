@@ -18,7 +18,6 @@
 package net.sarangnamu.wifi_battery.service;
 
 import net.sarangnamu.common.BkSystem;
-import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.service.immortal.ImmortalService;
 import net.sarangnamu.wifi_battery.BatteryInfo;
 import net.sarangnamu.wifi_battery.BatteryInfo.BatteryInfoListener;
@@ -69,23 +68,11 @@ public class WifiBatteryService extends ImmortalService {
         batteryInfo.register(this, new BatteryInfoListener() {
             @Override
             public void onChangeBattery(int battery) {
-                DLog.d(TAG, "battery info " + battery + "%");
-//                sendIntentToWidget(BATTERY_INFO, "Battery : " + battery + "%");
-                BkSystem.sendBroadcast(getApplicationContext(), WifiBatteryWidget.class, BATTERY_INFO, "Battery : " + battery + "%");
+                BkSystem.sendBroadcast(getApplicationContext(),
+                        WifiBatteryWidget.class, BATTERY_INFO, "Battery : " + battery + "%");
             }
         });
     }
-
-//    private void sendIntentToWidget(final String action, final String extraValue) {
-//        Intent intent = new Intent(this, WifiBatteryWidget.class);
-//        intent.setAction(action);
-//
-//        if (extraValue != null) {
-//            intent.putExtra(action, extraValue);
-//        }
-//
-//        sendBroadcast(intent);
-//    }
 
     ////////////////////////////////////////////////////////////////////////////////////
     //

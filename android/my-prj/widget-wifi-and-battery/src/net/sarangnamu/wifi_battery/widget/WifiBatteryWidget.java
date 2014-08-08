@@ -86,7 +86,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
                 views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
                 views.setTextViewText(R.id.ip, context.getString(R.string.invalidIp));
             } else if (status == WifiManager.WIFI_STATE_ENABLED) {
-               new AsyncTask<Context, Void, String>() {
+                new AsyncTask<Context, Void, String>() {
                     Context context;
 
                     @Override
