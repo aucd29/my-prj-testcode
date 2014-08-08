@@ -36,7 +36,6 @@ public class WifiBatteryWidget extends AppWidgetProvider {
     private static final String TAG = "WifiBatteryWidget";
     private static final String TOGGLE_WIFI = "toggleWifi";
 
-    private String batteryValue;
     private Boolean changingWifi = false;
 
     @Override
@@ -57,7 +56,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
             final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
 
             views.setOnClickPendingIntent(R.id.widgetLayout, getPendingSelfIntent(context, TOGGLE_WIFI, appWidgetId));
-            views.setTextViewText(R.id.battery, batteryValue);
+            views.setTextViewText(R.id.battery, context.getString(R.string.getBatteryInfo));
             views.setTextViewText(R.id.ip, BkWifiManager.getInstance(context).getIPAddr());
 
             if (BkWifiManager.getInstance(context).isEnabled()) {
