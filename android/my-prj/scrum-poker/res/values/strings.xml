@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WiFi and Battery</string>
+    <string name="getBatteryInfo">Battery : ? %</string>
+    <string name="mainTxt">WiFi and Battery Widget</string>
+    <string name="invalidIp">0.0.0.0</string>
+    <string name="wifiOff">Wi-Fi OFF</string>
+    <string name="wifiOn">Wi-Fi ON</string>
+</resources>
