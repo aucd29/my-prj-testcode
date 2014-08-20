@@ -124,6 +124,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
             case HIDE_PROGRESS_BAR:
                 sdProgressBar.setVisibility(View.GONE);
+                sdProgressBar.setProgress(0);
                 break;
             }
         }
