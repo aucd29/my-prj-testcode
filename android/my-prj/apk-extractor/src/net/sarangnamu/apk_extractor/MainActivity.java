@@ -187,6 +187,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         case EMAIL_ACTIVITY:
             if (resultCode == RESULT_OK) {
             } else if (resultCode == RESULT_CANCELED) {
+
             } else {
                 showPopup(getString(R.string.sendMailFail));
             }
@@ -472,6 +473,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         dlg.setContentView(R.layout.dlg_progress);
     }
 
+    private void hideProgress() {
+        if (dlg != null && dlg.isShowing()) {
+            dlg.dismiss();
+            sdProgressBar.setVisibility(View.GONE);
+        }
+    }
+
     private void initListView() {
         adapter = new AppAdapter();
         setListAdapter(adapter);
@@ -520,14 +528,14 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
                         @Override
                         public void onFinish(String name) {
+                            if (info.size > SHOW_PROGRESS) {
+                                sendMessage(HIDE_PROGRESS_BAR, null);
+                                dlg.dismiss();
+                            }
+
                             if (sendEmail) {
                                 sendToEmail(info, name);
                             } else {
-                                if (info.size > SHOW_PROGRESS) {
-                                    sendMessage(HIDE_PROGRESS_BAR, null);
-                                    dlg.dismiss();
-                                }
-
                                 String fileName = BkString.getFileName(name);
                                 sendMessage(SHOW_POPUP, fileName);
                             }
