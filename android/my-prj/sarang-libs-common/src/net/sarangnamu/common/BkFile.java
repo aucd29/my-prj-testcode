@@ -91,6 +91,8 @@ public class BkFile {
             Thread.sleep(1);
         }
 
+        dl.onProcess(100);
+
         out.flush();
         in.close();
         out.close();

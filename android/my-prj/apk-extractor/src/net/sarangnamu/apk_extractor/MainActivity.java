@@ -40,7 +40,6 @@ import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -63,6 +62,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu.OnMenuItemClickListener;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -72,6 +72,9 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     private static final long SHOW_PROGRESS = 2000000;
     private static final int SHOW_POPUP = 1;
+    private static final int UPDATE_PROGRESS_BAR = 2;
+    private static final int HIDE_PROGRESS_BAR = 3;
+
     private static final int SLIDING_MARGIN = 160;
 
     private static final int ET_SDCARD = 0;
@@ -90,6 +93,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private AppAdapter adapter;
     private ImageButton menu;
     private RelativeLayout titleBar;
+    private ProgressBar sdProgressBar;
     private ProgressDialog dlg;
     private ArrayList<PkgInfo> data;
     private ArrayList<PkgInfo> searchedData;
@@ -113,6 +117,14 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 dlg.show();
                 dlg.setTransparentBaseLayout();
                 break;
+
+            case UPDATE_PROGRESS_BAR:
+                sdProgressBar.setProgress(msg.arg1);
+                break;
+
+            case HIDE_PROGRESS_BAR:
+                sdProgressBar.setVisibility(View.GONE);
+                break;
             }
         }
     };
@@ -121,6 +133,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         Message msg = handler.obtainMessage();
         msg.what = type;
         msg.obj = obj;
+        handler.sendMessage(msg);
+    }
+
+    private void sendMessage(int type, int arg) {
+        Message msg = handler.obtainMessage();
+        msg.what = type;
+        msg.arg1 = arg;
         handler.sendMessage(msg);
     }
 
@@ -143,6 +162,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         search   = (EditText) findViewById(R.id.search);
         menu     = (ImageButton) findViewById(R.id.menu);
         titleBar = (RelativeLayout) findViewById(R.id.titleBar);
+        sdProgressBar = (ProgressBar) findViewById(R.id.sdProgressBar);
 
         initLabel();
         initMenu();
@@ -178,7 +198,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
             PkgInfo info = getPkgInfo(deletedPosition);
             try {
-                ApplicationInfo appInfo = getPackageManager().getApplicationInfo(info.pkgName, 0);
+                getPackageManager().getApplicationInfo(info.pkgName, 0);
             } catch (NameNotFoundException e) {
                 DLog.e(TAG, "onActivityResult", e);
                 removeDataListAndRefereshList(deletedPosition);
@@ -239,6 +259,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
         String src = String.format("<b>%s</b> <a href='http://sarangnamu.net'>@aucd29</a>", getString(R.string.dev));
         dev.setText(Html.fromHtml(src));
+        sdProgressBar.setMax(100);
     }
 
     private void setDownloadPath() {
@@ -465,6 +486,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         final PkgInfo info = getPkgInfo(position);
         if (info.size > SHOW_PROGRESS) {
             showProgress();
+            sdProgressBar.setVisibility(View.VISIBLE);
         }
 
         new Thread(new Runnable() {
@@ -484,6 +506,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
                     BkFile.copyFileTo(src, Cfg.getDownPath(MainActivity.this) + fileName, new FileCopyDetailListener() {
                         long fileSize;
+                        private boolean cancelFlag = false;
 
                         @Override
                         public void onCancelled() {
@@ -491,7 +514,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
                         @Override
                         public boolean isCancelled() {
-                            return false;
+                            return cancelFlag;
                         }
 
                         @Override
@@ -500,6 +523,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                                 sendToEmail(info, name);
                             } else {
                                 if (info.size > SHOW_PROGRESS) {
+                                    sendMessage(HIDE_PROGRESS_BAR, null);
                                     dlg.dismiss();
                                 }
 
@@ -510,7 +534,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
                         @Override
                         public void onProcess(int percent) {
-
+                            DLog.d(TAG, "copy progress : " + percent);
+                            sendMessage(UPDATE_PROGRESS_BAR, percent);
                         }
 
                         @Override
