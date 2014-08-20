@@ -40,6 +40,8 @@ import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -70,16 +72,19 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     private static final long SHOW_PROGRESS = 2000000;
     private static final int SHOW_POPUP = 1;
-    private static final int SLIDING_MARGIN = 130;
+    private static final int SLIDING_MARGIN = 160;
 
     private static final int ET_SDCARD = 0;
-    private static final int ET_EMAIL = 1;
-    private static final int ET_MENU = 2;
+    private static final int ET_EMAIL  = 1;
+    private static final int ET_MENU   = 2;
+    private static final int ET_DELETE = 3;
 
     private static final int EMAIL_ACTIVITY = 100;
     private static final int DIR_ACTIVITY = 200;
+    private static final int DEL_ACTIVITY = 300;
 
     private boolean sendEmail = false, searchedList = false;
+    private int deletedPosition = -1;
     private TextView title, path, dev, tvSearch, empty;
     private EditText search;
     private AppAdapter adapter;
@@ -88,6 +93,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private ProgressDialog dlg;
     private ArrayList<PkgInfo> data;
     private ArrayList<PkgInfo> searchedData;
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // HANDLER
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
 
     private final Handler handler = new Handler() {
         @Override
@@ -113,6 +124,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         handler.sendMessage(msg);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // SYSTEM METHODS
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,11 +151,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         switch (requestCode) {
         case DIR_ACTIVITY:
             if (resultCode == RESULT_OK) {
-                String path = data.getStringExtra("path");
+                String path = intent.getStringExtra("path");
                 if (path != null) {
                     Cfg.setUserPath(this, path);
                     setDownloadPath();
@@ -152,6 +169,22 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             } else {
                 showPopup(getString(R.string.sendMailFail));
             }
+            break;
+
+        case DEL_ACTIVITY:
+            if (deletedPosition == -1) {
+                return ;
+            }
+
+            PkgInfo info = getPkgInfo(deletedPosition);
+            try {
+                ApplicationInfo appInfo = getPackageManager().getApplicationInfo(info.pkgName, 0);
+            } catch (NameNotFoundException e) {
+                DLog.e(TAG, "onActivityResult", e);
+                removeDataListAndRefereshList(deletedPosition);
+            }
+
+            deletedPosition = -1;
             break;
         }
     }
@@ -192,6 +225,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
         super.onPause();
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // PRIVATE
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
 
     private void initLabel() {
         title.setText(Html.fromHtml(getString(R.string.appName)));
@@ -342,6 +381,27 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         }
     }
 
+    private PkgInfo getPkgInfo(int position) {
+        if (searchedList) {
+            return searchedData.get(position);
+        } else {
+            return data.get(position);
+        }
+    }
+
+    private void removeDataListAndRefereshList(int pos) {
+        if (searchedList) {
+            searchedData.remove(deletedPosition);
+        } else {
+            data.remove(deletedPosition);
+        }
+
+        BaseAdapter adapter = (BaseAdapter) getListAdapter();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
     private void initData(final boolean initList) {
         new AsyncTask<Context, Void, Boolean>() {
             @Override
@@ -402,14 +462,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     private void sendToSd(int position) {
-        final PkgInfo info;
-
-        if (searchedList) {
-            info = searchedData.get(position);
-        } else {
-            info = data.get(position);
-        }
-
+        final PkgInfo info = getPkgInfo(position);
         if (info.size > SHOW_PROGRESS) {
             showProgress();
         }
@@ -550,7 +603,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     class ViewHolder {
         ImageView icon;
-        TextView name, size, pkgName, version, sd, email;
+        TextView name, size, pkgName, version, sd, email, delete;
         LinearLayout btnLayout;
         RelativeLayout row;
     }
@@ -609,11 +662,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 holder.version   = (TextView) convertView.findViewById(R.id.version);
                 holder.sd        = (TextView) convertView.findViewById(R.id.sd);
                 holder.email     = (TextView) convertView.findViewById(R.id.email);
+                holder.delete    = (TextView) convertView.findViewById(R.id.delete);
                 holder.row       = (RelativeLayout) convertView.findViewById(R.id.row);
                 holder.btnLayout = (LinearLayout) convertView.findViewById(R.id.btnLayout);
 
                 holder.sd.setOnClickListener(MainActivity.this);
                 holder.email.setOnClickListener(MainActivity.this);
+                holder.delete.setOnClickListener(MainActivity.this);
                 holder.row.setOnClickListener(MainActivity.this);
 
                 convertView.setTag(holder);
@@ -621,13 +676,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            PkgInfo info;
-            if (searchedList) {
-                info = searchedData.get(position);
-            } else {
-                info = data.get(position);
-            }
-
+            PkgInfo info = getPkgInfo(position);
             if (info.icon != null) {
                 if (Build.VERSION_CODES.JELLY_BEAN < Build.VERSION.SDK_INT) {
                     holder.icon.setBackground(info.icon);
@@ -642,17 +691,18 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
             holder.sd.setTag(new PosHolder(position, ET_SDCARD, holder.row));
             holder.email.setTag(new PosHolder(position, ET_EMAIL, holder.row));
+            holder.delete.setTag(new PosHolder(position, ET_DELETE, holder.row));
             holder.row.setTag(new PosHolder(position, ET_MENU, holder.row));
 
             return convertView;
         }
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // View.OnClickListener
     //
-    // //////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public void onClick(View v) {
@@ -669,6 +719,14 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             }
 
             ((AniBtnListView) getListView()).showAnimation(v);
+        } else if (ph.type == ET_DELETE) {
+            PkgInfo info = getPkgInfo(ph.position);
+            deletedPosition = ph.position;
+
+            Intent intent = new Intent(Intent.ACTION_DELETE);
+            intent.setData(Uri.parse("package:" + info.pkgName));
+
+            startActivityForResult(intent, DEL_ACTIVITY);
         } else {
             sendEmail = ph.type == 0 ? false : true;
             sendToSd(ph.position);
