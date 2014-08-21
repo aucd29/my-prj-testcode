@@ -8,6 +8,7 @@ aucd29's Libraries & Test code
 - ems-tracking src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/ems-tracking), bin - [link](https://play.google.com/store/apps/details?id=net.sarangnamu.ems_tracking)
 - sarangnamu src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarangnamu), bin - [link](https://play.google.com/store/apps/details?id=net.sarangnamu.home)
 - d-day src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/d-day)
+- wifi-and-battery-widget src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/widget-wifi-and-battery), bin - [link](https://play.google.com/store/apps/details?id=net.sarangnamu.wifi_battery)
 
 ## My Lib Project
 - sarang-libs-ani [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-ani)
