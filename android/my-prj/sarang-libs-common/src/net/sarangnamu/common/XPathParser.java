@@ -34,7 +34,31 @@ import org.xml.sax.InputSource;
  * {@code
    class TestParser extends XPathParser {
        protected void parsing() throws Exception {
-           // TODO
+            String expr;
+            int count;
+
+            expr = "count(//xsyncData)";
+            count = Integer.parseInt(xpath.evaluate(expr, document, XPathConstants.STRING).toString());
+
+            expr = "//rgist/text()";
+            emsNum = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+
+            if (emsNum == null || emsNum.length() == 0) {
+                expr = "//message/text()";
+                errMsg = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+                errMsg += " - [";
+
+                expr = "//error_code/text()";
+                errMsg += xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+                errMsg += "]";
+
+                emsNum = tmpNum;
+                emsData.add(new EmsData());
+            } else {
+                for (int i=2; i<=count; ++i) {
+                    emsData.add(new EmsData(i));
+                }
+            }
        }
    }
  * }
