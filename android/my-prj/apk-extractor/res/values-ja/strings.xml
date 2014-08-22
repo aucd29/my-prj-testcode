@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="plsWait">しばらくお待ちください..</string>
+    <string name="extractOk">抽出されました.</string>
+    <string name="delete">削除</string>
+    <string name="errorEmail">電子メールクライアントがインストールされていませんでした.</string>
+    <string name="sendMailFail">ネットワークを確認してください</string>
+    <string name="regAddr">登録されたアドレス</string>
+    <string name="save">保存</string>
+    <string name="emptyList">アプリを見つけることができませんでした.</string>
+    
+    <!-- MENU -->
+    <string name="mnu_email">メールアドレスの設定</string>
+    <string name="mnu_search">検索</string>
+    <string name="mnu_showAllApps">すべてのアプリを見る</string>
+    <string name="mnu_showInstalledApps">インストールされているアプリを見る</string>
+    <string name="mnu_setSdPath">アプリのパスを指定</string>
+    <string name="mnu_license">ライセンス</string>
+</resources>

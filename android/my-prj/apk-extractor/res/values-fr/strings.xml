@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="plsWait">"S'il vous plaît, attendez.."</string>
+    <string name="downloadPath">"Télécharger chemin"</string>
+    <string name="dev">promoteur</string>
+    <string name="extractOk">a été extrait.</string>
+    <string name="delete">effacer</string>
+    <string name="errorEmail">"Client e-mail n'est pas installé."</string>
+    <string name="sendMailFail">Vérifiez que le réseau</string>
+    <string name="regAddr">Adresse du siège social</string>
+    <string name="save">Enregistrer</string>
+    <string name="emptyList">"Vous ne trouvez pas l'application."</string>
+    
+    <!-- MENU -->
+    <string name="mnu_email">Mettre en place une adresse e-mail</string>
+    <string name="mnu_search">recherche</string>
+    <string name="mnu_showAllApps">Voir toutes les applications</string>
+    <string name="mnu_showInstalledApps">Applications installées vues</string>
+    <string name="mnu_setSdPath">App routage</string>
+    <string name="mnu_license">licence</string>
+</resources>
