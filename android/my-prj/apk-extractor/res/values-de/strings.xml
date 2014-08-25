@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="plsWait">warten Sie mal..</string>
+    <string name="downloadPath">Download-Pfad</string>
+    <string name="dev">Entwickler</string>
+    <string name="extractOk">Auszug OK!</string>
+    <string name="sdcard">sd</string>
+    <string name="delete">löschen</string>
+    <string name="email">e-mail</string>
+    <string name="dlgEmail">E-Mail : </string>
+    <string name="errorEmail">Es gibt keine E-Mail-Clients installiert.</string>
+    <string name="sendMailFail">Bitte überprüfen Sie Netzwerk</string>
+    <string name="regAddr">Registrierte Adresse</string>
+    <string name="save">Speichern</string>
+    <string name="emptyList">Konnte nicht finden, eine App</string>
+    
+    <!-- MENU -->
+    <string name="mnu_email">Set E-Mail Adress</string>
+    <string name="mnu_search">Suche</string>
+    <string name="mnu_showAllApps">Zeige alle Apps</string>
+    <string name="mnu_showInstalledApps">Show Installierte Apps</string>
+    <string name="mnu_setSdPath">Set SD-Pfad</string>
+    <string name="mnu_license">Lizenz</string>
+</resources>

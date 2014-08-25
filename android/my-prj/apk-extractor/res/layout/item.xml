@@ -64,10 +64,10 @@
 
     <LinearLayout
         android:id="@+id/btnLayout"
-        android:layout_width="130dp"
+        android:layout_width="160dp"
         android:layout_height="70dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="-130dp"
+        android:layout_marginRight="-160dp"
         android:orientation="horizontal" >
 
         <TextView
@@ -75,7 +75,7 @@
             style="@style/btnLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#8c8c8c"
+            android:background="@drawable/btn_sdcard_selector"
             android:text="@string/sdcard"
             android:textColor="#ffffff" />
 
@@ -84,8 +84,17 @@
             style="@style/btnLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ee3135"
+            android:background="@drawable/btn_email_selector"
             android:text="@string/email" />
+        
+        <TextView
+            android:id="@+id/delete"
+            style="@style/btnLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_sdcard_selector"
+            android:text="@string/delete"
+            android:textColor="#ffffff" />
     </LinearLayout>
 
 </RelativeLayout>

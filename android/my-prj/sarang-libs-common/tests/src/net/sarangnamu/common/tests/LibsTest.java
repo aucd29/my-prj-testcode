@@ -10,6 +10,7 @@ import java.io.File;
 import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.BkFile;
 import net.sarangnamu.common.DLog;
+import net.sarangnamu.common.XPathParser;
 import android.test.AndroidTestCase;
 
 public class LibsTest extends AndroidTestCase {
@@ -82,5 +83,24 @@ public class LibsTest extends AndroidTestCase {
 
     public void testCopyAssetFile() {
 
+    }
+
+    public void testLogMsg() {
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "debug");
+        DLog.d(TAG, "===================================================================");
+        DLog.e(TAG, "testLogMsg");
+        DLog.d(TAG, "===================================================================");
+    }
+
+    class XPathTest extends XPathParser {
+        @Override
+        protected void parsing() throws Exception {
+        }
+    }
+
+    public void testXpath() {
+        String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\">" +
+                "<root><name attr=\"attr\">contenxt</name></root>";
     }
 }

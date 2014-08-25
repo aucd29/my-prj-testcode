@@ -129,6 +129,8 @@ public class AniBtnListView extends LockListView {
                 }
             }
         });
+
+        setSelector(getResources().getDrawable(android.R.color.transparent));
     }
 
     protected int dpToPixelInt(int dp) {
@@ -149,7 +151,7 @@ public class AniBtnListView extends LockListView {
 
     public void showAnimation(final View view) {
         if (rowId == 0 || btnLayoutId == 0) {
-            DLog.e(TAG, "showAnimation Please init id " );
+            DLog.e(TAG, "showAnimation Please init id ");
             return ;
         }
 
