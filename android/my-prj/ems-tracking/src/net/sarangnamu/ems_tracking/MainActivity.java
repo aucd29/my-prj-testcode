@@ -21,6 +21,8 @@ import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.BkSystem;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.DimTool;
+import net.sarangnamu.common.ani.Resize;
+import net.sarangnamu.common.ani.Resize.ResizeAnimatorListener;
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.common.ui.dlg.DlgBtnBase.DlgBtnListener;
@@ -35,6 +37,7 @@ import net.sarangnamu.ems_tracking.cfg.Cfg;
 import net.sarangnamu.ems_tracking.db.EmsDbHelper;
 import net.sarangnamu.ems_tracking.dlg.DlgAnotherName;
 import net.sarangnamu.ems_tracking.widget.StatusWidget;
+import android.animation.Animator;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -69,7 +72,9 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private EditText emsNum, anotherName;
     private EmsAdapter adapter;
     private ImageButton refersh;
+    private LinearLayout editLayout;
     private ProgressDialog dlg;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +86,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         empty       = (TextView) findViewById(android.R.id.empty);
         emsNum      = (EditText) findViewById(R.id.emsNum);
         anotherName = (EditText) findViewById(R.id.anotherName);
+        editLayout  = (LinearLayout) findViewById(R.id.editLayout);
         refersh     = (ImageButton) findViewById(R.id.refersh);
 
         initLabel();
@@ -136,7 +142,31 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 DLog.d(TAG, "===================================================================");
 
                 if (focus == true) {
-                    setAnotherNameEditText(true);
+                    float height = DimTool.dpToPixel(getApplicationContext(), 80);
+                    Resize.height(editLayout, height, new ResizeAnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator arg0) {
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator arg0) {
+                            setAnotherNameEditText(true);
+                            getObjectAnimator().removeListener(this);
+                        }
+                    });
+                } else {
+                    float height = DimTool.dpToPixel(getApplicationContext(), 40);
+                    Resize.height(editLayout, height, new ResizeAnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator arg0) {
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator arg0) {
+                            setAnotherNameEditText(false);
+                            getObjectAnimator().removeListener(this);
+                        }
+                    });
                 }
             }
         });

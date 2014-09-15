@@ -40,9 +40,9 @@ public class Fade {
         ObjectAnimator.ofFloat(hideView, ALPHA, 0.25f, 1, 1).start();
         ObjectAnimator obj = ObjectAnimator.ofFloat(showView, ALPHA, 1f, 1, 1);
 
-        if (l != null) {
+/*        if (l != null) {
             obj.addListener(l);
-        }
+        }*/
 
         obj.start();
     }
