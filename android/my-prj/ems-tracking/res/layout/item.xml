@@ -21,6 +21,16 @@
             android:textSize="17sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/secondEmsNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/emsNum"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:visibility="gone"
+             />
+        
         <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/office"
             android:layout_width="wrap_content"

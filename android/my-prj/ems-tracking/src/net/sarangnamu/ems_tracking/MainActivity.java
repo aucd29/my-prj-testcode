@@ -49,6 +49,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
@@ -65,7 +66,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private Button add;
 
     private TextView title, empty;
-    private EditText emsNum;
+    private EditText emsNum, anotherName;
     private EmsAdapter adapter;
     private ImageButton refersh;
     private ProgressDialog dlg;
@@ -75,11 +76,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        add      = (Button) findViewById(R.id.add);
-        title    = (TextView) findViewById(R.id.title);
-        empty    = (TextView) findViewById(android.R.id.empty);
-        emsNum   = (EditText) findViewById(R.id.emsNum);
-        refersh  = (ImageButton) findViewById(R.id.refersh);
+        add         = (Button) findViewById(R.id.add);
+        title       = (TextView) findViewById(R.id.title);
+        empty       = (TextView) findViewById(android.R.id.empty);
+        emsNum      = (EditText) findViewById(R.id.emsNum);
+        anotherName = (EditText) findViewById(R.id.anotherName);
+        refersh     = (ImageButton) findViewById(R.id.refersh);
 
         initLabel();
         initData();
@@ -126,10 +128,31 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             }
         });
 
+        emsNum.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focus) {
+                DLog.d(TAG, "===================================================================");
+                DLog.d(TAG, "focus " + focus);
+                DLog.d(TAG, "===================================================================");
+
+                if (focus == true) {
+                    setAnotherNameEditText(true);
+                }
+            }
+        });
+
         BkCfg.engKeyboard(emsNum);
 
         //        getWindow().setSoftInputMode(
         //                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+    private void setAnotherNameEditText(boolean show) {
+        if (show) {
+            anotherName.setVisibility(View.VISIBLE);
+        } else {
+            anotherName.setVisibility(View.GONE);
+        }
     }
 
     private void trackingAndInsertDB(final String num) {
@@ -328,7 +351,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     ////////////////////////////////////////////////////////////////////////////////////
 
     class ViewHolder {
-        TextView emsNum, date, status, office, delete, detail, modify;
+        TextView emsNum, date, status, office, delete, detail, modify, secondEmsNum;
         LinearLayout btnLayout;
         RelativeLayout row;
     }
@@ -362,15 +385,16 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         public void bindView(View view, Context context, Cursor cr) {
             ViewHolder vh = new ViewHolder();
 
-            vh.emsNum    = (TextView) view.findViewById(R.id.emsNum);
-            vh.date      = (TextView) view.findViewById(R.id.date);
-            vh.status    = (TextView) view.findViewById(R.id.status);
-            vh.office    = (TextView) view.findViewById(R.id.office);
-            vh.delete    = (TextView) view.findViewById(R.id.delete);
-            vh.detail    = (TextView) view.findViewById(R.id.detail);
-            vh.modify    = (TextView) view.findViewById(R.id.modify);
-            vh.btnLayout = (LinearLayout) view.findViewById(R.id.btnLayout);
-            vh.row       = (RelativeLayout) view.findViewById(R.id.row);
+            vh.emsNum       = (TextView) view.findViewById(R.id.emsNum);
+            vh.date         = (TextView) view.findViewById(R.id.date);
+            vh.status       = (TextView) view.findViewById(R.id.status);
+            vh.office       = (TextView) view.findViewById(R.id.office);
+            vh.delete       = (TextView) view.findViewById(R.id.delete);
+            vh.detail       = (TextView) view.findViewById(R.id.detail);
+            vh.modify       = (TextView) view.findViewById(R.id.modify);
+            vh.secondEmsNum = (TextView) view.findViewById(R.id.secondEmsNum);
+            vh.btnLayout    = (LinearLayout) view.findViewById(R.id.btnLayout);
+            vh.row          = (RelativeLayout) view.findViewById(R.id.row);
 
             int pos = 0;
             int id = cr.getInt(pos++);
@@ -386,6 +410,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 vh.emsNum.setText(emsNumber);
             } else {
                 vh.emsNum.setText(anotherName);
+                vh.secondEmsNum.setText(emsNumber);
             }
 
             vh.date.setText(cr.getString(pos++));
