@@ -77,7 +77,7 @@ public class Detail extends Activity {
         if (anotherName == null) {
             emsNum.setText(ems.emsNum);
         } else {
-            emsNum.setText(anotherName);
+            emsNum.setText(anotherName + " (" + ems.emsNum + ")");
         }
     }
 
