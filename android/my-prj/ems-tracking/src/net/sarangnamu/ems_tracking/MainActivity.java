@@ -197,6 +197,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             protected void onPostExecute(Boolean result) {
                 hideProgress();
                 emsNum.setText("");
+                anotherName.setText("");
 
                 if (result) {
                     Cursor cr = EmsDbHelper.selectDesc();
