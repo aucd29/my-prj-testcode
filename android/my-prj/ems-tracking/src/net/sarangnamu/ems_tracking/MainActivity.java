@@ -134,10 +134,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             public void afterTextChanged(Editable arg0) {
                 int height;
                 if (emsNum.getText().length() == 0) {
-                    DLog.d(TAG, "===================================================================");
-                    DLog.d(TAG, "text changed 0");
-                    DLog.d(TAG, "===================================================================");
-
                     height = (int) getResources().getDimension(R.dimen.emsLayoutMinHeight);
                     Resize.height(editLayout, height, new ResizeAnimationListener() {
                         @Override
@@ -431,7 +427,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             if (anotherName.equals("")) {
                 vh.emsNum.setText(emsNumber);
             } else {
-                vh.emsNum.setText(Html.fromHtml(anotherName + " <font color='#6c6c6c'>(" + emsNumber + ")</font>"));
+                vh.emsNum.setText(anotherName);
             }
 
             vh.date.setText(cr.getString(pos++));
@@ -441,7 +437,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             vh.detail.setTag(new DetailType(emsNumber, vh.row));
             vh.detail.setOnClickListener(MainActivity.this);
 
-            vh.office.setText(cr.getString(pos++));
+            if (anotherName.equals("")) {
+                vh.office.setText(cr.getString(pos++));
+            } else {
+                vh.office.setText("(" + emsNumber + ") " + cr.getString(pos++));
+            }
+
             vh.row.setOnClickListener(MainActivity.this);
 
             view.setTag(vh);
