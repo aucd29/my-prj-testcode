@@ -21,6 +21,8 @@ import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.BkSystem;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.DimTool;
+import net.sarangnamu.common.ani.Resize;
+import net.sarangnamu.common.ani.Resize.ResizeAnimationListener;
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.common.ui.dlg.DlgBtnBase.DlgBtnListener;
@@ -84,7 +86,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         title       = (TextView) findViewById(R.id.title);
         empty       = (TextView) findViewById(android.R.id.empty);
         emsNum      = (EditText) findViewById(R.id.emsNum);
-        //        anotherName = (EditText) findViewById(R.id.anotherName);
+        anotherName = (EditText) findViewById(R.id.anotherName);
         editLayout  = (RelativeLayout) findViewById(R.id.editLayout);
         refersh     = (ImageButton) findViewById(R.id.refersh);
 
@@ -109,19 +111,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                     return ;
                 }
 
-                if (Cfg.getOptionName(MainActivity.this)) {
-                    DlgAnotherName dlg = new DlgAnotherName(MainActivity.this, num.toUpperCase());
-                    dlg.setOnDismissListener(new OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            trackingAndInsertDB(num);
-                        }
-                    });
-
-                    dlg.show();
-                } else {
-                    trackingAndInsertDB(num);
-                }
+                Cfg.setAnotherName(getApplicationContext(), num.toUpperCase(), anotherName.getText().toString());
+                trackingAndInsertDB(num);
             }
         });
 
@@ -135,41 +126,47 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
         emsNum.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-            }
-
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) { }
             @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-            }
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) { }
 
             @Override
             public void afterTextChanged(Editable arg0) {
+                int height;
                 if (emsNum.getText().length() == 0) {
-                    //                    float height = DimTool.dpToPixel(getApplicationContext(), 40);
-                    //                    Resize.height(editLayout, height, new ResizeAnimatorListener() {
-                    //                        @Override
-                    //                        public void onAnimationStart(Animator arg0) {
-                    //                        }
-                    //
-                    //                        @Override
-                    //                        public void onAnimationEnd(Animator arg0) {
-                    //                            setAnotherNameEditText(false);
-                    //                            getObjectAnimator().removeListener(this);
-                    //                        }
-                    //                    });
+                    DLog.d(TAG, "===================================================================");
+                    DLog.d(TAG, "text changed 0");
+                    DLog.d(TAG, "===================================================================");
+
+                    height = (int) getResources().getDimension(R.dimen.emsLayoutMinHeight);
+                    Resize.height(editLayout, height, new ResizeAnimationListener() {
+                        @Override
+                        public void onAnimationEnd() {
+                            expandLayout = false;
+                        }
+
+                        @Override
+                        public void onAnimationStart() {
+                            anotherName.setVisibility(View.GONE);
+                        }
+                    });
                 } else {
-                    //                    float height = DimTool.dpToPixel(getApplicationContext(), 80);
-                    //                    Resize.height(editLayout, height, new ResizeAnimatorListener() {
-                    //                        @Override
-                    //                        public void onAnimationStart(Animator arg0) {
-                    //                        }
-                    //
-                    //                        @Override
-                    //                        public void onAnimationEnd(Animator arg0) {
-                    //                            setAnotherNameEditText(true);
-                    //                            getObjectAnimator().removeListener(this);
-                    //                        }
-                    //                    });
+                    if (expandLayout) {
+                        return ;
+                    }
+
+                    expandLayout = true;
+                    height = (int) getResources().getDimension(R.dimen.emsLayoutMaxHeight);
+                    Resize.height(editLayout, height, new ResizeAnimationListener() {
+                        @Override
+                        public void onAnimationEnd() {
+                            anotherName.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationStart() {
+                        }
+                    });
                 }
             }
         });
@@ -178,14 +175,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
         //        getWindow().setSoftInputMode(
         //                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-    }
-
-    private void setAnotherNameEditText(boolean show) {
-        //        if (show) {
-        //            anotherName.setVisibility(View.VISIBLE);
-        //        } else {
-        //            anotherName.setVisibility(View.GONE);
-        //        }
     }
 
     private void trackingAndInsertDB(final String num) {
@@ -384,7 +373,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     ////////////////////////////////////////////////////////////////////////////////////
 
     class ViewHolder {
-        TextView emsNum, date, status, office, delete, detail, modify, secondEmsNum;
+        TextView emsNum, date, status, office, delete, detail, modify;
         LinearLayout btnLayout;
         RelativeLayout row;
     }

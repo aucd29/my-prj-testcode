@@ -40,14 +40,14 @@
     <RelativeLayout
         android:id="@+id/editLayout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/emsLayoutMinHeight"
         android:background="#d9d9d9"
         android:paddingLeft="10dp" >
 
         <EditText
             android:id="@+id/emsNum"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/emsLayoutMinHeight"
             android:layout_weight="0.9"
             android:layout_alignParentTop="true"
             android:background="@null"
@@ -68,8 +68,8 @@
         
         <EditText
             android:id="@+id/anotherName"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/emsLayoutMinHeight"
             android:hint="@string/anotherName"
             android:singleLine="true"
             android:layout_weight="0.9"

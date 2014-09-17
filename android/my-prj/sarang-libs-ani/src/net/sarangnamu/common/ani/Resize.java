@@ -19,26 +19,108 @@ package net.sarangnamu.common.ani;
 
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
-import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 public class Resize {
-    public static void height(View view, float value, ResizeAnimatorListener listener) {
+    private static final String TAG = "Resize";
+    private static final int TYPE_HEIGHT = 1;
+
+    public static void height(final View view, int changeValue, int duration, final ResizeAnimationListener l) {
         if (view == null) {
             return ;
         }
 
-        ObjectAnimator obj = ObjectAnimator.ofFloat(view, "y", value);
+/*        final Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                case TYPE_HEIGHT: {
+                    View view = (View) msg.obj;
 
-        if (listener != null) {
-            listener.setObjectAnimator(obj);
-            obj.addListener(listener);
-        }
+                    if (view.getParent() instanceof LinearLayout) {
+                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
 
-        obj.start();
+                        params.height = msg.arg1;
+                        view.setLayoutParams(params);
+                    } else if (view.getParent() instanceof RelativeLayout) {
+                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) view.getLayoutParams();
+
+                        params.height = msg.arg1;
+                        view.setLayoutParams(params);
+                    } else if (view.getParent() instanceof FrameLayout) {
+                        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+
+                        params.height = msg.arg1;
+                        view.setLayoutParams(params);
+                    }
+                } break;
+                }
+            }
+        };*/
+
+        final ValueAnimator anim = ValueAnimator.ofInt(view.getMeasuredHeight(), changeValue);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                int val = (Integer) valueAnimator.getAnimatedValue();
+                /*Message msg = handler.obtainMessage();
+                msg.what = TYPE_HEIGHT;
+                msg.obj  = view;
+                msg.arg1 = val;
+                handler.sendMessage(msg);*/
+
+                if (view.getParent() instanceof LinearLayout) {
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
+
+                    params.height = val;
+                    view.setLayoutParams(params);
+                } else if (view.getParent() instanceof RelativeLayout) {
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) view.getLayoutParams();
+
+                    params.height = val;
+                    view.setLayoutParams(params);
+                } else if (view.getParent() instanceof FrameLayout) {
+                    FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+
+                    params.height = val;
+                    view.setLayoutParams(params);
+                }
+            }
+        });
+        anim.addListener(new AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator arg0) {
+                if (l != null) {
+                    l.onAnimationStart();
+                }
+            }
+            @Override
+            public void onAnimationRepeat(Animator arg0) { }
+            @Override
+            public void onAnimationEnd(Animator arg0) {
+                anim.removeAllUpdateListeners();
+                anim.removeAllListeners();
+
+                if (l != null) {
+                    l.onAnimationEnd();
+                }
+            }
+            @Override
+            public void onAnimationCancel(Animator arg0) { }
+        });
+        anim.setDuration(duration);
+        anim.start();
     }
 
-    public static void width(View view, float value, ResizeAnimatorListener listener) {
+    public static void height(View view, int changeValue, ResizeAnimationListener l) {
+        height(view, changeValue, 300, l);
+    }
+
+    /*public static void width(View view, float value, ResizeAnimationListener listener) {
         if (view == null) {
             return ;
         }
@@ -51,7 +133,7 @@ public class Resize {
         }
 
         obj.start();
-    }
+    }*/
 
     ////////////////////////////////////////////////////////////////////////////////////
     //
@@ -59,23 +141,8 @@ public class Resize {
     //
     ////////////////////////////////////////////////////////////////////////////////////
 
-    public static abstract class ResizeAnimatorListener implements AnimatorListener {
-        private ObjectAnimator obj;
-
-        public ObjectAnimator getObjectAnimator() {
-            return obj;
-        }
-
-        public void setObjectAnimator(ObjectAnimator obj) {
-            this.obj = obj;
-        }
-
-        @Override
-        public void onAnimationRepeat(Animator arg0) {
-        }
-
-        @Override
-        public void onAnimationCancel(Animator arg0) {
-        }
+    public interface ResizeAnimationListener {
+        public void onAnimationStart();
+        public void onAnimationEnd();
     }
 }
