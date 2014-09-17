@@ -35,7 +35,7 @@ public class Detail extends Activity {
     private Ems ems;
     private EmsHistory adapter;
 
-    private TextView emsNum;
+    private TextView emsNum, detail;
     private ListView list;
     private LinearLayout adLayout;
     private AdMobDelegator admob;
@@ -53,6 +53,7 @@ public class Detail extends Activity {
         setContentView(R.layout.detail);
 
         emsNum   = (TextView) findViewById(R.id.emsNum);
+        detail   = (TextView) findViewById(R.id.detail);
         list     = (ListView) findViewById(R.id.list);
         adLayout = (LinearLayout) findViewById(R.id.adLayout);
 
@@ -77,7 +78,8 @@ public class Detail extends Activity {
         if (anotherName == null) {
             emsNum.setText(ems.emsNum);
         } else {
-            emsNum.setText(anotherName + " (" + ems.emsNum + ")");
+            emsNum.setText(anotherName);
+            detail.setText(ems.emsNum);
         }
     }
 
