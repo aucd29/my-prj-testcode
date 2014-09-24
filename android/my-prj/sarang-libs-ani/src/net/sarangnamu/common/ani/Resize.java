@@ -34,44 +34,11 @@ public class Resize {
             return ;
         }
 
-/*        final Handler handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                case TYPE_HEIGHT: {
-                    View view = (View) msg.obj;
-
-                    if (view.getParent() instanceof LinearLayout) {
-                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-
-                        params.height = msg.arg1;
-                        view.setLayoutParams(params);
-                    } else if (view.getParent() instanceof RelativeLayout) {
-                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) view.getLayoutParams();
-
-                        params.height = msg.arg1;
-                        view.setLayoutParams(params);
-                    } else if (view.getParent() instanceof FrameLayout) {
-                        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
-
-                        params.height = msg.arg1;
-                        view.setLayoutParams(params);
-                    }
-                } break;
-                }
-            }
-        };*/
-
         final ValueAnimator anim = ValueAnimator.ofInt(view.getMeasuredHeight(), changeValue);
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 int val = (Integer) valueAnimator.getAnimatedValue();
-                /*Message msg = handler.obtainMessage();
-                msg.what = TYPE_HEIGHT;
-                msg.obj  = view;
-                msg.arg1 = val;
-                handler.sendMessage(msg);*/
 
                 if (view.getParent() instanceof LinearLayout) {
                     LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
@@ -117,7 +84,7 @@ public class Resize {
     }
 
     public static void height(View view, int changeValue, ResizeAnimationListener l) {
-        height(view, changeValue, 300, l);
+        height(view, changeValue, 600, l);
     }
 
     /*public static void width(View view, float value, ResizeAnimationListener listener) {

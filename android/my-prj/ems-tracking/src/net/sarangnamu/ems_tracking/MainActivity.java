@@ -35,13 +35,10 @@ import net.sarangnamu.ems_tracking.api.Api;
 import net.sarangnamu.ems_tracking.api.xml.Ems;
 import net.sarangnamu.ems_tracking.cfg.Cfg;
 import net.sarangnamu.ems_tracking.db.EmsDbHelper;
-import net.sarangnamu.ems_tracking.dlg.DlgAnotherName;
 import net.sarangnamu.ems_tracking.widget.StatusWidget;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -75,6 +72,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private RelativeLayout editLayout;
     private ProgressDialog dlg;
     private boolean expandLayout = false;
+    private int modifyId = -1;
 
 
     @Override
@@ -111,8 +109,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                     return ;
                 }
 
-                Cfg.setAnotherName(getApplicationContext(), num.toUpperCase(), anotherName.getText().toString());
                 trackingAndInsertDB(num);
+                Cfg.setAnotherName(getApplicationContext(), num.toUpperCase(), anotherName.getText().toString());
             }
         });
 
@@ -156,11 +154,15 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                     Resize.height(editLayout, height, new ResizeAnimationListener() {
                         @Override
                         public void onAnimationEnd() {
+                            if (modifyId == -1) {
+                                anotherName.setText("");
+                            }
                             anotherName.setVisibility(View.VISIBLE);
                         }
 
                         @Override
                         public void onAnimationStart() {
+
                         }
                     });
                 }
@@ -186,7 +188,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             @Override
             protected Boolean doInBackground(Context... contexts) {
                 Ems ems = Api.tracking(num);
-                return EmsDbHelper.insert(ems);
+
+                if (modifyId == -1) {
+                    return EmsDbHelper.insert(ems);
+                } else {
+                    return EmsDbHelper.update(modifyId, ems);
+                }
             }
 
             @Override
@@ -194,6 +201,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 hideProgress();
                 emsNum.setText("");
                 anotherName.setText("");
+
+                if (modifyId != -1) {
+                    modifyId = -1;
+                    add.setText(R.string.add);
+                }
 
                 if (result) {
                     Cursor cr = EmsDbHelper.selectDesc();
@@ -264,7 +276,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                     Cursor cr = EmsDbHelper.select();
 
                     while (cr.moveToNext()) {
-                        String num = cr.getString(0);
+                        String num    = cr.getString(0);
                         String status = cr.getString(2);
 
                         // 배달완료된 항목은 로딩시 체크하지 않는다.
@@ -385,13 +397,25 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         }
     }
 
-    class DeleteType {
+    class TagBase {
         int id;
         String emsNum;
 
-        DeleteType(int id, String emsNum) {
+        TagBase(int id, String emsNum) {
             this.id = id;
             this.emsNum = emsNum;
+        }
+    }
+
+    class DeleteType extends TagBase {
+        DeleteType(int id, String emsNum) {
+            super(id, emsNum);
+        }
+    }
+
+    class ModifyType extends TagBase {
+        ModifyType(int id, String emsNum) {
+            super(id, emsNum);
         }
     }
 
@@ -415,14 +439,14 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             vh.row          = (RelativeLayout) view.findViewById(R.id.row);
 
             int pos = 0;
-            int id = cr.getInt(pos++);
+            int id  = cr.getInt(pos++);
             vh.delete.setOnClickListener(MainActivity.this);
             vh.modify.setOnClickListener(MainActivity.this);
 
-            String emsNumber = cr.getString(pos++);
+            String emsNumber   = cr.getString(pos++);
             String anotherName = Cfg.getAnotherName(MainActivity.this, emsNumber);
             vh.delete.setTag(new DeleteType(id, emsNumber));
-            vh.modify.setTag(emsNumber);
+            vh.modify.setTag(new ModifyType(id, emsNumber));
 
             if (anotherName.equals("")) {
                 vh.emsNum.setText(emsNumber);
@@ -431,19 +455,16 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             }
 
             vh.date.setText(cr.getString(pos++));
-
-            String statusValue = cr.getString(pos++);
-            vh.status.setText(statusValue);
+            vh.status.setText(cr.getString(pos++));
             vh.detail.setTag(new DetailType(emsNumber, vh.row));
             vh.detail.setOnClickListener(MainActivity.this);
+            vh.row.setOnClickListener(MainActivity.this);
 
             if (anotherName.equals("")) {
                 vh.office.setText(cr.getString(pos++));
             } else {
                 vh.office.setText("(" + emsNumber + ") " + cr.getString(pos++));
             }
-
-            vh.row.setOnClickListener(MainActivity.this);
 
             view.setTag(vh);
         }
@@ -491,20 +512,25 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 if (type != null) {
                     showDetail(type.emsNum);
                 }
-            } else if (obj instanceof String) {
-                String num = (String) obj;
-                String anotherName = Cfg.getAnotherName(MainActivity.this, num);
+            } else if (obj instanceof ModifyType) {
+                ModifyType typeObj = (ModifyType) obj;
 
-                DlgAnotherName dlg = new DlgAnotherName(MainActivity.this, num, anotherName);
-                dlg.setOnDismissListener(new OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        if (adapter != null) {
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
-                });
-                dlg.show();
+                emsNum.setText(typeObj.emsNum);
+                anotherName.setText(Cfg.getAnotherName(MainActivity.this, typeObj.emsNum));
+                add.setText(R.string.modify);
+
+                modifyId = typeObj.id;
+
+                //                DlgAnotherName dlg = new DlgAnotherName(MainActivity.this, num, anotherName);
+                //                dlg.setOnDismissListener(new OnDismissListener() {
+                //                    @Override
+                //                    public void onDismiss(DialogInterface dialog) {
+                //                        if (adapter != null) {
+                //                            adapter.notifyDataSetChanged();
+                //                        }
+                //                    }
+                //                });
+                //                dlg.show();
             }
         }
     }
