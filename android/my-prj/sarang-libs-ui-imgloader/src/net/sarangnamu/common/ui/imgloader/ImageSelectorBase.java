@@ -1,5 +1,5 @@
 /*
- * ImageLoaderBase.java
+ * ImageSelectorBase.java
  * Copyright 2013 Burke Choi All rights reserved.
  *             http://www.sarangnamu.net
  *
@@ -21,7 +21,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 
-public abstract class ImageLoaderBase {
+public abstract class ImageSelectorBase {
     protected static final String DRAWABLE = "drawable";
 
     public static final int MASK        = 0X1;
@@ -32,7 +32,7 @@ public abstract class ImageLoaderBase {
     public static final int TP_DEFAULT  = TP_NORMAL|TP_PRESSED;
     public static final int TP_ALL      = TP_DISABLED|TP_PRESSED|TP_NORMAL;
 
-    public StateListDrawable loadImage(Context context, String name, int type) {
+    public StateListDrawable getSelector(Context context, String name, int type) {
         int pressed;
         int disabled;
         int normal;

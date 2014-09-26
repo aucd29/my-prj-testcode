@@ -30,22 +30,32 @@ import org.xml.sax.InputSource;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
+    public Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        try {
-            String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root><ip>210.216.54.2</ip></root>";
-            String res = getIp(xml);
-            Log.d(TAG, res);
-        } catch (Exception e) {
-            Log.e(TAG, "onCreate", e);
-        }
+
+        btn = (Button) findViewById(R.id.button1);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+            }
+        });
+//
+//        try {
+//            String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root><ip>210.216.54.2</ip></root>";
+//            String res = getIp(xml);
+//            Log.d(TAG, res);
+//        } catch (Exception e) {
+//            Log.e(TAG, "onCreate", e);
+//        }
     }
 
     String getIp(String xml) throws Exception {
