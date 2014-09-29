@@ -17,6 +17,7 @@
  */
 package net.sarangnamu.wifi_battery.widget;
 
+import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.wifi_battery.R;
@@ -42,12 +43,20 @@ public class WifiBatteryWidget extends AppWidgetProvider {
     public void onEnabled(Context context) {
         super.onEnabled(context);
 
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "on enabled");
+        DLog.d(TAG, "===================================================================");
+
         startService(context);
     }
 
     @Override
     public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         final int N = appWidgetIds.length;
+
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "on update");
+        DLog.d(TAG, "===================================================================");
 
         startService(context);
 
@@ -56,7 +65,14 @@ public class WifiBatteryWidget extends AppWidgetProvider {
             final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
 
             views.setOnClickPendingIntent(R.id.widgetLayout, getPendingSelfIntent(context, TOGGLE_WIFI, appWidgetId));
-            views.setTextViewText(R.id.battery, context.getString(R.string.getBatteryInfo));
+
+            String battery = BkCfg.get(context, "battery", null);
+            if (battery == null) {
+                views.setTextViewText(R.id.battery, context.getString(R.string.getBatteryInfo));
+            } else {
+                views.setTextViewText(R.id.battery, battery);
+            }
+
             views.setTextViewText(R.id.ip, BkWifiManager.getInstance(context).getIPAddr());
 
             if (BkWifiManager.getInstance(context).isEnabled()) {
@@ -74,6 +90,10 @@ public class WifiBatteryWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, final Intent intent) {
         super.onReceive(context, intent);
+
+        DLog.d(TAG, "===================================================================");
+        DLog.d(TAG, "on receive");
+        DLog.d(TAG, "===================================================================");
 
         final String action = intent.getAction();
         final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);

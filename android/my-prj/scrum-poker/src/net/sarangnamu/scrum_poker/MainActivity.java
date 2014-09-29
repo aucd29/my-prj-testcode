@@ -1,14 +1,37 @@
-package net.sarangnamu.d_day;
+package net.sarangnamu.scrum_poker;
 
-import net.sarangnamu.common.fonts.FontLoader;
+import org.apache.http.client.methods.HttpGet;
 
-public class MainActivity extends FragmentActivity {
+import android.app.Activity;
+import android.content.Context;
+import android.net.http.AndroidHttpClient;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.Menu;
+
+
+public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        new AsyncTask<Context, Void, String>() {
+            @Override
+            protected String doInBackground(Context... contexts) {
+                AndroidHttpClient client = AndroidHttpClient.newInstance("Android");
+                HttpGet request = new HttpGet("http://117.16.231.212:8010/checkNewOrder");
+
+                return builder.toString();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+
+            }
+        }.execute(this);
     }
 
     @Override
@@ -16,7 +39,7 @@ public class MainActivity extends FragmentActivity {
         return true;
     }
 
-    @Override
+    /*@Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         switch (item.getItemId()) {
         case R.id.action_license:
@@ -38,6 +61,6 @@ public class MainActivity extends FragmentActivity {
         dlg.setTime(1000);
         dlg.show();
         dlg.setTransparentBaseLayout();
-    }
+    }*/
 }
 
