@@ -4,24 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-<!--     <LinearLayout -->
-<!--         android:id="@+id/top" -->
-<!--         android:layout_width="match_parent" -->
-<!--         android:layout_height="60dp" -->
-<!--         android:background="#ff00ff00" /> -->
-
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <GridView
-            android:id="@+id/grid"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:numColumns="3"
-            android:orientation="vertical" />
-    </FrameLayout>
+        android:layout_height="match_parent" />
 
     <ListView
         android:id="@+id/leftMenu"

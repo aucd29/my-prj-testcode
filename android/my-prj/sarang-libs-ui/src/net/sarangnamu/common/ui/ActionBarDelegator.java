@@ -23,22 +23,22 @@ import android.view.View;
 /**
  * <pre>
  * {@code
-    ActionBarEx actionBar;
-    actionBar = new ActionBarEx(this);
+    ActionBarDelegator actionBar;
+    actionBar = new ActionBarDelegator(this);
     actionBar.init(R.layout.actionbar);
  * }
  * </pre>
  *
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
-public class ActionBarEx {
+public class ActionBarDelegator {
     protected int displayOpt = ActionBar.DISPLAY_SHOW_CUSTOM;
     protected Activity activity;
     protected ActionBar actionBar;
     protected ActionBar.LayoutParams params;
     protected View view;
 
-    public ActionBarEx(Activity activity) {
+    public ActionBarDelegator(Activity activity) {
         this.activity = activity;
         params = new ActionBar.LayoutParams(
                 ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
