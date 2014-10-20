@@ -61,9 +61,10 @@ public class MainFrgmt extends FrgmtBase {
         defaultValue.add("8");
         defaultValue.add("13");
         defaultValue.add("20");
+        defaultValue.add("30");
         defaultValue.add("40");
         defaultValue.add("50");
-        defaultValue.add("100");
+        defaultValue.add("60");
     }
 
     private void initAdapter() {

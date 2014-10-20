@@ -51,8 +51,8 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initActionBar() {
-        actionBar = new ActionBarDecorator(this);
-        actionBar.init(R.layout.actionbar);
+        //actionBar = new ActionBarDecorator(this);
+        //actionBar.init(R.layout.actionbar);
     }
 
     private void initDrawer() {
