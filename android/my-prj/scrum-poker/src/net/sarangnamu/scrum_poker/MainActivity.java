@@ -1,6 +1,6 @@
 package net.sarangnamu.scrum_poker;
 
-import net.sarangnamu.common.ui.ActionBarDelegator;
+import net.sarangnamu.common.ui.ActionBarDecorator;
 import net.sarangnamu.scrum_poker.page.MainFrgmt;
 import net.sarangnamu.scrum_poker.page.PageManager;
 import android.os.Bundle;
@@ -21,7 +21,7 @@ public class MainActivity extends FragmentActivity {
     private static final String TAG = "MainActivity";
     private ListView leftMenu;
     private DrawerLayout drawer;
-    private ActionBarDelegator actionBar;
+    private ActionBarDecorator actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initActionBar() {
-        actionBar = new ActionBarDelegator(this);
+        actionBar = new ActionBarDecorator(this);
         actionBar.init(R.layout.actionbar);
     }
 

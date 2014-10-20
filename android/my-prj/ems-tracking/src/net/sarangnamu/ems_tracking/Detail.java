@@ -17,7 +17,7 @@
  */
 package net.sarangnamu.ems_tracking;
 
-import net.sarangnamu.common.admob.AdMobDelegator;
+import net.sarangnamu.common.admob.AdMobDecorator;
 import net.sarangnamu.ems_tracking.api.xml.Ems;
 import net.sarangnamu.ems_tracking.api.xml.Ems.EmsData;
 import net.sarangnamu.ems_tracking.cfg.Cfg;
@@ -38,7 +38,7 @@ public class Detail extends Activity {
     private TextView emsNum, detail;
     private ListView list;
     private LinearLayout adLayout;
-    private AdMobDelegator admob;
+    private AdMobDecorator admob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class Detail extends Activity {
     }
 
     private void initAdView() {
-        admob = new AdMobDelegator(this, Cfg.ADMOB_ID);
+        admob = new AdMobDecorator(this, Cfg.ADMOB_ID);
         admob.load(adLayout);
     }
 

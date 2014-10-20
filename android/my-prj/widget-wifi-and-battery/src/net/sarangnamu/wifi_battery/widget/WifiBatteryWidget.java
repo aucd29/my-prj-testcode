@@ -73,12 +73,28 @@ public class WifiBatteryWidget extends AppWidgetProvider {
                 views.setTextViewText(R.id.battery, battery);
             }
 
-            views.setTextViewText(R.id.ip, BkWifiManager.getInstance(context).getIPAddr());
+            String ip = BkCfg.get(context, "ip", null);
 
-            if (BkWifiManager.getInstance(context).isEnabled()) {
-                views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOn));
+            if (ip == null) {
+                views.setTextViewText(R.id.ip, BkWifiManager.getInstance(context).getIPAddr());
             } else {
-                views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
+                views.setTextViewText(R.id.ip, ip);
+            }
+
+            String wifiState = BkCfg.get(context, "wifi-state", null);
+
+            if (wifiState == null) {
+                if (BkWifiManager.getInstance(context).isEnabled()) {
+                    views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOn));
+                } else {
+                    views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
+                }
+            } else {
+                if (wifiState.equals("1")) {
+                    views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOn));
+                } else {
+                    views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
+                }
             }
 
             appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -100,12 +116,22 @@ public class WifiBatteryWidget extends AppWidgetProvider {
         final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
 
         if (action.equals(WifiManager.WIFI_STATE_CHANGED_ACTION)) {
+            DLog.d(TAG, "===================================================================");
+            DLog.d(TAG, "WIFI_STATE_CHANGED_ACTION");
+            DLog.d(TAG, "===================================================================");
             int status = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_DISABLED);
             if (status == WifiManager.WIFI_STATE_DISABLED) {
+                BkCfg.set(context, "wifi-state", "0");
+
                 views.setViewVisibility(R.id.prog, View.GONE);
                 views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
                 views.setTextViewText(R.id.ip, context.getString(R.string.invalidIp));
             } else if (status == WifiManager.WIFI_STATE_ENABLED) {
+                DLog.d(TAG, "===================================================================");
+                DLog.d(TAG, "WIFI_STATE_ENABLED");
+                DLog.d(TAG, "===================================================================");
+                BkCfg.set(context, "wifi-state", "1");
+
                 new AsyncTask<Context, Void, String>() {
                     Context context;
 
@@ -121,6 +147,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
                                 if (ip.equals("0.0.0.0") || ip == "") {
                                     Thread.sleep(500);
                                 } else {
+                                    BkCfg.set(context, "ip", ip);
                                     break;
                                 }
                             }
@@ -144,9 +171,15 @@ public class WifiBatteryWidget extends AppWidgetProvider {
                 }.execute(context);
             }
         } else if (action.equals(WifiBatteryService.BATTERY_INFO)) {
+            DLog.d(TAG, "===================================================================");
+            DLog.d(TAG, "BATTERY_INFO");
+            DLog.d(TAG, "===================================================================");
             String batteryInfo = intent.getStringExtra(WifiBatteryService.BATTERY_INFO);
             views.setTextViewText(R.id.battery, batteryInfo);
         } else if (action.equals(TOGGLE_WIFI)) {
+            DLog.d(TAG, "===================================================================");
+            DLog.d(TAG, "TOGGLE_WIFI");
+            DLog.d(TAG, "===================================================================");
             if (changingWifi) {
                 return;
             }
@@ -165,7 +198,14 @@ public class WifiBatteryWidget extends AppWidgetProvider {
                 }
             }
         } else if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
+            DLog.d(TAG, "===================================================================");
+            DLog.d(TAG, "ACTION_BOOT_COMPLETED");
+            DLog.d(TAG, "===================================================================");
             startService(context);
+        } else {
+            DLog.d(TAG, "===================================================================");
+            DLog.d(TAG, "ELSE ");
+            DLog.d(TAG, "===================================================================");
         }
 
         ComponentName watchWidget = new ComponentName(context, WifiBatteryWidget.class);

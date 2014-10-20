@@ -27,10 +27,10 @@ import com.google.ads.AdView;
 /**
  * <pre>
  * {@code
-    private AdMobDelegator admob;
+    private AdMobDecorator admob;
 
     private void initAdView() {
-        admob = new AdMobDelegator(this, Cfg.ADMOB_ID);
+        admob = new AdMobDecorator(this, Cfg.ADMOB_ID);
         admob.load(adLayout);
     }
 
@@ -45,14 +45,14 @@ import com.google.ads.AdView;
  *
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
-public class AdMobDelegator {
+public class AdMobDecorator {
     private AdView adView;
 
-    public AdMobDelegator(Activity act, String id) {
+    public AdMobDecorator(Activity act, String id) {
         adView = new AdView(act, AdSize.BANNER, id);
     }
 
-    public AdMobDelegator(Activity act, AdSize size, String id) {
+    public AdMobDecorator(Activity act, AdSize size, String id) {
         adView = new AdView(act, size, id);
     }
 
