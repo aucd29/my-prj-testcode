@@ -2,7 +2,9 @@ package net.sarangnamu.scrum_poker;
 
 import java.util.ArrayList;
 
+import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.common.ui.ActionBarDecorator;
+import net.sarangnamu.scrum_poker.db.DbHelper;
 import net.sarangnamu.scrum_poker.page.MainFrgmt;
 import net.sarangnamu.scrum_poker.page.PageManager;
 import android.os.Bundle;
@@ -47,6 +49,13 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        DbManager.getInstance().open(this, new DbHelper(this));
+
+        super.onResume();
     }
 
     private void initPageManager() {
@@ -157,7 +166,6 @@ public class MainActivity extends FragmentActivity {
             }
 
             MenuData data = menuData.get(position);
-            if (data.type == )
 
 
             return convertView;

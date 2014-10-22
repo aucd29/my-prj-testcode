@@ -6,9 +6,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,7 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public abstract class AutoInflateFrgmtBase extends FrgmtBase {
-    private static final String TAG = "InflateByClassNameBase";
+    private static final String TAG = "AutoInflateFrgmtBase";
 
     private static final String PREFIX_MENU = "mnu_";
     private static final String PREFIX_PAGE = "page_";
@@ -89,7 +89,7 @@ public abstract class AutoInflateFrgmtBase extends FrgmtBase {
 
     /**
      * for title name
-     * 
+     *
      * @param name
      * @return
      */
@@ -100,7 +100,7 @@ public abstract class AutoInflateFrgmtBase extends FrgmtBase {
 
     /**
      * for layout name
-     * 
+     *
      * @param name
      * @return
      */
