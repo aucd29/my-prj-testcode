@@ -15,13 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sarangnamu.scrum_poker.page;
+package net.sarangnamu.scrum_poker.page.sub;
 
 import java.util.ArrayList;
 
 import net.sarangnamu.common.FrgmtBase;
 import net.sarangnamu.scrum_poker.R;
-import net.sarangnamu.scrum_poker.page.sub.CardFrgmt;
+import net.sarangnamu.scrum_poker.cfg.Cfg;
+import net.sarangnamu.scrum_poker.page.PageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +55,10 @@ public class MainFrgmt extends FrgmtBase {
             defaultValue = new ArrayList<String>();
         }
 
+        if (defaultValue.size() > 0) {
+            return;
+        }
+
         defaultValue.add("0");
         defaultValue.add("1/2");
         defaultValue.add("2");
@@ -74,7 +79,7 @@ public class MainFrgmt extends FrgmtBase {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bd = new Bundle();
-                bd.putString("value", defaultValue.get(position));
+                bd.putString(Cfg.SCRUM_DATA, defaultValue.get(position));
 
                 PageManager.getInstance(getActivity()).replace(R.id.content_frame, CardFrgmt.class, bd);
             }

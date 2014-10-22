@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.common.ui.ActionBarDecorator;
 import net.sarangnamu.scrum_poker.db.DbHelper;
-import net.sarangnamu.scrum_poker.page.MainFrgmt;
 import net.sarangnamu.scrum_poker.page.PageManager;
+import net.sarangnamu.scrum_poker.page.sub.MainFrgmt;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
@@ -85,6 +85,10 @@ public class MainActivity extends FragmentActivity {
             public void onDrawerClosed(View arg0) {
             }
         });
+
+        if (menuData == null) {
+            menuData = new ArrayList<MenuData>();
+        }
 
         menuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.app_name)));
         menuData.add(new MenuData(LEFT_MENU_TYPE_ITEM, getString(R.string.add_rule)));

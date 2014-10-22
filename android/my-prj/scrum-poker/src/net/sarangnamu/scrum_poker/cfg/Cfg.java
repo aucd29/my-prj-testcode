@@ -1,5 +1,5 @@
 /*
- * MainFrgmt.java
+ * Cfg.java
  * Copyright 2014 Burke Choi All right reserverd.
  *             http://www.sarangnamu.net
  *
@@ -15,24 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sarangnamu.scrum_poker.page.sub;
+package net.sarangnamu.scrum_poker.cfg;
 
-import net.sarangnamu.common.FrgmtBase;
-import net.sarangnamu.scrum_poker.R;
-import net.sarangnamu.scrum_poker.cfg.Cfg;
-import android.widget.TextView;
+import net.sarangnamu.common.BkCfg;
 
-public class CardFrgmt extends FrgmtBase {
-    private TextView value;
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.page_card;
-    }
-
-    @Override
-    protected void initLayout() {
-        value = (TextView) base.findViewById(R.id.value);
-        value.setText(getArguments().getString(Cfg.SCRUM_DATA, "ERROR"));
-    }
+public class Cfg extends BkCfg {
+    public static final String SCRUM_DATA = "SCRUM_DATA";
 }
