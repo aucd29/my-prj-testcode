@@ -5,10 +5,9 @@
     android:orientation="vertical" >
 
     <net.sarangnamu.common.fonts.RobotoLightTextView
-        android:id="@+id/number"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textSize="40sp" />
+        android:textSize="15sp" />
 
 </LinearLayout>

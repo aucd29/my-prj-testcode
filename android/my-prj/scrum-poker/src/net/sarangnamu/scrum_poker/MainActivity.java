@@ -174,9 +174,9 @@ public class MainActivity extends FragmentActivity {
         private int getInflateId(int position) {
             switch (menuData.get(position).type) {
             case LEFT_MENU_TYPE_BAR:
-                return R.layout.page_main_scrum_bar;
+                return R.layout.page_main_menu_bar;
             default:
-                return R.layout.page_main_scrum_item;
+                return R.layout.page_main_menu_item;
             }
         }
     }
