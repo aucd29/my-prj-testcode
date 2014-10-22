@@ -21,6 +21,8 @@ import java.util.ArrayList;
 
 import net.sarangnamu.common.FrgmtBase;
 import net.sarangnamu.scrum_poker.R;
+import net.sarangnamu.scrum_poker.page.sub.CardFrgmt;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +49,6 @@ public class MainFrgmt extends FrgmtBase {
         initAdapter();
     }
 
-
     private void initDefaultValue() {
         if (defaultValue == null) {
             defaultValue = new ArrayList<String>();
@@ -72,7 +73,10 @@ public class MainFrgmt extends FrgmtBase {
         grid.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bd = new Bundle();
+                bd.putString("value", defaultValue.get(position));
 
+                PageManager.getInstance(getActivity()).replace(R.id.content_frame, CardFrgmt.class, bd);
             }
         });
     }
@@ -112,7 +116,7 @@ public class MainFrgmt extends FrgmtBase {
             ViewHolder holder;
 
             if (convertView == null) {
-                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.scrum_item, null);
+                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.page_main_scrum_item, null);
 
                 holder = new ViewHolder();
                 holder.number = (TextView) convertView.findViewById(R.id.number);
