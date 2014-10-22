@@ -157,6 +157,7 @@ public class MainActivity extends FragmentActivity {
             }
 
             MenuData data = menuData.get(position);
+            if (data.type == )
 
 
             return convertView;

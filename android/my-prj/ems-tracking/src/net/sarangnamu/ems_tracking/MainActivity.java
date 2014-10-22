@@ -68,7 +68,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private TextView title, empty;
     private EditText emsNum, anotherName;
     private EmsAdapter adapter;
-    private ImageButton refersh;
+    private ImageButton refresh;
     private RelativeLayout editLayout;
     private ProgressDialog dlg;
     private boolean expandLayout = false;
@@ -86,7 +86,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         emsNum      = (EditText) findViewById(R.id.emsNum);
         anotherName = (EditText) findViewById(R.id.anotherName);
         editLayout  = (RelativeLayout) findViewById(R.id.editLayout);
-        refersh     = (ImageButton) findViewById(R.id.refersh);
+        refresh     = (ImageButton) findViewById(R.id.refersh);
 
         initLabel();
         initData();
@@ -114,10 +114,10 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             }
         });
 
-        refersh.setOnClickListener(new View.OnClickListener() {
+        refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refersh.setEnabled(false);
+                refresh.setEnabled(false);
                 loadEmsData();
             }
         });
@@ -297,7 +297,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
             @Override
             protected void onPostExecute(Boolean result) {
-                refersh.setEnabled(true);
+                refresh.setEnabled(true);
 
                 hideProgress();
                 initListView();

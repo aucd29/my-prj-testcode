@@ -54,8 +54,7 @@ public class FadeColor {
             return ;
         }
 
-        ObjectAnimator colorFade = ObjectAnimator.ofObject(
-                view, "backgroundColor", new ArgbEvaluator(), fColor, sColor);
+        ObjectAnimator colorFade = ObjectAnimator.ofObject(view, "backgroundColor", new ArgbEvaluator(), fColor, sColor);
         colorFade.setDuration(duration);
         colorFade.start();
     }

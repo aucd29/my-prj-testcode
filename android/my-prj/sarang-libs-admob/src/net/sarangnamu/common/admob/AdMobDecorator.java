@@ -1,5 +1,5 @@
 /*
- * AdMobDelegator.java
+ * AdMobDecorator.java
  * Copyright 2014 Burke Choi All right reserverd.
  *             http://www.sarangnamu.net
  *
@@ -56,8 +56,8 @@ public class AdMobDecorator {
         adView = new AdView(act, size, id);
     }
 
-    public void load(ViewGroup parnet) {
-        parnet.addView(adView);
+    public void load(ViewGroup parent) {
+        parent.addView(adView);
         adView.loadAd(new AdRequest());
     }
 
