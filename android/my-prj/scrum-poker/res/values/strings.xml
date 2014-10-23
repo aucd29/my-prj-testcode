@@ -5,4 +5,7 @@
     <string name="user_rule">User Rule</string>
     <string name="delete_rule">Delete Rule</string>
     <string name="modify_rule">Modify Rule</string>
+    <string name="deck_settings">DECK SETTINGS</string>
+    <string name="about">ABOUT</string>
+    <string name="license">License</string>
 </resources>

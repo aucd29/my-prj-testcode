@@ -7,6 +7,7 @@ import net.sarangnamu.common.ui.ActionBarDecorator;
 import net.sarangnamu.scrum_poker.db.DbHelper;
 import net.sarangnamu.scrum_poker.page.PageManager;
 import net.sarangnamu.scrum_poker.page.sub.MainFrgmt;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
@@ -44,6 +45,7 @@ public class MainActivity extends FragmentActivity {
 
         initActionBar();
         initDrawer();
+        initLeftMenu();
     }
 
     @Override
@@ -85,7 +87,9 @@ public class MainActivity extends FragmentActivity {
             public void onDrawerClosed(View arg0) {
             }
         });
+    }
 
+    private void initLeftMenu() {
         if (menuData == null) {
             menuData = new ArrayList<MenuData>();
         }
@@ -93,13 +97,22 @@ public class MainActivity extends FragmentActivity {
         menuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.app_name)));
         menuData.add(new MenuData(LEFT_MENU_TYPE_ITEM, getString(R.string.add_rule)));
 
-        // TODO USER MENU WITH DB
-        menuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.user_rule)));
+        // async ??
+        DbManager.getInstance().open(this, new DbHelper(this));
+        Cursor cr = DbHelper.select();
+        if (cr.getCount() > 0) {
+            menuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.user_rule)));
+
+            while (cr.moveToNext()) {
+                menuData.add(new MenuData(LEFT_MENU_TYPE_ITEM, cr.getString(1)));
+            }
+        }
 
         leftMenu.setAdapter(new MenuAdapter());
         leftMenu.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
             }
         });
     }
@@ -114,12 +127,13 @@ public class MainActivity extends FragmentActivity {
     private static final int LEFT_MENU_TYPE_ITEM = 1;
 
     class MenuData {
-        public MenuData(int type, String subject) {
+        public MenuData(int type, String menu) {
             this.type = type;
-            this.subject = subject;
+            this.menu = menu;
         }
+
         int type;
-        String subject;
+        String menu;
     }
 
     class MenuViewHolder {
@@ -164,12 +178,15 @@ public class MainActivity extends FragmentActivity {
                 convertView = LayoutInflater.from(getApplicationContext()).inflate(getInflateId(position), null);
                 holder = new MenuViewHolder();
 
+                holder.menu = (TextView) convertView.findViewById(R.id.title);
+
                 convertView.setTag(holder);
             } else {
                 holder = (MenuViewHolder) convertView.getTag();
             }
 
             MenuData data = menuData.get(position);
+            holder.menu.setText(data.menu);
 
 
             return convertView;
