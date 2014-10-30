@@ -59,6 +59,14 @@ public class DbManager {
         helper.close();
     }
 
+    public boolean isAliveDb() {
+        if (db == null || helper == null) {
+            return false;
+        }
+
+        return true;
+    }
+
     public Cursor query(String table, String[] fields, String where) {
         return db.query(table, fields, where, null, null, null, null);
     }

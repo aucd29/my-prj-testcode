@@ -2,16 +2,20 @@ package net.sarangnamu.scrum_poker;
 
 import java.util.ArrayList;
 
+import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.common.ui.ActionBarDecorator;
+import net.sarangnamu.common.ui.dlg.DlgLicense;
+import net.sarangnamu.common.ui.widget.drawerlayout.ContentSlidingDrawerListener;
 import net.sarangnamu.scrum_poker.db.DbHelper;
 import net.sarangnamu.scrum_poker.page.PageManager;
+import net.sarangnamu.scrum_poker.page.sub.AddFrgmt;
 import net.sarangnamu.scrum_poker.page.sub.MainFrgmt;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.DrawerLayout.DrawerListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -19,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,14 +33,16 @@ public class MainActivity extends FragmentActivity {
     private DrawerLayout drawer;
     private ActionBarDecorator actionBar;
     private ArrayList<MenuData> menuData;
+    private FrameLayout contentFrame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        leftMenu = (ListView) findViewById(R.id.leftMenu);
-        drawer   = (DrawerLayout) findViewById(R.id.drawer);
+        leftMenu        = (ListView) findViewById(R.id.leftMenu);
+        drawer          = (DrawerLayout) findViewById(R.id.drawer);
+        contentFrame    = (FrameLayout) findViewById(R.id.content_frame);
 
         initActionBar();
 
@@ -55,7 +62,9 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     protected void onResume() {
-        DbManager.getInstance().open(this, new DbHelper(this));
+        if (!DbManager.getInstance().isAliveDb()) {
+            DbManager.getInstance().open(this, new DbHelper(this));
+        }
 
         super.onResume();
     }
@@ -70,21 +79,16 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initDrawer() {
-        drawer.setDrawerListener(new DrawerListener() {
+        drawer.setScrimColor(Color.TRANSPARENT);
+        drawer.setDrawerListener(new ContentSlidingDrawerListener() {
             @Override
-            public void onDrawerStateChanged(int arg0) {
+            public View getListView() {
+                return leftMenu;
             }
 
             @Override
-            public void onDrawerSlide(View arg0, float arg1) {
-            }
-
-            @Override
-            public void onDrawerOpened(View arg0) {
-            }
-
-            @Override
-            public void onDrawerClosed(View arg0) {
+            public View getContentFrame() {
+                return contentFrame;
             }
         });
     }
@@ -108,11 +112,22 @@ public class MainActivity extends FragmentActivity {
             }
         }
 
+        menuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.about)));
+        menuData.add(new MenuData(LEFT_MENU_TYPE_ITEM, getString(R.string.license)));
+
         leftMenu.setAdapter(new MenuAdapter());
         leftMenu.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (menuData.get(position).menu.equals(getString(R.string.license))) {
+                    DlgLicense dlg = new DlgLicense(MainActivity.this);
+                    dlg.setTitleTypeface(FontLoader.getInstance(getApplicationContext()).getRobotoLight());
+                    dlg.show();
+                } else if (menuData.get(position).menu.equals(getString(R.string.add_rule))) {
+                    PageManager.getInstance(MainActivity.this).replace(R.id.content_frame, AddFrgmt.class);
+                }
 
+                drawer.closeDrawers();
             }
         });
     }
@@ -171,6 +186,15 @@ public class MainActivity extends FragmentActivity {
         }
 
         @Override
+        public boolean isEnabled(int position) {
+            if (menuData.get(position).type == LEFT_MENU_TYPE_BAR) {
+                return false;
+            }
+
+            return true;
+        }
+
+        @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             MenuViewHolder holder;
 
@@ -180,6 +204,7 @@ public class MainActivity extends FragmentActivity {
 
                 holder.menu = (TextView) convertView.findViewById(R.id.title);
 
+
                 convertView.setTag(holder);
             } else {
                 holder = (MenuViewHolder) convertView.getTag();
@@ -187,7 +212,6 @@ public class MainActivity extends FragmentActivity {
 
             MenuData data = menuData.get(position);
             holder.menu.setText(data.menu);
-
 
             return convertView;
         }

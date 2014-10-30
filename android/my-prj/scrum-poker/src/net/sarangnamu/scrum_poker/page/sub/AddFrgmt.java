@@ -19,6 +19,7 @@ package net.sarangnamu.scrum_poker.page.sub;
 
 import net.sarangnamu.common.FrgmtBase;
 import net.sarangnamu.scrum_poker.R;
+import net.sarangnamu.scrum_poker.cfg.Cfg;
 
 public class AddFrgmt extends FrgmtBase {
     @Override
@@ -28,5 +29,6 @@ public class AddFrgmt extends FrgmtBase {
 
     @Override
     protected void initLayout() {
+        base.setPadding(0, dpToPixelInt(Cfg.ACTION_BAR_HEIGHT), 0, 0);
     }
 }

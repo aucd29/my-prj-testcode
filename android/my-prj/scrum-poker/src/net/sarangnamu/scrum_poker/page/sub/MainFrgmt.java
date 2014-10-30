@@ -44,6 +44,8 @@ public class MainFrgmt extends FrgmtBase {
 
     @Override
     protected void initLayout() {
+        base.setPadding(0, dpToPixelInt(Cfg.ACTION_BAR_HEIGHT), 0, 0);
+
         grid = (GridView) base.findViewById(R.id.grid);
 
         initDefaultValue();
@@ -62,15 +64,18 @@ public class MainFrgmt extends FrgmtBase {
         defaultValue.add("0");
         defaultValue.add("1/2");
         defaultValue.add("2");
+
         defaultValue.add("3");
         defaultValue.add("5");
         defaultValue.add("8");
+
         defaultValue.add("13");
         defaultValue.add("20");
         defaultValue.add("30");
-        defaultValue.add("40");
-        defaultValue.add("50");
+
         defaultValue.add("60");
+        defaultValue.add("?");
+        defaultValue.add("∞");
     }
 
     private void initAdapter() {
@@ -137,3 +142,4 @@ public class MainFrgmt extends FrgmtBase {
         }
     }
 }
+

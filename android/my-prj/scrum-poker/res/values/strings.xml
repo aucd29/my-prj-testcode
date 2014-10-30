@@ -8,4 +8,6 @@
     <string name="deck_settings">DECK SETTINGS</string>
     <string name="about">ABOUT</string>
     <string name="license">License</string>
+    <string name="title">TITLE</string>
+    
 </resources>

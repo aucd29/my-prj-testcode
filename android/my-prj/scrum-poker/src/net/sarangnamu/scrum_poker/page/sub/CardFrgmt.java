@@ -32,6 +32,8 @@ public class CardFrgmt extends FrgmtBase {
 
     @Override
     protected void initLayout() {
+        base.setPadding(0, dpToPixelInt(Cfg.ACTION_BAR_HEIGHT), 0, 0);
+
         value = (TextView) base.findViewById(R.id.value);
         value.setText(getArguments().getString(Cfg.SCRUM_DATA, "ERROR"));
     }

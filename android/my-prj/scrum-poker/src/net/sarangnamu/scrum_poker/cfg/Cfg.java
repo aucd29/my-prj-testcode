@@ -21,4 +21,5 @@ import net.sarangnamu.common.BkCfg;
 
 public class Cfg extends BkCfg {
     public static final String SCRUM_DATA = "SCRUM_DATA";
+    public static final int ACTION_BAR_HEIGHT = 40;
 }
