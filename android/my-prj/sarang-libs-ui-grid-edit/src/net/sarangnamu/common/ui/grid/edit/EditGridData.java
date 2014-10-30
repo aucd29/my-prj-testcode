@@ -1,5 +1,5 @@
 /*
- * MainFrgmt.java
+ * EditGridData.java
  * Copyright 2014 Burke Choi All right reserverd.
  *             http://www.sarangnamu.net
  *
@@ -15,25 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sarangnamu.scrum_poker.page.sub;
+package net.sarangnamu.common.ui.grid.edit;
 
-import net.sarangnamu.common.FrgmtBase;
-import net.sarangnamu.scrum_poker.R;
-import net.sarangnamu.scrum_poker.cfg.Cfg;
-import android.widget.GridView;
 
-public class AddFrgmt extends FrgmtBase {
-    private GridView grid;
+public class EditGridData {
+    public static final int TYPE_BUTTON = 0;
+    public static final int TYPE_EDIT = 1;
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.page_add;
+    public EditGridData(int type, String value) {
+        this.type = type;
+        this.value = value;
     }
 
-    @Override
-    protected void initLayout() {
-        base.setPadding(0, dpToPixelInt(Cfg.ACTION_BAR_HEIGHT), 0, 0);
-
-        grid = (GridView) base.findViewById(R.id.grid);
-    }
+    public String value;
+    public int type;
 }
