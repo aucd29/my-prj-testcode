@@ -187,7 +187,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
 
     private void setGoneProgressBar(final Context context, final RemoteViews views) {
         views.setViewVisibility(R.id.prog, View.GONE);
-        //        views.setOnClickPendingIntent(R.id.widgetLayout, getPendingSelfIntent(context, TOGGLE_WIFI, appWidgetId));
+        views.setOnClickPendingIntent(R.id.widgetLayout, getPendingSelfIntent(context, TOGGLE_WIFI, R.id.widgetLayout));
     }
 
     private void setWifiStateWithCfg(final Context context, final RemoteViews views) {
