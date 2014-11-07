@@ -40,23 +40,8 @@ public class WifiBatteryWidget extends AppWidgetProvider {
     private Boolean changingWifi = false;
 
     @Override
-    public void onEnabled(Context context) {
-        super.onEnabled(context);
-
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "on enabled");
-        DLog.d(TAG, "===================================================================");
-
-        startService(context);
-    }
-
-    @Override
     public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         final int N = appWidgetIds.length;
-
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "on update");
-        DLog.d(TAG, "===================================================================");
 
         startService(context);
 
@@ -64,38 +49,12 @@ public class WifiBatteryWidget extends AppWidgetProvider {
             final int appWidgetId = appWidgetIds[i];
             final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
 
+            views.setViewVisibility(R.id.prog, View.GONE);
             views.setOnClickPendingIntent(R.id.widgetLayout, getPendingSelfIntent(context, TOGGLE_WIFI, appWidgetId));
 
-            String battery = BkCfg.get(context, "battery", null);
-            if (battery == null) {
-                views.setTextViewText(R.id.battery, context.getString(R.string.getBatteryInfo));
-            } else {
-                views.setTextViewText(R.id.battery, battery);
-            }
-
-            String ip = BkCfg.get(context, "ip", null);
-
-            if (ip == null) {
-                views.setTextViewText(R.id.ip, BkWifiManager.getInstance(context).getIPAddr());
-            } else {
-                views.setTextViewText(R.id.ip, ip);
-            }
-
-            String wifiState = BkCfg.get(context, "wifi-state", null);
-
-            if (wifiState == null) {
-                if (BkWifiManager.getInstance(context).isEnabled()) {
-                    views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOn));
-                } else {
-                    views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
-                }
-            } else {
-                if (wifiState.equals("1")) {
-                    views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOn));
-                } else {
-                    views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
-                }
-            }
+            setBatteryWithCfg(context, views);
+            setIpAddrWithCfg(context, views);
+            setWifiStateWithCfg(context, views);
 
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
@@ -106,10 +65,6 @@ public class WifiBatteryWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, final Intent intent) {
         super.onReceive(context, intent);
-
-        DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "on receive");
-        DLog.d(TAG, "===================================================================");
 
         final String action = intent.getAction();
         final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
@@ -174,8 +129,8 @@ public class WifiBatteryWidget extends AppWidgetProvider {
             DLog.d(TAG, "===================================================================");
             DLog.d(TAG, "BATTERY_INFO");
             DLog.d(TAG, "===================================================================");
-            String batteryInfo = intent.getStringExtra(WifiBatteryService.BATTERY_INFO);
-            views.setTextViewText(R.id.battery, batteryInfo);
+
+            setBatteryWithCfg(context, views);
         } else if (action.equals(TOGGLE_WIFI)) {
             DLog.d(TAG, "===================================================================");
             DLog.d(TAG, "TOGGLE_WIFI");
@@ -202,14 +157,67 @@ public class WifiBatteryWidget extends AppWidgetProvider {
             DLog.d(TAG, "ACTION_BOOT_COMPLETED");
             DLog.d(TAG, "===================================================================");
             startService(context);
+        } else if (action.equals("android.appwidget.action.APPWIDGET_UPDATE_OPTIONS")) {
+            DLog.d(TAG, "===================================================================");
+            DLog.d(TAG, "android.appwidget.action.APPWIDGET_UPDATE_OPTIONS ");
+            DLog.d(TAG, "===================================================================");
+
+            setGoneProgressBar(context, views);
+            setBatteryWithCfg(context, views);
+            setIpAddrWithCfg(context, views);
+            setWifiStateWithCfg(context, views);
         } else {
             DLog.d(TAG, "===================================================================");
-            DLog.d(TAG, "ELSE ");
+            DLog.d(TAG, "ELSE " + action);
             DLog.d(TAG, "===================================================================");
         }
 
         ComponentName watchWidget = new ComponentName(context, WifiBatteryWidget.class);
         appWidgetManager.updateAppWidget(watchWidget, views);
+    }
+
+    private void setBatteryWithCfg(final Context context, final RemoteViews views) {
+        String battery = BkCfg.get(context, "battery", null);
+        if (battery == null) {
+            views.setTextViewText(R.id.battery, context.getString(R.string.getBatteryInfo));
+        } else {
+            views.setTextViewText(R.id.battery, battery);
+        }
+    }
+
+    private void setGoneProgressBar(final Context context, final RemoteViews views) {
+        views.setViewVisibility(R.id.prog, View.GONE);
+        //        views.setOnClickPendingIntent(R.id.widgetLayout, getPendingSelfIntent(context, TOGGLE_WIFI, appWidgetId));
+    }
+
+    private void setWifiStateWithCfg(final Context context, final RemoteViews views) {
+        String wifiState = BkCfg.get(context, "wifi-state", null);
+
+        if (wifiState == null) {
+            if (BkWifiManager.getInstance(context).isEnabled()) {
+                views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOn));
+            } else {
+                views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
+                views.setTextViewText(R.id.ip, context.getString(R.string.invalidIp));
+            }
+        } else {
+            if (wifiState.equals("1")) {
+                views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOn));
+            } else {
+                views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
+                views.setTextViewText(R.id.ip, context.getString(R.string.invalidIp));
+            }
+        }
+    }
+
+    private void setIpAddrWithCfg(final Context context, final RemoteViews views) {
+        String ip = BkCfg.get(context, "ip", null);
+
+        if (ip == null) {
+            views.setTextViewText(R.id.ip, BkWifiManager.getInstance(context).getIPAddr());
+        } else {
+            views.setTextViewText(R.id.ip, ip);
+        }
     }
 
     private PendingIntent getPendingSelfIntent(Context context, String action, int id) {

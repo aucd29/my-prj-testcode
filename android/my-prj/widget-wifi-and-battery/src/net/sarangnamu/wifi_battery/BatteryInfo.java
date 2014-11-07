@@ -17,8 +17,8 @@
  */
 package net.sarangnamu.wifi_battery;
 
-import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.DLog;
+import net.sarangnamu.wifi_battery.cfg.Cfg;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -67,23 +67,10 @@ public class BatteryInfo extends BroadcastReceiver {
         if (l != null && batteryValue != battery) {
             batteryValue = battery;
 
-            BkCfg.set(context, "battery", "Battery : " + battery + "%");
+            Cfg.set(context, Cfg.BATTERY, "Battery : " + battery + "%");
             l.onChangeBattery(batteryValue);
         }
     }
-
-//    public static String getBatteryLevel(Context context) {
-//        if (context == null) {
-//            return null;
-//        }
-//
-//        Intent intent  = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-//        int    level   = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-//        int    scale   = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 100);
-//        int    percent = (level * 100) / scale;
-//
-//        return String.valueOf(percent) + "%";
-//    }
 
     public void register(Context context, BatteryInfoListener l) {
         if (context == null) {

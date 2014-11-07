@@ -6,5 +6,6 @@
     -->
 	<dimen name="widgetSize">80dp</dimen>
 	<dimen name="progressSize">60dp</dimen>
-	<dimen name="widgetLinearPadding">8dp</dimen>
+	<dimen name="widgetLinearPadding">0dp</dimen>
+	
 </resources>
