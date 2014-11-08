@@ -21,6 +21,7 @@ import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.wifi_battery.R;
+import net.sarangnamu.wifi_battery.cfg.Cfg;
 import net.sarangnamu.wifi_battery.service.WifiBatteryService;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -177,7 +178,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
     }
 
     private void setBatteryWithCfg(final Context context, final RemoteViews views) {
-        String battery = BkCfg.get(context, "battery", null);
+        String battery = BkCfg.get(context, Cfg.BATTERY, null);
         if (battery == null) {
             views.setTextViewText(R.id.battery, context.getString(R.string.getBatteryInfo));
         } else {
