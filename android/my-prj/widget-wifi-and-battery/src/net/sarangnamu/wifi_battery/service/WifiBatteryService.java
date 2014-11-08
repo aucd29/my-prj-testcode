@@ -18,10 +18,10 @@
 package net.sarangnamu.wifi_battery.service;
 
 import net.sarangnamu.common.BkSystem;
+import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.service.immortal.ImmortalService;
 import net.sarangnamu.wifi_battery.BatteryInfo;
 import net.sarangnamu.wifi_battery.BatteryInfo.BatteryInfoListener;
-import net.sarangnamu.wifi_battery.cfg.Cfg;
 import net.sarangnamu.wifi_battery.widget.WifiBatteryWidget;
 import android.content.Intent;
 import android.os.IBinder;
@@ -69,7 +69,10 @@ public class WifiBatteryService extends ImmortalService {
         batteryInfo.register(this, new BatteryInfoListener() {
             @Override
             public void onChangeBattery(int battery) {
-                Cfg.set(getApplicationContext(), Cfg.BATTERY, "Battery : " + battery + "%");
+                DLog.d(TAG, "===================================================================");
+                DLog.d(TAG, " on change battery " + battery);
+                DLog.d(TAG, "===================================================================");
+
 
                 BkSystem.sendBroadcast(getApplicationContext(),
                         WifiBatteryWidget.class, BATTERY_INFO, "Battery : " + battery + "%");

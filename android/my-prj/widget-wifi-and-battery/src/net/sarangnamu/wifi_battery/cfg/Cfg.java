@@ -21,5 +21,7 @@ import net.sarangnamu.common.BkCfg;
 
 public class Cfg extends BkCfg {
     public static final String BATTERY = "battery";
-    public static final String IPADDR = "ipaddr";
+    public static final String IP = "ip";
+    public static final String WIFI_STATE = "wifi-state";
+
 }

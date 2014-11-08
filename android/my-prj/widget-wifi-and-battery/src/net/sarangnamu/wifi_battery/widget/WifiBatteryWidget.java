@@ -17,7 +17,6 @@
  */
 package net.sarangnamu.wifi_battery.widget;
 
-import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.network.BkWifiManager;
 import net.sarangnamu.wifi_battery.R;
@@ -77,7 +76,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
             DLog.d(TAG, "===================================================================");
             int status = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_DISABLED);
             if (status == WifiManager.WIFI_STATE_DISABLED) {
-                BkCfg.set(context, "wifi-state", "0");
+                Cfg.set(context, Cfg.WIFI_STATE, "0");
 
                 views.setViewVisibility(R.id.prog, View.GONE);
                 views.setTextViewText(R.id.wifiStatus, context.getString(R.string.wifiOff));
@@ -86,7 +85,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
                 DLog.d(TAG, "===================================================================");
                 DLog.d(TAG, "WIFI_STATE_ENABLED");
                 DLog.d(TAG, "===================================================================");
-                BkCfg.set(context, "wifi-state", "1");
+                Cfg.set(context, Cfg.WIFI_STATE, "1");
 
                 new AsyncTask<Context, Void, String>() {
                     Context context;
@@ -103,7 +102,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
                                 if (ip.equals("0.0.0.0") || ip == "") {
                                     Thread.sleep(500);
                                 } else {
-                                    BkCfg.set(context, "ip", ip);
+                                    Cfg.set(context, Cfg.IP, ip);
                                     break;
                                 }
                             }
@@ -128,8 +127,9 @@ public class WifiBatteryWidget extends AppWidgetProvider {
             }
         } else if (action.equals(WifiBatteryService.BATTERY_INFO)) {
             DLog.d(TAG, "===================================================================");
-            DLog.d(TAG, "BATTERY_INFO");
+            DLog.d(TAG, "BATTERY_INFO " + intent.getStringExtra(WifiBatteryService.BATTERY_INFO));
             DLog.d(TAG, "===================================================================");
+            Cfg.set(context, Cfg.BATTERY, intent.getStringExtra(WifiBatteryService.BATTERY_INFO));
 
             setBatteryWithCfg(context, views);
         } else if (action.equals(TOGGLE_WIFI)) {
@@ -178,7 +178,8 @@ public class WifiBatteryWidget extends AppWidgetProvider {
     }
 
     private void setBatteryWithCfg(final Context context, final RemoteViews views) {
-        String battery = BkCfg.get(context, Cfg.BATTERY, null);
+        String battery = Cfg.get(context, Cfg.BATTERY, null);
+        DLog.d(TAG, "@@@@@@ BATTERY : " + battery);
         if (battery == null) {
             views.setTextViewText(R.id.battery, context.getString(R.string.getBatteryInfo));
         } else {
@@ -192,7 +193,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
     }
 
     private void setWifiStateWithCfg(final Context context, final RemoteViews views) {
-        String wifiState = BkCfg.get(context, "wifi-state", null);
+        String wifiState = Cfg.get(context, Cfg.WIFI_STATE, null);
 
         if (wifiState == null) {
             if (BkWifiManager.getInstance(context).isEnabled()) {
@@ -212,7 +213,7 @@ public class WifiBatteryWidget extends AppWidgetProvider {
     }
 
     private void setIpAddrWithCfg(final Context context, final RemoteViews views) {
-        String ip = BkCfg.get(context, "ip", null);
+        String ip = Cfg.get(context, Cfg.IP, null);
 
         if (ip == null) {
             views.setTextViewText(R.id.ip, BkWifiManager.getInstance(context).getIPAddr());
