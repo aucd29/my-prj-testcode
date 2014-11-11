@@ -3,6 +3,6 @@
     android:initialLayout="@layout/widget"
     android:minHeight="40dp"
     android:minWidth="40dp"
-    android:updatePeriodMillis="3600000"
-    >
+    android:previewImage="@drawable/ic_launcher"
+    android:updatePeriodMillis="3600000">
 </appwidget-provider>

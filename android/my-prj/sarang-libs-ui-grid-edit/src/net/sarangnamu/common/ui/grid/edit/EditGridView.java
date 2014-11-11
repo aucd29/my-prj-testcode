@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -28,8 +29,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 
-public class EditGridView extends GridView {
-    private int maxCount = 2;
+public class EditGridView extends GridView  implements View.OnClickListener {
+    private int gridviewResId;
     private ArrayList<EditGridData> dataList;
 
     public EditGridView(Context context) {
@@ -53,12 +54,38 @@ public class EditGridView extends GridView {
             dataList.add(new EditGridData(EditGridData.TYPE_EDIT, ""));
             dataList.add(new EditGridData(EditGridData.TYPE_BUTTON, ""));
         }
+
+        gridviewResId = R.layout.editgridview_item;
+
+        setAdapter(new EditGridAdapter());
     }
 
-    public void setMax(int max) {
-        this.maxCount = max;
+    public void setInflateId(int id) {
+        gridviewResId = id;
+    }
 
-        ((BaseAdapter)getAdapter()).notifyDataSetChanged();
+    protected EditGridViewHolder setViewHolder(View view) {
+        EditGridViewHolder holder;
+
+        holder = new EditGridViewHolder();
+        holder.edt = (EditText) view.findViewById(R.id.edt);
+        holder.btn = (Button) view.findViewById(R.id.btn);
+
+        return holder;
+    }
+
+    protected void setGetView(EditGridData data, EditGridViewHolder holder) {
+        if (data.type == EditGridData.TYPE_BUTTON) {
+            holder.btn.setVisibility(View.VISIBLE);
+            holder.edt.setVisibility(View.GONE);
+
+            holder.btn.setOnClickListener(this);
+        } else if (data.type == EditGridData.TYPE_EDIT) {
+            holder.btn.setVisibility(View.GONE);
+            holder.edt.setVisibility(View.VISIBLE);
+
+            holder.edt.setText(data.value);
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -67,15 +94,14 @@ public class EditGridView extends GridView {
     //
     ////////////////////////////////////////////////////////////////////////////////////
 
-    class ViewHolder {
-        EditText edit;
-        Button btn;
-    }
-
     class EditGridAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return maxCount;
+            if (dataList == null) {
+                return 0;
+            }
+
+            return dataList.size();
         }
 
         @Override
@@ -89,28 +115,38 @@ public class EditGridView extends GridView {
         }
 
         @Override
-        public int getViewTypeCount() {
-            return 2;
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return super.getItemViewType(position);
-        }
-
-        @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
+            EditGridViewHolder holder;
             EditGridData data = dataList.get(position);
 
             if (convertView == null) {
-                holder = new ViewHolder();
-            } else {
+                convertView = LayoutInflater.from(getContext()).inflate(gridviewResId, null);
 
+                holder = setViewHolder(convertView);
+                convertView.setTag(holder);
+            } else {
+                holder = (EditGridViewHolder) convertView.getTag();
             }
 
+            setGetView(data, holder);
 
-            return null;
+            return convertView;
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // View.OnClickListener
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void onClick(View v) {
+        if (dataList == null) {
+            dataList = new ArrayList<EditGridData>();
+        }
+
+        dataList.get(dataList.size() - 1).type = EditGridData.TYPE_EDIT;
+        dataList.add(new EditGridData(EditGridData.TYPE_BUTTON, ""));
     }
 }
