@@ -74,7 +74,7 @@ public class EditGridView extends GridView  implements View.OnClickListener {
         return holder;
     }
 
-    protected void setGetView(EditGridData data, EditGridViewHolder holder) {
+    protected void setAdapterView(EditGridData data, EditGridViewHolder holder) {
         if (data.type == EditGridData.TYPE_BUTTON) {
             holder.btn.setVisibility(View.VISIBLE);
             holder.edt.setVisibility(View.GONE);
@@ -86,6 +86,18 @@ public class EditGridView extends GridView  implements View.OnClickListener {
 
             holder.edt.setText(data.value);
         }
+    }
+
+    public ArrayList<EditGridData> getGridData() {
+        return dataList;
+    }
+
+    public void clearGridData() {
+        if (dataList == null) {
+            return ;
+        }
+
+        dataList.clear();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -128,7 +140,7 @@ public class EditGridView extends GridView  implements View.OnClickListener {
                 holder = (EditGridViewHolder) convertView.getTag();
             }
 
-            setGetView(data, holder);
+            setAdapterView(data, holder);
 
             return convertView;
         }
@@ -148,5 +160,7 @@ public class EditGridView extends GridView  implements View.OnClickListener {
 
         dataList.get(dataList.size() - 1).type = EditGridData.TYPE_EDIT;
         dataList.add(new EditGridData(EditGridData.TYPE_BUTTON, ""));
+
+        ((BaseAdapter) getAdapter()).notifyDataSetChanged();
     }
 }

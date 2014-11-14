@@ -22,20 +22,13 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/title" />
 
-        <LinearLayout
+        <net.sarangnamu.common.ui.grid.edit.EditGridView
             android:id="@+id/rules"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/title" >
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-       
+            android:layout_below="@id/title"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="40dp" />
     </RelativeLayout>
 
 </ScrollView>
