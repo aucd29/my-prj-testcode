@@ -17,13 +17,22 @@
  */
 package net.sarangnamu.scrum_poker.page.sub;
 
+import java.util.ArrayList;
+
+import net.sarangnamu.common.DLog;
 import net.sarangnamu.common.FrgmtBase;
+import net.sarangnamu.common.ui.grid.edit.EditGridData;
+import net.sarangnamu.common.ui.grid.edit.EditGridView;
 import net.sarangnamu.scrum_poker.R;
 import net.sarangnamu.scrum_poker.cfg.Cfg;
-import android.widget.GridView;
+import android.view.View;
+import android.widget.ImageButton;
 
 public class AddFrgmt extends FrgmtBase {
-    private GridView grid;
+    private static final String TAG = "AddFrgmt";
+
+    private EditGridView grid;
+    private ImageButton btn;
 
     @Override
     protected int getLayoutId() {
@@ -34,6 +43,18 @@ public class AddFrgmt extends FrgmtBase {
     protected void initLayout() {
         base.setPadding(0, dpToPixelInt(Cfg.ACTION_BAR_HEIGHT), 0, 0);
 
-        grid = (GridView) base.findViewById(R.id.grid);
+        grid = (EditGridView) base.findViewById(R.id.grid);
+        btn  = (ImageButton) base.findViewById(R.id.submit);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DLog.d(TAG, "===================================================================");
+                DLog.d(TAG, "Add Rule");
+                DLog.d(TAG, "===================================================================");
+
+                ArrayList<EditGridData> datas = grid.getGridData();
+            }
+        });
     }
 }

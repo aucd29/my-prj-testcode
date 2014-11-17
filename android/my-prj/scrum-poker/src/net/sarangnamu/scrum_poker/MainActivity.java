@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.sqlite.DbManager;
-import net.sarangnamu.common.ui.ActionBarDecorator;
 import net.sarangnamu.common.ui.dlg.DlgLicense;
 import net.sarangnamu.common.ui.widget.drawerlayout.ContentSlidingDrawerListener;
 import net.sarangnamu.scrum_poker.db.DbHelper;
@@ -31,7 +30,6 @@ public class MainActivity extends FragmentActivity {
     private static final String TAG = "MainActivity";
     private ListView leftMenu;
     private DrawerLayout drawer;
-    private ActionBarDecorator actionBar;
     private ArrayList<MenuData> menuData;
     private FrameLayout contentFrame;
 
@@ -44,13 +42,10 @@ public class MainActivity extends FragmentActivity {
         drawer          = (DrawerLayout) findViewById(R.id.drawer);
         contentFrame    = (FrameLayout) findViewById(R.id.content_frame);
 
-        initActionBar();
-
         if (savedInstanceState == null) {
             initPageManager();
         }
 
-        initActionBar();
         initDrawer();
         initLeftMenu();
     }
@@ -71,11 +66,6 @@ public class MainActivity extends FragmentActivity {
 
     private void initPageManager() {
         PageManager.getInstance(this).add(R.id.content_frame, MainFrgmt.class);
-    }
-
-    private void initActionBar() {
-        //actionBar = new ActionBarDecorator(this);
-        //actionBar.init(R.layout.actionbar);
     }
 
     private void initDrawer() {

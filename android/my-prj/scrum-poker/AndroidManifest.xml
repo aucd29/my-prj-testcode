@@ -9,6 +9,7 @@
         android:targetSdkVersion="19" />
 
     <application
+        android:debuggable="true"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
