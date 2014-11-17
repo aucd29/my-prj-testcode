@@ -59,8 +59,16 @@ public class AddFrgmt extends FrgmtBase {
                 DLog.d(TAG, "Add Rule");
                 DLog.d(TAG, "===================================================================");
 
+                if (getString(R.string.license).equals(edtTitle.getText()) ||
+                    getString(R.string.add_rule).equals(edtTitle.getText())) {
+                    String msg = String.format(getActivity().getString(R.string.doNotUseThisWord), edtTitle.getText());
+                    showDlgTimer(msg);
+                    return ;
+                }
+
                 ArrayList<EditGridData> datas = grid.getGridData();
                 if (datas == null) {
+                    showDlgTimer(R.string.invalidData);
                     DLog.e(TAG, "onClick <ArrayList<EditGridData> is null>");
                     return ;
                 }
@@ -82,12 +90,20 @@ public class AddFrgmt extends FrgmtBase {
                 edtTitle.setText("");
                 grid.reset();
 
-                /*DlgTimer dlg = new DlgTimer(getActivity(), R.layout.);
-                dlg.setMessage(R.string.insertComplete);
-                dlg.setTime(1500);
-                dlg.show();
-                dlg.setTransparentBaseLayout();*/
+                showDlgTimer(R.string.insertComplete);
             }
         });
+    }
+
+    private void showDlgTimer(int resid) {
+        showDlgTimer(getActivity().getString(resid));
+    }
+
+    private void showDlgTimer(String msg) {
+        /*DlgTimer dlg = new DlgTimer(getActivity(), R.layout.);
+        dlg.setMessage(msg);
+        dlg.setTime(1500);
+        dlg.show();
+        dlg.setTransparentBaseLayout();*/
     }
 }

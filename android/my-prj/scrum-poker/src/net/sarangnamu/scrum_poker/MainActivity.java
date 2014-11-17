@@ -98,7 +98,7 @@ public class MainActivity extends FragmentActivity {
             menuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.user_rule)));
 
             while (cr.moveToNext()) {
-                menuData.add(new MenuData(LEFT_MENU_TYPE_ITEM, cr.getString(1)));
+                menuData.add(new MenuData(LEFT_MENU_TYPE_DB, cr.getString(1)));
             }
         }
 
@@ -115,6 +115,8 @@ public class MainActivity extends FragmentActivity {
                     dlg.show();
                 } else if (menuData.get(position).menu.equals(getString(R.string.add_rule))) {
                     PageManager.getInstance(MainActivity.this).replace(R.id.content_frame, AddFrgmt.class);
+                } else if (menuData.get(position).type == LEFT_MENU_TYPE_DB) {
+
                 }
 
                 drawer.closeDrawers();
@@ -130,6 +132,7 @@ public class MainActivity extends FragmentActivity {
 
     private static final int LEFT_MENU_TYPE_BAR  = 0;
     private static final int LEFT_MENU_TYPE_ITEM = 1;
+    private static final int LEFT_MENU_TYPE_DB   = 2;
 
     class MenuData {
         public MenuData(int type, String menu) {

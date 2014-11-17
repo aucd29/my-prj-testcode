@@ -11,5 +11,7 @@
     <string name="title">TITLE</string>
     <string name="errInsert">Insert Error</string>
     <string name="insertComplete">Insert Complete!</string>
+    <string name="doNotUseThisWord">Do not use this word (%s)</string>
+    <string name="invalidData">Invalid data</string>
     
 </resources>
