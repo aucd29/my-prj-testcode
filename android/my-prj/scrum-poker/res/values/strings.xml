@@ -9,5 +9,7 @@
     <string name="about">ABOUT</string>
     <string name="license">License</string>
     <string name="title">TITLE</string>
+    <string name="errInsert">Insert Error</string>
+    <string name="insertComplete">Insert Complete!</string>
     
 </resources>

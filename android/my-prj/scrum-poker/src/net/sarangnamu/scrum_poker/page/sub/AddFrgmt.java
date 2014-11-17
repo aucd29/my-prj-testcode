@@ -25,14 +25,19 @@ import net.sarangnamu.common.ui.grid.edit.EditGridData;
 import net.sarangnamu.common.ui.grid.edit.EditGridView;
 import net.sarangnamu.scrum_poker.R;
 import net.sarangnamu.scrum_poker.cfg.Cfg;
+import net.sarangnamu.scrum_poker.db.DbHelper;
+import net.sarangnamu.scrum_poker.db.UserScrumData;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class AddFrgmt extends FrgmtBase {
     private static final String TAG = "AddFrgmt";
 
+    private EditText edtTitle;
+    private ImageButton submit;
     private EditGridView grid;
-    private ImageButton btn;
 
     @Override
     protected int getLayoutId() {
@@ -43,10 +48,11 @@ public class AddFrgmt extends FrgmtBase {
     protected void initLayout() {
         base.setPadding(0, dpToPixelInt(Cfg.ACTION_BAR_HEIGHT), 0, 0);
 
-        grid = (EditGridView) base.findViewById(R.id.grid);
-        btn  = (ImageButton) base.findViewById(R.id.submit);
+        edtTitle    = (EditText) base.findViewById(R.id.edtTitle);
+        submit      = (ImageButton) base.findViewById(R.id.submit);
+        grid        = (EditGridView) base.findViewById(R.id.grid);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DLog.d(TAG, "===================================================================");
@@ -54,6 +60,33 @@ public class AddFrgmt extends FrgmtBase {
                 DLog.d(TAG, "===================================================================");
 
                 ArrayList<EditGridData> datas = grid.getGridData();
+                if (datas == null) {
+                    DLog.e(TAG, "onClick <ArrayList<EditGridData> is null>");
+                    return ;
+                }
+
+                ArrayList<String> contents = new ArrayList<String>();
+                for (EditGridData data : datas) {
+                    contents.add(data.value);
+                }
+
+                UserScrumData scrumData = new UserScrumData();
+                scrumData.setTitle(edtTitle.getText().toString());
+                scrumData.setContents(contents);
+
+                if (!DbHelper.insert(scrumData)) {
+                    Toast.makeText(getActivity(), R.string.errInsert, Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+
+                edtTitle.setText("");
+                grid.reset();
+
+                /*DlgTimer dlg = new DlgTimer(getActivity(), R.layout.);
+                dlg.setMessage(R.string.insertComplete);
+                dlg.setTime(1500);
+                dlg.show();
+                dlg.setTransparentBaseLayout();*/
             }
         });
     }

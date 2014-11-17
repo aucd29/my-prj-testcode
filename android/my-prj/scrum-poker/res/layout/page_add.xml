@@ -29,7 +29,7 @@
             android:layout_toRightOf="@id/title" />
 
         <net.sarangnamu.common.ui.grid.edit.EditGridView
-            android:id="@+id/rules"
+            android:id="@+id/grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/title"

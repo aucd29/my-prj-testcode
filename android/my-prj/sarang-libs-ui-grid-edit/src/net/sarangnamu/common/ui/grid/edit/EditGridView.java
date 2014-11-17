@@ -49,15 +49,18 @@ public class EditGridView extends GridView  implements View.OnClickListener {
     }
 
     protected void initLayout() {
+        initData();
+        gridviewResId = R.layout.editgridview_item;
+
+        setAdapter(new EditGridAdapter());
+    }
+
+    protected void initData() {
         if (dataList == null) {
             dataList = new ArrayList<EditGridData>();
             dataList.add(new EditGridData(EditGridData.TYPE_EDIT, ""));
             dataList.add(new EditGridData(EditGridData.TYPE_BUTTON, ""));
         }
-
-        gridviewResId = R.layout.editgridview_item;
-
-        setAdapter(new EditGridAdapter());
     }
 
     public void setInflateId(int id) {
@@ -98,6 +101,16 @@ public class EditGridView extends GridView  implements View.OnClickListener {
         }
 
         dataList.clear();
+        dataList = null;
+    }
+
+    public void reset() {
+        clearGridData();
+        initData();
+
+        if (((BaseAdapter) getAdapter()) != null) {
+            ((BaseAdapter) getAdapter()).notifyDataSetChanged();
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
