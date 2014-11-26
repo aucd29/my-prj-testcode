@@ -6,6 +6,7 @@ import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.common.ui.dlg.DlgLicense;
 import net.sarangnamu.common.ui.widget.drawerlayout.ContentSlidingDrawerListener;
+import net.sarangnamu.scrum_poker.cfg.Cfg;
 import net.sarangnamu.scrum_poker.db.DbHelper;
 import net.sarangnamu.scrum_poker.page.PageManager;
 import net.sarangnamu.scrum_poker.page.sub.AddFrgmt;
@@ -98,7 +99,9 @@ public class MainActivity extends FragmentActivity {
             menuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.user_rule)));
 
             while (cr.moveToNext()) {
-                menuData.add(new MenuData(LEFT_MENU_TYPE_DB, cr.getString(1)));
+                MenuData mnuData = new MenuData(LEFT_MENU_TYPE_DB, cr.getString(1));
+                mnuData.primaryKey = cr.getInt(0);
+                menuData.add(mnuData);
             }
         }
 
@@ -116,7 +119,7 @@ public class MainActivity extends FragmentActivity {
                 } else if (menuData.get(position).menu.equals(getString(R.string.add_rule))) {
                     PageManager.getInstance(MainActivity.this).replace(R.id.content_frame, AddFrgmt.class);
                 } else if (menuData.get(position).type == LEFT_MENU_TYPE_DB) {
-
+                    Cfg.set(getApplicationContext(), Cfg.DB_ID, menuData.get(position).primaryKey + "");
                 }
 
                 drawer.closeDrawers();
@@ -140,6 +143,7 @@ public class MainActivity extends FragmentActivity {
             this.menu = menu;
         }
 
+        int primaryKey;
         int type;
         String menu;
     }

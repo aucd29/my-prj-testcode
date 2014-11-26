@@ -37,7 +37,9 @@
             </intent-filter>
         </receiver>
         
-        <receiver android:name=".widget.WifiBatteryWidget" >
+        <receiver
+            android:icon="@drawable/ic_launcher" 
+            android:name=".widget.WifiBatteryWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

@@ -13,15 +13,6 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp" />
 
-    <!--
-        android:layout_width="@dimen/progressSize"
-        android:layout_height="@dimen/progressSize"
-        
-        
-        android:layout_width="@dimen/widgetSize"
-        android:layout_height="@dimen/widgetSize"
-    -->
-
     <LinearLayout
         android:id="@+id/widgetLayout"
         android:layout_width="match_parent"

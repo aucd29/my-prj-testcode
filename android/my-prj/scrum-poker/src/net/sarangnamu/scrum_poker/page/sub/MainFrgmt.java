@@ -91,6 +91,11 @@ public class MainFrgmt extends FrgmtBase {
         });
     }
 
+    public void reloadPage() {
+        int primaryKey = Integer.parseInt(Cfg.get(getActivity(), Cfg.DB_ID, ""));
+        //DBHelper.select(
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////
     //
     // SCRUM ADAPTER
