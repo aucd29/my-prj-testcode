@@ -29,7 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 
-public class EditGridView extends GridView  implements View.OnClickListener {
+public class EditGridView extends GridView implements View.OnClickListener {
     private int gridviewResId;
     private ArrayList<EditGridData> dataList;
 
@@ -50,6 +50,8 @@ public class EditGridView extends GridView  implements View.OnClickListener {
 
     protected void initLayout() {
         initData();
+        setNumColumns(3); // default 3
+
         gridviewResId = R.layout.editgridview_item;
 
         setAdapter(new EditGridAdapter());

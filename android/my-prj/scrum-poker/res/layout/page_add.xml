@@ -20,13 +20,14 @@
             android:id="@+id/edtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="60dp"
             android:layout_toRightOf="@id/title" />
         
         <ImageButton
             android:id="@+id/submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/title" />
+            android:layout_alignParentRight="true" />
 
         <net.sarangnamu.common.ui.grid.edit.EditGridView
             android:id="@+id/grid"
