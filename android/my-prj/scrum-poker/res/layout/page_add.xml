@@ -1,41 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="15dp" >
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title" />
+
+    <EditText
+        android:id="@+id/edtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="60dp"
+        android:layout_toRightOf="@id/title" />
+
+    <ImageButton
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" />
+
+    <net.sarangnamu.common.ui.grid.edit.EditGridView
+        android:id="@+id/grid"
+        android:background="#7f0000ff"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="15dp" >
+        android:layout_below="@id/title"
+        android:layout_marginTop="40dp" />
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title" />
-
-        <EditText
-            android:id="@+id/edtTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="60dp"
-            android:layout_toRightOf="@id/title" />
-        
-        <ImageButton
-            android:id="@+id/submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true" />
-
-        <net.sarangnamu.common.ui.grid.edit.EditGridView
-            android:id="@+id/grid"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/title"
-            android:layout_marginBottom="40dp"
-            android:layout_marginTop="40dp" />
-    </RelativeLayout>
-
-</ScrollView>
+</RelativeLayout>

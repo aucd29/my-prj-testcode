@@ -34,6 +34,8 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 public class MainFrgmt extends FrgmtBase {
+    private static final String TAG = "MainFrgmt";
+
     private ArrayList<String> defaultValue;
     private GridView grid;
 
@@ -47,6 +49,7 @@ public class MainFrgmt extends FrgmtBase {
         base.setPadding(0, dpToPixelInt(Cfg.ACTION_BAR_HEIGHT), 0, 0);
 
         grid = (GridView) base.findViewById(R.id.grid);
+        int measureWidth = grid.getMeasuredWidth();
 
         initDefaultValue();
         initAdapter();
