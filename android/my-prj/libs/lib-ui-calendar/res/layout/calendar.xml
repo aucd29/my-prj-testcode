@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/monthBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-8dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/prevMonth"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:text="&lt;"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/monthLabel"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:gravity="center"
+            android:textColor="#202020"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/nextMonth"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:text="&gt;"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/calendar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" />
+
+</LinearLayout>
