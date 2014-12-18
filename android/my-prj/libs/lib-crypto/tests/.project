@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>sarang-libs-crypto-tests</name>
+	<name>lib-crypto-tests</name>
 	<comment></comment>
 	<projects>
 		<project>master-change-over</project>
