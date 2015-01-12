@@ -25,6 +25,7 @@ import net.sarangnamu.common.ani.Resize;
 import net.sarangnamu.common.ani.Resize.ResizeAnimationListener;
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.sqlite.DbManager;
+import net.sarangnamu.common.ui.StatusBar;
 import net.sarangnamu.common.ui.dlg.DlgBtnBase.DlgBtnListener;
 import net.sarangnamu.common.ui.dlg.DlgLicense;
 import net.sarangnamu.common.ui.dlg.DlgNormal;
@@ -74,7 +75,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private boolean expandLayout = false;
     private int modifyId = -1;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +90,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
         initLabel();
         initData();
+        
+        StatusBar.setColor(getWindow(), 0xfff23131);
     }
 
     private void initLabel() {

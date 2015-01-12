@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="app_name">APK Extractor</string>
     <string name="plsWait">잠시만 기다려 주세요..</string>
     <string name="extractOk">추출 되었습니다.</string>
     <string name="delete">삭제</string>

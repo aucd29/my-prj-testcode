@@ -18,6 +18,7 @@
 package net.sarangnamu.ems_tracking;
 
 import net.sarangnamu.common.admob.AdMobDecorator;
+import net.sarangnamu.common.ui.StatusBar;
 import net.sarangnamu.ems_tracking.api.xml.Ems;
 import net.sarangnamu.ems_tracking.api.xml.Ems.EmsData;
 import net.sarangnamu.ems_tracking.cfg.Cfg;
@@ -60,6 +61,8 @@ public class Detail extends Activity {
         initLabel();
         initAdView();
         initListView();
+        
+        StatusBar.setColor(getWindow(), 0xfff23131);
     }
 
     @Override

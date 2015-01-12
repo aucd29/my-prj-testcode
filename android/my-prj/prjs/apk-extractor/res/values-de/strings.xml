@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="app_name">APK Extractor</string>
     <string name="plsWait">warten Sie mal..</string>
     <string name="downloadPath">Download-Pfad</string>
     <string name="dev">Entwickler</string>

@@ -38,6 +38,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginRight="6dp"
             android:layout_marginTop="3dp"
+            android:textColor="@android:color/darker_gray"
             android:textSize="12sp" />
 
         <net.sarangnamu.common.fonts.RobotoLightTextView
@@ -49,7 +50,10 @@
             android:layout_marginTop="5dp"
             android:maxWidth="@dimen/list_max"
             android:singleLine="true"
+            android:textColor="@android:color/darker_gray"
             android:textSize="11sp" />
+
+        <!-- android:layout_alignLeft="@+id/name" android:maxWidth="@dimen/list_max" -->
 
         <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/version"
@@ -70,7 +74,7 @@
         android:layout_marginRight="-160dp"
         android:orientation="horizontal" >
 
-        <TextView
+        <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/sd"
             style="@style/btnLayout"
             android:layout_width="match_parent"
@@ -79,15 +83,15 @@
             android:text="@string/sdcard"
             android:textColor="#ffffff" />
 
-        <TextView
+        <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/email"
             style="@style/btnLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/btn_email_selector"
             android:text="@string/email" />
-        
-        <TextView
+
+        <net.sarangnamu.common.fonts.RobotoLightTextView
             android:id="@+id/delete"
             style="@style/btnLayout"
             android:layout_width="match_parent"

@@ -33,6 +33,7 @@ import net.sarangnamu.common.ani.FadeColor;
 import net.sarangnamu.common.explorer.DirChooserActivity;
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.ui.MenuManager;
+import net.sarangnamu.common.ui.StatusBar;
 import net.sarangnamu.common.ui.dlg.DlgLicense;
 import net.sarangnamu.common.ui.dlg.DlgTimer;
 import net.sarangnamu.common.ui.list.AniBtnListView;
@@ -55,6 +56,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -169,6 +172,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         initMenu();
         initSearch();
         initData(true);
+        
+        StatusBar.setColor(getWindow(), 0xff0e5cbc);
     }
 
     @Override
