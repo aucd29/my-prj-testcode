@@ -91,7 +91,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         initLabel();
         initData();
         
-        StatusBar.setColor(getWindow(), 0xfff23131);
+        StatusBar.setColor(getWindow(), 0xffe73636);
     }
 
     private void initLabel() {

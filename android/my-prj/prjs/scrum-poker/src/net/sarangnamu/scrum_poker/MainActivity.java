@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.sqlite.DbManager;
+import net.sarangnamu.common.ui.StatusBar;
 import net.sarangnamu.common.ui.dlg.DlgLicense;
 import net.sarangnamu.common.ui.widget.drawerlayout.ContentSlidingDrawerListener;
 import net.sarangnamu.scrum_poker.cfg.Cfg;
@@ -49,6 +50,7 @@ public class MainActivity extends FragmentActivity {
 
         initDrawer();
         initLeftMenu();
+        StatusBar.setColor(getWindow(), 0xff0e5cbc);
     }
 
     @Override

@@ -62,7 +62,7 @@ public class Detail extends Activity {
         initAdView();
         initListView();
         
-        StatusBar.setColor(getWindow(), 0xfff23131);
+        StatusBar.setColor(getWindow(), 0xffe73636);
     }
 
     @Override
