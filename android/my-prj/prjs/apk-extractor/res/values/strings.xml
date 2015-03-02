@@ -9,7 +9,7 @@
     <string name="extractOk">Extract OK!</string>
     <string name="sdcard">sd</string>
     <string name="delete">Delete</string>
-    <string name="email">e-mail</string>
+    <string name="email">E-mail</string>
     <string name="dlgEmail">E-Mail : </string>
     <string name="errorEmail">There are no email clients installed.</string>
     <string name="sendMailFail">Please check network</string>
@@ -23,5 +23,6 @@
     <string name="mnu_showAllApps">Show All Apps</string>
     <string name="mnu_showInstalledApps">Show Installed Apps</string>
     <string name="mnu_setSdPath">Set SD Path</string>
+    <string name="mnu_specialThanks">Special Thanks</string>
     <string name="mnu_license">License</string>
 </resources>

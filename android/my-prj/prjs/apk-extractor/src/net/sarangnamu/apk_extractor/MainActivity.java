@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import net.sarangnamu.apk_extractor.AppList.PkgInfo;
 import net.sarangnamu.apk_extractor.cfg.Cfg;
 import net.sarangnamu.apk_extractor.dlg.DlgEmail;
+import net.sarangnamu.apk_extractor.dlg.DlgSpecialThanks;
 import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.BkFile;
 import net.sarangnamu.common.BkFile.FileCopyDetailListener;
@@ -56,8 +57,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -172,7 +171,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         initMenu();
         initSearch();
         initData(true);
-        
+
         StatusBar.setColor(getWindow(), 0xff0e5cbc);
     }
 
@@ -299,6 +298,9 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 case R.id.mnu_showInstalledApp:
                     showInstalledApp();
                     break;
+                case R.id.mnu_specialThanks:
+                    showSpecialThanks();
+                    break;
                 }
 
                 return false;
@@ -312,6 +314,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             void showLicenseDlg() {
                 DlgLicense dlg = new DlgLicense(MainActivity.this);
                 dlg.setTitleTypeface(FontLoader.getInstance(getApplicationContext()).getRobotoLight());
+                dlg.show();
+            }
+
+            void showSpecialThanks() {
+                DlgSpecialThanks dlg = new DlgSpecialThanks(MainActivity.this);
+                dlg.setTitleTypeface(FontLoader.getInstance(getApplicationContext()).getRobotoLight());
+                dlg.setTitle("Special Thanks");
                 dlg.show();
             }
         });
