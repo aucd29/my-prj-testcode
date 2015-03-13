@@ -23,76 +23,76 @@ public class RoundedAvatarDrawable extends Drawable {
     private final int mBitmapHeight;
 
     public RoundedAvatarDrawable(Bitmap bitmap) {
-      mBitmap = bitmap;
-      mRectF = new RectF();
-      mPaint = new Paint();
-      mPaint.setAntiAlias(true);
-      mPaint.setDither(true);
-      final BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-      mPaint.setShader(shader);
+        mBitmap = bitmap;
+        mRectF = new RectF();
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaint.setDither(true);
+        final BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        mPaint.setShader(shader);
 
-      mBitmapWidth = mBitmap.getWidth();
-      mBitmapHeight = mBitmap.getHeight();
+        mBitmapWidth = mBitmap.getWidth();
+        mBitmapHeight = mBitmap.getHeight();
     }
 
     @Override
     public void draw(Canvas canvas) {
-      canvas.drawOval(mRectF, mPaint);
+        canvas.drawOval(mRectF, mPaint);
     }
 
     @Override
     protected void onBoundsChange(Rect bounds) {
-      super.onBoundsChange(bounds);
+        super.onBoundsChange(bounds);
 
-      mRectF.set(bounds);
+        mRectF.set(bounds);
     }
 
     @Override
     public void setAlpha(int alpha) {
-      if (mPaint.getAlpha() != alpha) {
-        mPaint.setAlpha(alpha);
-        invalidateSelf();
-      }
+        if (mPaint.getAlpha() != alpha) {
+            mPaint.setAlpha(alpha);
+            invalidateSelf();
+        }
     }
 
     @Override
     public void setColorFilter(ColorFilter cf) {
-      mPaint.setColorFilter(cf);
+        mPaint.setColorFilter(cf);
     }
 
     @Override
     public int getOpacity() {
-      return PixelFormat.TRANSLUCENT;
+        return PixelFormat.TRANSLUCENT;
     }
 
     @Override
     public int getIntrinsicWidth() {
-      return mBitmapWidth;
+        return mBitmapWidth;
     }
 
     @Override
     public int getIntrinsicHeight() {
-      return mBitmapHeight;
+        return mBitmapHeight;
     }
 
     public void setAntiAlias(boolean aa) {
-      mPaint.setAntiAlias(aa);
-      invalidateSelf();
+        mPaint.setAntiAlias(aa);
+        invalidateSelf();
     }
 
     @Override
     public void setFilterBitmap(boolean filter) {
-      mPaint.setFilterBitmap(filter);
-      invalidateSelf();
+        mPaint.setFilterBitmap(filter);
+        invalidateSelf();
     }
 
     @Override
     public void setDither(boolean dither) {
-      mPaint.setDither(dither);
-      invalidateSelf();
+        mPaint.setDither(dither);
+        invalidateSelf();
     }
 
     public Bitmap getBitmap() {
-      return mBitmap;
+        return mBitmap;
     }
 }

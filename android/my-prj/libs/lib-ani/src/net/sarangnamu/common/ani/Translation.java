@@ -30,13 +30,13 @@ import android.view.View;
  *
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
-public class Transition {
+public class Translation {
     public static void startX(View view, float dpMoveX, AnimatorListener l) {
         start(view, 0, dpMoveX, l);
     }
 
     public static void startY(View view, float dpMoveY, AnimatorListener l) {
-        start(view, 0, dpMoveY, l);
+        start(view, 1, dpMoveY, l);
     }
 
     private static void start(final View view, int type, float move, AnimatorListener l) {
