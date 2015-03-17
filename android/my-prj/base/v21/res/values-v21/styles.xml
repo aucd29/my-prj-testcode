@@ -7,6 +7,12 @@
     -->
     <style name="AppBaseTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- API 21 theme customizations can go here. -->
+        <item name="colorAccent">#FF4081</item>
+        <item name="colorPrimary">#3F51B5</item>
+        <item name="colorPrimaryDark">#303F9F</item>
+        <item name="colorControlHighlight">#00CC55</item>
+        <item name="colorControlNormal">#FF0000</item>
+        <item name="android:navigationBarColor">#303F9F</item>
     </style>
 
 </resources>

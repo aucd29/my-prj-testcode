@@ -5,10 +5,11 @@
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="Theme.AppCompat.NoActionBar">
-
-        <!-- <item name="colorPrimary">@color/material_blue_500</item> -->
-        <!-- <item name="colorPrimaryDark">@color/material_blue_700</item> -->
-        <!-- <item name="colorAccent">@color/material_green_A200</item> -->
+        <item name="colorAccent">#FF4081</item>
+        <item name="colorPrimary">#3F51B5</item>
+        <item name="colorPrimaryDark">#303F9F</item>
+        <item name="colorControlHighlight">#00CC55</item>
+        <item name="colorControlNormal">#FF0000</item>
     </style>
 
     <!-- Application theme. -->
