@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardbase"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -11,5 +12,11 @@
         android:layout_centerVertical="true"
         android:textSize="180sp"
         android:gravity="center" />
+    
+    <net.sarangnamu.common.ui.text.BlurView
+        android:id="@+id/blur"
+        android:background="#00ffffff"
+        android:layout_width="250dp"
+        android:layout_height="match_parent" />
     
 </RelativeLayout>

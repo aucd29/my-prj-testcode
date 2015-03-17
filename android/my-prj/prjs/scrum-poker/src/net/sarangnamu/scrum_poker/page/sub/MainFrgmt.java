@@ -46,8 +46,6 @@ public class MainFrgmt extends FrgmtBase {
 
     @Override
     protected void initLayout() {
-        base.setPadding(0, dpToPixelInt(Cfg.ACTION_BAR_HEIGHT), 0, 0);
-
         grid = (GridView) base.findViewById(R.id.grid);
         int measureWidth = grid.getMeasuredWidth();
 

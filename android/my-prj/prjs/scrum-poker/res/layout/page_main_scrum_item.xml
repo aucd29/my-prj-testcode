@@ -13,3 +13,25 @@
         android:textSize="40sp" />
 
 </net.sarangnamu.common.ui.layout.SquareLayout>
+
+<!-- <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android" -->
+<!-- xmlns:tools="http://schemas.android.com/tools" -->
+<!-- xmlns:card_view="http://schemas.android.com/apk/res-auto" -->
+<!-- android:id="@+id/cardview" -->
+<!-- android:layout_width="match_parent" -->
+<!-- android:layout_height="wrap_content" -->
+<!-- card_view:cardBackgroundColor="@android:color/white" -->
+<!-- card_view:cardCornerRadius="5dp" -->
+<!-- card_view:cardElevation="5dp" > -->
+
+
+<!-- <net.sarangnamu.common.fonts.RobotoLightTextView -->
+<!-- android:id="@+id/number" -->
+<!-- android:layout_width="match_parent" -->
+<!-- android:layout_height="match_parent" -->
+<!-- android:layout_gravity="center|center_vertical" -->
+<!-- android:gravity="center|center_vertical" -->
+<!-- android:textSize="40sp" /> -->
+
+
+<!-- </android.support.v7.widget.CardView> -->

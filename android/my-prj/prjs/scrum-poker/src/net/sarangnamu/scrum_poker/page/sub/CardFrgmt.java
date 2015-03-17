@@ -1,5 +1,5 @@
 /*
- * MainFrgmt.java
+ * CardFrgmt.java
  * Copyright 2014 Burke Choi All right reserverd.
  *             http://www.sarangnamu.net
  *
@@ -18,12 +18,14 @@
 package net.sarangnamu.scrum_poker.page.sub;
 
 import net.sarangnamu.common.FrgmtBase;
+import net.sarangnamu.common.ui.text.BlurView;
 import net.sarangnamu.scrum_poker.R;
 import net.sarangnamu.scrum_poker.cfg.Cfg;
 import android.widget.TextView;
 
 public class CardFrgmt extends FrgmtBase {
     private TextView value;
+    private BlurView blur;
 
     @Override
     protected int getLayoutId() {
@@ -32,9 +34,10 @@ public class CardFrgmt extends FrgmtBase {
 
     @Override
     protected void initLayout() {
-        base.setPadding(0, dpToPixelInt(Cfg.ACTION_BAR_HEIGHT), 0, 0);
-
         value = (TextView) base.findViewById(R.id.value);
+        blur  = (BlurView) base.findViewById(R.id.blur);
+
         value.setText(getArguments().getString(Cfg.SCRUM_DATA, "ERROR"));
+        blur.loadParentView();
     }
 }

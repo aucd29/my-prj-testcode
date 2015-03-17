@@ -28,6 +28,8 @@ public class MainActivity extends ActionBarActivity {
 
     private void initLayout() {
         setSupportActionBar(toolbar);
+        getSupportActionBar().setElevation(40);
+
 
         actionbarToogle = new ActionBarDrawerToggle(this, drawer, R.string.app_name, R.string.app_name);
         drawer.setDrawerListener(actionbarToogle);
