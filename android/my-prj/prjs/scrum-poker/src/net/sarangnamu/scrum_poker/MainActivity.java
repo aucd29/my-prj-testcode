@@ -6,17 +6,17 @@ import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.common.ui.StatusBar;
 import net.sarangnamu.common.ui.dlg.DlgLicense;
-import net.sarangnamu.common.ui.widget.drawerlayout.ContentSlidingDrawerListener;
 import net.sarangnamu.scrum_poker.cfg.Cfg;
 import net.sarangnamu.scrum_poker.db.DbHelper;
 import net.sarangnamu.scrum_poker.page.PageManager;
 import net.sarangnamu.scrum_poker.page.sub.AddFrgmt;
 import net.sarangnamu.scrum_poker.page.sub.MainFrgmt;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -28,20 +28,24 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends ActionBarActivity {
     private static final String TAG = "MainActivity";
+
+    private Toolbar toolbar;
     private ListView leftMenu;
     private DrawerLayout drawer;
     private ArrayList<MenuData> menuData;
     private FrameLayout contentFrame;
+    private ActionBarDrawerToggle actionbarToogle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        leftMenu        = (ListView) findViewById(R.id.leftMenu);
-        drawer          = (DrawerLayout) findViewById(R.id.drawer);
+//        leftMenu        = (ListView) findViewById(R.id.leftMenu);
+        drawer          = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toolbar         = (Toolbar) findViewById(R.id.toolbar);
         contentFrame    = (FrameLayout) findViewById(R.id.content_frame);
 
         if (savedInstanceState == null) {
@@ -49,7 +53,7 @@ public class MainActivity extends FragmentActivity {
         }
 
         initDrawer();
-        initLeftMenu();
+//        initLeftMenu();
         StatusBar.setColor(getWindow(), 0xff0e5cbc);
     }
 
@@ -72,18 +76,23 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initDrawer() {
-        drawer.setScrimColor(Color.TRANSPARENT);
-        drawer.setDrawerListener(new ContentSlidingDrawerListener() {
-            @Override
-            public View getListView() {
-                return leftMenu;
-            }
+        setSupportActionBar(toolbar);
 
-            @Override
-            public View getContentFrame() {
-                return contentFrame;
-            }
-        });
+        actionbarToogle = new ActionBarDrawerToggle(this, drawer, R.string.app_name, R.string.app_name);
+        drawer.setDrawerListener(actionbarToogle);
+
+//        drawer.setScrimColor(Color.TRANSPARENT);
+//        drawer.setDrawerListener(new ContentSlidingDrawerListener() {
+//            @Override
+//            public View getListView() {
+//                return leftMenu;
+//            }
+//
+//            @Override
+//            public View getContentFrame() {
+//                return contentFrame;
+//            }
+//        });
     }
 
     private void initLeftMenu() {
