@@ -18,7 +18,7 @@
 package net.sarangnamu.scrum_poker.page.sub;
 
 import net.sarangnamu.common.FrgmtBase;
-import net.sarangnamu.common.ui.text.BlurView;
+import net.sarangnamu.common.ui.view.BlurView;
 import net.sarangnamu.scrum_poker.R;
 import net.sarangnamu.scrum_poker.cfg.Cfg;
 import android.widget.TextView;
@@ -38,6 +38,5 @@ public class CardFrgmt extends FrgmtBase {
         blur  = (BlurView) base.findViewById(R.id.blur);
 
         value.setText(getArguments().getString(Cfg.SCRUM_DATA, "ERROR"));
-        blur.loadParentView();
     }
 }

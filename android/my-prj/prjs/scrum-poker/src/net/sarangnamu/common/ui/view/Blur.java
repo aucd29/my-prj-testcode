@@ -1,4 +1,4 @@
-package net.sarangnamu.common.ui.text;
+package net.sarangnamu.common.ui.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

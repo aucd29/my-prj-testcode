@@ -678,6 +678,10 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         @Override
         public int getCount() {
             if (searchedList) {
+                if (searchedData == null) {
+                    return 0;
+                }
+
                 return searchedData.size();
             }
 
