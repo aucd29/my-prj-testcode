@@ -1,35 +1,35 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-   
+
     <item
         android:id="@+id/mnu_search"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/mnu_search"/>
-    
     <item
         android:id="@+id/mnu_showInstalledApp"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/mnu_showInstalledApps"/>
-    
     <item
         android:id="@+id/mnu_setSdPath"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/mnu_setSdPath"/>
-  
     <item
         android:id="@+id/mnu_email"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/mnu_email"/>
-    
+    <item
+        android:id="@+id/mnu_orderBy"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/mnu_orderBy"/>
     <item
         android:id="@+id/mnu_specialThanks"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/mnu_specialThanks"/>
-       
     <item
         android:id="@+id/mnu_license"
         android:orderInCategory="100"

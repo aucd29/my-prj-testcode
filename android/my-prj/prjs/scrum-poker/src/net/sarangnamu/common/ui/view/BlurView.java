@@ -79,29 +79,29 @@ public class BlurView extends LinearBase implements View.OnClickListener {
     }
 
     private void blur() {
-        scriptBlur.setRadius(25);
+        scriptBlur.setRadius(25f);
         scriptBlur.setInput(in);
         scriptBlur.forEach(out);
 
         out.copyTo(blurBm);
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        View v = (View) getParent();
-
-        if (parentDrawn) {
-            return;
-        }
-
-        parentDrawn = true;
-        drawParentInBitmap(v);
-        blur();
-        canvas.drawBitmap(blurBm, 0, 0, null);
-
-        super.draw(canvas);
-        parentDrawn = false;
-    }
+//    @Override
+//    protected void onDraw(Canvas canvas) {
+//        View v = (View) getParent();
+//
+//        if (parentDrawn) {
+//            return;
+//        }
+//
+//        parentDrawn = true;
+//        drawParentInBitmap(v);
+//        blur();
+//        canvas.drawBitmap(blurBm, 0, 0, null);
+//
+//        super.draw(canvas);
+//        parentDrawn = false;
+//    }
 
     private void drawParentInBitmap(View v) {
         blurCanvas.save();

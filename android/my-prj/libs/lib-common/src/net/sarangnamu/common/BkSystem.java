@@ -20,6 +20,7 @@ package net.sarangnamu.common;
 import java.io.File;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -166,5 +167,11 @@ public class BkSystem {
         }
 
         context.sendBroadcast(intent);
+    }
+
+    public static void killApp(Activity act) {
+        act.moveTaskToBack(true);
+        act.finish();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 }

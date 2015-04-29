@@ -451,7 +451,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 Context context = contexts[0];
 
                 if (data != null) {
-                    // Hmm OutOfMemory point!
+                    // TODO OutOfMemoryError
                     data.clear();
                     data = null;
                 }
@@ -487,12 +487,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         dlg.setContentView(R.layout.dlg_progress);
     }
 
-    private void hideProgress() {
-        if (dlg != null && dlg.isShowing()) {
-            dlg.dismiss();
-            sdProgressBar.setVisibility(View.GONE);
-        }
-    }
+//    private void hideProgress() {
+//        if (dlg != null && dlg.isShowing()) {
+//            dlg.dismiss();
+//            sdProgressBar.setVisibility(View.GONE);
+//        }
+//    }
 
     private void initListView() {
         adapter = new AppAdapter();
@@ -573,7 +573,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
                         @Override
                         public void onError(String errMsg) {
-                            // TODO Auto-generated method stub
                         }
                     });
                 } catch (Exception e) {

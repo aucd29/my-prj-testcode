@@ -17,6 +17,11 @@
     <string name="save">Save</string>
     <string name="emptyList">Could not find a App</string>
     
+    <!-- dlg order by  -->
+    <string name="defaultOrder">Default</string>
+    <string name="alphabet">Alphabet</string>
+    <string name="installTime">Install Time</string>
+    
     <!-- MENU -->
     <string name="mnu_email">Set E-mail Addr</string>
     <string name="mnu_search">Search</string>
@@ -25,4 +30,5 @@
     <string name="mnu_setSdPath">Set SD Path</string>
     <string name="mnu_specialThanks">Special Thanks</string>
     <string name="mnu_license">License</string>
+    <string name="mnu_orderBy">Order By</string>
 </resources>

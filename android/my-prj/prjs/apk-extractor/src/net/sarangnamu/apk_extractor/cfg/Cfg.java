@@ -27,6 +27,7 @@ public class Cfg extends BkCfg {
     private static final String EMAIL = "email";
     private static final String USERPATH = "usrPath";
     private static final String SHOW_OPT = "showOpt";
+    private static final String ORDER_BY = "orderBy";
 
     public static String getDownPath(Context context) {
         String usrPath = getUserPath(context);
@@ -60,5 +61,13 @@ public class Cfg extends BkCfg {
 
     public static void setShowOption(Context context, String val) {
         set(context, SHOW_OPT, val);
+    }
+
+    public static void setOrderBy(Context context, String type) {
+        set(context, ORDER_BY, type);
+    }
+
+    public static String getOrderBy(Context context, String type) {
+        return get(context, ORDER_BY, "default");
     }
 }

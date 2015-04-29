@@ -20,6 +20,7 @@ package net.sarangnamu.apk_extractor;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.WeakHashMap;
 
 import net.sarangnamu.common.BkMath;
 import android.content.Context;
@@ -29,6 +30,7 @@ import android.graphics.drawable.Drawable;
 
 public class AppList {
     private static AppList inst;
+    private WeakHashMap<String, Drawable> iconMap;
 
     public static AppList getInstance() {
         if (inst == null) {
@@ -50,6 +52,10 @@ public class AppList {
         ArrayList<PkgInfo> res = new ArrayList<PkgInfo>();
         List<PackageInfo> packs = context.getPackageManager().getInstalledPackages(0);
 
+        if (iconMap == null) {
+            iconMap = new WeakHashMap<String, Drawable>();
+        }
+
         for (int i = 0; i < packs.size(); i++) {
             PackageInfo p = packs.get(i);
             if (hideSystemApp) {
@@ -63,10 +69,16 @@ public class AppList {
             newInfo.pkgName = p.packageName;
             newInfo.versionName = p.versionName;
             newInfo.versionCode = p.versionCode;
-            newInfo.icon = p.applicationInfo.loadIcon(context.getPackageManager());
+
+            if (!iconMap.containsKey(p.packageName)) {
+                iconMap.put(p.packageName, p.applicationInfo.loadIcon(context.getPackageManager()).getConstantState().newDrawable());
+            }
+
+            newInfo.icon = iconMap.get(p.packageName);
             newInfo.srcDir = p.applicationInfo.sourceDir;
             newInfo.size = new File(p.applicationInfo.sourceDir).length();
             newInfo.appSize = BkMath.toFileSizeString(newInfo.size);
+            newInfo.firstInstallTime = p.firstInstallTime;
 
             res.add(newInfo);
         }
@@ -74,9 +86,15 @@ public class AppList {
         return res;
     }
 
-    public void clearBitmap() {
+    public void setOrderByAlphabet() {
 
     }
+
+    public void setOrderByInstalledTime() {
+        // firstInstallTime
+    }
+
+
 
     ////////////////////////////////////////////////////////////////////////////////////
     //
@@ -93,5 +111,6 @@ public class AppList {
         public int versionCode = 0;
         public long size;
         public Drawable icon;
+        public long firstInstallTime = 0;
     }
 }
