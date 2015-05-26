@@ -24,6 +24,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.WeakHashMap;
 
+import net.sarangnamu.apk_extractor.cfg.Cfg;
 import net.sarangnamu.common.BkMath;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -85,10 +86,14 @@ public class AppList {
             res.add(newInfo);
         }
 
-        if (sortBy.equals("installTime")) {
-            Collections.sort(res, new SortByInstallTime());
-        } else if (sortBy.equals("alphabet")) {
-            Collections.sort(res, new SortByAlphabet());
+        if (sortBy.equals(Cfg.SORT_ALPHABET_ASC)) {
+            Collections.sort(res, new SortByAlphabetAsc());
+        } else if (sortBy.equals(Cfg.SORT_ALPHABET_DESC)) {
+            Collections.sort(res, new SortByAlphabetDesc());
+        } else if (sortBy.equals(Cfg.SORT_FIRST_INSTALL_TIME)) {
+            Collections.sort(res, new SortByFirstInstallTime());
+        } else if (sortBy.equals(Cfg.SORT_LAST_INSTALL_TIME)) {
+            Collections.sort(res, new SortByLastInstallTime());
         }
 
         return res;
@@ -100,7 +105,7 @@ public class AppList {
     //
     ////////////////////////////////////////////////////////////////////////////////////
 
-    class SortByInstallTime implements Comparator<PkgInfo> {
+    class SortByFirstInstallTime implements Comparator<PkgInfo> {
         @Override
         public int compare(PkgInfo lhs, PkgInfo rhs) {
             if (lhs.firstInstallTime > rhs.firstInstallTime) {
@@ -112,11 +117,31 @@ public class AppList {
             return 0;
         }
     }
+    
+    class SortByLastInstallTime implements Comparator<PkgInfo> {
+        @Override
+        public int compare(PkgInfo lhs, PkgInfo rhs) {
+            if (lhs.firstInstallTime < rhs.firstInstallTime) {
+                return 1;
+            } else if (lhs.firstInstallTime > rhs.firstInstallTime) {
+                return -1;
+            }
 
-    class SortByAlphabet implements Comparator<PkgInfo> {
+            return 0;
+        }
+    }
+
+    class SortByAlphabetAsc implements Comparator<PkgInfo> {
         @Override
         public int compare(PkgInfo lhs, PkgInfo rhs) {
             return lhs.appName.compareTo(rhs.appName);
+        }
+    }
+    
+    class SortByAlphabetDesc implements Comparator<PkgInfo> {
+        @Override
+        public int compare(PkgInfo lhs, PkgInfo rhs) {
+            return rhs.appName.compareTo(lhs.appName);
         }
     }
 

@@ -28,6 +28,12 @@ public class Cfg extends BkCfg {
     private static final String USERPATH    = "usrPath";
     private static final String SHOW_OPT    = "showOpt";
     private static final String SORT_BY     = "sortBy";
+    
+    public static final String SORT_DEFAULT = "0";
+    public static final String SORT_ALPHABET_ASC = "1";
+    public static final String SORT_ALPHABET_DESC = "2";
+    public static final String SORT_FIRST_INSTALL_TIME = "3";
+    public static final String SORT_LAST_INSTALL_TIME = "4";
 
     public static String getDownPath(Context context) {
         String usrPath = getUserPath(context);
@@ -68,6 +74,6 @@ public class Cfg extends BkCfg {
     }
 
     public static String getSortBy(Context context) {
-        return get(context, SORT_BY, "default");
+        return get(context, SORT_BY, "0");
     }
 }

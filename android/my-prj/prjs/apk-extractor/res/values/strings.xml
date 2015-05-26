@@ -18,9 +18,11 @@
     <string name="emptyList">Could not find a App</string>
     
     <!-- dlg order by  -->
-    <string name="defaultOrder">Default</string>
-    <string name="alphabet">Alphabet</string>
-    <string name="installTime">Install Time</string>
+    <string name="sortDefault">Default</string>
+    <string name="alphabetAsc">Alphabet (ASC)</string>
+    <string name="alphabetDesc">Alphabet (DESC)</string>
+    <string name="firstInstallTime">First Install Time</string>
+    <string name="lastInstallTime">Last Install Time</string>
     
     <!-- MENU -->
     <string name="mnu_email">Set E-mail Addr</string>

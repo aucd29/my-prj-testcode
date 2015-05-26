@@ -23,23 +23,33 @@
             android:textSize="20sp" />
 
         <RadioGroup
-            android:id="@+id/orderGroup"
+            android:id="@+id/sortGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
             <RadioButton
-                android:id="@+id/defaultOrder"
-                android:paddingBottom="20dp"
-                android:text="@string/defaultOrder" />
+                android:id="@+id/sortDefault"
+				android:layout_marginBottom="10dp"
+                android:text="@string/sortDefault" />
 
             <RadioButton
-                android:id="@+id/alphabet"
-                android:paddingBottom="20dp"
-                android:text="@string/alphabet" />
+                android:id="@+id/alphabetAsc"
+                android:layout_marginBottom="10dp"
+                android:text="@string/alphabetAsc" />
+            
+            <RadioButton
+                android:id="@+id/alphabetDesc"
+                android:layout_marginBottom="10dp"
+                android:text="@string/alphabetDesc" />
 
             <RadioButton
-                android:id="@+id/installTime"
-                android:text="@string/installTime" />
+                android:id="@+id/firstInstallTime"
+                android:layout_marginBottom="10dp"
+                android:text="@string/firstInstallTime" />
+            
+            <RadioButton
+                android:id="@+id/lastInstallTime"
+                android:text="@string/lastInstallTime" />
         </RadioGroup>
     </LinearLayout>
 

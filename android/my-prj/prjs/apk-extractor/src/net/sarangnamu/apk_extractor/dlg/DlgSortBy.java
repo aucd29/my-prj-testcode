@@ -10,11 +10,14 @@ import net.sarangnamu.apk_extractor.cfg.Cfg;
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.ui.dlg.DlgBase;
 import android.content.Context;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class DlgSortBy extends DlgBase {
-    private RadioGroup group;
+    private RadioGroup mGroup;
+    private RadioButton mDefault, mAlphabetAsc, mAlphabetDesc;
+    private RadioButton mFirstInstallTime, mLastInstallTime;
 
     public DlgSortBy(Context context) {
         super(context);
@@ -27,19 +30,46 @@ public class DlgSortBy extends DlgBase {
 
     @Override
     protected void initLayout() {
-        group = (RadioGroup) findViewById(R.id.orderGroup);
-        group.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+    	mGroup 				= (RadioGroup) findViewById(R.id.sortGroup);
+    	mDefault 			= (RadioButton) findViewById(R.id.sortDefault);
+    	mAlphabetAsc 		= (RadioButton) findViewById(R.id.alphabetAsc);
+    	mAlphabetDesc 		= (RadioButton) findViewById(R.id.alphabetDesc);
+    	mFirstInstallTime 	= (RadioButton) findViewById(R.id.firstInstallTime);
+    	mLastInstallTime 	= (RadioButton) findViewById(R.id.lastInstallTime);
+    			
+    	
+        String sortBy = Cfg.getSortBy(getContext());
+        
+        if (sortBy.equals(Cfg.SORT_DEFAULT)) {
+        	mDefault.setChecked(true);
+        } else if (sortBy.equals(Cfg.SORT_ALPHABET_ASC)) {
+        	mAlphabetAsc.setChecked(true);        	
+        } else if (sortBy.equals(Cfg.SORT_ALPHABET_DESC)) {
+        	mAlphabetDesc.setChecked(true);
+        } else if (sortBy.equals(Cfg.SORT_FIRST_INSTALL_TIME)) {
+        	mFirstInstallTime.setChecked(true);
+        } else if (sortBy.equals(Cfg.SORT_LAST_INSTALL_TIME)) {
+        	mLastInstallTime.setChecked(true);
+        }
+        
+        mGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
-                case R.id.defaultOrder:
-                    Cfg.setSortBy(getContext(), "default");
+                case R.id.sortDefault:
+                    Cfg.setSortBy(getContext(), Cfg.SORT_DEFAULT);
                     break;
-                case R.id.alphabet:
-                    Cfg.setSortBy(getContext(), "alphabet");
+                case R.id.alphabetAsc:
+                    Cfg.setSortBy(getContext(), Cfg.SORT_ALPHABET_ASC);
                     break;
-                case R.id.installTime:
-                    Cfg.setSortBy(getContext(), "installTime");
+                case R.id.alphabetDesc:
+                    Cfg.setSortBy(getContext(), Cfg.SORT_ALPHABET_DESC);
+                    break;
+                case R.id.firstInstallTime:
+                    Cfg.setSortBy(getContext(), Cfg.SORT_FIRST_INSTALL_TIME);
+                    break;
+                case R.id.lastInstallTime:
+                    Cfg.setSortBy(getContext(), Cfg.SORT_LAST_INSTALL_TIME);
                     break;
                 }
 
@@ -47,6 +77,6 @@ public class DlgSortBy extends DlgBase {
             }
         });
 
-        FontLoader.getInstance(getContext()).applyChild("Roboto-Light", group);
+        FontLoader.getInstance(getContext()).applyChild("Roboto-Light", mGroup);
     }
 }
