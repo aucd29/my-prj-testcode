@@ -21,10 +21,10 @@
         android:showAsAction="never"
         android:title="@string/mnu_email"/>
     <item
-        android:id="@+id/mnu_orderBy"
+        android:id="@+id/mnu_sortBy"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/mnu_orderBy"/>
+        android:title="@string/mnu_sortBy"/>
     <item
         android:id="@+id/mnu_specialThanks"
         android:orderInCategory="100"

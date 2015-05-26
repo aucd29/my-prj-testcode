@@ -105,7 +105,6 @@ public class BkAsset {
         int read;
         while ((read = in.read(buffer)) != -1) {
             out.write(buffer, 0, read);
-            Thread.sleep(1);
         }
 
         if (l != null) {

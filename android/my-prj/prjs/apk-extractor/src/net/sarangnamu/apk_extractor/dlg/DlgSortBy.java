@@ -7,21 +7,22 @@ package net.sarangnamu.apk_extractor.dlg;
 
 import net.sarangnamu.apk_extractor.R;
 import net.sarangnamu.apk_extractor.cfg.Cfg;
+import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.ui.dlg.DlgBase;
 import android.content.Context;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
-public class DlgOrderBy extends DlgBase {
+public class DlgSortBy extends DlgBase {
     private RadioGroup group;
 
-    public DlgOrderBy(Context context) {
+    public DlgSortBy(Context context) {
         super(context);
     }
 
     @Override
     protected int getBaseLayoutId() {
-        return R.layout.dlg_orderby;
+        return R.layout.dlg_sortby;
     }
 
     @Override
@@ -32,18 +33,20 @@ public class DlgOrderBy extends DlgBase {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                 case R.id.defaultOrder:
-                    Cfg.setOrderBy(getContext(), "default");
+                    Cfg.setSortBy(getContext(), "default");
                     break;
                 case R.id.alphabet:
-                    Cfg.setOrderBy(getContext(), "alphabet");
+                    Cfg.setSortBy(getContext(), "alphabet");
                     break;
                 case R.id.installTime:
-                    Cfg.setOrderBy(getContext(), "installTime");
+                    Cfg.setSortBy(getContext(), "installTime");
                     break;
                 }
 
                 dismiss();
             }
         });
+
+        FontLoader.getInstance(getContext()).applyChild("Roboto-Light", group);
     }
 }

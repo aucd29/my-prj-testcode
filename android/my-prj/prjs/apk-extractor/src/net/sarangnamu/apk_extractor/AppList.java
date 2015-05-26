@@ -19,6 +19,8 @@ package net.sarangnamu.apk_extractor;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.WeakHashMap;
 
@@ -44,11 +46,11 @@ public class AppList {
 
     }
 
-    public ArrayList<PkgInfo> getInstalledApps(Context context) {
-        return getAllApps(context, true);
+    public ArrayList<PkgInfo> getInstalledApps(Context context, String sortBy) {
+        return getAllApps(context, true, sortBy);
     }
 
-    public ArrayList<PkgInfo> getAllApps(Context context, boolean hideSystemApp) {
+    public ArrayList<PkgInfo> getAllApps(Context context, boolean hideSystemApp, String sortBy) {
         ArrayList<PkgInfo> res = new ArrayList<PkgInfo>();
         List<PackageInfo> packs = context.getPackageManager().getInstalledPackages(0);
 
@@ -83,18 +85,40 @@ public class AppList {
             res.add(newInfo);
         }
 
+        if (sortBy.equals("installTime")) {
+            Collections.sort(res, new SortByInstallTime());
+        } else if (sortBy.equals("alphabet")) {
+            Collections.sort(res, new SortByAlphabet());
+        }
+
         return res;
     }
 
-    public void setOrderByAlphabet() {
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Comparator
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
 
+    class SortByInstallTime implements Comparator<PkgInfo> {
+        @Override
+        public int compare(PkgInfo lhs, PkgInfo rhs) {
+            if (lhs.firstInstallTime > rhs.firstInstallTime) {
+                return 1;
+            } else if (lhs.firstInstallTime < rhs.firstInstallTime) {
+                return -1;
+            }
+
+            return 0;
+        }
     }
 
-    public void setOrderByInstalledTime() {
-        // firstInstallTime
+    class SortByAlphabet implements Comparator<PkgInfo> {
+        @Override
+        public int compare(PkgInfo lhs, PkgInfo rhs) {
+            return lhs.appName.compareTo(rhs.appName);
+        }
     }
-
-
 
     ////////////////////////////////////////////////////////////////////////////////////
     //

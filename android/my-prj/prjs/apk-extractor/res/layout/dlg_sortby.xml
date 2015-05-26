@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
     android:background="@drawable/popup_bg"
-    android:minHeight="115dp" >
+    android:minHeight="115dp"
+    android:paddingLeft="10dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,14 +14,27 @@
         android:layout_marginTop="20dp"
         android:orientation="vertical" >
 
-        <RadioGroup android:id="@+id/orderGroup" >
+        <net.sarangnamu.common.fonts.RobotoLightTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:text="@string/mnu_sortBy"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:id="@+id/orderGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
             <RadioButton
                 android:id="@+id/defaultOrder"
+                android:paddingBottom="20dp"
                 android:text="@string/defaultOrder" />
 
             <RadioButton
                 android:id="@+id/alphabet"
+                android:paddingBottom="20dp"
                 android:text="@string/alphabet" />
 
             <RadioButton

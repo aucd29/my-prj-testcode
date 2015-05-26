@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import net.sarangnamu.apk_extractor.AppList.PkgInfo;
 import net.sarangnamu.apk_extractor.cfg.Cfg;
 import net.sarangnamu.apk_extractor.dlg.DlgEmail;
+import net.sarangnamu.apk_extractor.dlg.DlgSortBy;
 import net.sarangnamu.apk_extractor.dlg.DlgSpecialThanks;
 import net.sarangnamu.common.BkCfg;
 import net.sarangnamu.common.BkFile;
@@ -41,6 +42,7 @@ import net.sarangnamu.common.ui.list.AniBtnListView;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
@@ -301,6 +303,9 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 case R.id.mnu_specialThanks:
                     showSpecialThanks();
                     break;
+                case R.id.mnu_sortBy:
+                    showSortBy();
+                    break;
                 }
 
                 return false;
@@ -322,6 +327,18 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 dlg.setTitleTypeface(FontLoader.getInstance(getApplicationContext()).getRobotoLight());
                 dlg.setTitle("Special Thanks");
                 dlg.show();
+            }
+
+            void showSortBy() {
+                DlgSortBy dlg = new DlgSortBy(MainActivity.this);
+                dlg.setTitle(R.string.mnu_sortBy);
+                dlg.show();
+                dlg.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        initData(false);
+                    }
+                });
             }
         });
 
@@ -451,12 +468,13 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 Context context = contexts[0];
 
                 if (data != null) {
-                    // TODO OutOfMemoryError
                     data.clear();
                     data = null;
                 }
 
-                data = AppList.getInstance().getAllApps(context, getShowOption());
+                data = AppList.getInstance().getAllApps(context
+                        , getShowOption()
+                        , getSortByOption());
 
                 return false;
             }
@@ -640,6 +658,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         }
 
         return false;
+    }
+
+    private String getSortByOption() {
+        String opt = Cfg.getSortBy(MainActivity.this);
+        return opt;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

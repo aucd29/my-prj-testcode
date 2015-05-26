@@ -22,12 +22,12 @@ import net.sarangnamu.common.BkString;
 import android.content.Context;
 
 public class Cfg extends BkCfg {
-    public static final String PATH = "/apks/";
+    public static final String PATH         = "/apks/";
 
-    private static final String EMAIL = "email";
-    private static final String USERPATH = "usrPath";
-    private static final String SHOW_OPT = "showOpt";
-    private static final String ORDER_BY = "orderBy";
+    private static final String EMAIL       = "email";
+    private static final String USERPATH    = "usrPath";
+    private static final String SHOW_OPT    = "showOpt";
+    private static final String SORT_BY     = "sortBy";
 
     public static String getDownPath(Context context) {
         String usrPath = getUserPath(context);
@@ -63,11 +63,11 @@ public class Cfg extends BkCfg {
         set(context, SHOW_OPT, val);
     }
 
-    public static void setOrderBy(Context context, String type) {
-        set(context, ORDER_BY, type);
+    public static void setSortBy(Context context, String type) {
+        set(context, SORT_BY, type);
     }
 
-    public static String getOrderBy(Context context, String type) {
-        return get(context, ORDER_BY, "default");
+    public static String getSortBy(Context context) {
+        return get(context, SORT_BY, "default");
     }
 }
