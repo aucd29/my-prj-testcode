@@ -32,15 +32,15 @@ import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 
 public class AppList {
-    private static AppList inst;
-    private WeakHashMap<String, Drawable> iconMap;
+    private static AppList mInst;
+    private WeakHashMap<String, Drawable> mIconMap;
 
     public static AppList getInstance() {
-        if (inst == null) {
-            inst = new AppList();
+        if (mInst == null) {
+            mInst = new AppList();
         }
 
-        return inst;
+        return mInst;
     }
 
     private AppList() {
@@ -55,8 +55,8 @@ public class AppList {
         ArrayList<PkgInfo> res = new ArrayList<PkgInfo>();
         List<PackageInfo> packs = context.getPackageManager().getInstalledPackages(0);
 
-        if (iconMap == null) {
-            iconMap = new WeakHashMap<String, Drawable>();
+        if (mIconMap == null) {
+            mIconMap = new WeakHashMap<String, Drawable>();
         }
 
         for (int i = 0; i < packs.size(); i++) {
@@ -73,11 +73,11 @@ public class AppList {
             newInfo.versionName = p.versionName;
             newInfo.versionCode = p.versionCode;
 
-            if (!iconMap.containsKey(p.packageName)) {
-                iconMap.put(p.packageName, p.applicationInfo.loadIcon(context.getPackageManager()).getConstantState().newDrawable());
+            if (!mIconMap.containsKey(p.packageName)) {
+                mIconMap.put(p.packageName, p.applicationInfo.loadIcon(context.getPackageManager()).getConstantState().newDrawable());
             }
 
-            newInfo.icon = iconMap.get(p.packageName);
+            newInfo.icon = mIconMap.get(p.packageName);
             newInfo.srcDir = p.applicationInfo.sourceDir;
             newInfo.size = new File(p.applicationInfo.sourceDir).length();
             newInfo.appSize = BkMath.toFileSizeString(newInfo.size);

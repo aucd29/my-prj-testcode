@@ -90,17 +90,17 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final int DIR_ACTIVITY = 200;
     private static final int DEL_ACTIVITY = 300;
 
-    private boolean sendEmail = false, searchedList = false;
-    private int deletedPosition = -1;
-    private TextView title, path, dev, tvSearch, empty;
-    private EditText search;
-    private AppAdapter adapter;
-    private ImageButton menu;
-    private RelativeLayout titleBar;
-    private ProgressBar sdProgressBar;
-    private ProgressDialog dlg;
-    private ArrayList<PkgInfo> data;
-    private ArrayList<PkgInfo> searchedData;
+    private boolean mSendEmail = false, mSearchedList = false;
+    private int mDeletedPosition = -1;
+    private TextView mTitle, mPath, mDev, mSearch, mEmpty;
+    private EditText mEdtSearch;
+    private AppAdapter mAdapter;
+    private ImageButton mMenu;
+    private RelativeLayout mTitleBar;
+    private ProgressBar mSdProgressBar;
+    private ProgressDialog mDlg;
+    private ArrayList<PkgInfo> mPkgInfoList;
+    private ArrayList<PkgInfo> mPkgInfoSearchedList;
 
     ////////////////////////////////////////////////////////////////////////////////////
     //
@@ -108,7 +108,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     //
     ////////////////////////////////////////////////////////////////////////////////////
 
-    private final Handler handler = new Handler() {
+    private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -123,29 +123,29 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 break;
 
             case UPDATE_PROGRESS_BAR:
-                sdProgressBar.setProgress(msg.arg1);
+                mSdProgressBar.setProgress(msg.arg1);
                 break;
 
             case HIDE_PROGRESS_BAR:
-                sdProgressBar.setVisibility(View.GONE);
-                sdProgressBar.setProgress(0);
+                mSdProgressBar.setVisibility(View.GONE);
+                mSdProgressBar.setProgress(0);
                 break;
             }
         }
     };
 
     private void sendMessage(int type, Object obj) {
-        Message msg = handler.obtainMessage();
+        Message msg = mHandler.obtainMessage();
         msg.what = type;
         msg.obj = obj;
-        handler.sendMessage(msg);
+        mHandler.sendMessage(msg);
     }
 
     private void sendMessage(int type, int arg) {
-        Message msg = handler.obtainMessage();
+        Message msg = mHandler.obtainMessage();
         msg.what = type;
         msg.arg1 = arg;
-        handler.sendMessage(msg);
+        mHandler.sendMessage(msg);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -159,15 +159,15 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        title    = (TextView) findViewById(R.id.title);
-        path     = (TextView) findViewById(R.id.path);
-        dev      = (TextView) findViewById(R.id.dev);
-        tvSearch = (TextView) findViewById(R.id.tvSearch);
-        empty    = (TextView) findViewById(android.R.id.empty);
-        search   = (EditText) findViewById(R.id.search);
-        menu     = (ImageButton) findViewById(R.id.menu);
-        titleBar = (RelativeLayout) findViewById(R.id.titleBar);
-        sdProgressBar = (ProgressBar) findViewById(R.id.sdProgressBar);
+        mTitle         = (TextView) findViewById(R.id.title);
+        mPath          = (TextView) findViewById(R.id.path);
+        mDev           = (TextView) findViewById(R.id.dev);
+        mSearch        = (TextView) findViewById(R.id.tvSearch);
+        mEmpty         = (TextView) findViewById(android.R.id.empty);
+        mEdtSearch     = (EditText) findViewById(R.id.search);
+        mMenu          = (ImageButton) findViewById(R.id.menu);
+        mTitleBar      = (RelativeLayout) findViewById(R.id.titleBar);
+        mSdProgressBar = (ProgressBar) findViewById(R.id.sdProgressBar);
 
         initLabel();
         initMenu();
@@ -193,26 +193,25 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         case EMAIL_ACTIVITY:
             if (resultCode == RESULT_OK) {
             } else if (resultCode == RESULT_CANCELED) {
-
             } else {
                 showPopup(getString(R.string.sendMailFail));
             }
             break;
 
         case DEL_ACTIVITY:
-            if (deletedPosition == -1) {
+            if (mDeletedPosition == -1) {
                 return ;
             }
 
-            PkgInfo info = getPkgInfo(deletedPosition);
+            PkgInfo info = getPkgInfo(mDeletedPosition);
             try {
                 getPackageManager().getApplicationInfo(info.pkgName, 0);
             } catch (NameNotFoundException e) {
                 DLog.e(TAG, "onActivityResult", e);
-                removeDataListAndRefereshList(deletedPosition);
+                removeDataListAndRefereshList(mDeletedPosition);
             }
 
-            deletedPosition = -1;
+            mDeletedPosition = -1;
             break;
         }
     }
@@ -220,7 +219,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
-            menu.performClick();
+            mMenu.performClick();
             return true;
         }
 
@@ -229,9 +228,9 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     @Override
     public void onBackPressed() {
-        if (searchedList) {
-            searchedData.clear();
-            searchedList = false;
+        if (mSearchedList) {
+            mPkgInfoSearchedList.clear();
+            mSearchedList = false;
 
             BaseAdapter tmpAdapter = (BaseAdapter) getListAdapter();
             if (tmpAdapter != null) {
@@ -239,7 +238,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             }
 
             return;
-        } else if (search.getVisibility() != View.GONE) {
+        } else if (mEdtSearch.getVisibility() != View.GONE) {
             setSearchUi();
             return;
         }
@@ -249,7 +248,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
     @Override
     protected void onPause() {
-        BkCfg.hideKeyboard(search);
+        BkCfg.hideKeyboard(mEdtSearch);
 
         super.onPause();
     }
@@ -261,20 +260,20 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     ////////////////////////////////////////////////////////////////////////////////////
 
     private void initLabel() {
-        title.setText(Html.fromHtml(getString(R.string.appName)));
+        mTitle.setText(Html.fromHtml(getString(R.string.appName)));
 
         setDownloadPath();
 
         String src = String.format("<b>%s</b> <a href='http://sarangnamu.net'>@aucd29</a>", getString(R.string.dev));
-        dev.setText(Html.fromHtml(src));
-        sdProgressBar.setMax(100);
+        mDev.setText(Html.fromHtml(src));
+        mSdProgressBar.setMax(100);
     }
 
     private void setDownloadPath() {
         String dnPath = Cfg.getDownPath(this);
 
         String src = String.format("<b>%s</b> : %s", getString(R.string.downloadPath), dnPath.replace(BkCfg.sdPath(), "/sdcard"));
-        path.setText(Html.fromHtml(src));
+        mPath.setText(Html.fromHtml(src));
     }
 
     private void initMenu() {
@@ -342,7 +341,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             }
         });
 
-        menu.setOnClickListener(new View.OnClickListener() {
+        mMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int resid;
@@ -361,8 +360,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private void initSearch() {
         BkCfg.forceHideKeyboard(getWindow());
 
-        search.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        search.addTextChangedListener(new TextWatcher() {
+        mEdtSearch.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        mEdtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
@@ -373,24 +372,24 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (searchedData == null) {
-                    searchedData = new ArrayList<PkgInfo>();
+                if (mPkgInfoSearchedList == null) {
+                    mPkgInfoSearchedList = new ArrayList<PkgInfo>();
                 }
 
-                searchedData.clear();
-                String keyword = search.getText().toString();
+                mPkgInfoSearchedList.clear();
+                String keyword = mEdtSearch.getText().toString();
 
                 if (keyword != null && keyword.length() > 0) {
-                    searchedList = true;
+                    mSearchedList = true;
                     keyword = keyword.toLowerCase();
 
-                    for (PkgInfo info : data) {
+                    for (PkgInfo info : mPkgInfoList) {
                         if (info.appName.toLowerCase().contains(keyword)) {
-                            searchedData.add(info);
+                            mPkgInfoSearchedList.add(info);
                         }
                     }
                 } else {
-                    searchedList = false;
+                    mSearchedList = false;
                 }
 
                 BaseAdapter tmpAdapter = (BaseAdapter) getListAdapter();
@@ -400,7 +399,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             }
         });
 
-        search.setOnEditorActionListener(new OnEditorActionListener() {
+        mEdtSearch.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -411,43 +410,43 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             }
         });
 
-        search.setTypeface(FontLoader.getInstance(MainActivity.this).getFont("Roboto-Light"));
-        BkCfg.hideKeyboard(search);
+        mEdtSearch.setTypeface(FontLoader.getInstance(MainActivity.this).getFont("Roboto-Light"));
+        BkCfg.hideKeyboard(mEdtSearch);
     }
 
     private void setSearchUi() {
-        if (search.getVisibility() == View.GONE) {
-            search.setVisibility(View.VISIBLE);
-            tvSearch.setVisibility(View.VISIBLE);
-            title.setVisibility(View.GONE);
-            FadeColor.startResource(titleBar, R.color.dBg, R.color.dBgSearch, null);
+        if (mEdtSearch.getVisibility() == View.GONE) {
+            mEdtSearch.setVisibility(View.VISIBLE);
+            mSearch.setVisibility(View.VISIBLE);
+            mTitle.setVisibility(View.GONE);
+            FadeColor.startResource(mTitleBar, R.color.dBg, R.color.dBgSearch, null);
 
-            search.setText("");
+            mEdtSearch.setText("");
 
-            BkCfg.showKeyboard(search);
+            BkCfg.showKeyboard(mEdtSearch);
         } else {
-            search.setVisibility(View.GONE);
-            tvSearch.setVisibility(View.GONE);
-            title.setVisibility(View.VISIBLE);
-            FadeColor.startResource(titleBar, R.color.dBgSearch, R.color.dBg, null);
+            mEdtSearch.setVisibility(View.GONE);
+            mSearch.setVisibility(View.GONE);
+            mTitle.setVisibility(View.VISIBLE);
+            FadeColor.startResource(mTitleBar, R.color.dBgSearch, R.color.dBg, null);
 
-            BkCfg.hideKeyboard(search);
+            BkCfg.hideKeyboard(mEdtSearch);
         }
     }
 
     private PkgInfo getPkgInfo(int position) {
-        if (searchedList) {
-            return searchedData.get(position);
+        if (mSearchedList) {
+            return mPkgInfoSearchedList.get(position);
         } else {
-            return data.get(position);
+            return mPkgInfoList.get(position);
         }
     }
 
     private void removeDataListAndRefereshList(int pos) {
-        if (searchedList) {
-            searchedData.remove(deletedPosition);
+        if (mSearchedList) {
+            mPkgInfoSearchedList.remove(mDeletedPosition);
         } else {
-            data.remove(deletedPosition);
+            mPkgInfoList.remove(mDeletedPosition);
         }
 
         BaseAdapter adapter = (BaseAdapter) getListAdapter();
@@ -467,12 +466,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             protected Boolean doInBackground(Context... contexts) {
                 Context context = contexts[0];
 
-                if (data != null) {
-                    data.clear();
-                    data = null;
+                if (mPkgInfoList != null) {
+                    mPkgInfoList.clear();
+                    mPkgInfoList = null;
                 }
 
-                data = AppList.getInstance().getAllApps(context
+                mPkgInfoList = AppList.getInstance().getAllApps(context
                         , getShowOption()
                         , getSortByOption());
 
@@ -481,53 +480,46 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
             @Override
             protected void onPostExecute(Boolean result) {
-                dlg.dismiss();
+                mDlg.dismiss();
 
                 if (initList) {
                     initListView();
                 } else {
-                    adapter = null;
-                    adapter = new AppAdapter();
+                    mAdapter = null;
+                    mAdapter = new AppAdapter();
 
                     AniBtnListView list = (AniBtnListView) getListView();
                     list.resetCheckedList();
-                    list.setAdapter(adapter);
+                    list.setAdapter(mAdapter);
                 }
             }
         }.execute(getApplicationContext());
     }
 
     private void showProgress() {
-        dlg = new ProgressDialog(MainActivity.this);
-        dlg.setCancelable(false);
-        dlg.setMessage(getString(R.string.plsWait));
-        dlg.show();
-        dlg.setContentView(R.layout.dlg_progress);
+        mDlg = new ProgressDialog(MainActivity.this);
+        mDlg.setCancelable(false);
+        mDlg.setMessage(getString(R.string.plsWait));
+        mDlg.show();
+        mDlg.setContentView(R.layout.dlg_progress);
     }
 
-//    private void hideProgress() {
-//        if (dlg != null && dlg.isShowing()) {
-//            dlg.dismiss();
-//            sdProgressBar.setVisibility(View.GONE);
-//        }
-//    }
-
     private void initListView() {
-        adapter = new AppAdapter();
-        setListAdapter(adapter);
+        mAdapter = new AppAdapter();
+        setListAdapter(mAdapter);
 
         AniBtnListView list = (AniBtnListView) getListView();
         list.setSlidingMargin(SLIDING_MARGIN);
         list.setBtnLayoutId(R.id.btnLayout);
         list.setRowId(R.id.row);
-        list.setEmptyView(empty);
+        list.setEmptyView(mEmpty);
     }
 
     private void sendToSd(int position) {
         final PkgInfo info = getPkgInfo(position);
         if (info.size > SHOW_PROGRESS) {
             showProgress();
-            sdProgressBar.setVisibility(View.VISIBLE);
+            mSdProgressBar.setVisibility(View.VISIBLE);
         }
 
         new Thread(new Runnable() {
@@ -562,10 +554,10 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                         public void onFinish(String name) {
                             if (info.size > SHOW_PROGRESS) {
                                 sendMessage(HIDE_PROGRESS_BAR, null);
-                                dlg.dismiss();
+                                mDlg.dismiss();
                             }
 
-                            if (sendEmail) {
+                            if (mSendEmail) {
                                 sendToEmail(info, name);
                             } else {
                                 String fileName = BkString.getFileName(name);
@@ -699,15 +691,15 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
         @Override
         public int getCount() {
-            if (searchedList) {
-                if (searchedData == null) {
+            if (mSearchedList) {
+                if (mPkgInfoSearchedList == null) {
                     return 0;
                 }
 
-                return searchedData.size();
+                return mPkgInfoSearchedList.size();
             }
 
-            return data.size();
+            return mPkgInfoList.size();
         }
 
         @Override
@@ -783,26 +775,26 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         PosHolder ph = (PosHolder) v.getTag();
 
         if (ph.type == ET_MENU) {
-            if (search.getVisibility() != View.GONE) {
-                search.setVisibility(View.GONE);
-                tvSearch.setVisibility(View.GONE);
-                title.setVisibility(View.VISIBLE);
-                FadeColor.startResource(titleBar, R.color.dBgSearch, R.color.dBg, null);
+            if (mEdtSearch.getVisibility() != View.GONE) {
+                mEdtSearch.setVisibility(View.GONE);
+                mSearch.setVisibility(View.GONE);
+                mTitle.setVisibility(View.VISIBLE);
+                FadeColor.startResource(mTitleBar, R.color.dBgSearch, R.color.dBg, null);
 
-                BkCfg.hideKeyboard(search);
+                BkCfg.hideKeyboard(mEdtSearch);
             }
 
             ((AniBtnListView) getListView()).showAnimation(v);
         } else if (ph.type == ET_DELETE) {
             PkgInfo info = getPkgInfo(ph.position);
-            deletedPosition = ph.position;
+            mDeletedPosition = ph.position;
 
             Intent intent = new Intent(Intent.ACTION_DELETE);
             intent.setData(Uri.parse("package:" + info.pkgName));
 
             startActivityForResult(intent, DEL_ACTIVITY);
         } else {
-            sendEmail = ph.type == 0 ? false : true;
+            mSendEmail = ph.type == 0 ? false : true;
             sendToSd(ph.position);
         }
     }
