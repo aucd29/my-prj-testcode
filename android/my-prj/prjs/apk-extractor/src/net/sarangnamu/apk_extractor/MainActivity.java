@@ -231,11 +231,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
         if (mSearchedList) {
             mPkgInfoSearchedList.clear();
             mSearchedList = false;
-
-            BaseAdapter tmpAdapter = (BaseAdapter) getListAdapter();
-            if (tmpAdapter != null) {
-                tmpAdapter.notifyDataSetChanged();
-            }
+            notifyDataSetChanged();
 
             return;
         } else if (mEdtSearch.getVisibility() != View.GONE) {
@@ -392,10 +388,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                     mSearchedList = false;
                 }
 
-                BaseAdapter tmpAdapter = (BaseAdapter) getListAdapter();
-                if (tmpAdapter != null) {
-                    tmpAdapter.notifyDataSetChanged();
-                }
+                notifyDataSetChanged();
             }
         });
 
@@ -449,10 +442,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             mPkgInfoList.remove(mDeletedPosition);
         }
 
-        BaseAdapter adapter = (BaseAdapter) getListAdapter();
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }
+        notifyDataSetChanged();
     }
 
     private void initData(final boolean initList) {
@@ -485,15 +475,19 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 if (initList) {
                     initListView();
                 } else {
-                    mAdapter = null;
-                    mAdapter = new AppAdapter();
-
                     AniBtnListView list = (AniBtnListView) getListView();
                     list.resetCheckedList();
-                    list.setAdapter(mAdapter);
+                    notifyDataSetChanged();
                 }
             }
         }.execute(getApplicationContext());
+    }
+
+    private void notifyDataSetChanged() {
+        BaseAdapter tmpAdapter = (BaseAdapter) getListAdapter();
+        if (tmpAdapter != null) {
+            tmpAdapter.notifyDataSetChanged();
+        }
     }
 
     private void showProgress() {
