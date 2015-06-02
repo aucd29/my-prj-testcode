@@ -32,18 +32,18 @@ public abstract class AutoInflateFrgmtBase extends FrgmtBase {
     private static final String IDENTIFIER_STRING = "string";
     private static final String IDENTIFIER_LAYOUT = "layout";
 
-    protected View view;
-    protected ViewGroup pageContent; // /< child view
-    protected String parseClassName;
+    protected View mView;
+    protected ViewGroup mPageContent; // /< child view
+    protected String mParseClassName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        base = (ViewGroup) inflate(getLayoutId());
+        mBaseView = (ViewGroup) inflate(getLayoutId());
 
         autoInflate();
         initLayout();
 
-        return base;
+        return mBaseView;
     }
 
     private void autoInflate() {
@@ -53,19 +53,19 @@ public abstract class AutoInflateFrgmtBase extends FrgmtBase {
         DLog.d(TAG, "===================================================================");
 
         // base <- pageContent <- other View (class_name.xml)
-        pageContent = (ViewGroup) base.findViewById(getPageContentId());
+        mPageContent = (ViewGroup) mBaseView.findViewById(getPageContentId());
 
         if (id != 0) {
-            view = inflate(id);
-            pageContent.addView(view);
+            mView = inflate(id);
+            mPageContent.addView(mView);
         } else {
             DLog.e(TAG, "initLayout, not found layout id for pageContent");
         }
     }
 
     private String getClassSimpleName() {
-        if (parseClassName != null && parseClassName.length() > 0) {
-            return parseClassName;
+        if (mParseClassName != null && mParseClassName.length() > 0) {
+            return mParseClassName;
         }
 
         StringBuilder sb = new StringBuilder();
@@ -82,9 +82,9 @@ public abstract class AutoInflateFrgmtBase extends FrgmtBase {
             }
         }
 
-        parseClassName = sb.toString();
+        mParseClassName = sb.toString();
 
-        return parseClassName;
+        return mParseClassName;
     }
 
     /**

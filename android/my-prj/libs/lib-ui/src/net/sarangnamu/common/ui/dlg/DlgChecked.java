@@ -30,63 +30,63 @@ import android.widget.ListView;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class DlgChecked extends DlgBtnBase {
-    protected int layoutId;
-    protected String[] items;
-    protected ListView list;
+    protected int mLayoutId;
+    protected String[] mItems;
+    protected ListView mList;
 
     public DlgChecked(Context context, int layoutId) {
         super(context);
 
-        this.list = new ListView(getContext());
-        this.list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        this.layoutId = layoutId;
+        this.mList = new ListView(getContext());
+        this.mList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        this.mLayoutId = layoutId;
     }
 
     @Override
     protected void initLayout() {
         super.initLayout();
-        content.addView(list);
+        mContent.addView(mList);
 
-        if (items != null) {
-            list.setAdapter(new DlgAdapter());
+        if (mItems != null) {
+            mList.setAdapter(new DlgAdapter());
         }
     }
 
     public void setOnItemClickListener(OnItemClickListener l) {
-        if (list != null) {
-            list.setOnItemClickListener(l);
+        if (mList != null) {
+            mList.setOnItemClickListener(l);
         }
     }
 
     public ListView getListView() {
-        return list;
+        return mList;
     }
 
     public void setItem(int resid) {
-        items = getContext().getResources().getStringArray(resid);
+        mItems = getContext().getResources().getStringArray(resid);
     }
 
     public void setItem(String[] item) {
-        items = item;
+        mItems = item;
     }
 
     public void setMultiChoice() {
-        this.list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        this.mList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
     }
 
     public String[] getCheckedItems() {
-        if (list == null) {
+        if (mList == null) {
             return null;
         }
 
-        SparseBooleanArray spItems = list.getCheckedItemPositions();
-        String[] trigger = new String[list.getCheckedItemCount()];
+        SparseBooleanArray spItems = mList.getCheckedItemPositions();
+        String[] trigger = new String[mList.getCheckedItemCount()];
 
         int j = 0;
         for (int i = 0; i < spItems.size(); i++) {
             if (spItems.get(i) == true) {
                 int pos = spItems.keyAt(i);
-                trigger[j++] = items[pos];
+                trigger[j++] = mItems[pos];
             }
         }
 
@@ -94,11 +94,11 @@ public class DlgChecked extends DlgBtnBase {
     }
 
     public int getCheckedItemCount() {
-        if (list == null) {
+        if (mList == null) {
             return 0;
         }
 
-        return list.getCheckedItemCount();
+        return mList.getCheckedItemCount();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -114,7 +114,7 @@ public class DlgChecked extends DlgBtnBase {
     class DlgAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return items.length;
+            return mItems.length;
         }
 
         @Override
@@ -132,7 +132,7 @@ public class DlgChecked extends DlgBtnBase {
             ViewHolder holder;
 
             if (convertView == null) {
-                convertView = inflate(layoutId);
+                convertView = inflate(mLayoutId);
 
                 holder = new ViewHolder();
                 int editId = convertView.getResources().getIdentifier("checked", "id", getContext().getPackageName());
@@ -142,7 +142,7 @@ public class DlgChecked extends DlgBtnBase {
                 holder = (ViewHolder)convertView.getTag();
             }
 
-            holder.checked.setText(items[position]);
+            holder.checked.setText(mItems[position]);
 
             return convertView;
         }

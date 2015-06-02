@@ -28,17 +28,17 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class DbManager {
     private static final String TAG = "DbManager";
-    private static DbManager inst;
+    private static DbManager sInst;
 
-    protected SQLiteDatabase db;
-    protected DbHelperBase helper;
+    protected SQLiteDatabase mDB;
+    protected DbHelperBase mHelper;
 
     public static DbManager getInstance() {
-        if (inst == null) {
-            inst = new DbManager();
+        if (sInst == null) {
+            sInst = new DbManager();
         }
 
-        return inst;
+        return sInst;
     }
 
     private DbManager() {
@@ -47,20 +47,20 @@ public class DbManager {
 
     public void open(Context context, DbHelperBase helper) {
         try {
-            this.helper = helper;
-            this.db = helper.getWritableDatabase();
+            this.mHelper = helper;
+            this.mDB = helper.getWritableDatabase();
         } catch (Exception e) {
             DLog.e(TAG, "setOpenHelper", e);
         }
     }
 
     public void close() {
-        db.close();
-        helper.close();
+        mDB.close();
+        mHelper.close();
     }
 
     public boolean isAliveDb() {
-        if (db == null || helper == null) {
+        if (mDB == null || mHelper == null) {
             return false;
         }
 
@@ -68,26 +68,26 @@ public class DbManager {
     }
 
     public Cursor query(String table, String[] fields, String where) {
-        return db.query(table, fields, where, null, null, null, null);
+        return mDB.query(table, fields, where, null, null, null, null);
     }
 
     public Cursor query(String table, String[] fields, String where, String orderBy) {
-        return db.query(table, fields, where, null, null, null, orderBy);
+        return mDB.query(table, fields, where, null, null, null, orderBy);
     }
 
     public Cursor rawQuery(String sql, String[] args) {
-        return db.rawQuery(sql, args);
+        return mDB.rawQuery(sql, args);
     }
 
     public long insert(String table, ContentValues inputValues) {
-        return db.insert(table, null, inputValues);
+        return mDB.insert(table, null, inputValues);
     }
 
     public int update(String table, ContentValues inputValues, String where) {
-        return db.update(table, inputValues, where, null);
+        return mDB.update(table, inputValues, where, null);
     }
 
     public int delete(String table, String where) {
-        return db.delete(table, where, null);
+        return mDB.delete(table, where, null);
     }
 }

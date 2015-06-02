@@ -31,12 +31,12 @@ import android.widget.TextView;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public abstract class DlgBtnBase extends DlgBase implements View.OnClickListener {
-    protected int titleColor;
-    protected Button left, right;
-    protected TextView title;
-    protected FrameLayout layout;
-    protected LinearLayout content, bottom;
-    private DlgBtnListener listener;
+    protected int mTitleColor;
+    protected Button mLeftBtn, mRightBtn;
+    protected TextView mTitle;
+    protected FrameLayout mLayout;
+    protected LinearLayout mContent, mBottom;
+    private DlgBtnListener mListener;
 
     public DlgBtnBase(Context context) {
         super(context);
@@ -49,54 +49,54 @@ public abstract class DlgBtnBase extends DlgBase implements View.OnClickListener
 
     @Override
     protected void initLayout() {
-        left    = (Button) findViewById(R.id.left);
-        right   = (Button) findViewById(R.id.right);
-        title   = (TextView) findViewById(R.id.title);
-        layout  = (FrameLayout) findViewById(R.id.layout);
-        content = (LinearLayout) findViewById(R.id.content);
-        bottom  = (LinearLayout) findViewById(R.id.bottom);
+        mLeftBtn    = (Button) findViewById(R.id.left);
+        mRightBtn   = (Button) findViewById(R.id.right);
+        mTitle   = (TextView) findViewById(R.id.title);
+        mLayout  = (FrameLayout) findViewById(R.id.layout);
+        mContent = (LinearLayout) findViewById(R.id.content);
+        mBottom  = (LinearLayout) findViewById(R.id.bottom);
 
-        left.setOnClickListener(this);
-        right.setOnClickListener(this);
+        mLeftBtn.setOnClickListener(this);
+        mRightBtn.setOnClickListener(this);
 
-        if (titleColor != 0) {
-            title.setBackgroundColor(titleColor);
+        if (mTitleColor != 0) {
+            mTitle.setBackgroundColor(mTitleColor);
         }
     }
 
     public void setOnButtonClickListener(boolean left, View.OnClickListener l) {
         if (left) {
-            this.left.setOnClickListener(l);
+            this.mLeftBtn.setOnClickListener(l);
         } else {
-            this.right.setOnClickListener(l);
+            this.mRightBtn.setOnClickListener(l);
         }
     }
 
     public void setOneButton() {
-        right.setVisibility(View.GONE);
+        mRightBtn.setVisibility(View.GONE);
     }
 
     public void setTitleText(int id) {
-        title.setText(id);
+        mTitle.setText(id);
     }
 
     public void setBtnLeftText(int id) {
-        left.setText(id);
+        mLeftBtn.setText(id);
     }
 
     public void setBtnRightText(int id) {
-        right.setText(id);
+        mRightBtn.setText(id);
     }
 
     public void setOnBtnListener(DlgBtnListener l) {
-        listener = l;
+        mListener = l;
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == right.getId()) {
-            if (listener != null) {
-                listener.ok();
+        if (v.getId() == mRightBtn.getId()) {
+            if (mListener != null) {
+                mListener.ok();
             }
 
             dismiss();
@@ -106,33 +106,33 @@ public abstract class DlgBtnBase extends DlgBase implements View.OnClickListener
     }
 
     public void hideTitle() {
-        title.setVisibility(View.GONE);
+        mTitle.setVisibility(View.GONE);
 
-        FrameLayout.LayoutParams lp = (LayoutParams) content.getLayoutParams();
+        FrameLayout.LayoutParams lp = (LayoutParams) mContent.getLayoutParams();
         lp.topMargin = dpToPixelInt(10);
     }
 
     public void hideButtons() {
-        bottom.setVisibility(View.GONE);
+        mBottom.setVisibility(View.GONE);
 
-        FrameLayout.LayoutParams lp = (LayoutParams) content.getLayoutParams();
+        FrameLayout.LayoutParams lp = (LayoutParams) mContent.getLayoutParams();
         lp.bottomMargin = dpToPixelInt(10);
     }
 
     public void setTransparentBaseLayout() {
-        layout.setBackgroundColor(0x00000000);
+        mLayout.setBackgroundColor(0x00000000);
     }
 
     public void setDialogSize(int width, int height) {
-        ViewGroup.LayoutParams lp = layout.getLayoutParams();
+        ViewGroup.LayoutParams lp = mLayout.getLayoutParams();
         lp.width = width;
         lp.height = height;
 
-        layout.setLayoutParams(lp);
+        mLayout.setLayoutParams(lp);
     }
 
     public void setTitleBackgroundColor(int color) {
-        titleColor = color;
+        mTitleColor = color;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

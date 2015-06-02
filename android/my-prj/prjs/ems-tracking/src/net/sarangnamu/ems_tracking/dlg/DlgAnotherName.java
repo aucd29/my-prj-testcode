@@ -28,45 +28,45 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class DlgAnotherName extends DlgBase {
-    private Button btn;
-    private String emsNum;
-    private EditText edit;
-    private String anotherName;
+    private Button mBtn;
+    private String mEmsNum;
+    private EditText mEdit;
+    private String mAnotherName;
 
     public DlgAnotherName(Context context, String emsNum) {
         super(context);
 
-        this.emsNum = emsNum;
+        this.mEmsNum = emsNum;
     }
 
     public DlgAnotherName(Context context, String emsNum, String anotherName) {
         this(context, emsNum);
 
-        this.anotherName = anotherName;
+        this.mAnotherName = anotherName;
     }
 
     @Override
     protected void initLayout() {
-        btn     = (Button) findViewById(R.id.btn);
-        edit    = (EditText) findViewById(R.id.edit);
+        mBtn     = (Button) findViewById(R.id.btn);
+        mEdit    = (EditText) findViewById(R.id.edit);
 
-        edit.setTypeface(FontLoader.getInstance(getContext()).getFont("Roboto-Light"));
-        btn.setTypeface(FontLoader.getInstance(getContext()).getFont("Roboto-Light"));
-        btn.setOnClickListener(new View.OnClickListener() {
+        mEdit.setTypeface(FontLoader.getInstance(getContext()).getFont("Roboto-Light"));
+        mBtn.setTypeface(FontLoader.getInstance(getContext()).getFont("Roboto-Light"));
+        mBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = edit.getText().toString();
-                Cfg.setAnotherName(getContext(), emsNum, text);
-                BkCfg.hideKeyboard(edit);
+                String text = mEdit.getText().toString();
+                Cfg.setAnotherName(getContext(), mEmsNum, text);
+                BkCfg.hideKeyboard(mEdit);
                 dismiss();
             }
         });
 
-        if (anotherName != null) {
-            edit.setText(anotherName);
+        if (mAnotherName != null) {
+            mEdit.setText(mAnotherName);
         }
 
-        BkCfg.showKeyboard(edit);
+        BkCfg.showKeyboard(mEdit);
     }
 
     @Override

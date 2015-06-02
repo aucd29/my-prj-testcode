@@ -26,20 +26,20 @@ import android.widget.TextView;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class DlgNormal extends DlgBtnBase {
-    protected int layoutId;
-    protected String value;
-    protected TextView msg;
+    protected int mLayoutId;
+    protected String mValue;
+    protected TextView mMsg;
 
     public DlgNormal(Context context, int layoutId) {
         super(context);
 
-        this.layoutId = layoutId;
+        this.mLayoutId = layoutId;
     }
 
     public DlgNormal(Context context) {
         super(context);
 
-        this.layoutId = R.layout.dlg_normal;
+        this.mLayoutId = R.layout.dlg_normal;
     }
 
     @Override
@@ -50,19 +50,19 @@ public class DlgNormal extends DlgBtnBase {
     }
 
     private void initMsg() {
-        View view = inflate(layoutId);
-        content.addView(view);
+        View view = inflate(mLayoutId);
+        mContent.addView(view);
 
         int msgId = view.getResources().getIdentifier("msg", "id", getContext().getPackageName());
-        msg = (TextView) view.findViewById(msgId);
-        msg.setText(value);
+        mMsg = (TextView) view.findViewById(msgId);
+        mMsg.setText(mValue);
     }
 
     public void setMessage(String msg) {
-        this.value = msg;
+        this.mValue = msg;
     }
 
     public void setMessage(int resid) {
-        this.value = getString(resid);
+        this.mValue = getString(resid);
     }
 }

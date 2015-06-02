@@ -41,19 +41,19 @@ import net.sarangnamu.common.DLog;
  */
 public class BkDownloader extends BkHandler {
     private static final String TAG = "BkDownloader";
-    protected int connTimeout = 3000;
-    protected int readTimeout = 3000;
+    protected int mConnTimeout = 3000;
+    protected int mReadTimeout = 3000;
 
     public BkDownloader() {
 
     }
 
     public void setConnTimeout(int time) {
-        connTimeout = time;
+        mConnTimeout = time;
     }
 
     public void setReadTimeout(int time) {
-        readTimeout = time;
+        mReadTimeout = time;
     }
 
     public void downloadThread(final String addr, final String dest, final BkHandlerListener l) {
@@ -75,8 +75,8 @@ public class BkDownloader extends BkHandler {
 
         conn.setDoOutput(true);
         conn.setDoInput(true);
-        conn.setConnectTimeout(connTimeout);
-        conn.setReadTimeout(readTimeout);
+        conn.setConnectTimeout(mConnTimeout);
+        conn.setReadTimeout(mReadTimeout);
         conn.connect();
 
         int fileSize = conn.getContentLength();

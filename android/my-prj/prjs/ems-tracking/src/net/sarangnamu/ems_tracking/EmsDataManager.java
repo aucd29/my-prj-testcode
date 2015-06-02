@@ -29,15 +29,15 @@ public class EmsDataManager {
     private static final String TAG = "EmsDataManager";
     public static final String EMS_NUM = "emsNum";
 
-    private static EmsDataManager inst;
-    private HashMap<String, Ems> emsData;
+    private static EmsDataManager sInst;
+    private HashMap<String, Ems> mEmsData;
 
     public static EmsDataManager getInstance() {
-        if (inst == null) {
-            inst = new EmsDataManager();
+        if (sInst == null) {
+            sInst = new EmsDataManager();
         }
 
-        return inst;
+        return sInst;
     }
 
     private EmsDataManager() {
@@ -49,11 +49,11 @@ public class EmsDataManager {
     }
 
     public void getAsyncEmsData(final MainActivity act, final String num, final EmsDataListener l) {
-        if (emsData == null) {
-            emsData = new HashMap<String, Ems>();
+        if (mEmsData == null) {
+            mEmsData = new HashMap<String, Ems>();
         }
 
-        Ems ems = emsData.get(num);
+        Ems ems = mEmsData.get(num);
         if (ems == null) {
             new AsyncTask<Void, Void, Boolean>() {
                 Ems ems;
@@ -97,7 +97,7 @@ public class EmsDataManager {
 
     public Ems getEmsData(String ems) {
         try {
-            return emsData.get(ems);
+            return mEmsData.get(ems);
         } catch (NullPointerException e) {
             DLog.e(TAG, "getEmsData", e);
         } catch (Exception e) {
@@ -108,10 +108,10 @@ public class EmsDataManager {
     }
 
     public void setEmsData(String num, Ems ems) {
-        if (emsData == null) {
-            emsData = new HashMap<String, Ems>();
+        if (mEmsData == null) {
+            mEmsData = new HashMap<String, Ems>();
         }
 
-        emsData.put(num, ems);
+        mEmsData.put(num, ems);
     }
 }

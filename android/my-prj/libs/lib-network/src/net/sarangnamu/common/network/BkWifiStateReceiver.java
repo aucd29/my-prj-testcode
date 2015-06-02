@@ -30,9 +30,9 @@ import android.net.wifi.WifiManager;
 public class BkWifiStateReceiver extends BroadcastReceiver {
     private static final String TAG = "BkWifiStateReceiver";
 
-    private Thread thread = null;
-    private WiFIConnectedListener listenerConnected;
-    private WiFiDisconnectedListener listenerDisconnected;
+    private Thread mThread = null;
+    private WiFIConnectedListener mListenerConnected;
+    private WiFiDisconnectedListener mListenerDisconnected;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -53,8 +53,8 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
             return;
         }
 
-        this.listenerConnected = listenerConntected;
-        this.listenerDisconnected = listenerDisconnected;
+        this.mListenerConnected = listenerConntected;
+        this.mListenerDisconnected = listenerDisconnected;
 
         IntentFilter filter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
         context.registerReceiver(this, filter);
@@ -69,13 +69,13 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
         sendDisconnected();
         context.unregisterReceiver(this);
 
-        this.listenerConnected = null;
-        this.listenerDisconnected = null;
+        this.mListenerConnected = null;
+        this.mListenerDisconnected = null;
     }
 
     private synchronized void sendConnected(final Context context) {
-        if (thread == null) {
-            thread = new Thread(new Runnable() {
+        if (mThread == null) {
+            mThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -85,13 +85,13 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
 
                                 Thread.sleep(500);
                             } else {
-                                if (listenerConnected != null) {
-                                    listenerConnected.onWiFiConnected();
+                                if (mListenerConnected != null) {
+                                    mListenerConnected.onWiFiConnected();
                                 } else {
                                     DLog.e(TAG, "sendConnected listenerConnected is null");
                                 }
 
-                                thread = null;
+                                mThread = null;
 
                                 break;
                             }
@@ -100,24 +100,24 @@ public class BkWifiStateReceiver extends BroadcastReceiver {
                     }
                 }
             });
-            thread.start();
+            mThread.start();
         }
     }
 
     private synchronized void sendDisconnected() {
         killIpCheckThread();
 
-        if (listenerDisconnected != null) {
-            listenerDisconnected.onWiFiDisconnected();
+        if (mListenerDisconnected != null) {
+            mListenerDisconnected.onWiFiDisconnected();
         } else {
             DLog.e(TAG, "sendDisconnected listenerDisconnected is null");
         }
     }
 
     private void killIpCheckThread() {
-        if (thread != null && thread.isAlive()) {
-            thread.interrupt();
-            thread = null;
+        if (mThread != null && mThread.isAlive()) {
+            mThread.interrupt();
+            mThread = null;
         }
     }
 

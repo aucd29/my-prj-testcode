@@ -27,8 +27,8 @@ import android.util.Log;
 public class ColorSelector {
     private static final String TAG = "ColorSelector";
 
-    private HashMap<Integer, ColorDrawable> mapColors;
-    private int normal, pressed, disabled;
+    private HashMap<Integer, ColorDrawable> mColorMap;
+    private int mNormal, mPressed, mDisabled;
 
     public StateListDrawable getSelector(int[] colors) {
         StateListDrawable states = new StateListDrawable();
@@ -41,11 +41,11 @@ public class ColorSelector {
         setColorIndex(colors.length);
 
         for (int i=0; i<colors.length; ++i) {
-            if (i == normal) {
+            if (i == mNormal) {
                 states.addState(new int[] { }, getDrawable(colors[i]));
-            } else if (i == pressed) {
+            } else if (i == mPressed) {
                 states.addState(new int[] { android.R.attr.state_pressed }, getDrawable(colors[i]));
-            } else if (i == disabled) {
+            } else if (i == mDisabled) {
                 states.addState(new int[] { -android.R.attr.state_enabled }, getDrawable(colors[i]));
             }
         }
@@ -54,20 +54,20 @@ public class ColorSelector {
     }
 
     private void setColorIndex(int normalValue) {
-        normal   = normalValue - 1;
-        pressed  = normal - 1;
-        disabled = pressed - 1;
+        mNormal   = normalValue - 1;
+        mPressed  = mNormal - 1;
+        mDisabled = mPressed - 1;
     }
 
     public Drawable getDrawable(int color) {
-        if (mapColors == null) {
-            mapColors = new HashMap<Integer, ColorDrawable>();
+        if (mColorMap == null) {
+            mColorMap = new HashMap<Integer, ColorDrawable>();
         }
 
-        if (mapColors.get(color) == null) {
-            mapColors.put(color, new ColorDrawable(color));
+        if (mColorMap.get(color) == null) {
+            mColorMap.put(color, new ColorDrawable(color));
         }
 
-        return mapColors.get(color);
+        return mColorMap.get(color);
     }
 }

@@ -60,7 +60,7 @@ import android.support.v4.app.FragmentTransaction;
 public abstract class FrgmtManager {
     private static final String TAG = "FrgmtManager";
 
-    protected FragmentManager fm;
+    protected FragmentManager mFrgmtManager;
 
     public FrgmtManager() {
     }
@@ -71,7 +71,7 @@ public abstract class FrgmtManager {
             return;
         }
 
-        fm = act.getSupportFragmentManager();
+        mFrgmtManager = act.getSupportFragmentManager();
     }
 
     public void add(int id, Class<?> cls) {
@@ -82,7 +82,7 @@ public abstract class FrgmtManager {
                 return;
             }
 
-            FragmentTransaction trans = fm.beginTransaction();
+            FragmentTransaction trans = mFrgmtManager.beginTransaction();
             if (frgmt.isVisible()) {
                 return;
             }
@@ -108,8 +108,8 @@ public abstract class FrgmtManager {
 
     private Fragment replace(int id, Class<?> cls, boolean stack, Bundle bundle) {
         try {
-            Fragment frgmt = fm.findFragmentByTag(cls.getName());
-            FragmentTransaction trans = fm.beginTransaction();
+            Fragment frgmt = mFrgmtManager.findFragmentByTag(cls.getName());
+            FragmentTransaction trans = mFrgmtManager.beginTransaction();
 
             if (frgmt != null && frgmt.isVisible()) {
                 return frgmt;
@@ -146,20 +146,20 @@ public abstract class FrgmtManager {
     }
 
     public void popBack() {
-        if (fm != null) {
-            fm.popBackStack();
+        if (mFrgmtManager != null) {
+            mFrgmtManager.popBackStack();
         }
     }
 
     public void popBackAll() {
-        if (fm == null) {
+        if (mFrgmtManager == null) {
             DLog.e(TAG, "setFragmentManager fm is null");
             return;
         }
 
-        int count = fm.getBackStackEntryCount();
+        int count = mFrgmtManager.getBackStackEntryCount();
         for (int i = 0; i < count; ++i) {
-            fm.popBackStack(i, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            mFrgmtManager.popBackStack(i, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
 
@@ -178,24 +178,24 @@ public abstract class FrgmtManager {
     }
 
     public Fragment getCurrentFragment() {
-        if (fm == null) {
+        if (mFrgmtManager == null) {
             return null;
         }
 
-        int count = fm.getBackStackEntryCount();
+        int count = mFrgmtManager.getBackStackEntryCount();
         if (count > 0) {
-            BackStackEntry frgmt = fm.getBackStackEntryAt(count - 1);
-            return fm.findFragmentByTag(frgmt.getName());
+            BackStackEntry frgmt = mFrgmtManager.getBackStackEntryAt(count - 1);
+            return mFrgmtManager.findFragmentByTag(frgmt.getName());
         }
 
         return null;
     }
 
     public Fragment getFragment(Class<?> cls) {
-        if (fm == null) {
+        if (mFrgmtManager == null) {
             return null;
         }
 
-        return fm.findFragmentByTag(cls.getName());
+        return mFrgmtManager.findFragmentByTag(cls.getName());
     }
 }

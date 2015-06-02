@@ -27,7 +27,7 @@ import android.view.MotionEvent;
 
 public class SwipeListView extends AniBtnListView {
     private static final String TAG = "SwipeListView";
-    private Gesture gesture;
+    private Gesture mGesture;
 
     public SwipeListView(Context context) {
         super(context);
@@ -46,9 +46,9 @@ public class SwipeListView extends AniBtnListView {
 
     @Override
     protected void initLayout() {
-        gesture = Gesture.newInstance(getContext());
+        mGesture = Gesture.newInstance(getContext());
         //gesture.setThreshold(1000, 1000);
-        gesture.setOnGestureLeftListener(new GestureLeftListener() {
+        mGesture.setOnGestureLeftListener(new GestureLeftListener() {
             @Override
             public void toLeft() {
                 DLog.d(TAG, "===================================================================");
@@ -69,9 +69,9 @@ public class SwipeListView extends AniBtnListView {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-      if (gesture != null) {
+      if (mGesture != null) {
           DLog.d(TAG, "gesture.onTouchEvent");
-          gesture.onTouchEvent(ev);
+          mGesture.onTouchEvent(ev);
       }
 
 //      return false;

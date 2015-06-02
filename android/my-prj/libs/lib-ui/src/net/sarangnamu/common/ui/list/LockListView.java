@@ -49,8 +49,8 @@ import android.widget.ListView;
  */
 public class LockListView extends ListView {
     //    private static final String TAG = "LockListView";
-    protected boolean lockScroll;
-    private TouchUpListener listener;
+    protected boolean mIsScrollLock;
+    private TouchUpListener mListener;
 
     public LockListView(Context context) {
         super(context);
@@ -72,11 +72,11 @@ public class LockListView extends ListView {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (lockScroll) {
+        if (mIsScrollLock) {
             switch (ev.getAction()) {
             case MotionEvent.ACTION_UP:
-                if (listener != null) {
-                    listener.up();
+                if (mListener != null) {
+                    mListener.up();
                 }
                 break;
             }
@@ -89,7 +89,7 @@ public class LockListView extends ListView {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        if (lockScroll) {
+        if (mIsScrollLock) {
             return false;
         } else {
             return super.onTouchEvent(ev);
@@ -97,15 +97,15 @@ public class LockListView extends ListView {
     }
 
     public synchronized void setLock() {
-        lockScroll = lockScroll ? false : true;
+        mIsScrollLock = mIsScrollLock ? false : true;
     }
 
     public boolean getLockStatus() {
-        return lockScroll;
+        return mIsScrollLock;
     }
 
     public void setOnTouchListener(TouchUpListener l) {
-        listener = l;
+        mListener = l;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

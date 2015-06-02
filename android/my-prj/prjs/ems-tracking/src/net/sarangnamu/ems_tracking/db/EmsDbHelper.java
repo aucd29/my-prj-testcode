@@ -60,7 +60,7 @@ public class EmsDbHelper extends DbHelperBase {
     public static boolean insert(Ems ems) {
         try {
             ContentValues values = new ContentValues();
-            values.put(Columns.EMS_NUM, ems.emsNum);
+            values.put(Columns.EMS_NUM, ems.mEmsNum);
 
             EmsData emsData = ems.getLastEmsData();
             values.put(Columns.DATE, emsData.date);

@@ -27,21 +27,21 @@ import net.sarangnamu.common.XPathParser;
 public class Ems extends XPathParser {
     private static final String TAG = "Ems";
 
-    public String emsNum, tmpNum;
-    public ArrayList<EmsData> emsData = new ArrayList<EmsData>();
-    public String errMsg;
+    public String mEmsNum, mTmpNum;
+    public ArrayList<EmsData> mEmsData = new ArrayList<EmsData>();
+    public String mErrMsg;
 
     public Ems(String ems, String emsNum) {
         super();
 
-        tmpNum = emsNum.toUpperCase();
+        mTmpNum = emsNum.toUpperCase();
         loadXmlString(ems);
     }
 
     @Override
     protected void parsing() throws Exception {
-        if (emsData == null) {
-            emsData = new ArrayList<EmsData>();
+        if (mEmsData == null) {
+            mEmsData = new ArrayList<EmsData>();
         }
 
         /*
@@ -124,62 +124,62 @@ public class Ems extends XPathParser {
         count = Integer.parseInt(xpath.evaluate(expr, document, XPathConstants.STRING).toString());
 
         expr = "//rgist/text()";
-        emsNum = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+        mEmsNum = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
 
-        if (emsNum == null || emsNum.length() == 0) {
+        if (mEmsNum == null || mEmsNum.length() == 0) {
             expr = "//message/text()";
-            errMsg = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
-            errMsg += " - [";
+            mErrMsg = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+            mErrMsg += " - [";
 
             expr = "//error_code/text()";
-            errMsg += xpath.evaluate(expr, document, XPathConstants.STRING).toString();
-            errMsg += "]";
+            mErrMsg += xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+            mErrMsg += "]";
 
-            emsNum = tmpNum;
-            emsData.add(new EmsData());
+            mEmsNum = mTmpNum;
+            mEmsData.add(new EmsData());
         } else {
             for (int i=2; i<=count; ++i) {
-                emsData.add(new EmsData(i));
+                mEmsData.add(new EmsData(i));
             }
         }
     }
 
     public int getDataCount() {
-        if (emsData == null) {
+        if (mEmsData == null) {
             return 0;
         }
 
-        return emsData.size();
+        return mEmsData.size();
     }
 
     public EmsData getEmsData(int pos) {
-        if (emsData == null) {
+        if (mEmsData == null) {
             return null;
         }
 
-        return emsData.get(pos);
+        return mEmsData.get(pos);
     }
 
     public EmsData getLastEmsData() {
-        if (emsData == null) {
+        if (mEmsData == null) {
             return null;
         }
 
-        int pos = emsData.size();
+        int pos = mEmsData.size();
         if (pos == 0) {
             return null;
         }
 
-        return emsData.get(pos - 1);
+        return mEmsData.get(pos - 1);
     }
 
     public void trace() {
         DLog.d(TAG, "===================================================================");
         DLog.d(TAG, "EMS DATA INFO");
         DLog.d(TAG, "===================================================================");
-        DLog.d(TAG, "emsNum " + emsNum);
+        DLog.d(TAG, "emsNum " + mEmsNum);
 
-        for (EmsData data : emsData) {
+        for (EmsData data : mEmsData) {
             data.trace();
         }
 

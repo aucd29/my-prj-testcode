@@ -25,10 +25,10 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 public class DlgLicense extends DlgBase {
-    private WebView web;
-    private TextView title;
-    private Typeface tf;
-    private String licenseFilePath = "file:///android_asset/license.html";
+    private WebView mWeb;
+    private TextView mTitle;
+    private Typeface mFont;
+    private String mLicenseFilePath = "file:///android_asset/license.html";
 
     public DlgLicense(Context context) {
         super(context);
@@ -43,28 +43,28 @@ public class DlgLicense extends DlgBase {
     protected void initLayout() {
         setFullscreen();
 
-        web   = (WebView) findViewById(R.id.web);
-        title = (TextView) findViewById(R.id.title);
+        mWeb   = (WebView) findViewById(R.id.web);
+        mTitle = (TextView) findViewById(R.id.title);
 
-        web.setWebViewClient(new WebViewClient() {
+        mWeb.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
             }
         });
-        web.loadUrl(licenseFilePath);
+        mWeb.loadUrl(mLicenseFilePath);
 
-        if (tf != null && title != null) {
-            title.setTypeface(tf);
+        if (mFont != null && mTitle != null) {
+            mTitle.setTypeface(mFont);
         }
     }
 
     public void setTitleTypeface(Typeface tf) {
-        this.tf = tf;
+        this.mFont = tf;
     }
 
     public void setLicenseFilePath(final String path) {
-        licenseFilePath = path;
+        mLicenseFilePath = path;
     }
 }

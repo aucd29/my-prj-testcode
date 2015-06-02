@@ -37,18 +37,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public abstract class CalendarViewBase extends LinearLayout implements View.OnClickListener {
-    protected LinearLayout view, calendar, monthBar;
-    protected TextView monthLabel;
-    protected Button prevMonth, nextMonth;
+    protected LinearLayout mView, mCalendar, mMonthBar;
+    protected TextView mMonthLabel;
+    protected Button mPrevMonth, mNextMonth;
 
-    protected int minWidth, minHeight;
-    protected int headerHeight, headerTextSize, headerBgColor;
-    protected int dayMargin, dayTextMargin;
-    protected int satColor, sunColor, notInMonthColor, todayBgColor, dayBgColor;
-    protected int normalColor;
-    protected boolean mini;
-    protected int thisMonth, thisYear;
-    protected Locale locale;
+    protected int mMinWidth, mMinHeight;
+    protected int mHeaderHeight, mHeaderTextSize, mHeaderBgColor;
+    protected int mDayMargin, mDayTextMargin;
+    protected int mSatColor, mSunColor, mNotInMonthColor, mTodayBgColor, mDayBgColor;
+    protected int mNormalColor;
+    protected boolean mIsMini;
+    protected int mThisMonth, mThisYear;
+    protected Locale mLocale;
 
     public CalendarViewBase(Context context) {
         super(context);
@@ -66,20 +66,20 @@ public abstract class CalendarViewBase extends LinearLayout implements View.OnCl
     }
 
     protected void setCalendarSize() {
-        headerHeight    = dpToPixelInt(32);
-        headerTextSize  = dpToPixelInt(5);
-        dayMargin       = dpToPixelInt(1);
-        dayTextMargin   = dpToPixelInt(3);
+        mHeaderHeight    = dpToPixelInt(32);
+        mHeaderTextSize  = dpToPixelInt(5);
+        mDayMargin       = dpToPixelInt(1);
+        mDayTextMargin   = dpToPixelInt(3);
     }
 
     protected void setCalendarColor() {
-        headerBgColor   = 0xffd5d5d5;
-        satColor        = 0xff7d7d7d;
-        sunColor        = 0xff7d7d7d;
-        notInMonthColor = 0xffd2d2d2;
-        dayBgColor      = 0xffefefef;
-        todayBgColor    = 0xffe8e8e8;
-        normalColor     = 0;
+        mHeaderBgColor   = 0xffd5d5d5;
+        mSatColor        = 0xff7d7d7d;
+        mSunColor        = 0xff7d7d7d;
+        mNotInMonthColor = 0xffd2d2d2;
+        mDayBgColor      = 0xffefefef;
+        mTodayBgColor    = 0xffe8e8e8;
+        mNormalColor     = 0;
     }
 
     protected void initLayout() {
@@ -87,23 +87,23 @@ public abstract class CalendarViewBase extends LinearLayout implements View.OnCl
         setCalendarColor();
 
         LinearLayout.LayoutParams lp = LpInst.linearMm();
-        view        = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.calendar, null);
-        monthBar    = (LinearLayout) view.findViewById(R.id.monthBar);
-        monthLabel  = (TextView) view.findViewById(R.id.monthLabel);
-        calendar    = (LinearLayout) view.findViewById(R.id.calendar);
-        prevMonth   = (Button) view.findViewById(R.id.prevMonth);
-        nextMonth   = (Button) view.findViewById(R.id.nextMonth);
+        mView        = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.calendar, null);
+        mMonthBar    = (LinearLayout) mView.findViewById(R.id.monthBar);
+        mMonthLabel  = (TextView) mView.findViewById(R.id.monthLabel);
+        mCalendar    = (LinearLayout) mView.findViewById(R.id.calendar);
+        mPrevMonth   = (Button) mView.findViewById(R.id.prevMonth);
+        mNextMonth   = (Button) mView.findViewById(R.id.nextMonth);
 
-        prevMonth.setOnClickListener(this);
-        nextMonth.setOnClickListener(this);
-        calendar.setOrientation(VERTICAL);
-        view.setLayoutParams(lp);
+        mPrevMonth.setOnClickListener(this);
+        mNextMonth.setOnClickListener(this);
+        mCalendar.setOrientation(VERTICAL);
+        mView.setLayoutParams(lp);
 
-        addView(view);
+        addView(mView);
 
         Calendar cal = Calendar.getInstance(Locale.US);
-        thisMonth    = cal.get(Calendar.MONTH);
-        thisYear     = cal.get(Calendar.YEAR);
+        mThisMonth    = cal.get(Calendar.MONTH);
+        mThisYear     = cal.get(Calendar.YEAR);
 
         drawCalendar();
     }
@@ -112,10 +112,10 @@ public abstract class CalendarViewBase extends LinearLayout implements View.OnCl
         int numWeeks;
 
         Calendar cal = Calendar.getInstance(Locale.US);
-        cal.set(Calendar.MONTH, thisMonth);
-        cal.set(Calendar.YEAR, thisYear);
+        cal.set(Calendar.MONTH, mThisMonth);
+        cal.set(Calendar.YEAR, mThisYear);
 
-        monthLabel.setText(DateFormat.format("MM.yyyy", cal));
+        mMonthLabel.setText(DateFormat.format("MM.yyyy", cal));
 
         cal.set(Calendar.DAY_OF_MONTH, 1);
         int monthStartDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
@@ -124,18 +124,18 @@ public abstract class CalendarViewBase extends LinearLayout implements View.OnCl
         numWeeks = (int) Math.ceil(((double) (lastDay + monthStartDayOfWeek - 1)) / 7f);
         cal.add(Calendar.DAY_OF_MONTH, 1 - monthStartDayOfWeek);
 
-        calendar.removeAllViews();
+        mCalendar.removeAllViews();
 
         setHeader();
-        setCalendar(numWeeks, cal, thisMonth);
+        setCalendar(numWeeks, cal, mThisMonth);
     }
 
     protected void setHeader() {
-        LinearLayout.LayoutParams lp = LpInst.linear(LinearLayout.LayoutParams.MATCH_PARENT, headerHeight);
+        LinearLayout.LayoutParams lp = LpInst.linear(LinearLayout.LayoutParams.MATCH_PARENT, mHeaderHeight);
         LinearLayout header = new LinearLayout(getContext());
         header.setLayoutParams(lp);
         header.setOrientation(HORIZONTAL);
-        header.setBackgroundColor(headerBgColor);
+        header.setBackgroundColor(mHeaderBgColor);
 
         DateFormatSymbols dfs = DateFormatSymbols.getInstance(Locale.US);
         String[] weekdays = dfs.getShortWeekdays();
@@ -151,15 +151,15 @@ public abstract class CalendarViewBase extends LinearLayout implements View.OnCl
             dayView.setLayoutParams(lp);
 
             if (day == Calendar.SATURDAY) {
-                dayView.setTextColor(satColor);
+                dayView.setTextColor(mSatColor);
             } else if (day == Calendar.SUNDAY) {
-                dayView.setTextColor(sunColor);
+                dayView.setTextColor(mSunColor);
             }
 
             header.addView(dayView);
         }
 
-        calendar.addView(header);
+        mCalendar.addView(header);
     }
 
     protected void setCalendar(int numWeeks, Calendar cal, int thisMonth) {
@@ -170,7 +170,7 @@ public abstract class CalendarViewBase extends LinearLayout implements View.OnCl
         for (int week=0; week<numWeeks; ++week) {
             LinearLayout.LayoutParams lp = LpInst.linearMw();
             lp.weight = 1;
-            lp.topMargin = dayMargin;
+            lp.topMargin = mDayMargin;
 
             weekLayout = new LinearLayout(getContext());
             weekLayout.setLayoutParams(lp);
@@ -184,13 +184,13 @@ public abstract class CalendarViewBase extends LinearLayout implements View.OnCl
 
                 lp = LpInst.linearMm();
                 lp.weight = 1;
-                lp.rightMargin = dayMargin;
+                lp.rightMargin = mDayMargin;
                 FrameLayout dayLayout = new FrameLayout(getContext());
                 dayLayout.setLayoutParams(lp);
 
                 FrameLayout.LayoutParams flp = LpInst.frameWw();
                 flp.gravity = Gravity.RIGHT;
-                flp.rightMargin = dayTextMargin;
+                flp.rightMargin = mDayTextMargin;
 
                 TextView dayTxt = new TextView(getContext());
                 dayTxt.setText("" + cal.get(Calendar.DAY_OF_MONTH));
@@ -198,17 +198,17 @@ public abstract class CalendarViewBase extends LinearLayout implements View.OnCl
                 dayTxt.setTypeface(FontLoader.getInstance(getContext()).getRobotoLight());
 
                 if (day == 6) {                      // sat
-                    dayTxt.setTextColor(satColor);
+                    dayTxt.setTextColor(mSatColor);
                 } else if (day == 0) {              // sun
-                    dayTxt.setTextColor(sunColor);
+                    dayTxt.setTextColor(mSunColor);
                 } else {
-                    if (normalColor != 0) {
-                        dayTxt.setTextColor(normalColor);
+                    if (mNormalColor != 0) {
+                        dayTxt.setTextColor(mNormalColor);
                     }
                 }
 
                 if (!inMonth) {
-                    dayTxt.setTextColor(notInMonthColor);
+                    dayTxt.setTextColor(mNotInMonthColor);
                 } else {
                     setDayLayout(dayLayout);
                 }
@@ -223,7 +223,7 @@ public abstract class CalendarViewBase extends LinearLayout implements View.OnCl
                 cal.add(Calendar.DAY_OF_MONTH, 1);
             }
 
-            calendar.addView(weekLayout);
+            mCalendar.addView(weekLayout);
             setWeekLine();
         }
     }
@@ -234,9 +234,9 @@ public abstract class CalendarViewBase extends LinearLayout implements View.OnCl
 
     protected void setTodayLayout(boolean isToday, FrameLayout dayLayout, TextView dayTxt) {
         if (isToday) {
-            dayLayout.setBackgroundColor(todayBgColor);
+            dayLayout.setBackgroundColor(mTodayBgColor);
         } else {
-            dayLayout.setBackgroundColor(dayBgColor);
+            dayLayout.setBackgroundColor(mDayBgColor);
         }
     }
 
@@ -249,16 +249,16 @@ public abstract class CalendarViewBase extends LinearLayout implements View.OnCl
     }
 
     public void setMinSize(int width, int height) {
-        minWidth  = dpToPixelInt(width);
-        minHeight = dpToPixelInt(height);
+        mMinWidth  = dpToPixelInt(width);
+        mMinHeight = dpToPixelInt(height);
     }
 
     public void setMiniMode() {
-        mini = true;
+        mIsMini = true;
     }
 
     public void hideMonthBar() {
-        monthBar.setVisibility(View.GONE);
+        mMonthBar.setVisibility(View.GONE);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -269,15 +269,15 @@ public abstract class CalendarViewBase extends LinearLayout implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == prevMonth.getId() || v.getId() == nextMonth.getId()) {
+        if (v.getId() == mPrevMonth.getId() || v.getId() == mNextMonth.getId()) {
             Calendar cal = Calendar.getInstance();
 
-            cal.set(Calendar.MONTH, thisMonth);
-            cal.set(Calendar.YEAR, thisYear);
-            cal.add(Calendar.MONTH, v.getId() == prevMonth.getId() ? -1 : 1);
+            cal.set(Calendar.MONTH, mThisMonth);
+            cal.set(Calendar.YEAR, mThisYear);
+            cal.add(Calendar.MONTH, v.getId() == mPrevMonth.getId() ? -1 : 1);
 
-            thisMonth = cal.get(Calendar.MONTH);
-            thisYear  = cal.get(Calendar.YEAR);
+            mThisMonth = cal.get(Calendar.MONTH);
+            mThisYear  = cal.get(Calendar.YEAR);
 
             drawCalendar();
         }

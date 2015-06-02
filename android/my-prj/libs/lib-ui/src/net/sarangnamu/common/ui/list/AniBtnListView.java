@@ -103,9 +103,9 @@ import android.view.ViewGroup;
 public class AniBtnListView extends LockListView {
     private static final String TAG = "AniBtnListView";
 
-    protected int slidingMargin = 0, rowId, btnLayoutId;
-    protected View currView;
-    protected boolean checkedList;
+    protected int mSlidingMargin = 0, mRowId, mBtnLayoutId;
+    protected View mCurrView;
+    protected boolean mCheckedList;
 
     public AniBtnListView(Context context) {
         super(context);
@@ -124,8 +124,8 @@ public class AniBtnListView extends LockListView {
         setOnTouchListener(new TouchUpListener() {
             @Override
             public void up() {
-                if (currView != null) {
-                    showAnimation(currView);
+                if (mCurrView != null) {
+                    showAnimation(mCurrView);
                 }
             }
         });
@@ -138,42 +138,42 @@ public class AniBtnListView extends LockListView {
     }
 
     public void setSlidingMargin(int dp) {
-        slidingMargin = dpToPixelInt(dp) - 1;
+        mSlidingMargin = dpToPixelInt(dp) - 1;
     }
 
     public void setBtnLayoutId(int id) {
-        btnLayoutId = id;
+        mBtnLayoutId = id;
     }
 
     public void setRowId(int id) {
-        rowId = id;
+        mRowId = id;
     }
 
     public void showAnimation(final View view) {
-        if (rowId == 0 || btnLayoutId == 0) {
+        if (mRowId == 0 || mBtnLayoutId == 0) {
             DLog.e(TAG, "showAnimation Please init id ");
             return ;
         }
 
         final int endX;
-        final int moveX = slidingMargin;
+        final int moveX = mSlidingMargin;
         View tempView;
 
-        if (checkedList) {
+        if (mCheckedList) {
             endX = 0;
-            tempView = (View) currView.getParent();
-            currView = null;
+            tempView = (View) mCurrView.getParent();
+            mCurrView = null;
         } else {
             endX = moveX * -1;
             tempView = (View) view.getParent();
-            currView = view;
+            mCurrView = view;
         }
 
-        checkedList = !checkedList;
+        mCheckedList = !mCheckedList;
         setLock();
 
-        final ViewGroup row       = (ViewGroup) tempView.findViewById(rowId);
-        final ViewGroup btnLayout = (ViewGroup) tempView.findViewById(btnLayoutId);
+        final ViewGroup row       = (ViewGroup) tempView.findViewById(mRowId);
+        final ViewGroup btnLayout = (ViewGroup) tempView.findViewById(mBtnLayoutId);
 
         // resize button height
         //ViewGroup.LayoutParams lp = btnLayout.getLayoutParams();
@@ -221,12 +221,12 @@ public class AniBtnListView extends LockListView {
     }
 
     public boolean isCheckedList() {
-        return checkedList;
+        return mCheckedList;
     }
 
     public void resetCheckedList() {
-        checkedList = false;
-        currView = null;
-        lockScroll = false;
+        mCheckedList = false;
+        mCurrView = null;
+        mIsScrollLock = false;
     }
 }

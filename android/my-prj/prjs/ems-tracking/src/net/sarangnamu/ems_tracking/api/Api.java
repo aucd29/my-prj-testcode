@@ -29,17 +29,17 @@ public class Api {
     private static final String URL = "http://smart.epost.go.kr/servlet/kpl.vis.common.svl.VisSVL";
     private static final String VERSION = "1.5.1";
 
-    private static BkHttp http;
+    private static BkHttp mHttp;
 
     private static void initHttp() {
-        if (http == null) {
-            http = new BkHttp();
+        if (mHttp == null) {
+            mHttp = new BkHttp();
         }
     }
 
     public static Ems tracking(String num) {
         initHttp();
-        http.setMethod("POST");
+        mHttp.setMethod("POST");
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("typeApp", "postSearch");
@@ -51,7 +51,7 @@ public class Api {
         Ems ems = null;
 
         try {
-            String res = http.submit(URL, params);
+            String res = mHttp.submit(URL, params);
             ems = new Ems(res, num);
             //            ems.trace();
         } catch (Exception e) {

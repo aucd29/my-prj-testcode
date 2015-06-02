@@ -33,30 +33,30 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class Detail extends Activity {
-    private Ems ems;
-    private EmsHistory adapter;
+    private Ems mEms;
+    private EmsHistory mAdapter;
 
-    private TextView emsNum, detail;
-    private ListView list;
-    private LinearLayout adLayout;
-    private AdMobDecorator admob;
+    private TextView mEmsNum, mDetail;
+    private ListView mList;
+    private LinearLayout mAdLayout;
+    private AdMobDecorator mAdmob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         String emsNumber = getIntent().getStringExtra(EmsDataManager.EMS_NUM);
-        ems = EmsDataManager.getInstance().getEmsData(emsNumber);
-        if (ems == null) {
+        mEms = EmsDataManager.getInstance().getEmsData(emsNumber);
+        if (mEms == null) {
             finish();
         }
 
         setContentView(R.layout.detail);
 
-        emsNum   = (TextView) findViewById(R.id.emsNum);
-        detail   = (TextView) findViewById(R.id.detail);
-        list     = (ListView) findViewById(R.id.list);
-        adLayout = (LinearLayout) findViewById(R.id.adLayout);
+        mEmsNum   = (TextView) findViewById(R.id.emsNum);
+        mDetail   = (TextView) findViewById(R.id.detail);
+        mList     = (ListView) findViewById(R.id.list);
+        mAdLayout = (LinearLayout) findViewById(R.id.adLayout);
 
         initLabel();
         initAdView();
@@ -67,33 +67,33 @@ public class Detail extends Activity {
 
     @Override
     protected void onDestroy() {
-        admob.destroy();
+        mAdmob.destroy();
 
         super.onDestroy();
     }
 
     private void initLabel() {
-        if (ems == null) {
+        if (mEms == null) {
             return ;
         }
 
-        String anotherName = Cfg.getAnotherName(getApplicationContext(), ems.emsNum);
+        String anotherName = Cfg.getAnotherName(getApplicationContext(), mEms.mEmsNum);
         if (anotherName == null) {
-            emsNum.setText(ems.emsNum);
+            mEmsNum.setText(mEms.mEmsNum);
         } else {
-            emsNum.setText(anotherName);
-            detail.setText(ems.emsNum);
+            mEmsNum.setText(anotherName);
+            mDetail.setText(mEms.mEmsNum);
         }
     }
 
     private void initAdView() {
-        admob = new AdMobDecorator(this, Cfg.ADMOB_ID);
-        admob.load(adLayout);
+        mAdmob = new AdMobDecorator(this, Cfg.ADMOB_ID);
+        mAdmob.load(mAdLayout);
     }
 
     private void initListView() {
-        adapter = new EmsHistory();
-        list.setAdapter(adapter);
+        mAdapter = new EmsHistory();
+        mList.setAdapter(mAdapter);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -111,11 +111,11 @@ public class Detail extends Activity {
     class EmsHistory extends BaseAdapter {
         @Override
         public int getCount() {
-            if (ems == null) {
+            if (mEms == null) {
                 return 0;
             }
 
-            return ems.emsData.size();
+            return mEms.mEmsData.size();
         }
 
         @Override
@@ -145,7 +145,7 @@ public class Detail extends Activity {
                 vh = (ViewHolder) view.getTag();
             }
 
-            EmsData data = ems.getEmsData(pos);
+            EmsData data = mEms.getEmsData(pos);
 
             vh.office.setText(data.office);
             vh.status.setText(data.status);

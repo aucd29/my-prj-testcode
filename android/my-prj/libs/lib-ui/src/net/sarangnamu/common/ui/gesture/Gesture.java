@@ -55,7 +55,7 @@ public class Gesture extends GestureDetector {
     public static int SWIPE_THRESHOLD = 300;
     public static int SWIPE_VELOCITY_THRESHOLD = 300;
 
-    protected GestureDetectorListener gdListener;
+    protected GestureDetectorListener mGestureDectectorListener;
 
     public static Gesture newInstance(Context context) {
         return new Gesture(context, new GestureDetectorListener());
@@ -64,7 +64,7 @@ public class Gesture extends GestureDetector {
     public Gesture(Context context, GestureDetectorListener gdl) {
         super(context, gdl);
 
-        gdListener = gdl;
+        mGestureDectectorListener = gdl;
     }
 
     public void setThreshold(int threshold, int velocity) {
@@ -175,43 +175,43 @@ public class Gesture extends GestureDetector {
     ////////////////////////////////////////////////////////////////////////////////////
 
     public void setOnGestureListener(GestureListener l) {
-        if (gdListener == null) {
+        if (mGestureDectectorListener == null) {
             return ;
         }
 
-        gdListener.listener = l;
+        mGestureDectectorListener.listener = l;
     }
 
     public void setOnGestureLeftListener(GestureLeftListener l) {
-        if (gdListener == null) {
+        if (mGestureDectectorListener == null) {
             return ;
         }
 
-        gdListener.listenerLeft = l;
+        mGestureDectectorListener.listenerLeft = l;
     }
 
     public void setOnGestureUpListener(GestureUpListener l) {
-        if (gdListener == null) {
+        if (mGestureDectectorListener == null) {
             return ;
         }
 
-        gdListener.listenerUp = l;
+        mGestureDectectorListener.listenerUp = l;
     }
 
     public void setOnGestureRightListener(GestureRightListener l) {
-        if (gdListener == null) {
+        if (mGestureDectectorListener == null) {
             return ;
         }
 
-        gdListener.listenerRight = l;
+        mGestureDectectorListener.listenerRight = l;
     }
 
     public void setOnGestureDownListener(GestureDownListener l) {
-        if (gdListener == null) {
+        if (mGestureDectectorListener == null) {
             return ;
         }
 
-        gdListener.listenerDown = l;
+        mGestureDectectorListener.listenerDown = l;
     }
 
     public interface GestureListener {

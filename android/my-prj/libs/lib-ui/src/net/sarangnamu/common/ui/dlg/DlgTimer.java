@@ -26,15 +26,15 @@ import android.widget.TextView;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class DlgTimer extends DlgBtnBase {
-    private int time = 1000, layoutId;
-    private String value;
-    private Spanned html;
-    protected TextView msg;
+    private int mTime = 1000, mLayoutId;
+    private String mValue;
+    private Spanned mHtml;
+    protected TextView mMsg;
 
     public DlgTimer(Context context, int layoutId) {
         super(context);
 
-        this.layoutId = layoutId;
+        this.mLayoutId = layoutId;
     }
 
     @Override
@@ -44,33 +44,33 @@ public class DlgTimer extends DlgBtnBase {
         hideTitle();
         hideButtons();
 
-        View view = inflate(layoutId);
-        content.addView(view);
+        View view = inflate(mLayoutId);
+        mContent.addView(view);
 
         int msgId = view.getResources().getIdentifier("msg", "id", getContext().getPackageName());
-        msg = (TextView) view.findViewById(msgId);
-        msg.setText(html == null ? value : html);
-        msg.postDelayed(new Runnable() {
+        mMsg = (TextView) view.findViewById(msgId);
+        mMsg.setText(mHtml == null ? mValue : mHtml);
+        mMsg.postDelayed(new Runnable() {
             @Override
             public void run() {
                 dismiss();
             }
-        }, time);
+        }, mTime);
     }
 
     public void setTime(int time) {
-        this.time = time;
+        this.mTime = time;
     }
 
     public void setMessage(String msg) {
-        this.value = msg;
+        this.mValue = msg;
     }
 
     public void setMessage(int resid) {
-        this.value = getString(resid);
+        this.mValue = getString(resid);
     }
 
     public void setMessage(Spanned msg) {
-        html = msg;
+        mHtml = msg;
     }
 }

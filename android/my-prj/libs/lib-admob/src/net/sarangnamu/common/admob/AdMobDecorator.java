@@ -46,22 +46,22 @@ import com.google.ads.AdView;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class AdMobDecorator {
-    private AdView adView;
+    private AdView mAdView;
 
     public AdMobDecorator(Activity act, String id) {
-        adView = new AdView(act, AdSize.BANNER, id);
+        mAdView = new AdView(act, AdSize.BANNER, id);
     }
 
     public AdMobDecorator(Activity act, AdSize size, String id) {
-        adView = new AdView(act, size, id);
+        mAdView = new AdView(act, size, id);
     }
 
     public void load(ViewGroup parent) {
-        parent.addView(adView);
-        adView.loadAd(new AdRequest());
+        parent.addView(mAdView);
+        mAdView.loadAd(new AdRequest());
     }
 
     public void destroy() {
-        adView.destroy();
+        mAdView.destroy();
     }
 }

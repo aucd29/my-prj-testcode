@@ -48,20 +48,20 @@ import com.ipaulpro.afilechooser.FileListFragment;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class DirChooserActivity extends FileChooserActivity {
-    private LinearLayout layout;
-    private Button createDir, setPath;
+    private LinearLayout mLayout;
+    private Button mCreateDir, mSetPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        createDir = (Button) findViewById(R.id.createDir);
-        setPath   = (Button) findViewById(R.id.setPath);
-        layout    = (LinearLayout) findViewById(R.id.layout);
+        mCreateDir = (Button) findViewById(R.id.createDir);
+        mSetPath   = (Button) findViewById(R.id.setPath);
+        mLayout    = (LinearLayout) findViewById(R.id.layout);
 
-        FontLoader.getInstance(this).applyChild("Roboto-Light", layout, Button.class);
+        FontLoader.getInstance(this).applyChild("Roboto-Light", mLayout, Button.class);
 
-        createDir.setOnClickListener(new View.OnClickListener() {
+        mCreateDir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final View view = LayoutInflater.from(DirChooserActivity.this).inflate(R.layout.dlg_create_dir, null);
@@ -93,7 +93,7 @@ public class DirChooserActivity extends FileChooserActivity {
             }
         });
 
-        setPath.setOnClickListener(new View.OnClickListener() {
+        mSetPath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setPath(null);

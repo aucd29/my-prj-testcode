@@ -27,14 +27,14 @@ import android.view.ViewGroup;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public abstract class FrgmtBase extends Fragment {
-    protected ViewGroup base;
+    protected ViewGroup mBaseView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        base = (ViewGroup) inflate(getLayoutId());
+        mBaseView = (ViewGroup) inflate(getLayoutId());
         initLayout();
 
-        return base;
+        return mBaseView;
     }
 
     protected int dpToPixelInt(int dp) {

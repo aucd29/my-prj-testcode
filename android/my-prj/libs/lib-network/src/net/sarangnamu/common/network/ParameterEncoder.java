@@ -31,8 +31,8 @@ public class ParameterEncoder {
     private static final String TAG = "ParameterEncoder";
 
     public String encode = "UTF-8";
-    private ArrayList<String> fields = new ArrayList<String>();
-    private ArrayList<String> values = new ArrayList<String>();
+    private ArrayList<String> mFields = new ArrayList<String>();
+    private ArrayList<String> mValues = new ArrayList<String>();
 
     public ParameterEncoder() {
 
@@ -43,19 +43,19 @@ public class ParameterEncoder {
     }
 
     public void add(final String field, final String value) {
-        fields.add(field);
-        values.add(value);
+        mFields.add(field);
+        mValues.add(value);
     }
 
     public String encode() {
         StringBuilder parameters = new StringBuilder();
 
         try {
-            int size = fields.size();
+            int size = mFields.size();
             for (int i=0; i<size; ++i) {
-                parameters.append(URLEncoder.encode(fields.get(i), encode));
+                parameters.append(URLEncoder.encode(mFields.get(i), encode));
                 parameters.append("=");
-                parameters.append(URLEncoder.encode(values.get(i), encode));
+                parameters.append(URLEncoder.encode(mValues.get(i), encode));
                 parameters.append("&");
             }
         } catch (Exception e) {
@@ -68,8 +68,8 @@ public class ParameterEncoder {
         }
 
         String res = parameters.substring(0, count);
-        fields.clear();
-        values.clear();
+        mFields.clear();
+        mValues.clear();
 
         return res;
     }

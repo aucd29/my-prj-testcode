@@ -32,44 +32,44 @@ import android.view.View;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class ActionBarDecorator {
-    protected int displayOpt = ActionBar.DISPLAY_SHOW_CUSTOM;
-    protected Activity activity;
-    protected ActionBar actionBar;
-    protected ActionBar.LayoutParams params;
-    protected View view;
+    protected int mDisplayOpt = ActionBar.DISPLAY_SHOW_CUSTOM;
+    protected Activity mActivity;
+    protected ActionBar mActionBar;
+    protected ActionBar.LayoutParams mParams;
+    protected View mView;
 
     public ActionBarDecorator(Activity activity) {
-        this.activity = activity;
-        params = new ActionBar.LayoutParams(
+        this.mActivity = activity;
+        mParams = new ActionBar.LayoutParams(
                 ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
     }
 
     public void init(final int resId) {
-        view = activity.getLayoutInflater().inflate(resId, null);
+        mView = mActivity.getLayoutInflater().inflate(resId, null);
 
-        actionBar = activity.getActionBar();
+        mActionBar = mActivity.getActionBar();
 
-        if (actionBar == null) {
+        if (mActionBar == null) {
             return;
         }
 
-        actionBar.setCustomView(view, params);
-        actionBar.setDisplayOptions(displayOpt);
+        mActionBar.setCustomView(mView, mParams);
+        mActionBar.setDisplayOptions(mDisplayOpt);
     }
 
     public void setDisplayOption(final int opt) {
-        displayOpt = opt;
+        mDisplayOpt = opt;
     }
 
     public void setLayoutParams(ActionBar.LayoutParams params) {
-        this.params = params;
+        this.mParams = params;
     }
 
     public View getView() {
-        return view;
+        return mView;
     }
 
     public View getChildView(int id) {
-        return view.findViewById(id);
+        return mView.findViewById(id);
     }
 }

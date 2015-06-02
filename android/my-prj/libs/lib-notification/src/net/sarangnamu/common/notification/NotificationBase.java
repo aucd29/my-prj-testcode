@@ -24,12 +24,12 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
 public abstract class NotificationBase {
-    protected NotificationManager nm;
-    protected RemoteViews remoteView;
+    protected NotificationManager mNotiManager;
+    protected RemoteViews mRemoteView;
 
     protected void init(Context context) {
-        nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        remoteView = new RemoteViews(context.getPackageName(), getRemoteId());
+        mNotiManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mRemoteView = new RemoteViews(context.getPackageName(), getRemoteId());
 
         initLayout();
 
@@ -40,7 +40,7 @@ public abstract class NotificationBase {
 
         builder.setAutoCancel(isAutoCancel());
         builder.setOngoing(isOngoing());
-        builder.setContent(remoteView);
+        builder.setContent(mRemoteView);
 
         if (getPendingIntent() != null) {
             builder.setContentIntent(getPendingIntent());
@@ -48,7 +48,7 @@ public abstract class NotificationBase {
 
         // TODO id 값 은 변경되어야 한다. 이와 관련된 작업은 추후 진행 한다.
         //
-        nm.notify(0, builder.build());
+        mNotiManager.notify(0, builder.build());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

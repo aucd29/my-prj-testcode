@@ -64,29 +64,29 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
     private static final int SLIDING_MARGIN = 186;
 
-    private Button add;
+    private Button mAddBtn;
 
-    private TextView title, empty;
-    private EditText emsNum, anotherName;
-    private EmsAdapter adapter;
-    private ImageButton refresh;
-    private RelativeLayout editLayout;
-    private ProgressDialog dlg;
-    private boolean expandLayout = false;
-    private int modifyId = -1;
+    private TextView mTitle, mEmpty;
+    private EditText mEmsNum, mAnotherName;
+    private EmsAdapter mAdapter;
+    private ImageButton mRefreshBtn;
+    private RelativeLayout mEditLayout;
+    private ProgressDialog mDlg;
+    private boolean mExpandLayoutId = false;
+    private int mModifyId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        add         = (Button) findViewById(R.id.add);
-        title       = (TextView) findViewById(R.id.title);
-        empty       = (TextView) findViewById(android.R.id.empty);
-        emsNum      = (EditText) findViewById(R.id.emsNum);
-        anotherName = (EditText) findViewById(R.id.anotherName);
-        editLayout  = (RelativeLayout) findViewById(R.id.editLayout);
-        refresh     = (ImageButton) findViewById(R.id.refersh);
+        mAddBtn         = (Button) findViewById(R.id.add);
+        mTitle       = (TextView) findViewById(R.id.title);
+        mEmpty       = (TextView) findViewById(android.R.id.empty);
+        mEmsNum      = (EditText) findViewById(R.id.emsNum);
+        mAnotherName = (EditText) findViewById(R.id.anotherName);
+        mEditLayout  = (RelativeLayout) findViewById(R.id.editLayout);
+        mRefreshBtn     = (ImageButton) findViewById(R.id.refersh);
 
         initLabel();
         initData();
@@ -95,11 +95,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     private void initLabel() {
-        title.setText(Html.fromHtml(getString(R.string.appName)));
-        add.setOnClickListener(new View.OnClickListener() {
+        mTitle.setText(Html.fromHtml(getString(R.string.appName)));
+        mAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String num = emsNum.getText().toString();
+                final String num = mEmsNum.getText().toString();
 
                 if (num == null || num.length() < 1) {
                     showPopup(getString(R.string.plsInputNum));
@@ -112,19 +112,19 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 }
 
                 trackingAndInsertDB(num);
-                Cfg.setAnotherName(getApplicationContext(), num.toUpperCase(), anotherName.getText().toString());
+                Cfg.setAnotherName(getApplicationContext(), num.toUpperCase(), mAnotherName.getText().toString());
             }
         });
 
-        refresh.setOnClickListener(new View.OnClickListener() {
+        mRefreshBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refresh.setEnabled(false);
+                mRefreshBtn.setEnabled(false);
                 loadEmsData();
             }
         });
 
-        emsNum.addTextChangedListener(new TextWatcher() {
+        mEmsNum.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) { }
             @Override
@@ -133,33 +133,33 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             @Override
             public void afterTextChanged(Editable arg0) {
                 int height;
-                if (emsNum.getText().length() == 0) {
+                if (mEmsNum.getText().length() == 0) {
                     height = (int) getResources().getDimension(R.dimen.emsLayoutMinHeight);
-                    Resize.height(editLayout, height, new ResizeAnimationListener() {
+                    Resize.height(mEditLayout, height, new ResizeAnimationListener() {
                         @Override
                         public void onAnimationEnd() {
-                            expandLayout = false;
+                            mExpandLayoutId = false;
                         }
 
                         @Override
                         public void onAnimationStart() {
-                            anotherName.setVisibility(View.GONE);
+                            mAnotherName.setVisibility(View.GONE);
                         }
                     });
                 } else {
-                    if (expandLayout) {
+                    if (mExpandLayoutId) {
                         return ;
                     }
 
-                    expandLayout = true;
+                    mExpandLayoutId = true;
                     height = (int) getResources().getDimension(R.dimen.emsLayoutMaxHeight);
-                    Resize.height(editLayout, height, new ResizeAnimationListener() {
+                    Resize.height(mEditLayout, height, new ResizeAnimationListener() {
                         @Override
                         public void onAnimationEnd() {
-                            if (modifyId == -1) {
-                                anotherName.setText("");
+                            if (mModifyId == -1) {
+                                mAnotherName.setText("");
                             }
-                            anotherName.setVisibility(View.VISIBLE);
+                            mAnotherName.setVisibility(View.VISIBLE);
                         }
 
                         @Override
@@ -171,7 +171,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             }
         });
 
-        BkCfg.engKeyboard(emsNum);
+        BkCfg.engKeyboard(mEmsNum);
 
         //        getWindow().setSoftInputMode(
         //                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -183,7 +183,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
             @Override
             protected void onPreExecute() {
-                BkCfg.hideKeyboard(emsNum);
+                BkCfg.hideKeyboard(mEmsNum);
                 showProgress();
             }
 
@@ -191,27 +191,27 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             protected Boolean doInBackground(Context... contexts) {
                 Ems ems = Api.tracking(num);
 
-                if (modifyId == -1) {
+                if (mModifyId == -1) {
                     return EmsDbHelper.insert(ems);
                 } else {
-                    return EmsDbHelper.update(modifyId, ems);
+                    return EmsDbHelper.update(mModifyId, ems);
                 }
             }
 
             @Override
             protected void onPostExecute(Boolean result) {
                 hideProgress();
-                emsNum.setText("");
-                anotherName.setText("");
+                mEmsNum.setText("");
+                mAnotherName.setText("");
 
-                if (modifyId != -1) {
-                    modifyId = -1;
-                    add.setText(R.string.add);
+                if (mModifyId != -1) {
+                    mModifyId = -1;
+                    mAddBtn.setText(R.string.add);
                 }
 
                 if (result) {
                     Cursor cr = EmsDbHelper.selectDesc();
-                    adapter.changeCursor(cr);
+                    mAdapter.changeCursor(cr);
                 } else {
                     showPopup(errMsg);
                 }
@@ -299,7 +299,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
             @Override
             protected void onPostExecute(Boolean result) {
-                refresh.setEnabled(true);
+                mRefreshBtn.setEnabled(true);
 
                 hideProgress();
                 initListView();
@@ -308,24 +308,24 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
     }
 
     public void showProgress() {
-        dlg = new ProgressDialog(this);
-        dlg.setCancelable(false);
-        dlg.setMessage(getString(R.string.plsWait));
-        dlg.show();
-        dlg.setContentView(R.layout.dlg_progress);
+        mDlg = new ProgressDialog(this);
+        mDlg.setCancelable(false);
+        mDlg.setMessage(getString(R.string.plsWait));
+        mDlg.show();
+        mDlg.setContentView(R.layout.dlg_progress);
     }
 
     public void hideProgress() {
-        if (dlg != null) {
-            dlg.dismiss();
-            dlg = null;
+        if (mDlg != null) {
+            mDlg.dismiss();
+            mDlg = null;
         }
     }
 
     private void initListView() {
-        adapter = new EmsAdapter(this, EmsDbHelper.selectDesc());
-        setListAdapter(adapter);
-        getListView().setEmptyView(empty);
+        mAdapter = new EmsAdapter(this, EmsDbHelper.selectDesc());
+        setListAdapter(mAdapter);
+        getListView().setEmptyView(mEmpty);
 
         AniBtnListView list = (AniBtnListView) getListView();
         list.setSlidingMargin(SLIDING_MARGIN);
@@ -351,7 +351,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
                 }
 
                 Intent intent = new Intent(MainActivity.this, Detail.class);
-                intent.putExtra(EmsDataManager.EMS_NUM, ems.emsNum);
+                intent.putExtra(EmsDataManager.EMS_NUM, ems.mEmsNum);
                 startActivity(intent);
             }
         });
@@ -362,7 +362,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
 
         if (res) {
             Cursor cr = EmsDbHelper.selectDesc();
-            adapter.changeCursor(cr);
+            mAdapter.changeCursor(cr);
 
             showPopup(getString(R.string.deleted));
             reloadWidget();
@@ -517,11 +517,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener {
             } else if (obj instanceof ModifyType) {
                 ModifyType typeObj = (ModifyType) obj;
 
-                emsNum.setText(typeObj.emsNum);
-                anotherName.setText(Cfg.getAnotherName(MainActivity.this, typeObj.emsNum));
-                add.setText(R.string.modify);
+                mEmsNum.setText(typeObj.emsNum);
+                mAnotherName.setText(Cfg.getAnotherName(MainActivity.this, typeObj.emsNum));
+                mAddBtn.setText(R.string.modify);
 
-                modifyId = typeObj.id;
+                mModifyId = typeObj.id;
 
                 //                DlgAnotherName dlg = new DlgAnotherName(MainActivity.this, num, anotherName);
                 //                dlg.setOnDismissListener(new OnDismissListener() {

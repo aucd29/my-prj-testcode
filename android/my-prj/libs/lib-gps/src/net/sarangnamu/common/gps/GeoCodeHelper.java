@@ -25,16 +25,16 @@ public class GeoCodeHelper extends Handler {
 
     private static final String FROM_GOOGLE =
             "http://maps.googleapis.com/maps/api/geocode/json?latlng=%f,%f&sensor=false&language=en";
-    private static GeoCodeHelper inst;
-    private String cityName;
-    private GeoCodeListener listener;
+    private static GeoCodeHelper sInst;
+    private String mCityName;
+    private GeoCodeListener mListener;
 
     public static GeoCodeHelper getInstance() {
-        if (inst == null) {
-            inst = new GeoCodeHelper();
+        if (sInst == null) {
+            sInst = new GeoCodeHelper();
         }
 
-        return inst;
+        return sInst;
     }
 
     private GeoCodeHelper() {
@@ -43,8 +43,8 @@ public class GeoCodeHelper extends Handler {
 
     @Override
     public void handleMessage(Message msg) {
-        if (listener != null) {
-            listener.cityName((String) msg.obj);
+        if (mListener != null) {
+            mListener.cityName((String) msg.obj);
         }
     }
 
@@ -81,8 +81,8 @@ public class GeoCodeHelper extends Handler {
         List<Address> addresses = geocoder.getFromLocation(gps.getLatitude(), gps.getLongitude(), 1);
 
         if (addresses.size() > 0) {
-            cityName = addresses.get(0).getLocality();
-            sendMessage(0, cityName);
+            mCityName = addresses.get(0).getLocality();
+            sendMessage(0, mCityName);
         }
     }
 
@@ -105,10 +105,10 @@ public class GeoCodeHelper extends Handler {
                     if (result.has("types")) {
                         JSONArray types = addressComponent.getJSONArray("types");
                         for (int k = 0; k < types.length(); k++) {
-                            if ("locality".equals(types.getString(k)) && cityName == null) {
+                            if ("locality".equals(types.getString(k)) && mCityName == null) {
                                 if (addressComponent.has("long_name")) {
-                                    cityName = addressComponent.getString("long_name");
-                                    sendMessage(0, cityName);
+                                    mCityName = addressComponent.getString("long_name");
+                                    sendMessage(0, mCityName);
 
                                     return ;
                                 }
@@ -121,7 +121,7 @@ public class GeoCodeHelper extends Handler {
     }
 
     public String getCityName() {
-        return cityName;
+        return mCityName;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -131,7 +131,7 @@ public class GeoCodeHelper extends Handler {
     ////////////////////////////////////////////////////////////////////////////////////
 
     public void setOnGeoCodeListener(GeoCodeListener l) {
-        listener = l;
+        mListener = l;
     }
 
     public interface GeoCodeListener {

@@ -49,11 +49,11 @@ import android.widget.ListView;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class EndLessListView extends ListView implements OnScrollListener {
-    private int visibleThreshold = 5;
-    private int currentPage = 0;
-    private int previousTotal = 0;
-    private boolean loading = true;
-    private EndlessListViewListener listener;
+    private int mVisibleThreshold = 5;
+    private int mCurrentPage = 0;
+    private int mPreviousTotal = 0;
+    private boolean mLoading = true;
+    private EndlessListViewListener mListener;
 
     public EndLessListView(Context context) {
         super(context);
@@ -78,15 +78,15 @@ public class EndLessListView extends ListView implements OnScrollListener {
         new AsyncTask<Void, Void, Boolean>() {
             @Override
             protected void onPreExecute() {
-                if (listener != null) {
-                    listener.onTaskStart();
+                if (mListener != null) {
+                    mListener.onTaskStart();
                 }
             }
 
             @Override
             protected Boolean doInBackground(Void... argv) {
-                if (listener != null) {
-                    listener.onTaskBackground(page);
+                if (mListener != null) {
+                    mListener.onTaskBackground(page);
                 }
 
                 return false;
@@ -95,8 +95,8 @@ public class EndLessListView extends ListView implements OnScrollListener {
             @Override
             protected void onPostExecute(Boolean result) {
                 if (page == 1) {
-                    if (listener != null) {
-                        listener.onTaskSetAdapter();
+                    if (mListener != null) {
+                        mListener.onTaskSetAdapter();
                     }
                 } else {
                     ((BaseAdapter) getAdapter()).notifyDataSetChanged();
@@ -106,7 +106,7 @@ public class EndLessListView extends ListView implements OnScrollListener {
     }
 
     public void setVisibleThreshold(int visibleThreshold) {
-        this.visibleThreshold = visibleThreshold;
+        this.mVisibleThreshold = visibleThreshold;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -117,17 +117,17 @@ public class EndLessListView extends ListView implements OnScrollListener {
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        if (loading) {
-            if (totalItemCount > previousTotal) {
-                loading = false;
-                previousTotal = totalItemCount;
-                currentPage++;
+        if (mLoading) {
+            if (totalItemCount > mPreviousTotal) {
+                mLoading = false;
+                mPreviousTotal = totalItemCount;
+                mCurrentPage++;
             }
         }
 
-        if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-            doLoadTask(currentPage + 1);
-            loading = true;
+        if (!mLoading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + mVisibleThreshold)) {
+            doLoadTask(mCurrentPage + 1);
+            mLoading = true;
         }
     }
 
@@ -142,7 +142,7 @@ public class EndLessListView extends ListView implements OnScrollListener {
     ////////////////////////////////////////////////////////////////////////////////////
 
     public void setOnEndlessListViewListener(EndlessListViewListener l) {
-        listener = l;
+        mListener = l;
     }
 
     public interface EndlessListViewListener {

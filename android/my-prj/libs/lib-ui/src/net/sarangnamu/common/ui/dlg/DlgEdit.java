@@ -25,15 +25,15 @@ import android.widget.EditText;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class DlgEdit extends DlgBtnBase {
-    protected int layoutId;
-    protected String value, hint;
-    protected EditText edit;
-    private DlgEditListenr listener;
+    protected int mLayoutId;
+    protected String mValue, mHint;
+    protected EditText mEdit;
+    private DlgEditListenr mListener;
 
     public DlgEdit(Context context, int layoutId) {
         super(context);
 
-        this.layoutId = layoutId;
+        this.mLayoutId = layoutId;
     }
 
     @Override
@@ -44,52 +44,52 @@ public class DlgEdit extends DlgBtnBase {
     }
 
     private void initEdit() {
-        View view = inflate(layoutId);
-        content.addView(view);
+        View view = inflate(mLayoutId);
+        mContent.addView(view);
 
         int editId = view.getResources().getIdentifier("edit", "id", getContext().getPackageName());
-        edit = (EditText) view.findViewById(editId);
-        edit.setText(value);
+        mEdit = (EditText) view.findViewById(editId);
+        mEdit.setText(mValue);
 
-        if (hint != null && hint.length() > 0) {
-            edit.setHint(hint);
+        if (mHint != null && mHint.length() > 0) {
+            mEdit.setHint(mHint);
         }
 
-        if (value != null && value.length() > 0) {
-            edit.setText(value);
+        if (mValue != null && mValue.length() > 0) {
+            mEdit.setText(mValue);
         }
     }
 
     public void setHint(String value) {
-        hint = value;
+        mHint = value;
     }
 
     public void setHint(int resid) {
-        hint = getString(resid);
+        mHint = getString(resid);
     }
 
     public void setMessage(String value) {
-        this.value = value;
+        this.mValue = value;
     }
 
     public void setMessage(int resid) {
-        this.value = getString(resid);
+        this.mValue = getString(resid);
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == left.getId()) {
-            String res = edit.getText().toString();
+        if (v.getId() == mLeftBtn.getId()) {
+            String res = mEdit.getText().toString();
             if (res.length() == 0) {
-                if (listener != null) {
-                    listener.error();
+                if (mListener != null) {
+                    mListener.error();
                 }
 
                 return ;
             }
 
-            if (listener != null) {
-                listener.ok(res);
+            if (mListener != null) {
+                mListener.ok(res);
             }
 
             dismiss();
@@ -99,7 +99,7 @@ public class DlgEdit extends DlgBtnBase {
     }
 
     public void setOnEditListener(DlgEditListenr l) {
-        listener = l;
+        mListener = l;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

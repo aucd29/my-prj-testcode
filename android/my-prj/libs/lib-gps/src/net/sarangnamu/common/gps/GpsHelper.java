@@ -19,58 +19,58 @@ public class GpsHelper implements LocationListener {
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
 
-    private final Context context;
-    private boolean isGpsEnabled     = false;
-    private boolean isNetworkEnabled = false;
-    private boolean canGetLocation   = false;
-    private double latitude;
-    private double longitude;
-    private Location location;
-    private GpsListener listener;
+    private final Context mContext;
+    private boolean mIsGpsEnabled     = false;
+    private boolean mIsNetworkEnabled = false;
+    private boolean mCanGetLocation   = false;
+    private double mLatitude;
+    private double mLongitude;
+    private Location mLocation;
+    private GpsListener mListener;
 
-    protected LocationManager locationManager;
+    protected LocationManager mLocationManager;
 
     public GpsHelper(Context context) {
-        this.context = context;
+        this.mContext = context;
 
         getLocation();
     }
 
     public Location getLocation() {
         try {
-            locationManager  = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-            isGpsEnabled     = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            mLocationManager  = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+            mIsGpsEnabled     = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            mIsNetworkEnabled = mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if (!isGpsEnabled && !isNetworkEnabled) {
+            if (!mIsGpsEnabled && !mIsNetworkEnabled) {
                 // no network provider is enabled
             } else {
-                this.canGetLocation = true;
+                this.mCanGetLocation = true;
 
-                if (isNetworkEnabled) {
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                if (mIsNetworkEnabled) {
+                    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
                             MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 
-                    if (locationManager != null) {
-                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if (location != null) {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
+                    if (mLocationManager != null) {
+                        mLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        if (mLocation != null) {
+                            mLatitude = mLocation.getLatitude();
+                            mLongitude = mLocation.getLongitude();
                         }
                     }
                 }
 
                 // if GPS Enabled get lat/long using GPS Services
-                if (isGpsEnabled) {
-                    if (location == null) {
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                if (mIsGpsEnabled) {
+                    if (mLocation == null) {
+                        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                                 MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 
-                        if (locationManager != null) {
-                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                            if (location != null) {
-                                latitude = location.getLatitude();
-                                longitude = location.getLongitude();
+                        if (mLocationManager != null) {
+                            mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            if (mLocation != null) {
+                                mLatitude = mLocation.getLatitude();
+                                mLongitude = mLocation.getLongitude();
                             }
                         }
                     }
@@ -80,33 +80,33 @@ public class GpsHelper implements LocationListener {
             DLog.e(TAG, "getLocation", e);
         }
 
-        return location;
+        return mLocation;
     }
 
     public void stopUsingGPS() {
-        if (locationManager != null) {
-            locationManager.removeUpdates(this);
+        if (mLocationManager != null) {
+            mLocationManager.removeUpdates(this);
         }
     }
 
     public boolean canGetLocation() {
-        return this.canGetLocation;
+        return this.mCanGetLocation;
     }
 
     public double getLatitude() {
-        if (location != null) {
-            latitude = location.getLatitude();
+        if (mLocation != null) {
+            mLatitude = mLocation.getLatitude();
         }
 
-        return latitude;
+        return mLatitude;
     }
 
     public double getLongitude() {
-        if (location != null) {
-            longitude = location.getLongitude();
+        if (mLocation != null) {
+            mLongitude = mLocation.getLongitude();
         }
 
-        return longitude;
+        return mLongitude;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -116,7 +116,7 @@ public class GpsHelper implements LocationListener {
     ////////////////////////////////////////////////////////////////////////////////////
 
     public void setOnGpsListener(GpsListener l) {
-        listener = l;
+        mListener = l;
     }
 
     public interface GpsListener {
@@ -131,8 +131,8 @@ public class GpsHelper implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        if (listener != null) {
-            listener.onLocationChanged(location);
+        if (mListener != null) {
+            mListener.onLocationChanged(location);
         }
     }
 

@@ -35,15 +35,15 @@ import org.apache.http.client.ResponseHandler;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class BkResponseHandler implements ResponseHandler {
-    private String encoding; // EUC-KR
-    private byte data[] = new byte[2048];
+    private String mEncoding;
+    private byte mData[] = new byte[2048];
 
     public BkResponseHandler(final String encoding) {
-        this.encoding = encoding;
+        this.mEncoding = encoding;
     }
 
     public void setEncoding(final String encoding) {
-        this.encoding = encoding;
+        this.mEncoding = encoding;
     }
 
     @Override
@@ -53,8 +53,8 @@ public class BkResponseHandler implements ResponseHandler {
         int count;
         StringBuilder sb = new StringBuilder();
 
-        while ((count = input.read(data)) != -1) {
-            sb.append(new String(data, encoding));
+        while ((count = input.read(mData)) != -1) {
+            sb.append(new String(mData, mEncoding));
         }
 
         return sb.toString();

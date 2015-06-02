@@ -66,15 +66,15 @@ import org.xml.sax.InputSource;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public abstract class XPathParser {
-    protected XPath xpath = null;
-    protected Document document = null;
-    protected DocumentBuilder builder = null;
+    protected XPath mXPath = null;
+    protected Document mDocument = null;
+    protected DocumentBuilder mBuilder = null;
 
     public XPathParser() {
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-            builder = builderFactory.newDocumentBuilder();
-            xpath = XPathFactory.newInstance().newXPath();
+            mBuilder = builderFactory.newDocumentBuilder();
+            mXPath = XPathFactory.newInstance().newXPath();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,7 +87,7 @@ public abstract class XPathParser {
         }
 
         try {
-            document = builder.parse(fp);
+            mDocument = mBuilder.parse(fp);
             parsing();
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,7 +96,7 @@ public abstract class XPathParser {
 
     public void loadXml(InputStream is) {
         try {
-            document  = builder.parse(is);
+            mDocument  = mBuilder.parse(is);
             parsing();
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,7 +105,7 @@ public abstract class XPathParser {
 
     public void loadXmlString(String xml) {
         try {
-            document  = builder.parse(new InputSource(new StringReader(xml)));
+            mDocument  = mBuilder.parse(new InputSource(new StringReader(xml)));
             parsing();
         } catch (Exception e) {
             e.printStackTrace();

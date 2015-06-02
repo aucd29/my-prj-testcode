@@ -27,26 +27,26 @@ import android.widget.ListView;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public abstract class ListSwipeListener extends SwipeListenerBase {
-    private ListView list;
-    protected float scaleFactor = 1.f;
-    protected ScaleGestureDetector scaleDetector;
+    private ListView mList;
+    protected float mScaleFactor = 1.f;
+    protected ScaleGestureDetector mScaleDetector;
 
     public ListSwipeListener(Context context, ListView list) {
         super(context);
 
-        this.list = list;
-        scaleDetector = new ScaleGestureDetector(context, new ScaleDetector());
+        this.mList = list;
+        mScaleDetector = new ScaleGestureDetector(context, new ScaleDetector());
     }
 
     @Override
     protected int getPosition(int x, int y) {
-        return list.pointToPosition(x, y) - list.getFirstVisiblePosition();
+        return mList.pointToPosition(x, y) - mList.getFirstVisiblePosition();
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (scaleDetector != null && event.getPointerCount() > 1) {
-            scaleDetector.onTouchEvent(event);
+        if (mScaleDetector != null && event.getPointerCount() > 1) {
+            mScaleDetector.onTouchEvent(event);
             return true;
         }
 
@@ -56,13 +56,13 @@ public abstract class ListSwipeListener extends SwipeListenerBase {
     class ScaleDetector extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            scaleFactor *= detector.getScaleFactor();
+            mScaleFactor *= detector.getScaleFactor();
 
             // Don't let the object get too small or too large.
-            scaleFactor = Math.max(0.1f, Math.min(scaleFactor, 10.0f));
+            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 10.0f));
 
-            if (scaleFactor > 1.5f) {
-                scaleFactor = 1.f;
+            if (mScaleFactor > 1.5f) {
+                mScaleFactor = 1.f;
 
                 int x = (int) detector.getFocusX();
                 int y = (int) detector.getFocusY();

@@ -35,18 +35,18 @@ import android.widget.TextView;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class FontLoader {
-    private Context context;
-    private HashMap<String, Typeface> fonts = new HashMap<String, Typeface>();
-    private static FontLoader inst = null;
+    private Context mContext;
+    private HashMap<String, Typeface> mFontList = new HashMap<String, Typeface>();
+    private static FontLoader sInst = null;
 
     public static FontLoader getInstance(Context context) {
-        if (inst == null) {
-            inst = new FontLoader();
+        if (sInst == null) {
+            sInst = new FontLoader();
         }
 
-        inst.setContext(context);
+        sInst.setContext(context);
 
-        return inst;
+        return sInst;
     }
 
     private FontLoader() {
@@ -54,15 +54,15 @@ public class FontLoader {
     }
 
     public void setContext(Context context) {
-        this.context = context;
+        this.mContext = context;
     }
 
     public Typeface getFont(String name) {
-        Typeface typeface = fonts.get(name);
+        Typeface typeface = mFontList.get(name);
         if (typeface == null) {
-            typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + name + ".ttf");
+            typeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/" + name + ".ttf");
             if (typeface != null) {
-                fonts.put(name, typeface);
+                mFontList.put(name, typeface);
             }
         }
 

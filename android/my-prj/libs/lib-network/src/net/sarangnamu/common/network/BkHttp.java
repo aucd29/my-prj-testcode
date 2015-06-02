@@ -41,15 +41,15 @@ import org.json.JSONObject;
  */
 public class BkHttp {
     private String method = "POST";
-    protected DefaultHttpClient http;
+    protected DefaultHttpClient mHttp;
 
     public BkHttp() {
         initHttp();
     }
 
     protected void initHttp() {
-        if (http == null) {
-            http = new DefaultHttpClient();
+        if (mHttp == null) {
+            mHttp = new DefaultHttpClient();
             timeout();
         }
     }
@@ -63,11 +63,11 @@ public class BkHttp {
         int timeoutSocket = 5000;
         HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 
-        http.setParams(httpParameters);
+        mHttp.setParams(httpParameters);
     }
 
     public void setTimeout(int connTimeout, int socketTimeout) {
-        if (http == null) {
+        if (mHttp == null) {
             return ;
         }
 
@@ -75,7 +75,7 @@ public class BkHttp {
         HttpConnectionParams.setConnectionTimeout(httpParameters, connTimeout);
         HttpConnectionParams.setSoTimeout(httpParameters, socketTimeout);
 
-        http.setParams(httpParameters);
+        mHttp.setParams(httpParameters);
     }
 
     public void setMethod(final String method) {
@@ -125,7 +125,7 @@ public class BkHttp {
         }
 
         HttpGet httpGet = new HttpGet(getUrl + params);
-        HttpResponse response = http.execute(httpGet);
+        HttpResponse response = mHttp.execute(httpGet);
 
         return response.getEntity();
     }
@@ -141,12 +141,12 @@ public class BkHttp {
         }
 
         httpPost.setEntity(new UrlEncodedFormEntity(pair));
-        HttpResponse response = http.execute(httpPost);
+        HttpResponse response = mHttp.execute(httpPost);
 
         return response.getEntity();
     }
 
     public List<Cookie> getCookie() {
-        return http.getCookieStore().getCookies();
+        return mHttp.getCookieStore().getCookies();
     }
 }

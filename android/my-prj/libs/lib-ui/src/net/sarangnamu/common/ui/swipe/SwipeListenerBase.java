@@ -29,10 +29,10 @@ public abstract class SwipeListenerBase implements GestureDetector.OnGestureList
     public static int SWIPE_THRESHOLD = 300;
     public static int SWIPE_VELOCITY_THRESHOLD = 300;
 
-    protected GestureDetector detector;
+    protected GestureDetector mDetector;
 
     public SwipeListenerBase(Context context) {
-        this.detector = new GestureDetector(context, this);
+        this.mDetector = new GestureDetector(context, this);
     }
 
     protected void setThreshold(int val) {
@@ -113,7 +113,7 @@ public abstract class SwipeListenerBase implements GestureDetector.OnGestureList
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (detector != null && detector.onTouchEvent(event)) {
+        if (mDetector != null && mDetector.onTouchEvent(event)) {
             return true;
         }
 

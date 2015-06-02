@@ -41,10 +41,10 @@ import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDi
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class DlgCalendar implements CalendarDatePickerDialog.OnDateSetListener {
-    protected int baseColor;
+    protected int mBaseColor;
 
-    protected CalendarDatePickerDialog dlg;
-    protected DlgCalendarListener listener;
+    protected CalendarDatePickerDialog mDlg;
+    protected DlgCalendarListener mListener;
 
 
     public DlgCalendar() {
@@ -58,36 +58,36 @@ public class DlgCalendar implements CalendarDatePickerDialog.OnDateSetListener {
         int month = c.get(Calendar.MONTH);
         int day   = c.get(Calendar.DATE);
 
-        dlg = CalendarDatePickerDialog.newInstance(this, year, month, day);
-        if (baseColor != 0) {
-            dlg.setBaseColor(baseColor);
+        mDlg = CalendarDatePickerDialog.newInstance(this, year, month, day);
+        if (mBaseColor != 0) {
+            mDlg.setBaseColor(mBaseColor);
         }
-        dlg.show(act.getSupportFragmentManager(), "fragment_date_picker_name");
+        mDlg.show(act.getSupportFragmentManager(), "fragment_date_picker_name");
     }
 
     public void show(FragmentActivity act, int year, int month, int day) {
-        dlg = CalendarDatePickerDialog.newInstance(this, year, month, day);
-        if (baseColor != 0) {
-            dlg.setBaseColor(baseColor);
+        mDlg = CalendarDatePickerDialog.newInstance(this, year, month, day);
+        if (mBaseColor != 0) {
+            mDlg.setBaseColor(mBaseColor);
         }
-        dlg.show(act.getSupportFragmentManager(), "fragment_date_picker_name");
+        mDlg.show(act.getSupportFragmentManager(), "fragment_date_picker_name");
     }
 
     @Override
     public void onDateSet(CalendarDatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
-        if (listener != null) {
-            listener.ok(year, monthOfYear+1, dayOfMonth);
+        if (mListener != null) {
+            mListener.ok(year, monthOfYear+1, dayOfMonth);
         }
 
         dialog.dismiss();
     }
 
     public void setOnDlgCalendarListener(DlgCalendarListener l) {
-        listener = l;
+        mListener = l;
     }
 
     public void setBaseColor(int color) {
-        baseColor = color;
+        mBaseColor = color;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

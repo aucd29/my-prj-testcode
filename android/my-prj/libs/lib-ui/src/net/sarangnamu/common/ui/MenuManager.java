@@ -38,16 +38,16 @@ import android.widget.PopupMenu;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class MenuManager {
-    private static MenuManager inst;
-    private PopupMenu.OnMenuItemClickListener listener;
-    private PopupMenu popup;
+    private static MenuManager sInst;
+    private PopupMenu.OnMenuItemClickListener mListener;
+    private PopupMenu mPopup;
 
     public static MenuManager getInstance() {
-        if (inst == null) {
-            inst = new MenuManager();
+        if (sInst == null) {
+            sInst = new MenuManager();
         }
 
-        return inst;
+        return sInst;
     }
 
     private MenuManager() {
@@ -55,20 +55,20 @@ public class MenuManager {
     }
 
     public void showMenu(Context context, View v, int resid) {
-        popup = new PopupMenu(context, v);
-        popup.getMenuInflater().inflate(resid, popup.getMenu());
-        popup.setOnMenuItemClickListener(listener);
+        mPopup = new PopupMenu(context, v);
+        mPopup.getMenuInflater().inflate(resid, mPopup.getMenu());
+        mPopup.setOnMenuItemClickListener(mListener);
 
-        popup.show();
+        mPopup.show();
     }
 
     public void setListener(PopupMenu.OnMenuItemClickListener l) {
-        listener = l;
+        mListener = l;
     }
 
     public void show() {
-        if (popup != null) {
-            popup.show();
+        if (mPopup != null) {
+            mPopup.show();
         }
     }
 

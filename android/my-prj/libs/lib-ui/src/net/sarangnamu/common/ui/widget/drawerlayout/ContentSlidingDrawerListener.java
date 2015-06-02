@@ -22,8 +22,8 @@ import android.view.View;
 import android.view.animation.TranslateAnimation;
 
 public abstract class ContentSlidingDrawerListener implements DrawerListener {
-    protected float lastTranslate = 0.0f;
-    protected TranslateAnimation anim;
+    protected float mLastTranslate = 0.0f;
+    protected TranslateAnimation mAnim;
 
     @Override
     public void onDrawerClosed(View arg0) {
@@ -41,12 +41,12 @@ public abstract class ContentSlidingDrawerListener implements DrawerListener {
     public void onDrawerSlide(View drawerView, float slideOffset) {
         // @see http://stackoverflow.com/questions/20057084/how-to-move-main-content-with-drawer-layout-left-side
         float moveFactor = (getListView().getWidth() * slideOffset);
-        TranslateAnimation anim = new TranslateAnimation(lastTranslate, moveFactor, 0.0f, 0.0f);
+        TranslateAnimation anim = new TranslateAnimation(mLastTranslate, moveFactor, 0.0f, 0.0f);
         anim.setDuration(0);
         anim.setFillAfter(true);
         getContentFrame().startAnimation(anim);
 
-        lastTranslate = moveFactor;
+        mLastTranslate = moveFactor;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////

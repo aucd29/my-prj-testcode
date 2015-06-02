@@ -28,32 +28,32 @@ public class DlgProgressBarFlat extends DlgBase {
     private static final int MSG_UPDATE_PROGRESS    = 2;
     private static final int MSG_UPDATE_SIZE        = 3;
 
-    private TextView title, size;
-    private ProgressBar progressbar;
-    private Handler handler = new Handler() {
+    private TextView mTitle, mSize;
+    private ProgressBar mProgressbar;
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
             case MSG_UPDATE_TITLE:
-                title.setText((String) msg.obj);
+                mTitle.setText((String) msg.obj);
                 break;
             case MSG_UPDATE_PROGRESS:
-                progressbar.setProgress(msg.arg1);
+                mProgressbar.setProgress(msg.arg1);
                 break;
             case MSG_UPDATE_SIZE:
-                size.setText(String.format("%s/%s", msg.arg1, msg.arg2));
+                mSize.setText(String.format("%s/%s", msg.arg1, msg.arg2));
                 break;
             }
         }
     };
 
     private void sendMessage(int type, int arg1, int arg2, Object obj) {
-        Message msg = handler.obtainMessage();
+        Message msg = mHandler.obtainMessage();
         msg.what = type;
         msg.arg1 = arg1;
         msg.arg2 = arg2;
         msg.obj  = obj;
-        handler.sendMessage(msg);
+        mHandler.sendMessage(msg);
     }
 
     public DlgProgressBarFlat(Context context) {
@@ -67,9 +67,9 @@ public class DlgProgressBarFlat extends DlgBase {
 
     @Override
     protected void initLayout() {
-        title       = (TextView) findViewById(R.id.title);
-        size        = (TextView) findViewById(R.id.size);
-        progressbar = (ProgressBar) findViewById(R.id.progressbar);
+        mTitle       = (TextView) findViewById(R.id.title);
+        mSize        = (TextView) findViewById(R.id.size);
+        mProgressbar = (ProgressBar) findViewById(R.id.progressbar);
     }
 
     public void setTitle(final String title) {

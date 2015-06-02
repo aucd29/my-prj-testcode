@@ -34,39 +34,39 @@ import android.net.wifi.WifiManager;
 public class BkWifiManager {
     private static final String TAG = "BkWifiManager";
 
-    private static BkWifiManager inst = null;
-    private WifiManager manager = null;
+    private static BkWifiManager sInst = null;
+    private WifiManager mManager = null;
 
     private BkWifiManager(Context context) {
         try {
-            manager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            mManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         } catch (NullPointerException e) {
             DLog.e(TAG, "BkWifiManager", e);
         }
     }
 
     public static BkWifiManager getInstance(Context context) {
-        if (inst == null) {
-            inst = new BkWifiManager(context);
+        if (sInst == null) {
+            sInst = new BkWifiManager(context);
         }
 
-        return inst;
+        return sInst;
     }
 
     public boolean isEnabled() {
-        if (manager == null) {
+        if (mManager == null) {
             DLog.e(TAG, "manager is null");
             return false;
         }
 
-        return manager.isWifiEnabled();
+        return mManager.isWifiEnabled();
     }
 
     public String getIPAddr() {
         String ipAddr = "";
 
         try {
-            WifiInfo wifiInfo = manager.getConnectionInfo();
+            WifiInfo wifiInfo = mManager.getConnectionInfo();
             int ipAddress = wifiInfo.getIpAddress();
             ipAddr = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
 
@@ -80,7 +80,7 @@ public class BkWifiManager {
 
     public void wifiEnable() {
         try {
-            manager.setWifiEnabled(true);
+            mManager.setWifiEnabled(true);
         } catch (NullPointerException e) {
             DLog.e(TAG, "wifiEnable", e);
         }
@@ -88,7 +88,7 @@ public class BkWifiManager {
 
     public void wifiDisable() {
         try {
-            manager.setWifiEnabled(false);
+            mManager.setWifiEnabled(false);
         } catch (NullPointerException e) {
             DLog.e(TAG, "wifiDisable", e);
         }

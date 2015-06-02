@@ -119,7 +119,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public abstract class DbHelperBase extends SQLiteOpenHelper {
-    protected HashMap<String, String> tables;
+    protected HashMap<String, String> mTables;
 
     public DbHelperBase(Context context, String name, int version) {
         super(context, name, null, version);
@@ -127,18 +127,18 @@ public abstract class DbHelperBase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        if (tables == null) {
+        if (mTables == null) {
             return ;
         }
 
-        for (String key : tables.keySet()) {
-            db.execSQL(tables.get(key));
+        for (String key : mTables.keySet()) {
+            db.execSQL(mTables.get(key));
         }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        for (String key : tables.keySet()) {
+        for (String key : mTables.keySet()) {
             db.execSQL("DROP TABLE IF EXISTS " + key);
         }
 
@@ -146,6 +146,6 @@ public abstract class DbHelperBase extends SQLiteOpenHelper {
     }
 
     public void setTables(HashMap<String, String> tables) {
-        this.tables = tables;
+        this.mTables = tables;
     }
 }
