@@ -28,7 +28,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,7 +37,6 @@ public class Detail extends Activity {
 
     private TextView mEmsNum, mDetail;
     private ListView mList;
-    private LinearLayout mAdLayout;
     private AdMobDecorator mAdmob;
 
     @Override
@@ -56,12 +54,11 @@ public class Detail extends Activity {
         mEmsNum   = (TextView) findViewById(R.id.emsNum);
         mDetail   = (TextView) findViewById(R.id.detail);
         mList     = (ListView) findViewById(R.id.list);
-        mAdLayout = (LinearLayout) findViewById(R.id.adLayout);
 
         initLabel();
         initAdView();
         initListView();
-        
+
         StatusBar.setColor(getWindow(), 0xffe73636);
     }
 
@@ -87,8 +84,8 @@ public class Detail extends Activity {
     }
 
     private void initAdView() {
-        mAdmob = new AdMobDecorator(this, Cfg.ADMOB_ID);
-        mAdmob.load(mAdLayout);
+        mAdmob = new AdMobDecorator(this, R.id.adView, Cfg.ADMOB_ID);
+        mAdmob.load();
     }
 
     private void initListView() {
