@@ -7,6 +7,7 @@ package net.sarangnamu.apk_extractor.dlg;
 
 import net.sarangnamu.apk_extractor.R;
 import net.sarangnamu.apk_extractor.cfg.Cfg;
+import net.sarangnamu.common.admob.AdMobDecorator;
 import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.ui.dlg.DlgBase;
 import android.content.Context;
@@ -30,28 +31,28 @@ public class DlgSortBy extends DlgBase {
 
     @Override
     protected void initLayout() {
-    	mGroup 				= (RadioGroup) findViewById(R.id.sortGroup);
-    	mDefault 			= (RadioButton) findViewById(R.id.sortDefault);
-    	mAlphabetAsc 		= (RadioButton) findViewById(R.id.alphabetAsc);
-    	mAlphabetDesc 		= (RadioButton) findViewById(R.id.alphabetDesc);
-    	mFirstInstallTime 	= (RadioButton) findViewById(R.id.firstInstallTime);
-    	mLastInstallTime 	= (RadioButton) findViewById(R.id.lastInstallTime);
-    			
-    	
+        mGroup = (RadioGroup) findViewById(R.id.sortGroup);
+        mDefault = (RadioButton) findViewById(R.id.sortDefault);
+        mAlphabetAsc = (RadioButton) findViewById(R.id.alphabetAsc);
+        mAlphabetDesc = (RadioButton) findViewById(R.id.alphabetDesc);
+        mFirstInstallTime = (RadioButton) findViewById(R.id.firstInstallTime);
+        mLastInstallTime = (RadioButton) findViewById(R.id.lastInstallTime);
+
+        AdMobDecorator.getInstance().load(this, R.id.adView);
         String sortBy = Cfg.getSortBy(getContext());
-        
+
         if (sortBy.equals(Cfg.SORT_DEFAULT)) {
-        	mDefault.setChecked(true);
+            mDefault.setChecked(true);
         } else if (sortBy.equals(Cfg.SORT_ALPHABET_ASC)) {
-        	mAlphabetAsc.setChecked(true);        	
+            mAlphabetAsc.setChecked(true);
         } else if (sortBy.equals(Cfg.SORT_ALPHABET_DESC)) {
-        	mAlphabetDesc.setChecked(true);
+            mAlphabetDesc.setChecked(true);
         } else if (sortBy.equals(Cfg.SORT_FIRST_INSTALL_TIME)) {
-        	mFirstInstallTime.setChecked(true);
+            mFirstInstallTime.setChecked(true);
         } else if (sortBy.equals(Cfg.SORT_LAST_INSTALL_TIME)) {
-        	mLastInstallTime.setChecked(true);
+            mLastInstallTime.setChecked(true);
         }
-        
+
         mGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

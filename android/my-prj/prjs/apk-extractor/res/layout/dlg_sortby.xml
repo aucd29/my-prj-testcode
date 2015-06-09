@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="400dp"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:layout_width="350dp"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
     android:background="@drawable/popup_bg"
@@ -10,11 +11,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="27dp"
+        android:layout_marginBottom="5dp"
         android:layout_marginTop="20dp"
         android:orientation="vertical" >
 
-        <net.sarangnamu.common.fonts.RobotoLightTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -25,18 +26,19 @@
         <RadioGroup
             android:id="@+id/sortGroup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp" >
 
             <RadioButton
                 android:id="@+id/sortDefault"
-				android:layout_marginBottom="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="@string/sortDefault" />
 
             <RadioButton
                 android:id="@+id/alphabetAsc"
                 android:layout_marginBottom="10dp"
                 android:text="@string/alphabetAsc" />
-            
+
             <RadioButton
                 android:id="@+id/alphabetDesc"
                 android:layout_marginBottom="10dp"
@@ -46,11 +48,21 @@
                 android:id="@+id/firstInstallTime"
                 android:layout_marginBottom="10dp"
                 android:text="@string/firstInstallTime" />
-            
+
             <RadioButton
                 android:id="@+id/lastInstallTime"
                 android:text="@string/lastInstallTime" />
         </RadioGroup>
+        
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-7094629622358576/8078030738" >
+        </com.google.android.gms.ads.AdView>
     </LinearLayout>
 
 </RelativeLayout>

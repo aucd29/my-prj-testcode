@@ -18,10 +18,13 @@
 package net.sarangnamu.common.admob;
 
 import android.app.Activity;
-import android.view.ViewGroup;
+import android.app.Dialog;
+import android.content.Context;
+import android.view.View;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 /**
  * <pre>
@@ -33,27 +36,54 @@ import com.google.android.gms.ads.AdView;
  */
 public class AdMobDecorator {
     private AdView mAdView;
+    private static AdMobDecorator mInst;
+    private InterstitialAd mInterstitial;
 
-    public AdMobDecorator(Activity act, int id, String adUnitId) {
+    public static AdMobDecorator getInstance() {
+        if (mInst == null) {
+            mInst = new AdMobDecorator();
+        }
+
+        return mInst;
+    }
+
+    private AdMobDecorator() {
+
+    }
+
+    public void load(Activity act, int id) {
         mAdView = (AdView) act.findViewById(id);
-        mAdView.setAdUnitId(adUnitId);
-    }
-
-    public AdMobDecorator(Activity act, String adUnitId) {
-        mAdView = new AdView(act);
-        mAdView.setAdUnitId(adUnitId);
-    }
-
-    public void load() {
         mAdView.loadAd(new AdRequest.Builder().build());
     }
 
-    public void load(ViewGroup vg) {
+    public void load(Dialog dlg, int id) {
+        mAdView = (AdView) dlg.findViewById(id);
         mAdView.loadAd(new AdRequest.Builder().build());
-        vg.addView(mAdView);
+    }
+
+    public void load(View view, int id) {
+        mAdView = (AdView) view.findViewById(id);
+        mAdView.loadAd(new AdRequest.Builder().build());
     }
 
     public void destroy() {
-        mAdView.destroy();
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+    }
+
+    public void initInterstitial(Context context, String adId, String testDeviceId) {
+        mInterstitial = new InterstitialAd(context);
+        mInterstitial.setAdUnitId(adId);
+
+        AdRequest adRequest = new AdRequest.Builder()
+        .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+        .addTestDevice(testDeviceId).build();
+
+        mInterstitial.loadAd(adRequest);
+    }
+
+    public InterstitialAd getInterstitialAd() {
+        return mInterstitial;
     }
 }

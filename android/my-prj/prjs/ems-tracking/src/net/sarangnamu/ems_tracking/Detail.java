@@ -37,7 +37,6 @@ public class Detail extends Activity {
 
     private TextView mEmsNum, mDetail;
     private ListView mList;
-    private AdMobDecorator mAdmob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +63,7 @@ public class Detail extends Activity {
 
     @Override
     protected void onDestroy() {
-        mAdmob.destroy();
+        AdMobDecorator.getInstance().destroy();
 
         super.onDestroy();
     }
@@ -84,8 +83,7 @@ public class Detail extends Activity {
     }
 
     private void initAdView() {
-        mAdmob = new AdMobDecorator(this, R.id.adView, Cfg.ADMOB_ID);
-        mAdmob.load();
+        AdMobDecorator.getInstance().load(this, R.id.adView);
     }
 
     private void initListView() {
