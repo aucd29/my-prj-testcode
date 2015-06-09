@@ -121,18 +121,18 @@ public class Ems extends XPathParser {
         int count;
 
         expr = "count(//xsyncData)";
-        count = Integer.parseInt(xpath.evaluate(expr, document, XPathConstants.STRING).toString());
+        count = Integer.parseInt(mXPath.evaluate(expr, mDocument, XPathConstants.STRING).toString());
 
         expr = "//rgist/text()";
-        mEmsNum = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+        mEmsNum = mXPath.evaluate(expr, mDocument, XPathConstants.STRING).toString();
 
         if (mEmsNum == null || mEmsNum.length() == 0) {
             expr = "//message/text()";
-            mErrMsg = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+            mErrMsg = mXPath.evaluate(expr, mDocument, XPathConstants.STRING).toString();
             mErrMsg += " - [";
 
             expr = "//error_code/text()";
-            mErrMsg += xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+            mErrMsg += mXPath.evaluate(expr, mDocument, XPathConstants.STRING).toString();
             mErrMsg += "]";
 
             mEmsNum = mTmpNum;
@@ -203,16 +203,16 @@ public class Ems extends XPathParser {
             String expr, prefix = "//xsyncData[" + pos + "]";
 
             expr = prefix + "/processDe/text()";
-            date = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+            date = mXPath.evaluate(expr, mDocument, XPathConstants.STRING).toString();
 
             expr = prefix + "/processSttus/text()";
-            status = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+            status = mXPath.evaluate(expr, mDocument, XPathConstants.STRING).toString();
 
             expr = prefix + "/nowLc/text()";
-            office = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+            office = mXPath.evaluate(expr, mDocument, XPathConstants.STRING).toString();
 
             expr = prefix + "/detailDc/text()";
-            detail = xpath.evaluate(expr, document, XPathConstants.STRING).toString();
+            detail = mXPath.evaluate(expr, mDocument, XPathConstants.STRING).toString();
         }
 
         public void trace() {
