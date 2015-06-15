@@ -46,7 +46,7 @@ public class MainFrgmt extends FrgmtBase {
 
     @Override
     protected void initLayout() {
-        grid = (GridView) base.findViewById(R.id.grid);
+        grid = (GridView) mBaseView.findViewById(R.id.grid);
         int measureWidth = grid.getMeasuredWidth();
 
         initDefaultValue();

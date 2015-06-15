@@ -41,8 +41,8 @@ public class DbHelper extends DbHelperBase {
     public DbHelper(Context context) {
         super(context, DB_NAME, VERSION);
 
-        tables = new HashMap<String, String>();
-        tables.put(Columns.TABLE, Columns.CREATE);
+        mTables = new HashMap<String, String>();
+        mTables.put(Columns.TABLE, Columns.CREATE);
     }
 
     public static Cursor select() {

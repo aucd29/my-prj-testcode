@@ -46,11 +46,11 @@ public class AddFrgmt extends FrgmtBase {
 
     @Override
     protected void initLayout() {
-        base.setPadding(0, dpToPixelInt(Cfg.ACTION_BAR_HEIGHT), 0, 0);
+    	mBaseView.setPadding(0, dpToPixelInt(Cfg.ACTION_BAR_HEIGHT), 0, 0);
 
-        edtTitle    = (EditText) base.findViewById(R.id.edtTitle);
-        submit      = (ImageButton) base.findViewById(R.id.submit);
-        grid        = (EditGridView) base.findViewById(R.id.grid);
+        edtTitle    = (EditText) mBaseView.findViewById(R.id.edtTitle);
+        submit      = (ImageButton) mBaseView.findViewById(R.id.submit);
+        grid        = (EditGridView) mBaseView.findViewById(R.id.grid);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

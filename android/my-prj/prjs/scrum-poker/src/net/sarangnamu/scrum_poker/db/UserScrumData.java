@@ -22,27 +22,27 @@ import java.util.ArrayList;
 import android.text.TextUtils;
 
 public class UserScrumData {
-    private String title;
-    private ArrayList<String> contents;
-    private long date;
+    private String mTitle;
+    private ArrayList<String> mContents;
+    private long s;
 
     String getTitle() {
-        return title;
+        return mTitle;
     }
 
     String getContents() {
-        return TextUtils.join("|", contents);
+        return TextUtils.join("|", mContents);
     }
 
     long getDate() {
-        return date;
+        return mDate;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.mTitle = title;
     }
 
     public void setContents(ArrayList<String> contents) {
-        this.contents = contents;
+        this.mContents = contents;
     }
 }

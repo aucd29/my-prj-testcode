@@ -34,8 +34,8 @@ public class CardFrgmt extends FrgmtBase {
 
     @Override
     protected void initLayout() {
-        value = (TextView) base.findViewById(R.id.value);
-        blur  = (BlurView) base.findViewById(R.id.blur);
+        value = (TextView) mBaseView.findViewById(R.id.value);
+        blur  = (BlurView) mBaseView.findViewById(R.id.blur);
 
         value.setText(getArguments().getString(Cfg.SCRUM_DATA, "ERROR"));
     }
