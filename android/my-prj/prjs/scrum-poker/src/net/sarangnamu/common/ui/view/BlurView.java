@@ -62,7 +62,6 @@ public class BlurView extends LinearBase implements View.OnClickListener {
     protected void callGlobalLayout() {
     }
 
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -86,22 +85,22 @@ public class BlurView extends LinearBase implements View.OnClickListener {
         out.copyTo(blurBm);
     }
 
-//    @Override
-//    protected void onDraw(Canvas canvas) {
-//        View v = (View) getParent();
-//
-//        if (parentDrawn) {
-//            return;
-//        }
-//
-//        parentDrawn = true;
-//        drawParentInBitmap(v);
-//        blur();
-//        canvas.drawBitmap(blurBm, 0, 0, null);
-//
-//        super.draw(canvas);
-//        parentDrawn = false;
-//    }
+    // @Override
+    // protected void onDraw(Canvas canvas) {
+    // View v = (View) getParent();
+    //
+    // if (parentDrawn) {
+    // return;
+    // }
+    //
+    // parentDrawn = true;
+    // drawParentInBitmap(v);
+    // blur();
+    // canvas.drawBitmap(blurBm, 0, 0, null);
+    //
+    // super.draw(canvas);
+    // parentDrawn = false;
+    // }
 
     private void drawParentInBitmap(View v) {
         blurCanvas.save();
@@ -110,22 +109,28 @@ public class BlurView extends LinearBase implements View.OnClickListener {
         blurCanvas.restore();
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////////////
     //
     // View.OnClickListener
     //
-    ////////////////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public void onClick(View v) {
         Animator ani = ObjectAnimator.ofFloat(this, "alpha", 0);
         ani.addListener(new AnimatorListener() {
             @Override
-            public void onAnimationStart(Animator animation) { }
+            public void onAnimationStart(Animator animation) {
+            }
+
             @Override
-            public void onAnimationRepeat(Animator animation) { }
+            public void onAnimationRepeat(Animator animation) {
+            }
+
             @Override
-            public void onAnimationCancel(Animator animation) { }
+            public void onAnimationCancel(Animator animation) {
+            }
+
             @Override
             public void onAnimationEnd(Animator animation) {
                 setVisibility(View.GONE);

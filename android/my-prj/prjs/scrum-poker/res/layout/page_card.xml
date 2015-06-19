@@ -14,9 +14,9 @@
         android:textSize="180sp"
         android:gravity="center" />
     
-    <net.sarangnamu.common.ui.view.BlurView
-        android:id="@+id/blur"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+<!--     <net.sarangnamu.common.ui.view.BlurView -->
+<!--         android:id="@+id/blur" -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="match_parent" /> -->
     
 </RelativeLayout>

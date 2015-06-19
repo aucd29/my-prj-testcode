@@ -35,9 +35,9 @@ import android.widget.Toast;
 public class AddFrgmt extends FrgmtBase {
     private static final String TAG = "AddFrgmt";
 
-    private EditText edtTitle;
-    private ImageButton submit;
-    private EditGridView grid;
+    private EditText mTitle;
+    private ImageButton mSubmit;
+    private EditGridView mGrid;
 
     @Override
     protected int getLayoutId() {
@@ -48,25 +48,25 @@ public class AddFrgmt extends FrgmtBase {
     protected void initLayout() {
     	mBaseView.setPadding(0, dpToPixelInt(Cfg.ACTION_BAR_HEIGHT), 0, 0);
 
-        edtTitle    = (EditText) mBaseView.findViewById(R.id.edtTitle);
-        submit      = (ImageButton) mBaseView.findViewById(R.id.submit);
-        grid        = (EditGridView) mBaseView.findViewById(R.id.grid);
+        mTitle    = (EditText) mBaseView.findViewById(R.id.edtTitle);
+        mSubmit      = (ImageButton) mBaseView.findViewById(R.id.submit);
+        mGrid        = (EditGridView) mBaseView.findViewById(R.id.grid);
 
-        submit.setOnClickListener(new View.OnClickListener() {
+        mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DLog.d(TAG, "===================================================================");
                 DLog.d(TAG, "Add Rule");
                 DLog.d(TAG, "===================================================================");
 
-                if (getString(R.string.license).equals(edtTitle.getText()) ||
-                    getString(R.string.add_rule).equals(edtTitle.getText())) {
-                    String msg = String.format(getActivity().getString(R.string.doNotUseThisWord), edtTitle.getText());
+                if (getString(R.string.license).equals(mTitle.getText()) ||
+                    getString(R.string.add_rule).equals(mTitle.getText())) {
+                    String msg = String.format(getActivity().getString(R.string.doNotUseThisWord), mTitle.getText());
                     showDlgTimer(msg);
                     return ;
                 }
 
-                ArrayList<EditGridData> datas = grid.getGridData();
+                ArrayList<EditGridData> datas = mGrid.getGridData();
                 if (datas == null) {
                     showDlgTimer(R.string.invalidData);
                     DLog.e(TAG, "onClick <ArrayList<EditGridData> is null>");
@@ -79,7 +79,7 @@ public class AddFrgmt extends FrgmtBase {
                 }
 
                 UserScrumData scrumData = new UserScrumData();
-                scrumData.setTitle(edtTitle.getText().toString());
+                scrumData.setTitle(mTitle.getText().toString());
                 scrumData.setContents(contents);
 
                 if (!DbHelper.insert(scrumData)) {
@@ -87,8 +87,8 @@ public class AddFrgmt extends FrgmtBase {
                     return ;
                 }
 
-                edtTitle.setText("");
-                grid.reset();
+                mTitle.setText("");
+                mGrid.reset();
 
                 showDlgTimer(R.string.insertComplete);
             }

@@ -24,7 +24,7 @@ import android.text.TextUtils;
 public class UserScrumData {
     private String mTitle;
     private ArrayList<String> mContents;
-    private long s;
+    private long mDate;
 
     String getTitle() {
         return mTitle;

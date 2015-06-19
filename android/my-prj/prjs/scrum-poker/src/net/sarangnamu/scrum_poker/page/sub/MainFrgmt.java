@@ -36,8 +36,8 @@ import android.widget.TextView;
 public class MainFrgmt extends FrgmtBase {
     private static final String TAG = "MainFrgmt";
 
-    private ArrayList<String> defaultValue;
-    private GridView grid;
+    private GridView mGrid;
+    private ArrayList<String> mDefaultNumberList;
 
     @Override
     protected int getLayoutId() {
@@ -46,46 +46,46 @@ public class MainFrgmt extends FrgmtBase {
 
     @Override
     protected void initLayout() {
-        grid = (GridView) mBaseView.findViewById(R.id.grid);
-        int measureWidth = grid.getMeasuredWidth();
+        mGrid = (GridView) mBaseView.findViewById(R.id.grid);
+        int measureWidth = mGrid.getMeasuredWidth();
 
         initDefaultValue();
         initAdapter();
     }
 
     private void initDefaultValue() {
-        if (defaultValue == null) {
-            defaultValue = new ArrayList<String>();
+        if (mDefaultNumberList == null) {
+            mDefaultNumberList = new ArrayList<String>();
         }
 
-        if (defaultValue.size() > 0) {
+        if (mDefaultNumberList.size() > 0) {
             return;
         }
 
-        defaultValue.add("0");
-        defaultValue.add("1/2");
-        defaultValue.add("2");
+        mDefaultNumberList.add("0");
+        mDefaultNumberList.add("1/2");
+        mDefaultNumberList.add("2");
 
-        defaultValue.add("3");
-        defaultValue.add("5");
-        defaultValue.add("8");
+        mDefaultNumberList.add("3");
+        mDefaultNumberList.add("5");
+        mDefaultNumberList.add("8");
 
-        defaultValue.add("13");
-        defaultValue.add("20");
-        defaultValue.add("30");
+        mDefaultNumberList.add("13");
+        mDefaultNumberList.add("20");
+        mDefaultNumberList.add("30");
 
-        defaultValue.add("60");
-        defaultValue.add("?");
-        defaultValue.add("∞");
+        mDefaultNumberList.add("60");
+        mDefaultNumberList.add("?");
+        mDefaultNumberList.add("∞");
     }
 
     private void initAdapter() {
-        grid.setAdapter(new ScrumAdapter());
-        grid.setOnItemClickListener(new OnItemClickListener() {
+        mGrid.setAdapter(new ScrumAdapter());
+        mGrid.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bd = new Bundle();
-                bd.putString(Cfg.SCRUM_DATA, defaultValue.get(position));
+                bd.putString(Cfg.SCRUM_DATA, mDefaultNumberList.get(position));
 
                 PageManager.getInstance(getActivity()).replace(R.id.content_frame, CardFrgmt.class, bd);
             }
@@ -110,11 +110,11 @@ public class MainFrgmt extends FrgmtBase {
     class ScrumAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            if (defaultValue == null) {
+            if (mDefaultNumberList == null) {
                 return 0;
             }
 
-            return defaultValue.size();
+            return mDefaultNumberList.size();
         }
 
         @Override
@@ -142,7 +142,7 @@ public class MainFrgmt extends FrgmtBase {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.number.setText(defaultValue.get(position));
+            holder.number.setText(mDefaultNumberList.get(position));
 
             return convertView;
         }

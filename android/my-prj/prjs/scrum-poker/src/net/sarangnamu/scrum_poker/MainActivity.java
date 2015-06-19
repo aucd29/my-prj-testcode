@@ -32,12 +32,12 @@ import android.widget.TextView;
 public class MainActivity extends ActionBarActivity {
     private static final String TAG = "MainActivity";
 
-    private Toolbar toolbar;
-    private ListView leftMenu;
-    private DrawerLayout drawer;
-    private ArrayList<MenuData> menuData;
-    private FrameLayout contentFrame;
-    private ActionBarDrawerToggle actionbarToogle;
+    private Toolbar mToolbar;
+    private ListView mLeftMenu;
+    private DrawerLayout mDrawer;
+    private ArrayList<MenuData> mMenuData;
+    private FrameLayout mContentFrame;
+    private ActionBarDrawerToggle mActionbarToogle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +45,9 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
 //        leftMenu        = (ListView) findViewById(R.id.leftMenu);
-        drawer          = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toolbar         = (Toolbar) findViewById(R.id.toolbar);
-        contentFrame    = (FrameLayout) findViewById(R.id.content_frame);
+        mDrawer          = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mToolbar         = (Toolbar) findViewById(R.id.toolbar);
+        mContentFrame    = (FrameLayout) findViewById(R.id.content_frame);
 
         if (savedInstanceState == null) {
             initPageManager();
@@ -77,10 +77,10 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void initDrawer() {
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
 
-        actionbarToogle = new ActionBarDrawerToggle(this, drawer, R.string.app_name, R.string.app_name);
-        drawer.setDrawerListener(actionbarToogle);
+        mActionbarToogle = new ActionBarDrawerToggle(this, mDrawer, R.string.app_name, R.string.app_name);
+        mDrawer.setDrawerListener(mActionbarToogle);
 
 //        drawer.setScrimColor(Color.TRANSPARENT);
 //        drawer.setDrawerListener(new ContentSlidingDrawerListener() {
@@ -99,54 +99,54 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        actionbarToogle.syncState();
+        mActionbarToogle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        actionbarToogle.onConfigurationChanged(newConfig);
+        mActionbarToogle.onConfigurationChanged(newConfig);
     }
 
     private void initLeftMenu() {
-        if (menuData == null) {
-            menuData = new ArrayList<MenuData>();
+        if (mMenuData == null) {
+            mMenuData = new ArrayList<MenuData>();
         }
 
-        menuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.app_name)));
-        menuData.add(new MenuData(LEFT_MENU_TYPE_ITEM, getString(R.string.add_rule)));
+        mMenuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.app_name)));
+        mMenuData.add(new MenuData(LEFT_MENU_TYPE_ITEM, getString(R.string.add_rule)));
 
         // async ??
         DbManager.getInstance().open(this, new DbHelper(this));
         Cursor cr = DbHelper.select();
         if (cr.getCount() > 0) {
-            menuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.user_rule)));
+            mMenuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.user_rule)));
 
             while (cr.moveToNext()) {
                 MenuData mnuData = new MenuData(LEFT_MENU_TYPE_DB, cr.getString(1));
                 mnuData.primaryKey = cr.getInt(0);
-                menuData.add(mnuData);
+                mMenuData.add(mnuData);
             }
         }
 
-        menuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.about)));
-        menuData.add(new MenuData(LEFT_MENU_TYPE_ITEM, getString(R.string.license)));
+        mMenuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.about)));
+        mMenuData.add(new MenuData(LEFT_MENU_TYPE_ITEM, getString(R.string.license)));
 
-        leftMenu.setAdapter(new MenuAdapter());
-        leftMenu.setOnItemClickListener(new OnItemClickListener() {
+        mLeftMenu.setAdapter(new MenuAdapter());
+        mLeftMenu.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (menuData.get(position).menu.equals(getString(R.string.license))) {
+                if (mMenuData.get(position).menu.equals(getString(R.string.license))) {
                     DlgLicense dlg = new DlgLicense(MainActivity.this);
                     dlg.setTitleTypeface(FontLoader.getInstance(getApplicationContext()).getRobotoLight());
                     dlg.show();
-                } else if (menuData.get(position).menu.equals(getString(R.string.add_rule))) {
+                } else if (mMenuData.get(position).menu.equals(getString(R.string.add_rule))) {
                     PageManager.getInstance(MainActivity.this).replace(R.id.content_frame, AddFrgmt.class);
-                } else if (menuData.get(position).type == LEFT_MENU_TYPE_DB) {
-                    Cfg.set(getApplicationContext(), Cfg.DB_ID, menuData.get(position).primaryKey + "");
+                } else if (mMenuData.get(position).type == LEFT_MENU_TYPE_DB) {
+                    Cfg.set(getApplicationContext(), Cfg.DB_ID, mMenuData.get(position).primaryKey + "");
                 }
 
-                drawer.closeDrawers();
+                mDrawer.closeDrawers();
             }
         });
     }
@@ -179,11 +179,11 @@ public class MainActivity extends ActionBarActivity {
     class MenuAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            if (menuData == null) {
+            if (mMenuData == null) {
                 return 0;
             }
 
-            return menuData.size();
+            return mMenuData.size();
         }
 
         @Override
@@ -198,7 +198,7 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public int getItemViewType(int position) {
-            return menuData.get(position).type;
+            return mMenuData.get(position).type;
         }
 
         @Override
@@ -208,7 +208,7 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public boolean isEnabled(int position) {
-            if (menuData.get(position).type == LEFT_MENU_TYPE_BAR) {
+            if (mMenuData.get(position).type == LEFT_MENU_TYPE_BAR) {
                 return false;
             }
 
@@ -231,14 +231,14 @@ public class MainActivity extends ActionBarActivity {
                 holder = (MenuViewHolder) convertView.getTag();
             }
 
-            MenuData data = menuData.get(position);
+            MenuData data = mMenuData.get(position);
             holder.menu.setText(data.menu);
 
             return convertView;
         }
 
         private int getInflateId(int position) {
-            switch (menuData.get(position).type) {
+            switch (mMenuData.get(position).type) {
             case LEFT_MENU_TYPE_BAR:
                 return R.layout.page_main_menu_bar;
             default:
