@@ -6,9 +6,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,31 +30,31 @@ import android.support.v4.app.FragmentTransaction;
  * {@code
  *     public class Navigator extends FrgmtManager {
  *         private static Navigator inst;
- * 
+ *
  *         public static Navigator getInstance(FragmentActivity act) {
  *             if (inst == null) {
  *                 inst = new Navigator();
  *             }
- * 
+ *
  *             inst.setFragmentManager(act);
- * 
+ *
  *             return inst;
  *         }
- * 
+ *
  *         private Navigator() {
- * 
+ *
  *         }
  *     }
- * 
+ *
  *     - example
  *     Navigator nv = Navigator.getInstance(this);
  *     nv.setBase(HomeFrgmt.class);
- * 
+ *
  *     - change page
  *     nv.replace(OtherFrgmt.class);
  * }
  * </pre>
- * 
+ *
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public abstract class FrgmtManager {
@@ -78,7 +78,7 @@ public abstract class FrgmtManager {
         try {
             Fragment frgmt = (Fragment) cls.newInstance();
             if (frgmt == null) {
-                DLog.e(TAG, "setBase frgmt == null");
+                DLog.e(TAG, "add frgmt == null");
                 return;
             }
 
@@ -90,7 +90,7 @@ public abstract class FrgmtManager {
             trans.add(id, frgmt, frgmt.getClass().getName());
             trans.commit();
         } catch (Exception e) {
-            DLog.e(TAG, "setBase", e);
+            DLog.e(TAG, "add", e);
         }
     }
 
@@ -153,7 +153,7 @@ public abstract class FrgmtManager {
 
     public void popBackAll() {
         if (mFrgmtManager == null) {
-            DLog.e(TAG, "setFragmentManager fm is null");
+            DLog.e(TAG, "popBackAll fm is null");
             return;
         }
 

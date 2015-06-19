@@ -23,4 +23,6 @@ public class Cfg extends BkCfg {
     public static final String SCRUM_DATA = "SCRUM_DATA";
     public static final String DB_ID = "DB_ID";
     public static final int ACTION_BAR_HEIGHT = 40;
+    public static final boolean SHOW_BLUR_IMAGE = false;
+
 }
