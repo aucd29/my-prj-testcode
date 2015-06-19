@@ -11,21 +11,21 @@ aucd29's Libraries & Test code
 - wifi-and-battery-widget src - [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/widget-wifi-and-battery), bin - [link](https://play.google.com/store/apps/details?id=net.sarangnamu.wifi_battery)
 
 ## My Lib Project
-- sarang-libs-ani [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-ani)
-- sarang-libs-calendar [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-calendar)
-- sarang-libs-common [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-common)
-- sarang-libs-explorer [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-explorer)
-- sarang-libs-frgmt [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-frgmt)
-- sarang-libs-json [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-json)
-- sarang-libs-network [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-network)
-- sarang-libs-roboto [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-roboto)
-- sarang-libs-service-immortal [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-service-immortal)
-- sarang-libs-sqlite [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-sqlite)
-- sarang-libs-crypto [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-crypto)
-- sarang-libs-native-support [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-native-support)
-- sarang-libs-ui [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-ui)
-- sarang-libs-ui-img-loader [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-ui-imgloader)
-- sarang-libs-ui-list-endless [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/sarang-libs-ui-list-endless)
+- libs-ani [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/libs/libs-ani)
+- libs-calendar [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/libs/libs-calendar)
+- libs-common [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/libs/libs-common)
+- libs-explorer [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/libs/libs-explorer)
+- libs-frgmt [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/libs/libs-frgmt)
+- libs-json [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/libs/libs-json)
+- libs-network [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/libs/libs-network)
+- libs-roboto [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/libs/libs-roboto)
+- libs-service-immortal [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/libs/libs-service-immortal)
+- libs-sqlite [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/libs/libs-sqlite)
+- libs-crypto [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/libs/libs-crypto)
+- libs-native-support [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/libs/libs-native-support)
+- libs-ui [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/libs/libs-ui)
+- libs-ui-img-loader [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/libs/libs-ui-imgloader)
+- libs-ui-list-endless [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/my-prj/libs/libs-ui-list-endless)
 
 
 ### Platform libraries 
@@ -34,18 +34,6 @@ aucd29's Libraries & Test code
 - Jellybean 4.1.2 [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/platform-libs/4.1.2-r2)
 - Jellybean 4.2.2 [link] (https://github.com/aucd29/my-prj-testcode/tree/master/android/platform-libs/4.2.2-r2)
 
-## Test Projects
-- Task Killer [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/test-prj/KillTask)
-- C2DM [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/test-prj/TestC2DM)
-- Calendar [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/test-prj/TestCalendar)
-- Commoms Compress [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/test-prj/TestCommonsCompress)
-- File download [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/test-prj/TestFileDownload)
-- ViewPager [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/test-prj/TestViewPager)
-- XPath [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/test-prj/TestXPath)
-- Simple Framework(XML) [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/test-prj/simple-xml)
-- Jackson(JSON) [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/test-prj/test-gson)
-- Cling (SSDP) [link1](https://github.com/aucd29/my-prj-testcode/tree/master/android/test-prj/test-ssdp-server) [link2](https://github.com/aucd29/my-prj-testcode/tree/master/android/test-prj/test-ssdp)
-- WPS Button [link](https://github.com/aucd29/my-prj-testcode/tree/master/android/test-prj/test-wps-button)
 
 ## CPP
 - ISO Converter
