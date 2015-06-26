@@ -20,6 +20,10 @@ package net.sarangnamu.scrum_poker.page.sub;
 import net.sarangnamu.common.FrgmtBase;
 import net.sarangnamu.scrum_poker.R;
 import net.sarangnamu.scrum_poker.cfg.Cfg;
+import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
+import android.animation.ObjectAnimator;
+import android.view.View;
 import android.widget.TextView;
 
 public class CardFrgmt extends FrgmtBase {
@@ -36,6 +40,46 @@ public class CardFrgmt extends FrgmtBase {
         mNumber = (TextView) mBaseView.findViewById(R.id.value);
 //        mBlur  = (BlurView) mBaseView.findViewById(R.id.blur);
 
-        mNumber.setText(getArguments().getString(Cfg.SCRUM_DATA, "ERROR"));
+        mNumber.setText("TAP");
+        mNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Animator ani = ObjectAnimator.ofFloat(mNumber, "alpha", 0);
+                ani.setDuration(500);
+                ani.addListener(new AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) { }
+                    @Override
+                    public void onAnimationRepeat(Animator animation) { }
+                    @Override
+                    public void onAnimationCancel(Animator animation) { }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        animation.removeListener(this);
+                        mNumber.setText(getArguments().getString(Cfg.SCRUM_DATA, "ERROR"));
+
+                        Animator ani = ObjectAnimator.ofFloat(mNumber, "alpha", 1).setDuration(500);
+                        ani.addListener(new AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) { }
+                            @Override
+                            public void onAnimationRepeat(Animator animation) { }
+                            @Override
+                            public void onAnimationCancel(Animator animation) { }
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                mNumber.setClickable(false);
+                            }
+                        });
+                        ani.start();
+                    }
+                });
+                ani.start();
+            }
+        });
+
+
     }
 }

@@ -6,13 +6,14 @@ import net.sarangnamu.common.fonts.FontLoader;
 import net.sarangnamu.common.sqlite.DbManager;
 import net.sarangnamu.common.ui.StatusBar;
 import net.sarangnamu.common.ui.dlg.DlgLicense;
+import net.sarangnamu.common.ui.widget.drawerlayout.ContentSlidingDrawerListener;
 import net.sarangnamu.scrum_poker.cfg.Cfg;
 import net.sarangnamu.scrum_poker.db.DbHelper;
 import net.sarangnamu.scrum_poker.page.PageManager;
 import net.sarangnamu.scrum_poker.page.sub.AddFrgmt;
 import net.sarangnamu.scrum_poker.page.sub.MainFrgmt;
 import android.content.res.Configuration;
-import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -20,6 +21,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -33,9 +35,9 @@ public class MainActivity extends ActionBarActivity {
     private static final String TAG = "MainActivity";
 
     private Toolbar mToolbar;
-    private ListView mLeftMenu;
     private DrawerLayout mDrawer;
     private ArrayList<MenuData> mMenuData;
+    private ListView mLeftMenu;
     private FrameLayout mContentFrame;
     private ActionBarDrawerToggle mActionbarToogle;
 
@@ -44,9 +46,9 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        leftMenu        = (ListView) findViewById(R.id.leftMenu);
-        mDrawer          = (DrawerLayout) findViewById(R.id.drawer_layout);
         mToolbar         = (Toolbar) findViewById(R.id.toolbar);
+        mDrawer          = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mLeftMenu        = (ListView) findViewById(R.id.leftMenu);
         mContentFrame    = (FrameLayout) findViewById(R.id.content_frame);
 
         if (savedInstanceState == null) {
@@ -54,13 +56,22 @@ public class MainActivity extends ActionBarActivity {
         }
 
         initDrawer();
-//        initLeftMenu();
+        initLeftMenu();
         StatusBar.setColor(getWindow(), 0xff0e5cbc);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mActionbarToogle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -80,20 +91,19 @@ public class MainActivity extends ActionBarActivity {
         setSupportActionBar(mToolbar);
 
         mActionbarToogle = new ActionBarDrawerToggle(this, mDrawer, R.string.app_name, R.string.app_name);
-        mDrawer.setDrawerListener(mActionbarToogle);
+//        mDrawer.setDrawerListener(mActionbarToogle);
+        mDrawer.setScrimColor(Color.TRANSPARENT);
+        mDrawer.setDrawerListener(new ContentSlidingDrawerListener() {
+            @Override
+            public View getListView() {
+                return mLeftMenu;
+            }
 
-//        drawer.setScrimColor(Color.TRANSPARENT);
-//        drawer.setDrawerListener(new ContentSlidingDrawerListener() {
-//            @Override
-//            public View getListView() {
-//                return leftMenu;
-//            }
-//
-//            @Override
-//            public View getContentFrame() {
-//                return contentFrame;
-//            }
-//        });
+            @Override
+            public View getContentFrame() {
+                return mContentFrame;
+            }
+        });
     }
 
     @Override
@@ -113,26 +123,26 @@ public class MainActivity extends ActionBarActivity {
             mMenuData = new ArrayList<MenuData>();
         }
 
-        mMenuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.app_name)));
-        mMenuData.add(new MenuData(LEFT_MENU_TYPE_ITEM, getString(R.string.add_rule)));
-
-        // async ??
-        DbManager.getInstance().open(this, new DbHelper(this));
-        Cursor cr = DbHelper.select();
-        if (cr.getCount() > 0) {
-            mMenuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.user_rule)));
-
-            while (cr.moveToNext()) {
-                MenuData mnuData = new MenuData(LEFT_MENU_TYPE_DB, cr.getString(1));
-                mnuData.primaryKey = cr.getInt(0);
-                mMenuData.add(mnuData);
-            }
-        }
+//        mMenuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.app_name)));
+//        mMenuData.add(new MenuData(LEFT_MENU_TYPE_ITEM, getString(R.string.add_rule)));
+//
+//        DbManager.getInstance().open(this, new DbHelper(this));
+//        Cursor cr = DbHelper.select();
+//        if (cr.getCount() > 0) {
+//            mMenuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.user_rule)));
+//
+//            while (cr.moveToNext()) {
+//                MenuData mnuData = new MenuData(LEFT_MENU_TYPE_DB, cr.getString(1));
+//                mnuData.primaryKey = cr.getInt(0);
+//                mMenuData.add(mnuData);
+//            }
+//        }
 
         mMenuData.add(new MenuData(LEFT_MENU_TYPE_BAR, getString(R.string.about)));
         mMenuData.add(new MenuData(LEFT_MENU_TYPE_ITEM, getString(R.string.license)));
 
         mLeftMenu.setAdapter(new MenuAdapter());
+        mLeftMenu.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         mLeftMenu.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -221,11 +231,9 @@ public class MainActivity extends ActionBarActivity {
 
             if (convertView == null) {
                 convertView = LayoutInflater.from(getApplicationContext()).inflate(getInflateId(position), null);
+
                 holder = new MenuViewHolder();
-
                 holder.menu = (TextView) convertView.findViewById(R.id.title);
-
-
                 convertView.setTag(holder);
             } else {
                 holder = (MenuViewHolder) convertView.getTag();

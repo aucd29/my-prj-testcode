@@ -13,5 +13,6 @@
     <string name="insertComplete">Insert Complete!</string>
     <string name="doNotUseThisWord">Do not use this word (%s)</string>
     <string name="invalidData">Invalid data</string>
+    <string name="devMe">DEV: @aucd29</string>
     
 </resources>
