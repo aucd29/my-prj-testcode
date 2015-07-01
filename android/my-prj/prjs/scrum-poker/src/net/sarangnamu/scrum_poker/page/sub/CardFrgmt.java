@@ -28,7 +28,6 @@ import android.widget.TextView;
 
 public class CardFrgmt extends FrgmtBase {
     private TextView mNumber;
-//    private BlurView mBlur;
 
     @Override
     protected int getLayoutId() {
@@ -38,14 +37,12 @@ public class CardFrgmt extends FrgmtBase {
     @Override
     protected void initLayout() {
         mNumber = (TextView) mBaseView.findViewById(R.id.value);
-//        mBlur  = (BlurView) mBaseView.findViewById(R.id.blur);
 
         mNumber.setText("TAP");
         mNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Animator ani = ObjectAnimator.ofFloat(mNumber, "alpha", 0);
-                ani.setDuration(500);
+                Animator ani = ObjectAnimator.ofFloat(mNumber, "alpha", 0).setDuration(500);
                 ani.addListener(new AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) { }
@@ -79,7 +76,5 @@ public class CardFrgmt extends FrgmtBase {
                 ani.start();
             }
         });
-
-
     }
 }
