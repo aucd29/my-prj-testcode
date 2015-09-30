@@ -17,65 +17,68 @@
  */
 package net.sarangnamu.common.network;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
+
+import android.util.Log;
 
 /**
  * @author <a href="mailto:aucd29@gmail.com">Burke Choi</a>
  */
 public class BkHttp {
+	private static final String TAG = "BkHttp";
+
     private String method = "POST";
-    protected DefaultHttpClient mHttp;
+//    protected DefaultHttpClient mHttp;
+    private int mConnTimeout = 3000, mReadTimeout = 5000;
 
     public BkHttp() {
-        initHttp();
+//        initHttp();
     }
 
     protected void initHttp() {
-        if (mHttp == null) {
-            mHttp = new DefaultHttpClient();
-            timeout();
-        }
+//        if (mHttp == null) {
+//            mHttp = new DefaultHttpClient();
+//            timeout();
+//        }
+//    	if (mConn == null) {
+//
+//    	}
     }
 
     private void timeout() {
-        HttpParams httpParameters = new BasicHttpParams();
-
-        int timeoutConnection = 3000;
-        HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-
-        int timeoutSocket = 5000;
-        HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
-
-        mHttp.setParams(httpParameters);
+//        HttpParams httpParameters = new BasicHttpParams();
+//
+//        int timeoutConnection = 3000;
+//        HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+//
+//        int timeoutSocket = 5000;
+//        HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+//
+//        mHttp.setParams(httpParameters);
     }
 
     public void setTimeout(int connTimeout, int socketTimeout) {
-        if (mHttp == null) {
-            return ;
-        }
-
-        HttpParams httpParameters = new BasicHttpParams();
-        HttpConnectionParams.setConnectionTimeout(httpParameters, connTimeout);
-        HttpConnectionParams.setSoTimeout(httpParameters, socketTimeout);
-
-        mHttp.setParams(httpParameters);
+        mConnTimeout = connTimeout;
+        mReadTimeout = socketTimeout;
+//        if (mHttp == null) {
+//            return ;
+//        }
+//
+//        HttpParams httpParameters = new BasicHttpParams();
+//        HttpConnectionParams.setConnectionTimeout(httpParameters, connTimeout);
+//        HttpConnectionParams.setSoTimeout(httpParameters, socketTimeout);
+//
+//        mHttp.setParams(httpParameters);
     }
 
     public void setMethod(final String method) {
@@ -83,35 +86,13 @@ public class BkHttp {
     }
 
     public String submit(final String getUrl, final Map<String, String> parameters) throws Exception {
-        HttpEntity entity = null;
+        URL url = new URL(getUrl);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        if (method.equals("GET")) {
-            entity = methodGet(getUrl, parameters);
-        } else {
-            entity = methodPost(getUrl, parameters);
-        }
-
-        return EntityUtils.toString(entity);
-    }
-
-    public JSONObject jsonSubmit(final String getUrl, final Map<String, String> parameters) throws Exception {
-        return new JSONObject(submit(getUrl, parameters));
-    }
-
-    public byte[] bytesSubmit(String getUrl, final Map<String, String> parameters) throws Exception {
-        HttpEntity entity = null;
-
-        if (method.equals("GET")) {
-            entity = methodGet(getUrl, parameters);
-        } else {
-            entity = methodPost(getUrl, parameters);
-        }
-
-        return EntityUtils.toByteArray(entity);
-    }
-
-    protected HttpEntity methodGet(final String getUrl, final Map<String, String> parameters) throws Exception {
-        initHttp();
+        conn.setDoOutput(true);
+        conn.setConnectTimeout(mConnTimeout);
+        conn.setReadTimeout(mReadTimeout);
+        conn.setRequestMethod(method);
 
         String params = "";
         if (parameters != null) {
@@ -124,29 +105,76 @@ public class BkHttp {
             params = "?" + pe.encode();
         }
 
-        HttpGet httpGet = new HttpGet(getUrl + params);
-        HttpResponse response = mHttp.execute(httpGet);
+        OutputStream os = conn.getOutputStream();
+        os.write(params.getBytes("UTF-8"));
+        os.flush();
+        os.close();
 
-        return response.getEntity();
-    }
+        int responseCode = conn.getResponseCode();
+        Log.i(TAG, "POST Response Code :: " + responseCode);
 
-    protected HttpEntity methodPost(final String getUrl, final Map<String, String> parameters) throws Exception {
-        initHttp();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
 
-        HttpPost httpPost = new HttpPost(getUrl);
-        List<NameValuePair> pair = new ArrayList<NameValuePair>();
+            while ((inputLine = in.readLine()) != null) {
+                 response.append(inputLine);
+            }
+            in.close();
 
-        for (String key : parameters.keySet()) {
-            pair.add(new BasicNameValuePair(key, parameters.get(key)));
+            return response.toString();
         }
 
-        httpPost.setEntity(new UrlEncodedFormEntity(pair));
-        HttpResponse response = mHttp.execute(httpPost);
-
-        return response.getEntity();
+        return null;
     }
 
-    public List<Cookie> getCookie() {
-        return mHttp.getCookieStore().getCookies();
+    public JSONObject jsonSubmit(final String getUrl, final Map<String, String> parameters) throws Exception {
+        return new JSONObject(submit(getUrl, parameters));
     }
+
+//    public byte[] bytesSubmit(String getUrl, final Map<String, String> parameters) throws Exception {
+//        return EntityUtils.toByteArray(entity);
+//    }
+
+
+//    protected HttpEntity methodGet(final String getUrl, final Map<String, String> parameters) throws Exception {
+//        initHttp();
+//
+//        String params = "";
+//        if (parameters != null) {
+//            ParameterEncoder pe = new ParameterEncoder();
+//
+//            for (String key : parameters.keySet()) {
+//                pe.add(key, parameters.get(key));
+//            }
+//
+//            params = "?" + pe.encode();
+//        }
+//
+//        HttpGet httpGet = new HttpGet(getUrl + params);
+//        HttpResponse response = mHttp.execute(httpGet);
+//
+//        return response.getEntity();
+//    }
+//
+//    protected HttpEntity methodPost(final String getUrl, final Map<String, String> parameters) throws Exception {
+//        initHttp();
+//
+//        HttpPost httpPost = new HttpPost(getUrl);
+//        List<NameValuePair> pair = new ArrayList<NameValuePair>();
+//
+//        for (String key : parameters.keySet()) {
+//            pair.add(new BasicNameValuePair(key, parameters.get(key)));
+//        }
+//
+//        httpPost.setEntity(new UrlEncodedFormEntity(pair));
+//        HttpResponse response = mHttp.execute(httpPost);
+//
+//        return response.getEntity();
+//    }
+
+//    public List<Cookie> getCookie() {
+//        return mHttp.getCookieStore().getCookies();
+//    }
 }
