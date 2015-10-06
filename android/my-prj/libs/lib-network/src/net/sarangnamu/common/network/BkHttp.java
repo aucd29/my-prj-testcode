@@ -18,6 +18,7 @@
 package net.sarangnamu.common.network;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -93,6 +94,7 @@ public class BkHttp {
         conn.setConnectTimeout(mConnTimeout);
         conn.setReadTimeout(mReadTimeout);
         conn.setRequestMethod(method);
+        conn.setUseCaches(false);
 
         String params = "";
         if (parameters != null) {
@@ -102,10 +104,10 @@ public class BkHttp {
                 pe.add(key, parameters.get(key));
             }
 
-            params = "?" + pe.encode();
+            params = pe.encode();
         }
 
-        OutputStream os = conn.getOutputStream();
+        DataOutputStream os = new DataOutputStream(conn.getOutputStream());
         os.write(params.getBytes("UTF-8"));
         os.flush();
         os.close();
